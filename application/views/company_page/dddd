@@ -1,0 +1,90 @@
+<style type="text/css">
+	.wowbook-container-full{
+		position:relative!important;
+	}
+	body, html, .wowbook-container{
+		background: white!important;
+	}
+</style>
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo base_url(); ?>assets/img_flipbook/touch/apple-touch-icon-144x144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo base_url(); ?>assets/img_flipbook/touch/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo base_url(); ?>assets/img_flipbook/touch/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="<?php echo base_url(); ?>assets/img_flipbook/touch/apple-touch-icon-57x57-precomposed.png">
+    <link rel="shortcut icon" sizes="196x196" href="<?php echo base_url(); ?>assets/img_flipbook/touch/touch-icon-196x196.png">
+    <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/img_flipbook/touch/apple-touch-icon.png">
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="<?php echo base_url(); ?>assets/img_flipbook/touch/apple-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileColor" content="#222222">
+
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css_flipbook/normalize.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/wow_book/wow_book.css" type="text/css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css_flipbook/main.css">
+    <script src="<?php echo base_url(); ?>assets/js_flipbook/vendor/modernizr-2.7.1.min.js"></script>
+
+<?php if($book->print_permission == 0){?>
+    <script type="text/javascript">
+        $(document).bind("contextmenu",function(e){
+            return false;
+        });
+        $(document).on('keydown', function(e) { 
+            if(e.ctrlKey && (e.key == "p" || e.charCode == 16 || e.charCode == 112 || e.keyCode == 80 || e.keyCode == 44|| e.keyCode == 42) ){
+                //alert("Please use the Print PDF button below for a better rendering on the document");
+                e.cancelBubble = true;
+                e.preventDefault();
+
+                e.stopImmediatePropagation();
+            }  
+        });
+    </script>
+<?php } ?>
+<section class="sectionBox detailsWrapper">
+	<div class="container">		
+		<div class="row">			
+			<div class="col-md-12">
+				<div class="catalogBox">					
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="whitePanel">
+								<div class="book_container">
+								    <input type="hidden" name="book_path" id="book_path" value="<?php echo base_url($book->file_path);?>">
+								    <div id="book"></div>
+								</div><!--book_container-->
+							</div><!--whitePanel-->
+						</div><!--col-12-->
+					</div><!--row-->					
+				</div><!--courseBox-->
+			</div><!--col-12-->
+		</div><!--row-->
+	</div><!--container-->
+</section><!--sectionBox-->
+
+<script src="<?php echo base_url(); ?>assets/js_flipbook/vendor/jquery-1.11.2.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js_flipbook/helper.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/wow_book/pdf.combined.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/wow_book/wow_book.min.js"></script>
+<!-- <script src="js/main.js"></script> -->
+<script type="text/javascript">
+    $(function(){
+        if ($("#book_path").val().indexOf(".pdf") > 0){
+            var bookOptions = {
+                height   : 500
+                ,width    : 800
+                ,maxHeight : 600
+                ,centeredWhenClosed : true
+                ,hardcovers : true
+                ,pageNumbers: false
+                ,toolbarPosition: 'top'
+                ,toolbar : "lastLeft, left, right, lastRight, toc, zoomin, zoomout, slideshow, flipsound, fullscreen, thumbnails, download"
+                ,thumbnailsPosition : 'left'
+                ,responsiveHandleWidth : 50
+                ,container: window
+                ,containerPadding: "20px"
+                ,pdf: $("#book_path").val()
+            };
+            $('#book').wowBook( bookOptions );
+        }else{
+            window.open($("#book_path").val());
+        }
+    })
+</script>
