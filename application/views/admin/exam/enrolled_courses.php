@@ -89,11 +89,21 @@
                 <td class="text-left"><?php echo $myenroll['title'] ?></td>
                 <td class="text-left"><?php echo $course_type; ?></td>
                 <td class="text-left"><?php echo $myenroll['count'] ?></td>
-                <?php if($myenroll['type'] == 2){ ?>
-                <td class=" text-left"><a style="background-color:#1D2127; color:#FFF; border:0px;" target="_blank" class="btn btn-default btn-sm" id="append_view_<?php echo $myenroll['id'] ?>" href="<?= base_url()?>admin/examhistory/enrolled_course_users/<?php echo $myenroll['id'] ?>/0">View</a></td>
-                <?php }else{ ?>
-                <td class=" text-left"><a style="background-color:#1D2127; color:#FFF; border:0px;" class="btn btn-default btn-sm" id="append_view_<?php echo $myenroll['id'] ?>" href="javascript:void(0)" onclick="getEnrolled(<?php echo $myenroll['id'] ?>)">View</a></td>
-                <?php } ?>
+                <td class=" text-left">
+                  <?php if($myenroll['type'] == 2){ ?>
+                      <a style="background-color:#1D2127; color:#FFF; border:0px;" target="_blank" class="btn btn-default btn-sm" id="append_view_<?php echo $myenroll['id'] ?>" href="<?= base_url()?>admin/examhistory/enrolled_course_users/<?php echo $myenroll['id'] ?>/0">View</a>
+                    <?php if($user['user_type'] == "Admin"){ ?>
+                      <a style="background-color:#e81b06; color:#FFF; border:0px;"  class="btn btn-default btn-sm"  href="javascript:deleteEnroll('<?php echo $myenroll['id'] ?>')">Delete</a>
+                    <?php }?>
+                  <?php }else{ ?>
+                      <a style="background-color:#1D2127; color:#FFF; border:0px;" class="btn btn-default btn-sm" id="append_view_<?php echo $myenroll['id'] ?>" href="javascript:void(0)" onclick="getEnrolled(<?php echo $myenroll['id'] ?>)">View</a>
+                    <?php if($user['user_type'] == "Admin"){ ?>
+                      <a style="background-color:#e81b06; color:#FFF; border:0px;"  class="btn btn-default btn-sm"  href="javascript:deleteEnroll('<?php echo $myenroll['id'] ?>')">Delete</a>
+                    <?php }?>
+                  <?php } ?>
+                </td>
+
+                
               </tr>
               <?php $course_times = getCourseDetail($myenroll['id'],$myenroll['type']); 
                     if($course_times != ''){							
@@ -128,7 +138,12 @@
                       <td class="text-left">Not Available</td>
                       <?php } } ?>
                       <td class="text-left"><?php echo $totalEnCount;?></td>
-                      <td class="text-left"><a target="_blank" class="btn btn-default btn-sm" id="append_view_<?php echo $courseSchedule['id'] ?>" href="<?= base_url()?>admin/examhistory/enrolled_course_users/<?php echo $myenroll['id'] ?>/<?php echo $courseSchedule['time_id'] ?>/<?php echo $stringDate;?>">View</a></td>
+                      <td class="text-left">
+                        <a target="_blank" class="btn btn-default btn-sm" id="append_view_<?php echo $courseSchedule['id'] ?>" href="<?= base_url()?>admin/examhistory/enrolled_course_users/<?php echo $myenroll['id'] ?>/<?php echo $courseSchedule['time_id'] ?>/<?php echo $stringDate;?>">View</a>
+                      <?php if($user['user_type'] == "Admin"){ ?>
+                        <a style="background-color:#e81b06; color:#FFF; border:0px;" target="_blank" class="btn btn-default btn-sm"  href="javascript:deleteEnroll('<?php echo $myenroll['id'] ?>')">Delete</a>
+                      <?php }?>
+                      </td>
                     </tr>
                     <?php } ?>
                   </table></td>
@@ -152,6 +167,45 @@
 			$('#sub_tr_'+div_id).show();
 		}
 	}
+  function deleteEnroll(id){
+    (new PNotify({
+            title: "<?php echo $term['confirmation']; ?>",
+            text: "<?php echo $term['areyousuretodelete']; ?>",
+			icon: 'fas fa-question',
+			confirm: {
+				confirm: true
+			},
+			button: {
+				closer: false,
+				sticker: false
+			},
+			addclass: 'stack-modal',
+			stack: {
+				'dir1': 'down',
+				'dir2': 'right',
+				'modal':true
+			}
+		})).get().on('pnotify.confirm', function(){
+      $.ajax({
+        type: 'POST',
+        url: "<?= base_url()?>admin/examhistory/deleteCourse",
+        data: {
+          id : id
+        },
+        success: function(msg){
+          location.reload();
+          
+        },
+				error: function(){
+					new PNotify({
+                        title: '<?php echo $term['error']; ?>',
+                        text: '<?php echo $term['youcantdeletethisitem']; ?>',
+						type: 'error'
+					});		
+				}
+			});				
+		});
+  }
 	
 	function searchData(){
 		$('#searchBTN').html('Searching');

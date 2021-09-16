@@ -277,7 +277,6 @@ class Examhistory extends BaseController{
 		}
 		$this->response($records);
 	}	
-		
 	public function enrolledcourse(){
 		$this->load->library('Sidebar');
         $side_params = array(
@@ -324,7 +323,18 @@ class Examhistory extends BaseController{
 		}        
         $this->response($myData);
     }
-	
+	public function deleteCourse(){
+        $out_data = array();
+        $id = $this->input->post('id');
+        if($this->Course_model->deleteCourse($id)){
+            $out_data["status"] = "Success";
+            $out_data["message"] = "";
+        }else{
+            $out_data["status"] = "Fail";
+            $out_data["message"] = "Could not delete the row.";
+        }
+        $this->response($out_data);
+    }
 	public function deleteEnrollments(){
         $out_data = array();
         $id = $this->input->post('id');

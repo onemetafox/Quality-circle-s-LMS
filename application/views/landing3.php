@@ -45,7 +45,7 @@
 	        <li><a href="https://dev.gosmartacademy.com/pricing">Pricing</a></li>
 	        <li><a href="https://dev.gosmartacademy.com/contact">Contact Us</a></li>
 	        <!-- <li class="sign-up-btn"><a href="https://dev.gosmartacademy.com/login">Login</a><a href="https://dev.gosmartacademy.com/login">/Signup</a></li> -->
-	        <li class="sign-up-btn"><a href="http://localhost:8002/login">Login</a><a href="http://localhost:8002/login">/Signup</a></li>
+	        <li class="sign-up-btn"><a href="http://192.168.107.183:8002/login">Login</a><a href="http://192.168.107.183:8002/login">/Signup</a></li>
 
 	    </ul>
 	  </div>
