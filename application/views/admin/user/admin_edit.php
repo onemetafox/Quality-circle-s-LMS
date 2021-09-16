@@ -115,9 +115,9 @@ if($id != 0){
                                 <select name="country_code" id="country_code" class="form-control" required onchange="getCountryCode()">
                                 	<option value="">Select Country Code</option>
                                     <?php if(isset($country_list) && !empty($country_list)){ 
-                                        foreach($country_list as $cKey => $country){
+                                        foreach($country_list as $cKey => $item){
                                     ?>
-                                    <option <?php if($country['phonecode'] == $country_code){echo "selected";} ?> sortnameoption="<?php echo $country['sortname']; ?>" value="<?php echo $country['phonecode']; ?>"><?php echo $country['name'].' ('.$country['phonecode']; ?>)</option>
+                                    <option <?php if($item['phonecode'] == $country_code){echo "selected";} ?> sortnameoption="<?php echo $item['sortname']; ?>" value="<?php echo $item['phonecode']; ?>"><?php echo $item['name'].' ('.$item['phonecode']; ?>)</option>
                                     <?php } } ?>
                                 </select>
                                 </div>

@@ -71,12 +71,12 @@ class User extends BaseController {
             $this->global['sidebar'] = $this->sidebar->generate($side_params, $this->role);
             $page_path = "admin/user/admin_edit";
             $this->global['countries'] = $this->Location_model->getAllCounties();
-            $this->global['states'] = $this->Location_model->getStateByCountryId($course->country);
-            $this->global['cities'] = $this->Location_model->getCityByStateId($course->state);
             if($row_id != 0){
                 $user_data = $this->User_model->getList(array('id' => $row_id)) [0];
                 unset($user_data['password']);
 				$user_data['country_list'] = $this->Countries_model->getList();
+                $this->global['states'] = $this->Location_model->getStateByCountryId($user_data["country"]);
+                $this->global['cities'] = $this->Location_model->getCityByStateId($user_data["state"]);
             }else{
                 $user_data['id'] = 0;
                 $user_data['first_name'] = '';

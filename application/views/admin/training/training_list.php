@@ -603,6 +603,7 @@
             <footer class="card-footer">
                <div class="row">
                   <div class="col-md-12 text-right">
+                     <a href="#add_exist_modal" class="btn btn-default add_exist_modal" style="color:#333"><i class="fas fa-plus"></i> <?=$term[inviteuser]?> </a>
                      <a href="#add_modal" class="btn btn-default add_modal" style="color:#333"><i class="fas fa-plus"></i> <?=$term[add]?> </a>
                      <button class="btn btn-default modal-change-dismiss"><?=$term[cancel]?></button>
                   </div>
@@ -645,6 +646,28 @@
                   <div class="col-md-12 text-right">
                      <!--    <a class="btn btn-default" style="color:#333"><?/*=$term[send]*/?> </a>-->
                      <a class="btn btn-default" href="javascript:add_invite_user()" style="color:#333"><i class="fas fa-plus"></i> <?=$term[add]?> </a>
+                     <button class="btn btn-default modal-change-dismiss"><?=$term[cancel]?></button>
+                  </div>
+               </div>
+            </footer>
+         </section>
+      </form>
+   </div>
+   <div id="add_exist_modal" class="modal-block modal-block-primary mfp-hide" style="min-width: 900px;">
+      <form id="add_exist_form" action="" method="POST" novalidate="novalidate">
+         <input type="hidden" name="course_id" class="form-control" >
+         <input type="hidden" name="course_type" value="0" class="form-control" >
+         <input type="hidden" name="add_ilt_time_id" value="" class="form-control" >
+         <section class="card">
+            <header class="card-header">
+               <h2 class="card-title"><?=$term[add]?> <?=$term[inviteuser]?></h2>
+            </header>
+            <div class="card-body">
+               <table class="table table-responsive-md table-striped table-bordered mb-0" id="datatable_addexistuser"></table>
+            </div>
+            <footer class="card-footer">
+               <div class="row">
+                  <div class="col-md-12 text-right">
                      <button class="btn btn-default modal-change-dismiss"><?=$term[cancel]?></button>
                   </div>
                </div>
@@ -720,496 +743,553 @@
 		var courseId = $('#courses_filter').val();
 		window.location.href="<?=base_url()?>admin/training/showTrainingFilter/"+courseId;
    });
-     var $user_table = $('#datatable_user');
-     var $instructor_table = $('#datatable_instructor');
-     var enroll_users = '';
-     var instructors = '';
-     var isShowList = false;
+   var $user_table = $('#datatable_user');
+   var $add_exist_table = $('#datatable_addexistuser');
+   var $instructor_table = $('#datatable_instructor');
+   var enroll_users = '';
+   var instructors = '';
+   var isShowList = false;
      
-     jQuery(document).ready(function() {
-         $('[data-plugin-selectTwo]').each(function() {
-             var $this = $( this ),
-                 opts = {};
+   jQuery(document).ready(function() {
+      $('[data-plugin-selectTwo]').each(function() {
+            var $this = $( this ),
+               opts = {};
+   
+            var pluginOptions = $this.data('plugin-options');
+            if(pluginOptions)
+               opts = pluginOptions;
+   
+            $this.themePluginSelect2(opts);
+      });
+   
+      $('[data-plugin-ios-switch]').each(function () {
+            var $this = $(this);
+   
+            $this.themePluginIOS7Switch();
+      });
+   });
      
-             var pluginOptions = $this.data('plugin-options');
-             if(pluginOptions)
-                 opts = pluginOptions;
-     
-             $this.themePluginSelect2(opts);
-         });
-     
-         $('[data-plugin-ios-switch]').each(function () {
-             var $this = $(this);
-     
-             $this.themePluginIOS7Switch();
-         });
-     });
-     
-     jQuery(document).ready(function() {
-         $('[data-plugin-ios-switch]').each(function () {
-             var $this = $(this);
-     
-             $this.themePluginIOS7Switch();
-         });
-     
-         $('[data-plugin-datepicker]').each(function () {
-             var $this = $(this);
-     
-             $this.themePluginDatePicker();
-         });
-         $('[data-plugin-masked-input]').each(function() {
-             var $this = $( this );
-     
-             $this.themePluginMaskedInput();
-         });
-     
-         $('[data-plugin-markdown-editor]').each(function() {
-             var $this = $( this ),
-                 opts = {};
-     
-             var pluginOptions = $this.data('plugin-options');
-             if(pluginOptions)
-                 opts = pluginOptions;
-     
-             $this.themePluginMarkdownEditor(opts);
-         });
-     
-     
-     });
-     
-     $instructor_table.dataTable({
-     
+   jQuery(document).ready(function() {
+      $('[data-plugin-ios-switch]').each(function () {
+            var $this = $(this);
+   
+            $this.themePluginIOS7Switch();
+      });
+   
+      $('[data-plugin-datepicker]').each(function () {
+            var $this = $(this);
+   
+            $this.themePluginDatePicker();
+      });
+      $('[data-plugin-masked-input]').each(function() {
+            var $this = $( this );
+   
+            $this.themePluginMaskedInput();
+      });
+   
+      $('[data-plugin-markdown-editor]').each(function() {
+            var $this = $( this ),
+               opts = {};
+   
+            var pluginOptions = $this.data('plugin-options');
+            if(pluginOptions)
+               opts = pluginOptions;
+   
+            $this.themePluginMarkdownEditor(opts);
+      });
+      $add_exist_table.dataTable({
          "ordering": true,
          "info": true,
-         "searching": false,
-     
+         "searching": true,
+
          "ajax": {
-             "type": "POST",
-             "async": true,
-             "url": "<?=base_url()?>admin/training/getinstructor",
-             "data": '',
-             "dataSrc": "data",
-             "dataType": "json",
-             "cache":    false,
+               "type": "POST",
+               "async": true,
+               "url":$('#base_url').val() +"admin/user/view",
+               "data": {
+                  'user_type': 'Learner',
+                  'active': 1
+               },
+               "dataSrc": "data",
+               "dataType": "json",
+               "cache":    false,
          },
          "columnDefs": [{
-             "targets": [0],
-             "createdCell": function (td, cellData, rowData, row, col) {
-                 if(instructors.indexOf(cellData) > 0){
-                     $(td).html('<input type="checkBox" name="instructor[]" checked required value="'+rowData.id+'">');
-                 }else{
-                     $(td).html('<input type="checkBox" name="instructor[]" required value="'+rowData.id+'">');
-                 }
-             }
-         } ],
+               "targets": [4],
+               "createdCell": function (td, cellData, rowData, row, col) {
+                  $(td).html('<a href="javascript:add_exist_user('+rowData['id']+')" class="add-row"><i class="fas fa-plus"></i></i></a>');
+               }
+         }],
          "columns": [
-             { "title": "", "data": "id", "class": "text-left", "width":10 },
-             { "title": "#", "data": "no", "class": "center", "width":50 },
-             { "title": "<?=$term[name]?>", "data": "fullname", "class": "text-left", "width":"*" }
+               { "title": "#", "data": "no", "class": "center" },
+               { "title": "<?=$term[firstname]?>", "data": "first_name", "class": "text-left"},
+               { "title": "<?=$term[lastname]?>", "data": "last_name", "class": "text-left"},
+               { "title": "<?=$term[email]?>", "data": "email", "class": "text-left"},
+               { "title": "<?=$term[action]?>", "data": "id", "class": "text-center"},
          ],
-     
+         "lengthMenu": [
+               [5, 10, 20, 50, 150, -1],
+               [5, 10, 20, 50, 150, "All"] // change per page values here
+         ],
          "scrollY": false,
          "scrollX": true,
          "scrollCollapse": false,
          "jQueryUI": true,
-     
+
+         "paging": true,
+         "pagingType": "full_numbers",
+         "pageLength": 50, // default record count per page
+         dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
+         bProcessing: true,
+      });
+   
+   });
+   
+   $instructor_table.dataTable({
+   
+         "ordering": true,
+         "info": true,
+         "searching": false,
+   
+         "ajax": {
+            "type": "POST",
+            "async": true,
+            "url": "<?=base_url()?>admin/training/getinstructor",
+            "data": '',
+            "dataSrc": "data",
+            "dataType": "json",
+            "cache":    false,
+         },
+         "columnDefs": [{
+            "targets": [0],
+            "createdCell": function (td, cellData, rowData, row, col) {
+               if(instructors.indexOf(cellData) > 0){
+                     $(td).html('<input type="checkBox" name="instructor[]" checked required value="'+rowData.id+'">');
+               }else{
+                     $(td).html('<input type="checkBox" name="instructor[]" required value="'+rowData.id+'">');
+               }
+            }
+         } ],
+         "columns": [
+            { "title": "", "data": "id", "class": "text-left", "width":10 },
+            { "title": "#", "data": "no", "class": "center", "width":50 },
+            { "title": "<?=$term[name]?>", "data": "fullname", "class": "text-left", "width":"*" }
+         ],
+   
+         "scrollY": false,
+         "scrollX": true,
+         "scrollCollapse": false,
+         "jQueryUI": true,
+   
          "paging": false,
          "pagingType": "full_numbers",
          "pageLength": 10, // default record count per page
-     
+   
          dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
          bProcessing: true,
-     });
-     
-     var readURL_attendImg = function(input) {
+   });
+   
+   var readURL_attendImg = function(input) {
          if(input.files && input.files[0]) {
-             var reader = new FileReader();
-             reader.onload = function (e) {
-                 $('#attend_img_preview').css("background-image", "url("+e.target.result+")");
-             }   
-             reader.readAsDataURL(input.files[0]);
+            var reader = new FileReader();
+            reader.onload = function (e) {
+               $('#attend_img_preview').css("background-image", "url("+e.target.result+")");
+            }   
+            reader.readAsDataURL(input.files[0]);
          }
-     }
-     
-     $("#attend_img").on('change', function(){
+   }
+   
+   $("#attend_img").on('change', function(){
          readURL_attendImg(this);
          $("#attend_img_preview").children().hide();
-     });
-     
-     $("#attend_img_preview").on('click', function() {
+   });
+   
+   $("#attend_img_preview").on('click', function() {
          $("#attend_img").click();
-     });    
-     
-     var readURL_agendaImg = function(input) {
+   });    
+   
+   var readURL_agendaImg = function(input) {
          if(input.files && input.files[0]) {
-             var reader = new FileReader();
-             reader.onload = function (e) {
-                 $('#agenda_img_preview').css("background-image", "url("+e.target.result+")");
-             }
-             reader.readAsDataURL(input.files[0]);
+            var reader = new FileReader();
+            reader.onload = function (e) {
+               $('#agenda_img_preview').css("background-image", "url("+e.target.result+")");
+            }
+            reader.readAsDataURL(input.files[0]);
          }
-     }
-     
-     $("#agenda_img").on('change', function(){
+   }
+   
+   $("#agenda_img").on('change', function(){
          readURL_agendaImg(this);
          $("#agenda_img_preview").children().hide();
-     });
-     
-     $("#agenda_img_preview").on('click', function() {
+   });
+   
+   $("#agenda_img_preview").on('click', function() {
          $("#agenda_img").click();
-     });   
-     
-     var readURL_objectiveImg = function(input) {
+   });   
+   
+   var readURL_objectiveImg = function(input) {
          if(input.files && input.files[0]) {
-             var reader = new FileReader();
-             reader.onload = function (e) {
-                 $('#objective_img_preview').css("background-image", "url("+e.target.result+")");
-             }
-             reader.readAsDataURL(input.files[0]);
+            var reader = new FileReader();
+            reader.onload = function (e) {
+               $('#objective_img_preview').css("background-image", "url("+e.target.result+")");
+            }
+            reader.readAsDataURL(input.files[0]);
          }
-     }
-     
-     $("#objective_img").on('change', function(){
+   }
+   
+   $("#objective_img").on('change', function(){
          readURL_objectiveImg(this);
          $("#objective_img_preview").children().hide();
-     });
-     
-     $("#objective_img_preview").on('click', function() {
+   });
+   
+   $("#objective_img_preview").on('click', function() {
          $("#objective_img").click();
-     });  
-     
-     function addTime(id, month, year) {
+   });  
+   
+   function addTime(id, month, year) {
          $('#change_day').val(1);
          $('#change_id').val(id);
          for(var i = 0;i < document.getElementById("change_month").length;i++){
-             if(document.getElementById("change_month").options[i].value == month ){
-                 document.getElementById("change_month").selectedIndex = i;
-             }
+            if(document.getElementById("change_month").options[i].value == month ){
+               document.getElementById("change_month").selectedIndex = i;
+            }
          }
          $('#change_year').val(year);
          $('#change_location').val();
          $('.modal-change-confirm').html("Add");
          $('.change-time').click();
          enroll_users = '<?=$enroll_users?>';
-     }
-     
-     function showPayUser() {
+   }
+   
+   function showPayUser() {
          if($('.btn-user-list').html() == 'Show User List'){
-             $('.btn-user-list').html('Hide User List')
-             $user_table.show();
-             if(!isShowList) {
-                 $user_table.dataTable({     
+            $('.btn-user-list').html('Hide User List')
+            $user_table.show();
+            var ajaxData = {"id":0,'course_type':0};
+            if(!isShowList) {
+               $user_table.dataTable({     
                      "ordering": true,
                      "info": true,
                      "searching": false,
-     
+   
                      "ajax": {
-                         "type": "POST",
-                         "async": true,
-                         "url": "<?=base_url()?>admin/training/getPayUser",
-                         "data": {
-                             'id': $('#change_id').val(),
-                             'tid': $('#time_id').val()
-                         },
-                         "dataSrc": "data",
-                         "dataType": "json",
-                         "cache": false
+                        "type": "POST",
+                        "async": true,
+                        //  "url": "<?=base_url()?>admin/training/getPayUser",
+                        "url": "<?=base_url()?>admin/inviteuser/getInviteUser",
+                        //  "data": {
+                        //      'id': $('#change_id').val(),
+                        //      'tid': $('#time_id').val()
+                        //  },
+                        "data":{ // add request parameters before submit
+                           'id': $('#change_id').val(),
+                           'course_type': 0
+                        },
+                        "dataSrc": "data",
+                        "dataType": "json",
+                        "cache": false
                      },
-     
+   
+                     // "columns": [
+                     //     {"title": "#", "data": "no", "class": "center", "width": 50},
+                     //     {"title": "<?=$term[name]?>", "data": "fullname", "class": "text-left", "width": "*"}
+                     // ],
                      "columns": [
-                         {"title": "#", "data": "no", "class": "center", "width": 50},
-                         {"title": "<?=$term[name]?>", "data": "fullname", "class": "text-left", "width": "*"}
+                        {"title": "#", "data": "no", "class": "center", "width": 50},
+                        {"title": "<?=$term[firstname]?>", "data": "first_name", "class": "text-left", "width": 100},
+                        {"title": "<?=$term[lastname]?>", "data": "last_name", "class": "text-left", "width": 100},
+                        {"title": "<?=$term[email]?>", "data": "email", "class": "text-left", "width": 100},
                      ],
-     
+   
                      "scrollY": false,
                      "scrollX": true,
                      "scrollCollapse": false,
                      "jQueryUI": true,
-     
+   
                      "paging": true,
                      "pagingType": "full_numbers",
                      "pageLength": 10, // default record count per page
-     
+   
                      dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
                      bProcessing: true
-                 });
-                 isShowList = true;
-             }else{
-                 $user_table.DataTable().ajax.reload('', false);
-             }
-     
-         }else{
-             $('.btn-user-list').html('Show User List')
-             $user_table.hide();
-         }
-     }
-     
-     $('#category_id').on('change',function(){
-		var selectedText = $(this).find("option:selected").text();
-		var course_id = $(this).find("option:selected").val();		
-      	if(course_id != '' && selectedText != ''){
-   	   	$.ajax({
-   		   url: $('#base_url').val()+'admin/training/getCourseDetail',
-   		   type: 'POST',
-   		   data: {course_id:course_id},
-   		   success: function (data, status, xhr){
-   			   //console.log(data['course']);
-   			   $('#chapter_date_time').html('');
-   			   /*chapter_date_time*/
-   			   	$('#attend_img_preview').css("background-image", "url("+'../'+data['course']['attend_img']+")");
-   				$('#agenda_img_preview').css("background-image", "url("+'../'+data['course']['agenda_img']+")");
-   				$('#objective_img_preview').css("background-image", "url("+'../'+data['course']['objective_img']+")");
-   			   	$('#course_type').val(data['course']['course_type']);
-   				$('#duration').val(data['course']['duration']);
-   				$('#course_pre_requisite').val($.trim(data['course']['prerequisite']));
-   				//$('#startday').val($.trim(data['course']['start_at']));
-   				$('#duration').val($.trim(data['course']['duration']));
-   				//$('#endday').val($.trim(data['course']['end_at']));
-   				$('#category').val($.trim(data['course']['category_id']));					
-   				$('#title').val($.trim(selectedText));
-   				$('#description').val($.trim(data['course']['about'])); 
-   				$('#subtitle').val(data['course']['subtitle']);
-   				$('#objective').val($.trim(data['course']['learning_objective']));
-   				$('#attend').val($.trim(data['course']['attend']));
-   				$('#agenda').val($.trim(data['course']['agenda']));
-   				$('#objective_img_url').val(data['course']['objective_img']);
-   				$('#attend_img_url').val(data['course']['attend_img']);
-   				$('#agenda_img_url').val(data['course']['agenda_img']);
-   			   	if(data['course']['course_type'] == 0){
-   					$('#address').val(data['course']['address']);
-   					$('#country').val(data['course']['country']);
-   					$('#state').val(data['course']['state']);
-   					$('#city').val(data['course']['city']);						
-   					$('#div-address').show();
-   					$('.div-location').hide();
-   				}else{						
-   					$('#div-address').hide();
-   					$('.div-location').show();
-   				}
-   				get_standard_list($.trim(data['course']['category_id']));
-   				$.each(data['chapter'], function(key, value){
-   				   	if(value['session_dateTime'] != ''){							
-   					 	/*$('#chapter_date_time').append('<div class="form-group row"><label class="col-sm-3 control-label text-lg-right pt-2">Chapter</label><div class="col-sm-9"><input type="text" class="form-control" readonly value="'+value['title']+'" id="chapter_title" name="chapter_title"></div></div><div class="form-group row"><label class="col-sm-3 control-label text-lg-right pt-2">Session</label><div class="col-sm-9"><input type="text" class="form-control" value="'+value['session_dateTime']+'" readonly id="chapter_session" name="chapter_session"></div></div>');*/
-   						$('#agenda').val($('#agenda').val()+"\n\n"+value['session_dateTime']);
-   						return false;
-   					}					   
-   				});
-   		   }
-   	   });
-   	   return false;
-      }   
-     });
-     
-     function updateCourse(id,course_id){
-         $.ajax({
-             url: $('#base_url').val()+'admin/training/getCourseInstructor',
-             type: 'POST',
-             data: {id:id},
-             success: function (data, status, xhr) {
-                 instructors = data;
-                 $instructor_table.DataTable().ajax.reload('', false);
-             }
-         });
-      
-      $.ajax({
-			url: $('#base_url').val()+'admin/training/getCourseByTrainingId',
-			type: 'POST',
-			data: {id:id},
-			success: function (data, status, xhr){
-   		   	//console.log(data);
-   			var myHighlights = jQuery.parseJSON(data['highlights']);
-   			if(myHighlights != null){
-   				$('.addmorehigh').html('');
-				$.each(myHighlights, function (index, value){
-					$('.addmorehigh').append('<div id="deletebtn_'+index+'"><input type="text" value="'+value+'" class="highlights form-control" name="highlights[]"><a href="javascript:void(0)" onclick="deletehighlight('+index+')">Delete</a></div>');
-				});
-   			}
-   			$('#attend_img_preview').css("background-image", "url("+'../'+data['attend_img']+")");
-   			$('#agenda_img_preview').css("background-image", "url("+'../'+data['agenda_img']+")");
-   			$('#objective_img_preview').css("background-image", "url("+'../'+data['objective_img']+")");
-   			$('#id').val(id);
-   			$('#title').val(data['title']);
-   			$('#subtitle').val(data['subtitle']);
-   			//$('#startday').val(data['startday']);
-   			//$('#endday').val(data['endday']);
-   			$('.number_value').val($.trim(data['number']));
-   			$('#category').val(data['category']);
-   			$('#standard_id').val(data['standard_id']);
-   			$('#category_id').val($.trim(data['course_id']));
-   			$('#endday').val(data['endday']);
-   			$('#duration').val(data['duration']);
-   			$('#objective_img_url').val(data['objective_img']);
-   			$('#description').val(data['about']);
-   			$('#attend').val(data['attend']);
-   			$('#attend_img_url').val(data['attend_img']);
-   			$('#agenda').val(data['agenda']);
-   			$('#agenda_img_url').val(data['agenda_img']);
-   			$('#description').val(data['description']);
-   			$('#address').val(data['address']);
-   			$('#country').val(data['country']);
-   			$('#state').val(data['state']);
-   			$('#city').val(data['city']);
-   			$('#objective').val($.trim(data['objective']));
-   			$('#course_pre_requisite').val(data['course_pre_requisite']);
-   			get_standard_list_chk($.trim(data['category']));				
-   			$('.div-startday').hide();
-   			if(data['course_type'] == 0){
-   				$('#div-address').show();
-   				$('.div-location').hide();
-   			}else{						
-   				$('#div-address').hide();
-   				$('.div-location').show();
-   			}
-   			for(var i = 0;i < document.getElementById("standard_id").length;i++){					
-   			   if(document.getElementById("standard_id").options[i].value == standard_id ){
-   				   document.getElementById("standard_id").selectedIndex = i;
-   			   }
-   			}
-   		   	$('.modal-create-confirm').html('Change');
-         		$('.add-course-column').click();
-        	}
-         });
-         return false;
-     }
+               });
+               isShowList = true;
+            }else{
+               $user_table.DataTable().ajax.reload('', false);
+            }
    
-     function updateTime(id, month, day, location, time_id,year,startDays,startTime,country,state,city){
-         $('#change_day').val(day);
-         for(var i = 0;i < document.getElementById("change_month").length;i++){
-             if(document.getElementById("change_month").options[i].value == month ){
-                 document.getElementById("change_month").selectedIndex = i;
-             }
-         }
-		
-		$('.btn-user-list').prop('hidden', false);
-		$('#change_id').val(id);
-		$('#change_year').val(year);
-		$('#time_id').val(time_id);
-		$('#add_course_time_id').val(time_id);
-		$('#change_location').val(location);
-		$('#startdays').val(startDays);
-		$('#starttime').val(startTime);		
-		$('#country').val(country);
-		getStateByCountryId(country,state);
-		getCityByStateId(state,city);
-		$('.modal-change-confirm').html("Change");
-		$('.change-time').click();
-     }
-     
-     $('.add-column').magnificPopup({
-         type: 'inline',
-         preloader: false,
-         modal: true,
-     
-         // When elemened is focused, some mobile browsers in some cases zoom in
-         // It looks not nice, so we disable it:
-         callbacks: {
-             beforeOpen: function() {
-     
-             }
-         }
-     });
-     
-     $('.change-time').magnificPopup({
-         type: 'inline',
-         preloader: false,
-         modal: true,
-     
-         // When elemened is focused, some mobile browsers in some cases zoom in
-         // It looks not nice, so we disable it:
-         callbacks: {
-             beforeOpen: function() {
-     
-             }
-         }
-     });
-     
-     $('.add-course-column').magnificPopup({
-         type: 'inline',
-         preloader: false,
-         modal: true,
-     
-         // When elemened is focused, some mobile browsers in some cases zoom in
-         // It looks not nice, so we disable it:
-         callbacks: {
-             beforeOpen: function() {
-                 $instructor_table.DataTable().ajax.reload('', false);
-             },
-     
-     
-         }
-     });
-     
-     $('.modal-add-confirm').click(function (e) {
-      	e.preventDefault();
-     	$('.div-location').hide();
-        
-         if($('#title_1').val() == '' || $('#duration_1').val() == '') {
-             new PNotify({
-                 title: 'Failed',
-                 text: 'Fill Data.',
-                 type: 'danger'
-             });
-             return;
          }else{
-             $.magnificPopup.close();
-             $('#title').val($('#title_1').val());
-             $('#duration').val($('#duration_1').val());
-             $('.add-course-column').click();     
-         }     
-     
-     });
-     
-     $('.modal-change-delete').click(function (e){
-         e.preventDefault();
-         (new PNotify({
-             title: "<?php echo $term['confirmation']; ?>",
-             text: "<?php echo $term['areyousuretodelete']; ?>",
-             icon: 'fas fa-question',
-             confirm: {
-                 confirm: true
-             },
-             button: {
-                 closer: false,
-                 sticker: false
-             },
-             addclass: 'stack-modal',
-             stack: {
-                 'dir1': 'down',
-                 'dir2': 'right',
-                 'modal':true
-             }
-         })).get().on('pnotify.confirm', function(){
-             $.ajax({
-                 url: $('#base_url').val()+'admin/training/deleteTime',
-                 type: 'POST',
-                 data: {id:$('#time_id').val()},
-                 success: function (data, status, xhr) {
-                     if(status == "success") {
-                         document.location.reload();
-                     } else {
-                         new PNotify({
-                             title: 'Fail!',
-                             text: status,
-                             type: 'danger'
-                         });
-                     }
-                 },
-                 error: function(){
-                     new PNotify({
-                         title: '<?php echo $term['error']; ?>',
-                         text: '<?php echo $term['youcantdeletethisitem']; ?>',
-                         type: 'error'
-
-                     });
-                 }
-             });
+            $('.btn-user-list').html('Show User List')
+            $user_table.hide();
+         }
+   }
+   
+   $('#category_id').on('change',function(){
+      var selectedText = $(this).find("option:selected").text();
+      var course_id = $(this).find("option:selected").val();		
+      if(course_id != '' && selectedText != ''){
+         $.ajax({
+         url: $('#base_url').val()+'admin/training/getCourseDetail',
+         type: 'POST',
+         data: {course_id:course_id},
+         success: function (data, status, xhr){
+            //console.log(data['course']);
+            $('#chapter_date_time').html('');
+            /*chapter_date_time*/
+               $('#attend_img_preview').css("background-image", "url("+'../'+data['course']['attend_img']+")");
+            $('#agenda_img_preview').css("background-image", "url("+'../'+data['course']['agenda_img']+")");
+            $('#objective_img_preview').css("background-image", "url("+'../'+data['course']['objective_img']+")");
+               $('#course_type').val(data['course']['course_type']);
+            $('#duration').val(data['course']['duration']);
+            $('#course_pre_requisite').val($.trim(data['course']['prerequisite']));
+            //$('#startday').val($.trim(data['course']['start_at']));
+            $('#duration').val($.trim(data['course']['duration']));
+            //$('#endday').val($.trim(data['course']['end_at']));
+            $('#category').val($.trim(data['course']['category_id']));					
+            $('#title').val($.trim(selectedText));
+            $('#description').val($.trim(data['course']['about'])); 
+            $('#subtitle').val(data['course']['subtitle']);
+            $('#objective').val($.trim(data['course']['learning_objective']));
+            $('#attend').val($.trim(data['course']['attend']));
+            $('#agenda').val($.trim(data['course']['agenda']));
+            $('#objective_img_url').val(data['course']['objective_img']);
+            $('#attend_img_url').val(data['course']['attend_img']);
+            $('#agenda_img_url').val(data['course']['agenda_img']);
+               if(data['course']['course_type'] == 0){
+               $('#address').val(data['course']['address']);
+               $('#country').val(data['course']['country']);
+               $('#state').val(data['course']['state']);
+               $('#city').val(data['course']['city']);						
+               $('#div-address').show();
+               $('.div-location').hide();
+            }else{						
+               $('#div-address').hide();
+               $('.div-location').show();
+            }
+            get_standard_list($.trim(data['course']['category_id']));
+            $.each(data['chapter'], function(key, value){
+                  if(value['session_dateTime'] != ''){							
+                  /*$('#chapter_date_time').append('<div class="form-group row"><label class="col-sm-3 control-label text-lg-right pt-2">Chapter</label><div class="col-sm-9"><input type="text" class="form-control" readonly value="'+value['title']+'" id="chapter_title" name="chapter_title"></div></div><div class="form-group row"><label class="col-sm-3 control-label text-lg-right pt-2">Session</label><div class="col-sm-9"><input type="text" class="form-control" value="'+value['session_dateTime']+'" readonly id="chapter_session" name="chapter_session"></div></div>');*/
+                  $('#agenda').val($('#agenda').val()+"\n\n"+value['session_dateTime']);
+                  return false;
+               }					   
+            });
+         }
+      });
+      return false;
+   }   
+   });
+   
+   function updateCourse(id,course_id){
+      $.ajax({
+            url: $('#base_url').val()+'admin/training/getCourseInstructor',
+            type: 'POST',
+            data: {id:id},
+            success: function (data, status, xhr) {
+               instructors = data;
+               $instructor_table.DataTable().ajax.reload('', false);
+            }
+      });
+   
+      $.ajax({
+         url: $('#base_url').val()+'admin/training/getCourseByTrainingId',
+         type: 'POST',
+         data: {id:id},
+         success: function (data, status, xhr){
+               //console.log(data);
+            var myHighlights = jQuery.parseJSON(data['highlights']);
+            if(myHighlights != null){
+               $('.addmorehigh').html('');
+            $.each(myHighlights, function (index, value){
+               $('.addmorehigh').append('<div id="deletebtn_'+index+'"><input type="text" value="'+value+'" class="highlights form-control" name="highlights[]"><a href="javascript:void(0)" onclick="deletehighlight('+index+')">Delete</a></div>');
+            });
+            }
+            $('#attend_img_preview').css("background-image", "url("+'../'+data['attend_img']+")");
+            $('#agenda_img_preview').css("background-image", "url("+'../'+data['agenda_img']+")");
+            $('#objective_img_preview').css("background-image", "url("+'../'+data['objective_img']+")");
+            $('#id').val(id);
+            $('#title').val(data['title']);
+            $('#subtitle').val(data['subtitle']);
+            //$('#startday').val(data['startday']);
+            //$('#endday').val(data['endday']);
+            $('.number_value').val($.trim(data['number']));
+            $('#category').val(data['category']);
+            $('#standard_id').val(data['standard_id']);
+            $('#category_id').val($.trim(data['course_id']));
+            $('#endday').val(data['endday']);
+            $('#duration').val(data['duration']);
+            $('#objective_img_url').val(data['objective_img']);
+            $('#description').val(data['about']);
+            $('#attend').val(data['attend']);
+            $('#attend_img_url').val(data['attend_img']);
+            $('#agenda').val(data['agenda']);
+            $('#agenda_img_url').val(data['agenda_img']);
+            $('#description').val(data['description']);
+            $('#address').val(data['address']);
+            $('#country').val(data['country']);
+            $('#state').val(data['state']);
+            $('#city').val(data['city']);
+            $('#objective').val($.trim(data['objective']));
+            $('#course_pre_requisite').val(data['course_pre_requisite']);
+            get_standard_list_chk($.trim(data['category']));				
+            $('.div-startday').hide();
+            if(data['course_type'] == 0){
+               $('#div-address').show();
+               $('.div-location').hide();
+            }else{						
+               $('#div-address').hide();
+               $('.div-location').show();
+            }
+            for(var i = 0;i < document.getElementById("standard_id").length;i++){					
+               if(document.getElementById("standard_id").options[i].value == standard_id ){
+                  document.getElementById("standard_id").selectedIndex = i;
+               }
+            }
+               $('.modal-create-confirm').html('Change');
+               $('.add-course-column').click();
+         }
          });
-     
-     });
-     
-     $('.modal-create-confirm').click(function(e){
-         e.preventDefault();
-     $('.div-location').hide();		
+      return false;
+   }
+   
+   function updateTime(id, month, day, location, time_id,year,startDays,startTime,country,state,city){
+      $('#change_day').val(day);
+      for(var i = 0;i < document.getElementById("change_month").length;i++){
+            if(document.getElementById("change_month").options[i].value == month ){
+               document.getElementById("change_month").selectedIndex = i;
+            }
+      }
+   
+      $('.btn-user-list').prop('hidden', false);
+      $('#change_id').val(id);
+      $('#change_year').val(year);
+      $('#time_id').val(time_id);
+      $('#add_course_time_id').val(time_id);
+      $('#change_location').val(location);
+      $('#startdays').val(startDays);
+      $('#starttime').val(startTime);		
+      $('#country').val(country);
+      getStateByCountryId(country,state);
+      getCityByStateId(state,city);
+      $('.modal-change-confirm').html("Change");
+      $('.change-time').click();
+   }
+   
+   $('.add-column').magnificPopup({
+      type: 'inline',
+      preloader: false,
+      modal: true,
+   
+      // When elemened is focused, some mobile browsers in some cases zoom in
+      // It looks not nice, so we disable it:
+      callbacks: {
+            beforeOpen: function() {
+   
+            }
+      }
+   });
+   
+   $('.change-time').magnificPopup({
+      type: 'inline',
+      preloader: false,
+      modal: true,
+   
+      // When elemened is focused, some mobile browsers in some cases zoom in
+      // It looks not nice, so we disable it:
+      callbacks: {
+            beforeOpen: function() {
+   
+            }
+      }
+   });
+   
+   $('.add-course-column').magnificPopup({
+      type: 'inline',
+      preloader: false,
+      modal: true,
+   
+      // When elemened is focused, some mobile browsers in some cases zoom in
+      // It looks not nice, so we disable it:
+      callbacks: {
+            beforeOpen: function() {
+               $instructor_table.DataTable().ajax.reload('', false);
+            },
+   
+   
+      }
+   });
+   
+   $('.modal-add-confirm').click(function (e) {
+      e.preventDefault();
+      $('.div-location').hide();
+      
+      if($('#title_1').val() == '' || $('#duration_1').val() == '') {
+            new PNotify({
+               title: 'Failed',
+               text: 'Fill Data.',
+               type: 'danger'
+            });
+            return;
+      }else{
+            $.magnificPopup.close();
+            $('#title').val($('#title_1').val());
+            $('#duration').val($('#duration_1').val());
+            $('.add-course-column').click();     
+      }     
+   
+   });
+   
+   $('.modal-change-delete').click(function (e){
+      e.preventDefault();
+      (new PNotify({
+            title: "<?php echo $term['confirmation']; ?>",
+            text: "<?php echo $term['areyousuretodelete']; ?>",
+            icon: 'fas fa-question',
+            confirm: {
+               confirm: true
+            },
+            button: {
+               closer: false,
+               sticker: false
+            },
+            addclass: 'stack-modal',
+            stack: {
+               'dir1': 'down',
+               'dir2': 'right',
+               'modal':true
+            }
+      })).get().on('pnotify.confirm', function(){
+            $.ajax({
+               url: $('#base_url').val()+'admin/training/deleteTime',
+               type: 'POST',
+               data: {id:$('#time_id').val()},
+               success: function (data, status, xhr) {
+                  if(status == "success") {
+                        document.location.reload();
+                  } else {
+                        new PNotify({
+                           title: 'Fail!',
+                           text: status,
+                           type: 'danger'
+                        });
+                  }
+               },
+               error: function(){
+                  new PNotify({
+                        title: '<?php echo $term['error']; ?>',
+                        text: '<?php echo $term['youcantdeletethisitem']; ?>',
+                        type: 'error'
+
+                  });
+               }
+            });
+      });
+   
+   });
+   
+   $('.modal-create-confirm').click(function(e){
+      e.preventDefault();
+   $('.div-location').hide();		
      
    var formData = new FormData($('#new-course-form')[0]);		
    $.magnificPopup.close();		
@@ -1257,7 +1337,7 @@
    	   text: 'Fill Data.',
    	   type: 'danger'
       });
-     }else{
+   }else{
       $.ajax({
    		url: $('#base_url').val()+'admin/training/updateCourse',
    		type: 'POST',
@@ -1285,154 +1365,188 @@
    	   });
      	}
          }
-     });
-     
-     $('.modal-change-confirm').click(function(e){
-         e.preventDefault();
-         var formData = new FormData($('#change-time-form')[0]);
-         if($('#startdays').val() == '' || $('#starttime').val() == '' || $('#country').val() == ''){
-             new PNotify({
-                 title: 'Failed',
-                 text: 'Fill Data.',
-                 type: 'danger'
-             });
-             return;
-         }else{
-             $.magnificPopup.close();
-             if($('.modal-change-confirm').html().indexOf('<?=$term[add]?>') >= 0) {
-     
-                 $.ajax({
-                     url: $('#base_url').val()+'admin/training/add_time',
-                     type: 'POST',
-                     data: formData,
-                     processData:false,
-                     contentType: false,
-                     success: function (data, status, xhr) {						 
-                         document.location.reload();
-                         $.magnificPopup.close();
-                         new PNotify({
-                             title: 'Success',
-                             text: 'Upload',
-                             type: 'success'
-                         });
-                     },
-                     error: function(){
-                         new PNotify({
-                             title: '<?php echo $term['error']; ?>',
-                             text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
-                             type: 'error'
-                         });
-                         $.magnificPopup.close();
-                     }
-                 });
-             } else {
-                 $.ajax({
-                     url: $('#base_url').val()+'admin/training/update_time',
-                     type: 'POST',
-                     data: formData,
-                     processData:false,
-                     contentType: false,
-                     success: function (data, status, xhr) {
-                         document.location.reload();
-                         $.magnificPopup.close();
-                         new PNotify({
-                             title: 'Success',
-                             text: 'Upload',
-                             type: 'success'
-                         });
-                     },
-                     error: function(error){
-                         new PNotify({
-                             title: '<?php echo $term['error']; ?>',
-                             text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
-                             type: 'error'
-                         });
-                         $.magnificPopup.close();
-                     }
-                 });
-             }
-         }
-     
-     
-     });
-     $('.invite_modal').magnificPopup({
-         type: 'inline',
-         preloader: false,
-         callbacks: {
-             beforeOpen: function() {
-             }
-         }
-     });
-     $('.add_modal').magnificPopup({
-         type: 'inline',
-         preloader: false,
-         callbacks: {
-             beforeOpen: function() {
-             }
-         }
-     });
-     var inviteuser_table = $("#datatable_inviteuser");
-     var ajaxData = {"id":0,'course_type':0};
-     inviteuser_table.dataTable({
-         "ordering": true,
-         "info": true,
-         "searching": false,
-     
-         "ajax": {
-             "type": "POST",
-             "async": true,
-             "url": "<?=base_url()?>admin/inviteuser/getInviteUser",
-             "data":function(data) { // add request parameters before submit
-                     $.each(ajaxData, function(key, value) {
-                         data[key] = value;
-                     });
-             },
-             "dataSrc": "data",
-             "dataType": "json",
-             "cache": false
-         },
-     
-         "columns": [
-             {"title": "#", "data": "no", "class": "center", "width": 50},
-             {"title": "<?=$term[firstname]?>", "data": "first_name", "class": "text-left", "width": 100},
-             {"title": "<?=$term[lastname]?>", "data": "last_name", "class": "text-left", "width": 100},
-             {"title": "<?=$term[email]?>", "data": "email", "class": "text-left", "width": 100},
-             {"title": "<?=$term[action]?>", "data": "", "class": "text-left", "width": 200,
-       		mRender: function (data, type, row){   
-   			return '<a class="btn btn-default" href="javascript:resend_inviteuser(this,'+row.id+',\''+row.first_name +'\',\''+row.last_name +'\',\''+row.email +'\')" style="color:#333;margin-right:5px!important"><?=$term[resend]?> </a>'+
-              	'<a class="btn btn-default" href="javascript:delete_inviteuser('+row.id+')" style="color:#333"><?=$term[delete]?> </a>';
-   			}
-             }
-         ],
-         "scrollY": false,
-         "scrollX": true,
-         "scrollCollapse": false,
-         "jQueryUI": true,
-     
-         "paging": true,
-         "pagingType": "full_numbers",
-         "pageLength": 10, // default record count per page
-         dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
-         bProcessing: true
-     });
-     var isShow = false;
-     
-     function inviteuser(){
-		var id = $("#change_id").val();
-		$('#add_modal_form')[0].reset();
-		$('#add_course_id').val(id);
-		$('#add_course_type').val('0');
-		$('#add_course_time_id').val($('#time_id').val());
-		
-		$('#sel_id').val(id);
-		//$("#datatable_user").show();
-		ajaxData={  'id':id, 'course_type':0 };
-		inviteuser_table.DataTable().ajax.reload();
-		$('.invite_modal').click();
-     }
-     
+      });
+      
+      $('.modal-change-confirm').click(function(e){
+            e.preventDefault();
+            var formData = new FormData($('#change-time-form')[0]);
+            if($('#startdays').val() == '' || $('#starttime').val() == '' || $('#country').val() == ''){
+               new PNotify({
+                  title: 'Failed',
+                  text: 'Fill Data.',
+                  type: 'danger'
+               });
+               return;
+            }else{
+               $.magnificPopup.close();
+               if($('.modal-change-confirm').html().indexOf('<?=$term[add]?>') >= 0) {
+      
+                  $.ajax({
+                        url: $('#base_url').val()+'admin/training/add_time',
+                        type: 'POST',
+                        data: formData,
+                        processData:false,
+                        contentType: false,
+                        success: function (data, status, xhr) {						 
+                           document.location.reload();
+                           $.magnificPopup.close();
+                           new PNotify({
+                              title: 'Success',
+                              text: 'Upload',
+                              type: 'success'
+                           });
+                        },
+                        error: function(){
+                           new PNotify({
+                              title: '<?php echo $term['error']; ?>',
+                              text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
+                              type: 'error'
+                           });
+                           $.magnificPopup.close();
+                        }
+                  });
+               } else {
+                  $.ajax({
+                        url: $('#base_url').val()+'admin/training/update_time',
+                        type: 'POST',
+                        data: formData,
+                        processData:false,
+                        contentType: false,
+                        success: function (data, status, xhr) {
+                           document.location.reload();
+                           $.magnificPopup.close();
+                           new PNotify({
+                              title: 'Success',
+                              text: 'Upload',
+                              type: 'success'
+                           });
+                        },
+                        error: function(error){
+                           new PNotify({
+                              title: '<?php echo $term['error']; ?>',
+                              text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
+                              type: 'error'
+                           });
+                           $.magnificPopup.close();
+                        }
+                  });
+               }
+            }
+      
+      
+      });
+      $('.invite_modal').magnificPopup({
+            type: 'inline',
+            preloader: false,
+            callbacks: {
+               beforeOpen: function() {
+               }
+            }
+      });
+      $('.add_modal').magnificPopup({
+            type: 'inline',
+            preloader: false,
+            callbacks: {
+               beforeOpen: function() {
+               }
+            }
+      });
+      $('.add_exist_modal').magnificPopup({
+            type: 'inline',
+            preloader: false,
+            callbacks: {
+               beforeOpen: function() {
+               }
+            }
+      });
+      var inviteuser_table = $("#datatable_inviteuser");
+      var ajaxData = {"id":0,'course_type':0};
+      inviteuser_table.dataTable({
+            "ordering": true,
+            "info": true,
+            "searching": false,
+      
+            "ajax": {
+               "type": "POST",
+               "async": true,
+               "url": "<?=base_url()?>admin/inviteuser/getInviteUser",
+               "data":function(data) { // add request parameters before submit
+                        $.each(ajaxData, function(key, value) {
+                           data[key] = value;
+                        });
+               },
+               "dataSrc": "data",
+               "dataType": "json",
+               "cache": false
+            },
+      
+            "columns": [
+               {"title": "#", "data": "no", "class": "center", "width": 50},
+               {"title": "<?=$term[firstname]?>", "data": "first_name", "class": "text-left", "width": 100},
+               {"title": "<?=$term[lastname]?>", "data": "last_name", "class": "text-left", "width": 100},
+               {"title": "<?=$term[email]?>", "data": "email", "class": "text-left", "width": 100},
+               {"title": "<?=$term[action]?>", "data": "", "class": "text-left", "width": 200,
+               mRender: function (data, type, row){   
+               return '<a class="btn btn-default" href="javascript:resend_inviteuser(this,'+row.id+',\''+row.first_name +'\',\''+row.last_name +'\',\''+row.email +'\')" style="color:#333;margin-right:5px!important"><?=$term[resend]?> </a>'+
+                  '<a class="btn btn-default" href="javascript:delete_inviteuser('+row.id+')" style="color:#333"><?=$term[delete]?> </a>';
+               }
+               }
+            ],
+            "scrollY": false,
+            "scrollX": true,
+            "scrollCollapse": false,
+            "jQueryUI": true,
+      
+            "paging": true,
+            "pagingType": "full_numbers",
+            "pageLength": 10, // default record count per page
+            dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
+            bProcessing: true
+      });
+      var isShow = false;
+      
+      function inviteuser(){
+         var id = $("#change_id").val();
+         $('#add_modal_form')[0].reset();
+         $('#add_course_id').val(id);
+         $('#add_course_type').val('0');
+         $('#add_course_time_id').val($('#time_id').val());
 
-     function add_invite_user(){
+         // $('#add_invite_form')[0].reset();
+         // $('#add_invite_form name=[add_course_id]').val(id);
+         // $('#add_invite_form name=[add_course_type]').val('0');
+         // $('#add_invite_form name=[add_course_time_id]').val($('#time_id').val());
+
+         $('#sel_id').val(id);
+         //$("#datatable_user").show();
+         ajaxData={  'id':id, 'course_type':0 };
+         inviteuser_table.DataTable().ajax.reload();
+         $('.invite_modal').click();
+      }
+     
+      function add_exist_user(id){
+         var formData = new FormData($('#add_modal_form')[0]);
+         formData.append('user_id',id);
+         $.ajax({
+            url: '<?=base_url()?>admin/inviteuser/addExistUser/training/1',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data, status, xhr) {
+               // $.magnificPopup.close();
+               new PNotify({
+                     title: 'Success',
+                     text: 'Add',
+                     type: 'success'
+               });
+               //document.location.reload();
+            },
+            error: function(){   
+            }
+         });
+      }
+      function add_invite_user(){
          var formData = new FormData($('#add_modal_form')[0]);
          if($('#first_name').val() == '' || $('#last_name').val() == '' || $('#send_email').val() == '') {
              new PNotify({
@@ -1442,25 +1556,25 @@
              });
              return;
          }else{
-             $.magnificPopup.close();
-             $.ajax({
-                 url: '<?=base_url()?>admin/inviteuser/createInviteuser/training/1',
-                 type: 'POST',
-                 data: formData,
-                 processData: false,
-                 contentType: false,
-                 success: function (data, status, xhr) {
-                     $.magnificPopup.close();
-                     new PNotify({
-                         title: 'Success',
-                         text: 'Add',
-                         type: 'success'
-                     });
-                     //document.location.reload();
-                 },
-                 error: function(){   
-                 }
-             });
+            $.magnificPopup.close();
+            $.ajax({
+               url: '<?=base_url()?>admin/inviteuser/createInviteuser/training/1',
+               type: 'POST',
+               data: formData,
+               processData: false,
+               contentType: false,
+               success: function (data, status, xhr) {
+                  $.magnificPopup.close();
+                  new PNotify({
+                        title: 'Success',
+                        text: 'Add',
+                        type: 'success'
+                  });
+                  //document.location.reload();
+               },
+               error: function(){   
+               }
+            });
          }
      }
      
@@ -1531,7 +1645,7 @@
  	function get_standard_list_chk(id){
       	//$('#standard_id').empty();
    	var standard_array = <?php echo isset($course_data['standard_id'])?$course_data['standard_id']:0;?>;
-  	$.ajax({
+   	$.ajax({
    	   url: '<?php echo base_url() ?>admin/category/getStandardList',
    	   type: 'POST',
    	   data: {category_id:id},
@@ -1549,51 +1663,51 @@
    		   $('#standard_id').append(html);
    	   },
       });
-     }
+   }
      
-     function get_standard_list(id){
-      	$('#standard_id').empty();
-   	//var standard_id = <?php echo isset($course_data['standard_id'])?$course_data['standard_id']:0;?>;
-      	$.ajax({
-   	   url: '<?php echo base_url() ?>admin/category/getStandardList',
-   	   type: 'POST',
-   	   data: {category_id:id},
-   	   dataType : 'json',
-   	   success: function (data, status, xhr){
-   		   var standard = data.data;
-   		   html = '';
-   		   for(var i = 0; i < standard.length; i++){
-   				html += '<option value="'+standard[i].id+'">'+standard[i].name+'</option>';
-   		   };
-   		   $('#standard_id').append(html);
-   	   },
+   function get_standard_list(id){
+      $('#standard_id').empty();
+   //var standard_id = <?php echo isset($course_data['standard_id'])?$course_data['standard_id']:0;?>;
+      $.ajax({
+         url: '<?php echo base_url() ?>admin/category/getStandardList',
+         type: 'POST',
+         data: {category_id:id},
+         dataType : 'json',
+         success: function (data, status, xhr){
+            var standard = data.data;
+            html = '';
+            for(var i = 0; i < standard.length; i++){
+               html += '<option value="'+standard[i].id+'">'+standard[i].name+'</option>';
+            };
+            $('#standard_id').append(html);
+         },
       });
-     }
+   }
 	 
-	 function getStateByCountryId(CountryID,state=0){
-       if(CountryID != ''){
-           var appendrow = '';
-           $('#state').html('<option value="">Select State</option>');
-		   $('#city').html('<option value="">Select City</option>');
-           $.ajax({
-               url: "<?=base_url()?>admin/coursecreation/getStateById",
-               type: 'POST',
-               dataType: 'JSON',
-               data: {'country': CountryID},
-               success: function(data){
-                   appendrow += '<option value="">Select State</option>';
-                   $.each(data, function(index, value){
-					   	selected = '';
-					   	if(state == value.id){
-							selected = 'selected';
-						}
-                       	appendrow += '<option '+selected+' value="'+value.id+'">'+value.name+'</option>';
-                   });
-                   $('#state').html(appendrow);
-   				}
-           });
-       }
-   	}
+   function getStateByCountryId(CountryID,state=0){
+      if(CountryID != ''){
+         var appendrow = '';
+         $('#state').html('<option value="">Select State</option>');
+      $('#city').html('<option value="">Select City</option>');
+         $.ajax({
+            url: "<?=base_url()?>admin/coursecreation/getStateById",
+            type: 'POST',
+            dataType: 'JSON',
+            data: {'country': CountryID},
+            success: function(data){
+                  appendrow += '<option value="">Select State</option>';
+                  $.each(data, function(index, value){
+                  selected = '';
+                  if(state == value.id){
+                  selected = 'selected';
+               }
+                     appendrow += '<option '+selected+' value="'+value.id+'">'+value.name+'</option>';
+                  });
+                  $('#state').html(appendrow);
+            }
+         });
+      }
+   }
 	
 	function getCityByStateId(StateID,city=0){
        if(StateID != ''){
