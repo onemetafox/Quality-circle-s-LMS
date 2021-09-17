@@ -249,6 +249,7 @@
                 <footer class="card-footer">
                     <div class="row">
                         <div class="col-md-12 text-right">
+                            <a href="#add_exist_modal" class="btn btn-default add_exist_modal" style="color:#333"><i class="fas fa-plus"></i> <?=$term[inviteuser]?> </a>
                             <a href="#add_modal" class="btn btn-default add_modal" style="color:#333"><i class="fas fa-plus"></i> <?=$term[add]?> </a>
                             <button class="btn btn-default modal-change-dismiss"><?=$term[cancel]?></button>
                         </div>
@@ -298,6 +299,28 @@
             </section>
         </form>
     </div>
+    <div id="add_exist_modal" class="modal-block modal-block-primary mfp-hide" style="min-width: 900px;">
+      <form id="add_exist_form" action="" method="POST" novalidate="novalidate">
+         <input type="hidden" name="course_id" class="form-control" >
+         <input type="hidden" name="course_type" value="0" class="form-control" >
+         <input type="hidden" name="add_ilt_time_id" value="" class="form-control" >
+         <section class="card">
+            <header class="card-header">
+               <h2 class="card-title"><?=$term[add]?> <?=$term[inviteuser]?></h2>
+            </header>
+            <div class="card-body">
+               <table class="table table-responsive-md table-striped table-bordered mb-0" id="datatable_addexistuser"></table>
+            </div>
+            <footer class="card-footer">
+               <div class="row">
+                  <div class="col-md-12 text-right">
+                     <button class="btn btn-default modal-change-dismiss"><?=$term[cancel]?></button>
+                  </div>
+               </div>
+            </footer>
+         </section>
+      </form>
+   </div>
     <!-- end: page -->
 </section>
 
@@ -357,6 +380,7 @@
 	});
 
     var $table = $('#datatable');
+    var $add_exist_table = $('#datatable_addexistuser');
 
     jQuery(document).ready(function() {
         $('[data-plugin-ios-switch]').each(function () {
@@ -374,6 +398,51 @@
             var $this = $( this );
 
             $this.themePluginMaskedInput();
+        });
+        $add_exist_table.dataTable({
+            "ordering": true,
+            "info": true,
+            "searching": true,
+
+            "ajax": {
+                "type": "POST",
+                "async": true,
+                "url":$('#base_url').val() +"admin/user/view",
+                "data": {
+                    'user_type': 'Learner',
+                    'active': 1
+                },
+                "dataSrc": "data",
+                "dataType": "json",
+                "cache":    false,
+            },
+            "columnDefs": [{
+                "targets": [4],
+                "createdCell": function (td, cellData, rowData, row, col) {
+                    $(td).html('<a href="javascript:add_exist_user('+rowData['id']+')" class="add-row"><i class="fas fa-plus"></i></i></a>');
+                }
+            }],
+            "columns": [
+                { "title": "#", "data": "no", "class": "center" },
+                { "title": "<?=$term[firstname]?>", "data": "first_name", "class": "text-left"},
+                { "title": "<?=$term[lastname]?>", "data": "last_name", "class": "text-left"},
+                { "title": "<?=$term[email]?>", "data": "email", "class": "text-left"},
+                { "title": "<?=$term[action]?>", "data": "id", "class": "text-center"},
+            ],
+            "lengthMenu": [
+                [5, 10, 20, 50, 150, -1],
+                [5, 10, 20, 50, 150, "All"] // change per page values here
+            ],
+            "scrollY": false,
+            "scrollX": true,
+            "scrollCollapse": false,
+            "jQueryUI": true,
+
+            "paging": true,
+            "pagingType": "full_numbers",
+            "pageLength": 50, // default record count per page
+            dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
+            bProcessing: true,
         });
     });
 
@@ -550,6 +619,14 @@
             }
         }
     });
+    $('.add_exist_modal').magnificPopup({
+            type: 'inline',
+            preloader: false,
+            callbacks: {
+               beforeOpen: function() {
+               }
+            }
+      });
     var inviteuser_table = $("#datatable_inviteuser");
     var ajaxData = {"id":0,'course_type':1,};
     inviteuser_table.dataTable({
@@ -612,7 +689,29 @@
         inviteuser_table.DataTable().ajax.reload();
         $('.invite_modal').click();
     }
-
+    function add_exist_user(id){
+        var formData = new FormData($('#add_modal_form')[0]);
+        formData.append('user_id',id);
+        $.ajax({
+        // url: '<?=base_url()?>admin/inviteuser/addExistUser/training/1',
+        url: '<?=base_url()?>admin/inviteuser/addExistUser/classes/1',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data, status, xhr) {
+            // $.magnificPopup.close();
+            new PNotify({
+                    title: 'Success',
+                    text: 'Add',
+                    type: 'success'
+            });
+            //document.location.reload();
+        },
+        error: function(){   
+        }
+        });
+    }
     function add_invite_user(){
         var formData = new FormData($('#add_modal_form')[0]);
         if ($('#first_name').val() == '' || $('#last_name').val() == '' || $('#send_email').val() == '') {

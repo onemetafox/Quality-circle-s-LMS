@@ -74,9 +74,12 @@
 						?>
 							<div class="col-sm-12">
 								<?php foreach($course_list as $course):
+								print_r($course);
 									if($course['date_str'] != ''){
 									$currentdays = time();
-									$startDateI = $course['date_str'];
+									// $startDateI = $course['date_str'];
+									$startDateI = $course['start_day'];
+
 									$durationI = $course['duration'] - 1;
 									$enddateI = strtotime('+'.$durationI.' days', $course['date_str']);
 

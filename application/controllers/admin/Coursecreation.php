@@ -806,6 +806,7 @@ class Coursecreation extends BaseController{
     }
 	
 	public function addIltCourse($iltCourse){
+        
 		$trainingDetail = $this->Training_model->getListByCourseId($iltCourse['id']);		
 		if(empty($trainingDetail)){
 			$startday = NULL; 
@@ -874,8 +875,11 @@ class Coursecreation extends BaseController{
 			$course_time['month'] = date('m',$timestamp);
 			$course_time['sday'] = date('d',$timestamp);
 			$course_time['location'] = $course_data['location'];
-			$this->Training_model->insert_time($course_time);
-		}
+		
+            $this->Training_model->insert_time($course_time);
+		}else{
+            
+        }
 	}
 
 	public function addLive($liveCourse){
