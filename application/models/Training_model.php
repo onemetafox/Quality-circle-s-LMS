@@ -346,7 +346,7 @@ class Training_model extends AbstractModel
     function get_course_time_id($course_id)
     {   
         $query = "Select * from training_course_time WHERE training_course_id = ".$course_id." ORDER BY reg_date DESC";
-
+        
         $result = $this->db->query($query);
         $res=$result->first_row();
 

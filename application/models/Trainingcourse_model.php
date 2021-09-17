@@ -35,6 +35,7 @@ class Trainingcourse_model extends CI_Model
 
         $this->db->select("*,DATE_FORMAT(reg_date,'%b %d,%Y') as freg_date");
         $training_course = $this->db->get($this->table)->result_array();
+        
         $this->db->select('b.*,a.year,a.month,a.sday,a.id as training_course_time_id, a.training_course_id');
         $this->db->join($this->table.' b' ,'b.id = a.training_course_id','left');
         $this->db->where('a.year >=',date("Y"));
@@ -46,6 +47,8 @@ class Trainingcourse_model extends CI_Model
         $this->db->group_end();
         $this->db->order_by('a.`year`, a.`month`,a.`sday`', 'asc');
         $training_course_time = $this->db->get('training_course_time a')->result_array();
+        // print_r($this->db->last_query());
+        // die;
         $result = array();
         foreach ($training_course_time as $key1 => $value1) {
             foreach ($training_course as $key2 => $value2) {

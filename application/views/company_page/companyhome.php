@@ -133,13 +133,14 @@
                                 <?php echo $course['course_self_time']; ?>
                                 </li>
                                 <?php
+									
 									$showDuration = $course['duration'] > 1 ? $course['duration']. " Days" : $course['duration']." Day";
 									$duration = $course['duration'] - 1;
-									$cdate = $course['start_day'].' '.$course['start_time'];									
-									$enddate = strtotime('+'.$duration .' days', $course['course_start_date_time']);
+									$cdate = $course['start_day'].' '.explode(" ",$course['start_time'])[0];	
+									$enddate = strtotime('+'.$duration .' days', strtotime($cdate));
 								?>
                                 <li>Duration: <?php echo $showDuration; ?> </li>
-                                <li> Start Date: <?php echo date("M d, Y h:i:sa", $course['course_start_date_time']);?></li>
+                                <li> Start Date: <?php echo date("M d, Y h:i:sa", strtotime($cdate));?></li>
                                 <?php if($duration > 0){ ?>
                                     <li> End Date: <?php echo date("M d, Y h:i:sa", $enddate);?></li>
                                 <?php }else{ ?>
