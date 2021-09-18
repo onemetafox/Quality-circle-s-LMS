@@ -27,32 +27,31 @@ class Training extends BaseController {
         $this->load->library('Sidebar');
         $side_params = array('selected_menu_id' => '5');
         $this->global[sidebar] = $this->sidebar->generate($side_params, $this->role);
-        if($this->isLearner()){
-            $training_data = array();
-            if($location != null && $location != 'all') {
-				$res_id_list = $this->Training_model->getListByCompanyIdLocation($this->session->get_userdata() ['company_id'], $location);
-			}else if($course != null && $course != 'all') {
-				//$res_id_list = $this->Training_model->getListByCompanyIdCourse($course);
-				$res_id_list = $this->Training_model->select($course);				
-				if(is_object($res_id_list)){								
-					$objarray = json_decode(json_encode($res_id_list), true);
-					$res_id_list = [$objarray];	
-				}
-			}else{
-				$res_id_list = $this->Training_model->getListByCompanyId($this->session->get_userdata()['company_id']);
-			}
-            $res_pay_list = $this->Training_model->getPayCourseList($this->session->get_userdata()['user_id']);
-						
-            $training_data['course_list'] = $res_id_list;
-			$training_data['course_filter_list'] = $this->Training_model->getListByCompanyId($this->session->get_userdata()['company_id']);
-            $training_data['pay_course_list'] = $res_pay_list;
-            $training_data['location'] = $this->Training_model->getLocation();
-            $training_data['location_name'] = $location;
-			$training_data['course_name'] = $course;
-            $this->loadViews("learner/training/training_list", $this->global, $training_data, NULL);
+        // if($this->isLearner()){
+        $training_data = array();
+        if($location != null && $location != 'all') {
+            $res_id_list = $this->Training_model->getListByCompanyIdLocation($this->session->get_userdata() ['company_id'], $location);
+        }else if($course != null && $course != 'all') {
+            //$res_id_list = $this->Training_model->getListByCompanyIdCourse($course);
+            $res_id_list = $this->Training_model->select($course);				
+            if(is_object($res_id_list)){								
+                $objarray = json_decode(json_encode($res_id_list), true);
+                $res_id_list = [$objarray];	
+            }
         }else{
-            $this->loadViews("access", $this->global, NULL, NULL);
+            $res_id_list = $this->Training_model->getListByCompanyId($this->session->get_userdata()['company_id']);
         }
+        $res_pay_list = $this->Training_model->getPayCourseList($this->session->get_userdata()['user_id']);
+        $training_data['course_list'] = $res_id_list;
+        $training_data['course_filter_list'] = $this->Training_model->getListByCompanyId($this->session->get_userdata()['company_id']);
+        $training_data['pay_course_list'] = $res_pay_list;
+        $training_data['location'] = $this->Training_model->getLocation();
+        $training_data['location_name'] = $location;
+        $training_data['course_name'] = $course;
+        $this->loadViews("learner/training/training_list", $this->global, $training_data, NULL);
+        // }else{
+        //     $this->loadViews("access", $this->global, NULL, NULL);
+        // }
     }
 
     public function booknow(){
