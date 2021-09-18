@@ -43,7 +43,7 @@ class Home extends BaseController
             $course_time = $this->Training_model->get_course_time_id($item['id']);
             
             $item['course_time_id'] = $course_time->id; 
-			$item['course_start_date_time'] = $course_time->date_str; 
+			$item['date_str'] = $course_time->date_str; 
 			$item['start_day'] = $course_time->start_day; 
 			$item['start_time'] = $course_time->start_time; 
             $toReturn['trainCourses'][$i] = $item;

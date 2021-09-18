@@ -110,7 +110,7 @@
         <h2 class="titleH2 text-center">Instructor Led Training</h2>
         <div class="row">
 		<?php if(!empty($trainCourses)){ ?>
-            <?php foreach ($trainCourses as $course){ ?>
+            <?php foreach ($trainCourses as $course){ if($course['date_str'] != '' || $course['date_str'] != 0){ ?>
                 <div class="col-md-4 col-sm-6 col-xs-6 col-full">
                     <div class="courseBox">
                         <div class="courseImg">
@@ -136,11 +136,11 @@
 									
 									$showDuration = $course['duration'] > 1 ? $course['duration']. " Days" : $course['duration']." Day";
 									$duration = $course['duration'] - 1;
-									$cdate = $course['start_day'].' '.explode(" ",$course['start_time'])[0];	
-									$enddate = strtotime('+'.$duration .' days', strtotime($cdate));
+									$cdate = $course['date_str'];	
+									$enddate = strtotime('+'.$duration .' days', $cdate);
 								?>
                                 <li>Duration: <?php echo $showDuration; ?> </li>
-                                <li> Start Date: <?php echo date("M d, Y h:i:sa", strtotime($cdate));?></li>
+                                <li> Start Date: <?php echo date("M d, Y h:i:sa", $cdate);?></li>
                                 <?php if($duration > 0){ ?>
                                     <li> End Date: <?php echo date("M d, Y h:i:sa", $enddate);?></li>
                                 <?php }else{ ?>
@@ -155,7 +155,7 @@
                         </div><!--courseInfo-->
                     </div><!--courseBox-->
                 </div><!--col-4-->
-		<?php } } else{ ?>
+		<?php } } } else{ ?>
 				<div class="col-md-4 col-sm-6 col-xs-6 col-full">
                     <div class="courseBox">
                         <div class="courseImg">

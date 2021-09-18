@@ -74,19 +74,13 @@
 						?>
 							<div class="col-sm-12">
 								<?php foreach($course_list as $course):
-								print_r($course);
-									if($course['date_str'] != ''){
+									if($course['date_str'] != '' || $course['date_str'] != 0){
 									$currentdays = time();
-									// $startDateI = $course['date_str'];
-									$startDateI = $course['start_day'];
+									$startDateI = $course['date_str'];
 
 									$durationI = $course['duration'] - 1;
-									$enddateI = strtotime('+'.$durationI.' days', $course['date_str']);
-
-									if($currentdays >= $startDateI && $currentdays <= $enddateI){
-								
-									//$currentdays = strtotime(date('Y-n-d'));
-									//if($currentdays <= $course['date_str']){																			
+									$enddateI = strtotime('+'.$duration .' days', $startDateI);
+									if($currentdays <= $enddateI){
 								?> 
 									<div class="whitePanel">
 										<div class="row">
