@@ -344,7 +344,9 @@ class Demand extends BaseController{
                     }
                 }
             }
-            $page_data['asses_data'] = $asses_data;			
+            $page_data['asses_data'] = $asses_data;	
+            $user = $this->session->userdata();
+           $this->global['user_data'] = $user;
             $this->loadViews("admin/demand/view_assess", $this->global, $page_data, NULL);
         }else{
             $this->loadViews("access", $this->global, NULL , NULL); 

@@ -65,7 +65,7 @@
                             <td class="actions">
                                 <a href="#" class="hidden on-editing save-row"><i class="fas fa-save"></i></a>
                                 <a href="#" class="hidden on-editing cancel-row"><i class="fas fa-times"></i></a>
-                                <a href="#" class="on-default edit-row"><i class="fas fa-pencil-alt"></i></a>
+                                <a href="#" class="<?=$user_data['user_type'] == "Instructor"?'':'hidden'?> on-default edit-row"><i class="fas fa-pencil-alt"></i></a>
                                 <a href="#" class="hidden on-default remove-row"><i class="far fa-trash-alt"></i></a>
                             </td>
                         </tr>
@@ -87,7 +87,7 @@
                             <td class="actions">
                                 <a href="#" class="hidden on-editing save-row"><i class="fas fa-save"></i></a>
                                 <a href="#" class="hidden on-editing cancel-row"><i class="fas fa-times"></i></a>
-                                <a href="#" class="on-default edit-row"><i class="fas fa-pencil-alt"></i></a>
+                                <a href="#" class="<?=$user_data['user_type'] == "Instructor"?'':'hidden'?> on-default edit-row"><i class="fas fa-pencil-alt"></i></a>
                                 <a href="#" class="hidden on-default remove-row"><i class="far fa-trash-alt"></i></a>
                             </td>
                         </tr>
@@ -110,7 +110,7 @@
                             <td class="actions">
                                 <a href="#" class="hidden on-editing save-row"><i class="fas fa-save"></i></a>
                                 <a href="#" class="hidden on-editing cancel-row"><i class="fas fa-times"></i></a>
-                                <a href="#" class="on-default edit-row"><i class="fas fa-pencil-alt"></i></a>
+                                <a href="#" class="<?=$user_data['user_type'] == "Instructor"?'':'hidden'?> on-default edit-row"><i class="fas fa-pencil-alt"></i></a>
                                 <a href="#" class="hidden on-default remove-row"><i class="far fa-trash-alt"></i></a>
                             </td>
                         </tr>
@@ -132,7 +132,7 @@
                             <td class="actions">
                                 <a href="#" class="hidden on-editing save-row"><i class="fas fa-save"></i></a>
                                 <a href="#" class="hidden on-editing cancel-row"><i class="fas fa-times"></i></a>
-                                <a href="#" class="on-default edit-row"><i class="fas fa-pencil-alt"></i></a>
+                                <a href="#" class="<?=$user_data['user_type'] == "Instructor"?'':'hidden'?> on-default edit-row"><i class="fas fa-pencil-alt"></i></a>
                                 <a href="#" class="hidden on-default remove-row"><i class="far fa-trash-alt"></i></a>
                             </td>
                         </tr>
@@ -154,7 +154,7 @@
                             <td class="actions">
                                 <a href="#" class="hidden on-editing save-row"><i class="fas fa-save"></i></a>
                                 <a href="#" class="hidden on-editing cancel-row"><i class="fas fa-times"></i></a>
-                                <a href="#" class="on-default edit-row"><i class="fas fa-pencil-alt"></i></a>
+                                <a href="#" class="<?=$user_data['user_type'] == "Instructor"?'':'hidden'?> on-default edit-row"><i class="fas fa-pencil-alt"></i></a>
                                 <a href="#" class="hidden on-default remove-row"><i class="far fa-trash-alt"></i></a>
                             </td>
                         </tr>
@@ -176,7 +176,7 @@
                             <td class="actions">
                                 <a href="#" class="hidden on-editing save-row"><i class="fas fa-save"></i></a>
                                 <a href="#" class="hidden on-editing cancel-row"><i class="fas fa-times"></i></a>
-                                <a href="#" class="on-default edit-row"><i class="fas fa-pencil-alt"></i></a>
+                                <a href="#" class="<?=$user_data['user_type'] == "Instructor"?'':'hidden'?> on-default edit-row"><i class="fas fa-pencil-alt"></i></a>
                                 <a href="#" class="hidden on-default remove-row"><i class="far fa-trash-alt"></i></a>
                             </td>
                         </tr>
