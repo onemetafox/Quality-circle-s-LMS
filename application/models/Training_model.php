@@ -297,7 +297,7 @@ class Training_model extends AbstractModel
     function upcoming_three_course($id){
         $this->db->select("a.*,training_course.title,training_course.id as training_course_id,training_course.description,training_course.duration,training_course.course_id,a.month mreg_date, a.sday dreg_date")->from("training_course_time a");
         $this->db->join("training_course", 'a.training_course_id = training_course.id', 'left');
-            $this->db->where('training_course.id', $id);
+            $this->db->where('training_course.id <> '. $id);
             $this->db->group_start();
             $this->db->where('year >=',date("Y"));
             $this->db->where('month >',date("m"));
@@ -311,7 +311,7 @@ class Training_model extends AbstractModel
         
         $this->db->order_by('a.`year`, a.`month`,a.`sday`', $direction);
        
-            $this->db->limit('3');
+        $this->db->limit('3');
 
         $query = $this->db->get();
         $result = $query->result();
