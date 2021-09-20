@@ -59,6 +59,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-1"></div>
+                                            <div class="col-sm-10">
+                                                <table class="table table-responsive-md table-striped table-bordered mb-0" id="datatable_user">
+                                                </table>
+                                            </div>
+                                        </div>
 
                                     </div>
                                     <footer class="card-footer">
@@ -67,6 +74,7 @@
                                                 <a class="btn btn-default" href="javascript:inviteuser()"><?=$term[inviteuser] ?></a>
                                                 <button class="btn btn-default modal-change-delete"><?=$term[delete]?></button>
                                                 <button class="btn btn-primary modal-change-confirm"><?php $id==0?print $term[add]:print $term[update]?></button>
+                                                <a href="javascript:showPayUser()" class="btn btn-primary btn-user-list" hidden>Show User List</a>
                                                 <button class="btn btn-default modal-change-dismiss"><?=$term[cancel]?></button>
                                             </div>
                                         </div>
@@ -325,6 +333,72 @@
 </section>
 
 <script>
+    var isShowList = false;
+    var $user_table = $('#datatable_user');
+    function showPayUser() {
+        var id = $("#time_id").val();
+        if($('.btn-user-list').html() == 'Show User List'){
+            $('.btn-user-list').html('Hide User List')
+            $user_table.show();
+            var ajaxData = {"id":id,'course_type':1};
+            if(!isShowList) {
+                $user_table.dataTable({     
+                    "ordering": true,
+                    "info": true,
+                    "searching": false,
+
+                    "ajax": {
+                    "type": "POST",
+                    "async": true,
+                    //  "url": "<?=base_url()?>admin/training/getPayUser",
+                    "url": "<?=base_url()?>admin/inviteuser/getInviteUserVirtual",
+                    //  "data": {
+                    //      'id': $('#change_id').val(),
+                    //      'tid': $('#time_id').val()
+                    //  },
+                    "data":function(data) { // add request parameters before submit
+                        $.each(ajaxData, function(key, value) {
+                            data[key] = value;
+                        });
+                    },
+                    "dataSrc": "data",
+                    "dataType": "json",
+                    "cache": false
+                    },
+
+                    // "columns": [
+                    //     {"title": "#", "data": "no", "class": "center", "width": 50},
+                    //     {"title": "<?=$term[name]?>", "data": "fullname", "class": "text-left", "width": "*"}
+                    // ],
+                    "columns": [
+                    {"title": "#", "data": "no", "class": "center", "width": 50},
+                    {"title": "<?=$term[firstname]?>", "data": "first_name", "class": "text-left", "width": 100},
+                    {"title": "<?=$term[lastname]?>", "data": "last_name", "class": "text-left", "width": 100},
+                    {"title": "<?=$term[email]?>", "data": "email", "class": "text-left", "width": 100},
+                    ],
+
+                    "scrollY": false,
+                    "scrollX": true,
+                    "scrollCollapse": false,
+                    "jQueryUI": true,
+
+                    "paging": true,
+                    "pagingType": "full_numbers",
+                    "pageLength": 10, // default record count per page
+
+                    dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
+                    bProcessing: true
+                });
+                isShowList = true;
+            }else{
+                $user_table.DataTable().ajax.reload('', false);
+            }
+
+        }else{
+            $('.btn-user-list').html('Show User List')
+            $user_table.hide();
+        }
+   }
 	function deleteLiveClass(deleteId){
         (new PNotify({
             title: "<?php echo $term['confirmation']; ?>",
@@ -462,6 +536,7 @@
     }
 
     function updateTime(id, date,hour, time_id) {
+        $('.btn-user-list').prop('hidden', false);
 		$('#add_course_id').val(id);
         $('#startday').val(date);
         $('#starttime').val(hour);
@@ -628,7 +703,7 @@
             }
       });
     var inviteuser_table = $("#datatable_inviteuser");
-    var ajaxData = {"id":0,'course_type':1,};
+    var ajaxData = {"id":0,'course_type':1};
     inviteuser_table.dataTable({
         "ordering": true,
         "info": true,
@@ -639,9 +714,9 @@
             "async": true,
             "url": "<?=base_url()?>admin/inviteuser/getInviteUserVirtual",
             "data":function(data) { // add request parameters before submit
-                    $.each(ajaxData, function(key, value) {
-                        data[key] = value;
-                    });
+                $.each(ajaxData, function(key, value) {
+                    data[key] = value;
+                });
             },
             "dataSrc": "data",
             "dataType": "json",
