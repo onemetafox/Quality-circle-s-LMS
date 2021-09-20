@@ -63,8 +63,7 @@
         </footer>
   		
         <div id="replaceHtml">
-          <!-- <table class="table table-responsive-md table-striped table-hover mb-0 dataTable no-footer" id="datatable_examlist" role="grid" style="width: 1563px;"> -->
-          <table class="table table-responsive-md table-striped table-hover mb-0 dataTable no-footer" id="datatable_examlist" role="grid">
+          <table class="table table-responsive-md table-striped table-hover mb-0 dataTable no-footer" id="datatable_examlist" style="width:100%" role="grid">
 
             <thead style="background-color:#1D2127; color:#FFF">
               <td><b>S.No.</b></td>

@@ -376,7 +376,7 @@
 			"jQueryUI": true,							
 			"paging": true,
 			"pagingType": "full_numbers",			
-	        "pageLength": 	5, // default record count per page
+	        "pageLength": 	1000, // default record count per page
 			dom: '<"row"<"col-lg-6"><"col-lg-6">><"table-responsive"t>',
 			bProcessing: true,			
 		    "order": [

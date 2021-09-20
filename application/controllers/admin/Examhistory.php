@@ -372,6 +372,8 @@ class Examhistory extends BaseController{
 					$myData["data"][$key]['count'] = $total_entollments;				
 				}
 			}
+            $user = $this->session->get_userdata();
+			$myData['user'] = $user;
 			$this->load->view("admin/exam/enrolled_courses_search", $myData, NULL, NULL);	
 		}	
 	}
