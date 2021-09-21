@@ -89,6 +89,7 @@ class Live extends BaseController {
 						->select('id')
 						->get('payment_history')
 						->row_array();
+               
             }
             $training_data['course_list'] = $res_course_list;
 			$training_data['coursesfilter'] = $this->Live_model->getListByCompanyId($this->session->get_userdata() ['company_id']);
