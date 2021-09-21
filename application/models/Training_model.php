@@ -177,11 +177,50 @@ class Training_model extends AbstractModel
 		
         return $res;
     }
+    function getFreeCourses($filter){
+        $user = $this->session->userdata();
+        $query = "SELECT * FROM invite_user a
+            LEFT JOIN `user` d ON d.email = a.email
+            LEFT JOIN training_course b ON b.id = a.course_id
+            LEFT JOIN training_course_time e ON e.training_course_id = b.id
+            LEFT JOIN course c ON c.id = b.course_id
+            WHERE d.email = '".$user['email']."' AND b.create_id = '".$user['company_id']."' AND c.pay_type = 0 ";
+        if($filter['location']){
+            $query = $query . " And e.location = '".$filter['location']."'";
+        }
+        if($filter['course']){
+            $query = $query . " And b.id = '".$filter['course']."'";
+        }
+        
+        $result = $this->db->query($query);
+        $res=$result->result_array();
+
+        return $res;
+    }
+
+    function getPaidCourses($filter){
+        $user = $this->session->userdata();
+        $query = "SELECT * FROM training_course a
+        LEFT JOIN course b ON a.course_id = b.id
+        JOIN training_course_time c ON a.id = c.training_course_id
+        WHERE b.pay_type = 1 AND a.create_id = '".$user['company_id']."'";
+        if($filter['location']){
+            $query = $query . " And c.location = '".$filter['location']."'";
+        }
+        if($filter['course']){
+            $query = $query . " And a.id = '".$filter['course']."'";
+        }
+
+        $result = $this->db->query($query);
+        $res=$result->result_array();
+
+        return $res;
+    }
 
     function getListByCompanyIdLocation($company_id, $location){
 
         $query = "Select * from training_course as c left join training_course_time as ct on ct.training_course_id = c.id WHERE c.create_id=$company_id and ct.location='$location'";
-
+        
         $result = $this->db->query($query);
         $res=$result->result_array();
 

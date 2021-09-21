@@ -277,7 +277,10 @@ class Sidebar {
             array( 'id'=>'4', 'level'=>1, 'label'=>$this->term['ondemand'], 'href'=>'learner/demand', 'icon'=>'fa-file-image',
                 'submenu'=>array()
             ),
-            array( 'id'=>'5', 'level'=>1, 'label'=>$this->term['instructorledtraining'], 'href'=>'learner/training', 'icon'=>'fa-building',
+            // array( 'id'=>'5', 'level'=>1, 'label'=>$this->term['instructorledtraining'], 'href'=>'learner/training', 'icon'=>'fa-building',
+            //     'submenu'=>array()
+            // ),
+            array( 'id'=>'5', 'level'=>1, 'label'=>$this->term['instructorledtraining'], 'href'=>'learner/training/getTraining', 'icon'=>'fa-building',
                 'submenu'=>array()
             ),
             array('id'=>'6', 'level'=>1, 'label'=>'Virtual Instructor Led Training', 'href'=>'learner/live', 'icon'=>'fa-file-image',

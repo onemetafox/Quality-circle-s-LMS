@@ -54,6 +54,29 @@ class Training extends BaseController {
         // }
     }
 
+    public function getTraining(){		
+        $location = $this->input->get('location');
+		$course = $this->input->get('course');
+        $this->load->library('Sidebar');
+        $side_params = array('selected_menu_id' => '5');
+        $this->global[sidebar] = $this->sidebar->generate($side_params, $this->role);
+        // if($this->isLearner()){
+        $training_data = array();
+        
+        $res_free_courses = $this->Training_model->getFreeCourses($this->input->get());
+        $res_paid_courses = $this->Training_model->getPaidCourses($this->input->get());
+        $training_data['free_course_list'] = $res_free_courses;
+        $training_data['course_filter_list'] = $this->Training_model->getListByCompanyId($this->session->get_userdata()['company_id']);
+        $training_data['paid_course_list'] = $res_paid_courses;
+        $training_data['location'] = $this->Training_model->getLocation();
+        $training_data['location_name'] = $location;
+        $training_data['course_name'] = $course;
+        $this->loadViews("learner/training/training_list", $this->global, $training_data, NULL);
+        // }else{
+        //     $this->loadViews("access", $this->global, NULL, NULL);
+        // }
+    }
+
     public function booknow(){
         $course_time_id = $this->input->post('course_time_id');
 		$course_id = $this->input->post('course_id');
