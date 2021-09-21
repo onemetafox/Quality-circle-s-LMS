@@ -42,14 +42,14 @@
 							<div class="sortPanel">
 								<div class="sortSet"> 
                                     <select id="location" name="location" style="border: 1px solid #ccc !important;padding: 8px 10px !important;">
-                                        <option value="all"> Select Location </option>
+                                        <option value=""> Select Location </option>
                                         <?php foreach($location as $item){ ?>
                                             <option value="<?php echo $item['location']; ?>" <?php $location_name==$item['location']?print 'selected':print ''; ?>> <?php echo $item['location']; ?></option>
                                         <?php } ?>
                                     </select>
                                     
                                     <select id="course_id" name="course_id" style="border: 1px solid #ccc !important;padding: 8px 10px !important;">
-                                        <option value="all"> Select Course </option>
+                                        <option value=""> Select Course </option>
                                         <?php foreach($course_filter_list as $courseitem){
 											
 											if($courseitem['date_str'] != ''){
@@ -58,7 +58,7 @@
 											$duration = $courseitem['duration'] - 1;
 											$enddate = strtotime('+'.$duration.' days', $courseitem['date_str']);
 		
-											if($currentday >= $startDate && $currentday <= $enddate){
+											if($currentday <= $enddate){
 											
 										?>
                                             <option value="<?php echo $courseitem['id']; ?>" <?php $course_name==$courseitem['id']?print 'selected':print ''; ?>> <?php echo ucfirst($courseitem['title']); ?></option>
@@ -280,9 +280,9 @@
         });
     }
     $("#location").on('change',(function () {
-        window.location = $('#base_url').val()+ 'learner/getTraining?location='+$("#location").val();
+        window.location = $('#base_url').val()+ 'learner/training?location='+$("#location").val();
     }));
 	$("#course_id").on('change',(function () {
-        window.location = $('#base_url').val()+ 'learner/getTraining?course='+$("#course_id").val();
+        window.location = $('#base_url').val()+ 'learner/training?course='+$("#course_id").val();
     }));
 </script>

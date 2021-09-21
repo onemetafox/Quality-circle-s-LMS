@@ -398,7 +398,6 @@ class Training_model extends AbstractModel
             $query = 'Select * from training_course as c left join training_course_time as ct on ct.training_course_id = c.id where c.create_id='.$company_id;
         else
             $query = 'Select * from training_course as c left join training_course_time as ct on ct.training_course_id = c.id';
-
         $result = $this->db->query($query);
         $res=$result->result_array();
 

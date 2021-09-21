@@ -18,7 +18,8 @@ class Training extends BaseController {
      * This function used to load the default screen of trainingassign menu
      */
     public function index(){
-        $this->showTraining();
+        // $this->showTraining();
+        $this->getTraining();
     }
 
     public function showTraining(){		
