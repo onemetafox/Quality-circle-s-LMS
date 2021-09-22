@@ -62,15 +62,14 @@
 						</div><!--col-12-->
 					</div><!--row-->					
 					<div class="row">
-						<?php if($course_list){?>
+						<?php if($free_course_list || $paid_course_list){?>
 							<div class="col-sm-12">
-								<?php foreach($course_list as $course){									
-									if($course['start_at'] != ''){
+								<?php foreach($free_course_list as $free_course){									
+									if($free_course['start_at'] != ''){
 									$currentdays = time();
-									$startDateI = strtotime($course['start_at']);
-									$durationI = $course['duration'] - 1;
-									$enddateI = strtotime('+'.$durationI.' days', strtotime($course['start_at']));
-
+									$startDateI = strtotime($free_course['start_at']);
+									$durationI = $free_course['duration'] - 1;
+									$enddateI = strtotime('+'.$durationI.' days', strtotime($free_course['start_at']));
 									if($currentdays <= $enddateI){										
 								?>
 									<div class="whitePanel">
@@ -78,10 +77,10 @@
 											<div class="col-lg-4 col-md-5 col-sm-6">
 												<div class="leftImgBox">
 													<?php
-                                                        $imgName = end(explode('/', $course['img_path']));
+                                                        $imgName = end(explode('/', $free_course['img_path']));
                                                         if($imgName != '' && file_exists(getcwd().'/assets/uploads/company/course/'.$imgName)){								
                                                     ?>
-                                                        <img src="<?php echo base_url($course['img_path']); ?>" class="rounded img-fluid" alt="learnerlearner">
+                                                        <img src="<?php echo base_url($free_course['img_path']); ?>" class="rounded img-fluid" alt="learnerlearner">
                                                    	<?php }else{ ?>
                                                         <img src="<?php echo base_url().'assets/uploads/vilt-default.png'; ?>" class="rounded img-fluid" alt="learnerlearner">                                		
                                                    	<?php } ?>
@@ -89,18 +88,18 @@
 											</div><!--col-4-->
                                             
                                             <?php
-												$showDuration = $course['duration'] > 1 ? $course['duration']. " Days" : $course['duration']." Day";												
-												$duration = $course['duration'] - 1;
-												$enddate = strtotime($course['start_at'] .'+'.$duration .'days');
+												$showDuration = $free_course['duration'] > 1 ? $free_course['duration']. " Days" : $free_course['duration']." Day";												
+												$duration = $free_course['duration'] - 1;
+												$enddate = strtotime($free_course['start_at'] .'+'.$duration .'days');
 											?>
 											<div class="col-lg-8 col-md-7 col-sm-6 courseInfo">
-												<h5><?php echo ucfirst($course['title']);?>, <?php echo $showDuration; ?></h5>
+												<h5><?php echo ucfirst($free_course['title']);?>, <?php echo $showDuration; ?></h5>
 												<ul class="courseUl">
 													<li>
-														<a href="#"><?=$course['instructor_email']?>(instructor email address)</a>
+														<a href="#"><?=$free_course['instructor_email']?>(instructor email address)</a>
 													</li>
 													<li style="color:#090;">
-													 Start Date: <?php echo date("M d, Y h:i:sa", strtotime($course['start_at']));?>
+													 Start Date: <?php echo date("M d, Y h:i:sa", strtotime($free_course['start_at']));?>
 													</li>
                                                     <li style="color:#090;">
                                                     <?php if($duration > 0){ ?>
@@ -110,14 +109,14 @@
                                                     <?php } ?>
 													</li>                                                    
                                                     <li>
-													<?=nl2br(substr($course['about'],0,300));?>...
+													<?=nl2br(substr($free_course['about'],0,300));?>...
                                                     </li>                                                    
 												</ul>  
-		     	                               	<?php if(is_null($course['is_pay']['id'])){ ?>
-                                                	<a href="javascript:enroll(<?php echo $course['course_id'] ?>,<?php echo $course['pay_type'] ?>,<?=$course['id']?>)" class="btnBlue">Enroll Now</a>
+		     	                               	<?php if(is_null($free_course['is_pay']['id'])){ ?>
+                                                	<a href="javascript:enroll(<?php echo $free_course['course_id'] ?>,<?php echo $free_course['pay_type'] ?>,<?=$free_course['id']?>)" class="btnBlue">Enroll Now</a>
 												<?php /*
 														$activev = 'No';
-														$start_datev = strtotime($course['start_at']);
+														$start_datev = strtotime($free_course['start_at']);
 														$currentDatevilt = time();
 														$enddatev = $enddate;
 														if($currentDatevilt >= $start_datev && $currentDatevilt <= $enddatev){
@@ -125,19 +124,98 @@
 														}
 														if($activev == 'Yes'){
 													?>
-												    <a href="javascript:enroll(<?php echo $course['course_id'] ?>,<?php echo $course['pay_type'] ?>,<?=$course['id']?>)" class="btnBlue">Enroll Now</a>
+												    <a href="javascript:enroll(<?php echo $free_course['course_id'] ?>,<?php echo $free_course['pay_type'] ?>,<?=$free_course['id']?>)" class="btnBlue">Enroll Now</a>
                                                     <?php }else{ ?>
                                                     	<?php $startdatetime = date('d, M Y h:i:sa',$start_datev); ?>
                                                     	<a href="javascript:void(0)" onclick='swal({title: "Please wait until course is started! Course start date time is: <?php echo $startdatetime ;?>"});' class="btnBlue">Enroll Now</a>
                                                     <?php } */ ?>
 		                                        <?php }else {?>
-                                                     <a href="javascript:view_course(<?php echo $course['course_id'] ?>,<?=$course['id']?>)" class="btnBlue">View Course</a>
-                                                     <a href="<?=base_url()?>company/gosmartacademy.com/classes/view/<?=$course['id']?>" class="btnBlue">Start VILT Room</a>
+                                                     <a href="javascript:view_course(<?php echo $free_course['course_id'] ?>,<?=$free_course['id']?>)" class="btnBlue">View Course</a>
+                                                     <a href="<?=base_url()?>company/gosmartacademy.com/classes/view/<?=$free_course['id']?>" class="btnBlue">Start VILT Room</a>
 		                                        <?php }  ?>
-												<?php /*?><a href = "javascript:enroll(<?php echo $course['course_id'] ?>,<?php echo $course['pay_type'] ?>)" class="btnBlue">Enroll Now</a><?php */?>
+												<?php /*?><a href = "javascript:enroll(<?php echo $free_course['course_id'] ?>,<?php echo $free_course['pay_type'] ?>)" class="btnBlue">Enroll Now</a><?php */?>
                                                 
-                                                <?php /*?><a href="<?=base_url()?>learner/live/viewclass/<?=$course['virtual_course_id']?>" class="btnBlue">Course Details</a><?php */?>
-                                                <a href="<?=base_url()?>learner/live/viewclass/<?=$course['id']?>" class="btnBlue">Course Details</a>
+                                                <?php /*?><a href="<?=base_url()?>learner/live/viewclass/<?=$free_course['virtual_course_id']?>" class="btnBlue">Course Details</a><?php */?>
+                                                <a href="<?=base_url()?>learner/live/viewclass/<?=$free_course['id']?>" class="btnBlue">Course Details</a>
+											</div><!--col-8-->
+										</div><!--row-->
+									</div><!--whitePanel-->
+								<?php } } } ?>
+
+								<?php foreach($paid_course_list as $paid_course){									
+									if($paid_course['start_at'] != ''){
+									$currentdays = time();
+									$startDateI = strtotime($paid_course['start_at']);
+									$durationI = $paid_course['duration'] - 1;
+									$enddateI = strtotime('+'.$durationI.' days', strtotime($paid_course['start_at']));
+
+									if($currentdays <= $enddateI){										
+								?>
+									<div class="whitePanel">
+										<div class="row">
+											<div class="col-lg-4 col-md-5 col-sm-6">
+												<div class="leftImgBox">
+													<?php
+                                                        $imgName = end(explode('/', $paid_course['img_path']));
+                                                        if($imgName != '' && file_exists(getcwd().'/assets/uploads/company/course/'.$imgName)){								
+                                                    ?>
+                                                        <img src="<?php echo base_url($paid_course['img_path']); ?>" class="rounded img-fluid" alt="learnerlearner">
+                                                   	<?php }else{ ?>
+                                                        <img src="<?php echo base_url().'assets/uploads/vilt-default.png'; ?>" class="rounded img-fluid" alt="learnerlearner">                                		
+                                                   	<?php } ?>
+												</div><!--leftImgBox-->
+											</div><!--col-4-->
+                                            
+                                            <?php
+												$showDuration = $paid_course['duration'] > 1 ? $paid_course['duration']. " Days" : $paid_course['duration']." Day";												
+												$duration = $paid_course['duration'] - 1;
+												$enddate = strtotime($paid_course['start_at'] .'+'.$duration .'days');
+											?>
+											<div class="col-lg-8 col-md-7 col-sm-6 courseInfo">
+												<h5><?php echo ucfirst($paid_course['title']);?>, <?php echo $showDuration; ?></h5>
+												<ul class="courseUl">
+													<li>
+														<a href="#"><?=$paid_course['instructor_email']?>(instructor email address)</a>
+													</li>
+													<li style="color:#090;">
+													 Start Date: <?php echo date("M d, Y h:i:sa", strtotime($paid_course['start_at']));?>
+													</li>
+                                                    <li style="color:#090;">
+                                                    <?php if($duration > 0){ ?>
+                                                        End Date: <?php echo date("M d, Y h:i:sa", $enddate);?>
+                                                    <?php }else{ ?>
+                                                        End Date: <?php echo date("M d, Y", $enddate).' 11:59:59pm';?>
+                                                    <?php } ?>
+													</li>                                                    
+                                                    <li>
+													<?=nl2br(substr($paid_course['about'],0,300));?>...
+                                                    </li>                                                    
+												</ul>  
+		     	                               	<?php if(is_null($paid_course['is_pay']['id'])){ ?>
+                                                	<a href="javascript:enroll(<?php echo $paid_course['course_id'] ?>,<?php echo $paid_course['pay_type'] ?>,<?=$paid_course['id']?>)" class="btnBlue">Enroll Now</a>
+												<?php /*
+														$activev = 'No';
+														$start_datev = strtotime($paid_course['start_at']);
+														$currentDatevilt = time();
+														$enddatev = $enddate;
+														if($currentDatevilt >= $start_datev && $currentDatevilt <= $enddatev){
+															$activev = 'Yes';
+														}
+														if($activev == 'Yes'){
+													?>
+												    <a href="javascript:enroll(<?php echo $paid_course['course_id'] ?>,<?php echo $paid_course['pay_type'] ?>,<?=$paid_course['id']?>)" class="btnBlue">Enroll Now</a>
+                                                    <?php }else{ ?>
+                                                    	<?php $startdatetime = date('d, M Y h:i:sa',$start_datev); ?>
+                                                    	<a href="javascript:void(0)" onclick='swal({title: "Please wait until course is started! Course start date time is: <?php echo $startdatetime ;?>"});' class="btnBlue">Enroll Now</a>
+                                                    <?php } */ ?>
+		                                        <?php }else {?>
+                                                     <a href="javascript:view_course(<?php echo $paid_course['course_id'] ?>,<?=$paid_course['id']?>)" class="btnBlue">View Course</a>
+                                                     <a href="<?=base_url()?>company/gosmartacademy.com/classes/view/<?=$paid_course['id']?>" class="btnBlue">Start VILT Room</a>
+		                                        <?php }  ?>
+												<?php /*?><a href = "javascript:enroll(<?php echo $paid_course['course_id'] ?>,<?php echo $paid_course['pay_type'] ?>)" class="btnBlue">Enroll Now</a><?php */?>
+                                                
+                                                <?php /*?><a href="<?=base_url()?>learner/live/viewclass/<?=$paid_course['virtual_course_id']?>" class="btnBlue">Course Details</a><?php */?>
+                                                <a href="<?=base_url()?>learner/live/viewclass/<?=$paid_course['id']?>" class="btnBlue">Course Details</a>
 											</div><!--col-8-->
 										</div><!--row-->
 									</div><!--whitePanel-->

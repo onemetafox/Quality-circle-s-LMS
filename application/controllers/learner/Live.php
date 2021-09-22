@@ -24,7 +24,8 @@ class Live extends BaseController {
      * This function used to load the default screen of trainingassign menu
      */
     public function index(){
-        $this->showLive();
+        // $this->showLive();
+        $this->getCourseList();
     }
 
     public function viewclass($id){
@@ -56,7 +57,22 @@ class Live extends BaseController {
             $this->loadViews("access", $this->global, NULL, NULL);
         }
     }
-    
+    public function getCourseList(){
+        $this->load->library('Sidebar');
+		$course = $this->input->get('course');
+        $side_params = array('selected_menu_id' => '6');
+        $this->global[sidebar] = $this->sidebar->generate($side_params, $this->role);
+        if($this->isLearner()){
+            $training = array();
+			$training['free_course_list'] = $this->Live_model->getFreeCourses($this->input->get());
+            $training['paid_course_list'] = $this->Live_model->getPaidCourses($this->input->get());
+			$training['coursesfilter'] = $this->Live_model->getListByCompanyId($this->session->get_userdata() ['company_id']);
+			$this->global['courses_id'] = $course;							
+            $this->loadViews("learner/live/live_list", $this->global, $training, NULL);
+        }else{
+            $this->loadViews("access", $this->global, NULL, NULL);
+        }
+    }
     public function showLive(){
         $this->load->library('Sidebar');
 		$course = $this->input->get('course');

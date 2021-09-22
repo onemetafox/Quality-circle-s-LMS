@@ -184,7 +184,7 @@ class Training_model extends AbstractModel
             LEFT JOIN training_course b ON b.id = a.course_id
             LEFT JOIN training_course_time e ON e.training_course_id = b.id
             LEFT JOIN course c ON c.id = b.course_id
-            WHERE d.email = '".$user['email']."' AND b.create_id = '".$user['company_id']."' AND c.pay_type = 0 ";
+            WHERE a.course_type = 0 AND d.email = '".$user['email']."' AND b.create_id = '".$user['company_id']."' AND c.pay_type = 0 ";
         if($filter['location']){
             $query = $query . " And e.location = '".$filter['location']."'";
         }
