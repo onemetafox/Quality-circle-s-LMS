@@ -112,30 +112,15 @@
 													<?=nl2br(substr($free_course['about'],0,300));?>...
                                                     </li>                                                    
 												</ul>  
-		     	                               	<?php if(is_null($free_course['is_pay']['id'])){ ?>
-                                                	<a href="javascript:enroll(<?php echo $free_course['course_id'] ?>,<?php echo $free_course['pay_type'] ?>,<?=$free_course['id']?>)" class="btnBlue">Enroll Now</a>
-												<?php /*
-														$activev = 'No';
-														$start_datev = strtotime($free_course['start_at']);
-														$currentDatevilt = time();
-														$enddatev = $enddate;
-														if($currentDatevilt >= $start_datev && $currentDatevilt <= $enddatev){
-															$activev = 'Yes';
-														}
-														if($activev == 'Yes'){
-													?>
-												    <a href="javascript:enroll(<?php echo $free_course['course_id'] ?>,<?php echo $free_course['pay_type'] ?>,<?=$free_course['id']?>)" class="btnBlue">Enroll Now</a>
-                                                    <?php }else{ ?>
-                                                    	<?php $startdatetime = date('d, M Y h:i:sa',$start_datev); ?>
-                                                    	<a href="javascript:void(0)" onclick='swal({title: "Please wait until course is started! Course start date time is: <?php echo $startdatetime ;?>"});' class="btnBlue">Enroll Now</a>
-                                                    <?php } */ ?>
-		                                        <?php }else {?>
-                                                     <a href="javascript:view_course(<?php echo $free_course['course_id'] ?>,<?=$free_course['id']?>)" class="btnBlue">View Course</a>
-                                                     <a href="<?=base_url()?>company/gosmartacademy.com/classes/view/<?=$free_course['id']?>" class="btnBlue">Start VILT Room</a>
-		                                        <?php }  ?>
-												<?php /*?><a href = "javascript:enroll(<?php echo $free_course['course_id'] ?>,<?php echo $free_course['pay_type'] ?>)" class="btnBlue">Enroll Now</a><?php */?>
-                                                
-                                                <?php /*?><a href="<?=base_url()?>learner/live/viewclass/<?=$free_course['virtual_course_id']?>" class="btnBlue">Course Details</a><?php */?>
+												<?php if($free_course['enroll_id'] == ''){ ?>
+                                                <a class="btnBlue" href="javascript:booknow(<?=$free_course['course_id']?>,<?=$free_course['course_time_id']?>)" >
+                                                    <?=$term[enrollnow]?>
+                                                </a>
+                                                <?php }else { ?>
+													<a class="btnBlue" href="javascript:viewcourse(<?=$free_course['course_id']?>)" >
+														<?=$term[viewcourse]?>
+													</a>
+												<?php } ?>
                                                 <a href="<?=base_url()?>learner/live/viewclass/<?=$free_course['id']?>" class="btnBlue">Course Details</a>
 											</div><!--col-8-->
 										</div><!--row-->
@@ -191,27 +176,15 @@
 													<?=nl2br(substr($paid_course['about'],0,300));?>...
                                                     </li>                                                    
 												</ul>  
-		     	                               	<?php if(is_null($paid_course['is_pay']['id'])){ ?>
-                                                	<a href="javascript:enroll(<?php echo $paid_course['course_id'] ?>,<?php echo $paid_course['pay_type'] ?>,<?=$paid_course['id']?>)" class="btnBlue">Enroll Now</a>
-												<?php /*
-														$activev = 'No';
-														$start_datev = strtotime($paid_course['start_at']);
-														$currentDatevilt = time();
-														$enddatev = $enddate;
-														if($currentDatevilt >= $start_datev && $currentDatevilt <= $enddatev){
-															$activev = 'Yes';
-														}
-														if($activev == 'Yes'){
-													?>
-												    <a href="javascript:enroll(<?php echo $paid_course['course_id'] ?>,<?php echo $paid_course['pay_type'] ?>,<?=$paid_course['id']?>)" class="btnBlue">Enroll Now</a>
-                                                    <?php }else{ ?>
-                                                    	<?php $startdatetime = date('d, M Y h:i:sa',$start_datev); ?>
-                                                    	<a href="javascript:void(0)" onclick='swal({title: "Please wait until course is started! Course start date time is: <?php echo $startdatetime ;?>"});' class="btnBlue">Enroll Now</a>
-                                                    <?php } */ ?>
-		                                        <?php }else {?>
-                                                     <a href="javascript:view_course(<?php echo $paid_course['course_id'] ?>,<?=$paid_course['id']?>)" class="btnBlue">View Course</a>
-                                                     <a href="<?=base_url()?>company/gosmartacademy.com/classes/view/<?=$paid_course['id']?>" class="btnBlue">Start VILT Room</a>
-		                                        <?php }  ?>
+												<?php if($free_course['enroll_id'] == ''){ ?>
+                                                <a class="btnBlue" href="javascript:booknow(<?=$free_course['course_id']?>,<?=$free_course['course_time_id']?>)" >
+                                                    <?=$term[enrollnow]?>
+                                                </a>
+                                                <?php }else { ?>
+													<a class="btnBlue" href="javascript:viewcourse(<?=$free_course['course_id']?>)" >
+														<?=$term[viewcourse]?>
+													</a>
+												<?php } ?>
 												<?php /*?><a href = "javascript:enroll(<?php echo $paid_course['course_id'] ?>,<?php echo $paid_course['pay_type'] ?>)" class="btnBlue">Enroll Now</a><?php */?>
                                                 
                                                 <?php /*?><a href="<?=base_url()?>learner/live/viewclass/<?=$paid_course['virtual_course_id']?>" class="btnBlue">Course Details</a><?php */?>
@@ -245,7 +218,28 @@
 	$(function(){
         $("ul.pagination a").addClass('page-link');
     });
-	
+	function booknow(course_id,id) {
+        $.ajax({
+            url: $('#base_url').val()+'learner/live/booknow',
+            type: 'POST',
+            data: {'course_time_id': id, 'course_id': course_id},
+            success: function (data, status, xhr) { 
+                new PNotify({
+                    title: 'Success',
+                    text: 'Success Book Now',
+                    type: 'success'
+                });
+                location.reload();
+            },
+            error: function(data){
+                new PNotify({
+                    title: '<?php echo $term['error']; ?>',
+                    text: '<?php echo $term['alreadybooking']; ?>',
+                    type: 'warning'
+                });
+            }
+        });
+    }
 	function enroll(id,pay_type,time_id){
 		if(!isLogin){
 			showLogin();

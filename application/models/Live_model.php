@@ -27,20 +27,36 @@ class Live_model extends CI_Model
         $this->course_user_table = 'virtual_course_user';
         $this->user_table = 'user';
     }
+    function insertTrainingUser($data)
+    {
+        $data['reg_date'] = date("Y-m-d H:i:s");
+        $this->db->insert($this->course_user_table, $data);
+        $id = $this->db->insert_id();
+        return $id;
+    }
+    function isBooking($course_id = 0, $user_id = 0){
+        //$sql = "select * from training_course_user where training_course_time_id = $course_id and user_id = $user_id";
+        $sql = "select * from virtual_course_user where virtual_course_time_id = '".$course_id."' and user_id = $user_id"; 
+        return count($this->db->query($sql)->result_array());
+    }
     function getFreeCourses($filter){
         $user = $this->session->userdata();
-        $query = "SELECT b.*, e.*  FROM invite_user a
+        $query = "SELECT c.id course_id, e.id course_time_id, f.id enroll_id, b.title, e.start_at, c.duration
+            FROM invite_user a
             LEFT JOIN `user` d ON d.email = a.email
             LEFT JOIN virtual_course b ON b.id = a.course_id
             LEFT JOIN virtual_course_time e ON e.virtual_course_id = b.id
             LEFT JOIN course c ON c.id = b.course_id
+            LEFT JOIN enrollments f ON f.user_id = d.id AND f.course_id = c.id AND f.course_time_id = e.id
             WHERE a.course_type = 1 AND d.email = '".$user['email']."' AND b.create_id = '".$user['company_id']."' AND c.pay_type = 0 ";
+            
         if($filter['location']){
             $query = $query . " And e.location = '".$filter['location']."'";
         }
         if($filter['course']){
             $query = $query . " And b.id = '".$filter['course']."'";
         }
+        
         $result = $this->db->query($query);
         $res=$result->result_array();
 

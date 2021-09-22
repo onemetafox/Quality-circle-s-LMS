@@ -115,6 +115,35 @@ class Live extends BaseController {
             $this->loadViews("access", $this->global, NULL, NULL);
         }
     }
+    public function booknow(){
+        $course_time_id = $this->input->post('course_time_id');
+		$course_id = $this->input->post('course_id');
+        $data['virtual_course_time_id'] = $course_time_id;
+        $data['user_id'] = $this->session->get_userdata() ['user_id'];
+        
+		$course = $this->Course_model->select($course_id);
+		$enrolledUsersCount = $this->Enrollments_model->getEnrolledList($this->session->get_userdata()['user_id'],$course_id,$course_time_id);		
+		if($enrolledUsersCount == 0){
+			$enrolled_data = array(
+				'user_id' => $this->session->get_userdata()['user_id'],
+				'course_id' => $course_id,			
+				'course_time_id' => $course_time_id,					
+				'course_title' => $course->title,
+				'user_name' => $this->session->get_userdata()['user_name'],
+				'user_email' => $this->session->get_userdata()['email'],
+				'create_date' => date("Y-m-d H:i:s"),					
+			);	
+			$this->Enrollments_model->insertEnrolledUser($enrolled_data);
+		}
+		if($this->Live_model->isBooking($course_time_id, $this->session->get_userdata()['user_id']) > 0){
+            return false;
+        }	
+        $id = $this->Live_model->insertTrainingUser($data);
+        echo $id;
+        exit;
+        //return $this->Training_model->insertTrainingUser($data);
+        
+    }
     
     public function pay_course($course_id = NULL,$time_id = NULL){
         $course_id = $this->input->post('course_id');
