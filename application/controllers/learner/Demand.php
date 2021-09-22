@@ -32,64 +32,65 @@ class Demand extends BaseController {
      */
     public function index(){
         if($this->isLearner()){            
-			$filter['course_type'] = 2;
-			$course_id = $this->input->get('course');
-			if($course_id != null && $course_id != 0){
-                $filter['id'] = $course_id;
-            }
-			$category_id = $this->input->get('category');
-            if($category_id != null && $category_id != 0){
-                $filter['category_id'] = $category_id;
-            }
-            $this->global[term] = $this->term;
-            $this->global['company'] = $this->company;
-            /*pagenation*/
-            if($this->session->userdata('isLoggedIn') != NULL){
-                $filter['user_id'] = $this->session->userdata('user_id');
-            }
-            $displayLength = 3;
-            $search = $this->input->get('sSearch');
-            $start = $this->input->get('per_page');
-            if(!isset($start)){
-                $start = 0;
-            }
-            $filter['start'] = $start;
-            $filter['limit'] = $displayLength;
-            $filter['search'] = $search;
-            $this->global['courses'] = $this->Course_model->all($filter);
-            unset($filter['start']);
-            unset($filter['limit']);
-            $this->global['iTotalRecords'] = $this->Course_model->count($filter);
-            $this->global['sEcho'] = $search;
-            $this->load->library('pagination');
-            $config['base_url'] = site_url('learner/demand/?sSearch=' . $search);
-            $config['page_query_string'] = TRUE;
-            $config['total_rows'] = $this->global['iTotalRecords'];
-            $config['per_page'] = $displayLength;
-            $config['num_links'] = 2;
-            $config['uri_segment'] = 3;
-            $config['full_tag_open'] = '<ul class="pagination">';
-            $config['full_tag_close'] = '</ul>';
-            $config['first_link'] = '&laquo;';
-            $config['first_tag_open'] = '<li class="page-item">';
-            $config['first_tag_close'] = '</li>';
-            $config['last_link'] = '&raquo;';
-            $config['last_tag_open'] = '<li class="page-item">';
-            $config['last_tag_close'] = '</li>';
-            $config['next_link'] = '&rarr;';
-            $config['next_tag_open'] = '<li class="page-item">';
-            $config['next_tag_close'] = '</li>';
-            $config['prev_link'] = '&larr;';
-            $config['prev_tag_open'] = '<li class="page-item">';
-            $config['prev_tag_close'] = '</li>';
-            $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link">';
-            $config['cur_tag_close'] = '</a></li>';
-            $config['num_tag_open'] = '<li class="page-item">';
-            $config['num_tag_close'] = '</li>';
-            $this->pagination->initialize($config);
-            $this->global['links'] = $this->pagination->create_links();			
+			// $filter['course_type'] = 2;
+			// $course_id = $this->input->get('course');
+			// if($course_id != null && $course_id != 0){
+            //     $filter['id'] = $course_id;
+            // }
+			// $category_id = $this->input->get('category');
+            // if($category_id != null && $category_id != 0){
+            //     $filter['category_id'] = $category_id;
+            // }
+            // $this->global[term] = $this->term;
+            // $this->global['company'] = $this->company;
+            // /*pagenation*/
+            // if($this->session->userdata('isLoggedIn') != NULL){
+            //     $filter['user_id'] = $this->session->userdata('user_id');
+            // }
+            // $displayLength = 3;
+            // $search = $this->input->get('sSearch');
+            // $start = $this->input->get('per_page');
+            // if(!isset($start)){
+            //     $start = 0;
+            // }
+            // $filter['start'] = $start;
+            // $filter['limit'] = $displayLength;
+            // $filter['search'] = $search;
+            $this->global['free_course_list'] = $this->Course_model->getFreeCourses($this->input->get());
+            $this->global['paid_course_list'] = $this->Course_model->getPaidCourses($this->input->get());
+            // unset($filter['start']);
+            // unset($filter['limit']);
+            // $this->global['iTotalRecords'] = $this->Course_model->count($filter);
+            // $this->global['sEcho'] = $search;
+            // $this->load->library('pagination');
+            // $config['base_url'] = site_url('learner/demand/?sSearch=' . $search);
+            // $config['page_query_string'] = TRUE;
+            // $config['total_rows'] = $this->global['iTotalRecords'];
+            // $config['per_page'] = $displayLength;
+            // $config['num_links'] = 2;
+            // $config['uri_segment'] = 3;
+            // $config['full_tag_open'] = '<ul class="pagination">';
+            // $config['full_tag_close'] = '</ul>';
+            // $config['first_link'] = '&laquo;';
+            // $config['first_tag_open'] = '<li class="page-item">';
+            // $config['first_tag_close'] = '</li>';
+            // $config['last_link'] = '&raquo;';
+            // $config['last_tag_open'] = '<li class="page-item">';
+            // $config['last_tag_close'] = '</li>';
+            // $config['next_link'] = '&rarr;';
+            // $config['next_tag_open'] = '<li class="page-item">';
+            // $config['next_tag_close'] = '</li>';
+            // $config['prev_link'] = '&larr;';
+            // $config['prev_tag_open'] = '<li class="page-item">';
+            // $config['prev_tag_close'] = '</li>';
+            // $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link">';
+            // $config['cur_tag_close'] = '</a></li>';
+            // $config['num_tag_open'] = '<li class="page-item">';
+            // $config['num_tag_close'] = '</li>';
+            // $this->pagination->initialize($config);
+            // $this->global['links'] = $this->pagination->create_links();			
             $this->global['category_id'] = $category_id;
-			$this->global['courses_id'] = $course_id;			
+			// $this->global['courses_id'] = $course_id;			
             $this->global['category'] = $this->Category_model->getListByCompanyID($this->session->userdata('company_id'));
 			
 			$listcourses['user_id'] = $this->session->userdata('user_id');

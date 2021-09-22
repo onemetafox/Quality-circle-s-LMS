@@ -97,14 +97,6 @@
                                                    	<?php } ?>
 												</div><!--leftImgBox-->
 											</div><!--col-4-->
-                                            <?php
-												$is_pay = 0;
-												foreach($pay_course_list as $pay){
-													if($pay['id'] == $free_course['id']){
-														$is_pay = 1;
-													}
-												}
-											?>
 											<div class="col-lg-8 col-md-7 col-sm-6 courseInfo">
                                                 <h5>
 													<?php
@@ -125,30 +117,17 @@
                                                 <ul class="courseUl">
 													<li><?=nl2br(substr($free_course['description'],0,300)); ?>...</li>
 												</ul>
-		     	                               	<?php if($is_pay != 1){ ?>
-                                                <a class="btnBlue" href="javascript:booknow(<?=$free_course['course_id']?>,<?=$free_course['id']?>)" >
+		     	                               	<?php if($free_course['enroll_id'] == ''){ ?>
+                                                <a class="btnBlue" href="javascript:booknow(<?=$free_course['course_id']?>,<?=$free_course['course_time_id']?>)" >
                                                     <?=$term[enrollnow]?>
                                                 </a>
-                                                <?php
-												/*
-													$active = 'No';
-													$start_date = $free_course['date_str'];
-													$currentDate = time();
-													if($currentDate >= $start_date && $currentDate <= $enddate){
-														$active = 'Yes';
-													}
-													if($active == 'Yes'){
-												?>  
-                                                <a class="btnBlue" href="javascript:booknow(<?=$free_course['course_id']?>,<?=$free_course['id']?>)" >
-                                                    <?=$term[enrollnow]?>
-                                                </a>
-                                                <?php }else{ ?>
-                                                	<?php $startdatetime = date('d, M Y h:i:sa',$free_course['date_str']); ?>
-                                                	<a href="javascript:void(0)" onclick='swal({title: "Please wait until course is started! Course start date time is: <?php echo $startdatetime ;?>"});' class="btnBlue">Enroll Now</a>
-                                                <?php } */ ?>
-                                                <?php } ?>
+                                                <?php }else { ?>
+													<a class="btnBlue" href="javascript:viewcourse(<?=$free_course['course_id']?>)" >
+														<?=$term[viewcourse]?>
+													</a>
+												<?php } ?>
                                                 <a class="btnBlue" href="<?=base_url()?>learner/training/viewDetail/<?=$free_course['id']?>" >
-                                                     <?=$term[viewdetails] ?>
+													<?=$term[viewdetails] ?>
                                                 </a>
 											</div><!--col-8-->
 										</div><!--row-->
@@ -180,14 +159,6 @@
                                                    	<?php } ?>
 												</div><!--leftImgBox-->
 											</div><!--col-4-->
-                                            <?php
-												$is_pay = 0;
-												foreach($pay_course_list as $pay){
-													if($pay['id'] == $paid_course['id']){
-														$is_pay = 1;
-													}
-												}
-											?>
 											<div class="col-lg-8 col-md-7 col-sm-6 courseInfo">
                                                 <h5>
 													<?php
@@ -208,28 +179,19 @@
                                                 <ul class="courseUl">
 													<li><?=nl2br(substr($paid_course['description'],0,300)); ?>...</li>
 												</ul>
-		     	                               	<?php if($is_pay != 1){ ?>
-                                                <a class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['id']?>)" >
-                                                    <?=$term[enrollnow]?>
-                                                </a>
-                                                <?php
-												/*
-													$active = 'No';
-													$start_date = $paid_course['date_str'];
-													$currentDate = time();
-													if($currentDate >= $start_date && $currentDate <= $enddate){
-														$active = 'Yes';
-													}
-													if($active == 'Yes'){
-												?>  
-                                                <a class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['id']?>)" >
-                                                    <?=$term[enrollnow]?>
-                                                </a>
-                                                <?php }else{ ?>
-                                                	<?php $startdatetime = date('d, M Y h:i:sa',$paid_course['date_str']); ?>
-                                                	<a href="javascript:void(0)" onclick='swal({title: "Please wait until course is started! Course start date time is: <?php echo $startdatetime ;?>"});' class="btnBlue">Enroll Now</a>
-                                                <?php } */ ?>
-                                                <?php } ?>
+		     	                               	<?php if(!$paid_course['pay_id']){ ?>
+													<a class="btnBlue" href="javascript:pay_now(<?=$paid_course['course_id']?>,<?=$paid_course['training_id']?>,<?=$paid_course['course_time_id']?>,<?=$paid_course['pay_price']?>)" >
+														Pay Now
+													</a>
+                                                <?php }else if(!$paid_course['enroll_id']){ ?>
+													<a class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
+														<?=$term[enrollnow]?>
+													</a>
+												<?php } else{?>
+													<a class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
+														<?=$term[viewcourse]?>
+													</a>
+												<?php }?>
                                                 <a class="btnBlue" href="<?=base_url()?>learner/training/viewDetail/<?=$paid_course['id']?>" >
                                                      <?=$term[viewdetails] ?>
                                                 </a>
@@ -257,6 +219,10 @@
 </section>
 
 <script>
+	var company_url = "<?= base_url('company/'.$company['url'])?>";
+	function viewcourse(course_id){
+		window.location = company_url + '/traing/view/' + course_id;	
+	}
     function booknow(course_id,id) {
         $.ajax({
             url: $('#base_url').val()+'learner/training/booknow',
@@ -278,6 +244,36 @@
                 });
             }
         });
+    }
+	function pay_now(course_id,training_id, course_time_id, price) {
+        swal({
+			title: "You have to pay $"+price+" to take part in this course",
+			buttons: true
+		}).then((willDelete) => {
+			if (willDelete) {
+			$.ajax({
+				url: "<?php echo base_url() ?>learner/training/pay_training",
+				type: 'POST',
+				data: {'course_id':training_id,'time_id':course_time_id,'ilt_course_id':course_id},
+				dataType : 'json',
+				success: function(data){
+					if(data == 'success') {
+						swal({
+							title: "You have successfully enroll this course. Please wait until course is started!",
+						});
+						setTimeout(function(){ location.reload(); }, 10000);
+					}else{
+						swal({
+							title: " Error!",
+						});
+					}
+								
+				}
+			});
+			} else {
+			// return;
+			}
+		});
     }
     $("#location").on('change',(function () {
         window.location = $('#base_url').val()+ 'learner/training?location='+$("#location").val();

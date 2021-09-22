@@ -67,10 +67,10 @@
 					</div><!--row-->
 					
 					<div class="row">
-						<?php if($courses){?>
+						<?php if($free_course_list || $paid_course_list){?>
 							<div class="col-sm-12">
-								<?php foreach($courses as $course):
-									$enddays = strtotime($course->end_at);	
+								<?php foreach($free_course_list as $free_course):
+									$enddays = strtotime($free_course['end_at']);	
 																
 									$currentdays = time();
 									if($currentdays <= $enddays){
@@ -81,35 +81,75 @@
 											<div class="col-lg-4 col-md-5 col-sm-6">
 												<div class="leftImgBox">
                                                 <?php
-													$imgName = end(explode('/', $course->img_path));
+													$imgName = end(explode('/', $free_course['img_path']));
 													if($imgName != '' && file_exists(getcwd().'/assets/uploads/company/course/'.$imgName)){								
 												?>
-													<img src="<?php echo base_url($course->img_path); ?>">
+													<img src="<?php echo base_url($free_course['img_path']); ?>">
                                                <?php }else{ ?>
                										<img src="<?php echo base_url().'assets/uploads/on-demand-default.png'; ?>">                                		
                                                <?php } ?>
 												</div><!--leftImgBox-->
 											</div><!--col-4-->
 											<div class="col-lg-8 col-md-7 col-sm-6 courseInfo">
-												<h5><?php echo ucfirst($course->title);?></h5>
+												<h5><?php echo ucfirst($free_course['title']);?></h5>
 												<ul class="courseUl">
-													<li>
-														<a href="#"><?php echo $course->first_instructor['email']?></a>
-													</li>
-													<li><?php echo $course->course_self_time; ?></li>
-                                                    <span style="color:#090;"><li>Publish date: <?php echo $course->freg_date;?></li></span>
-                                                    <span style="color:#090;"><li> Start Date: <?php echo date("M d, Y", strtotime($course->start_at));?></li></span>
-             										<span style="color:#090;"><li> End Date: <?php echo date("M d, Y", strtotime($course->end_at));?></li></span>
+													<!-- <li>
+														<a href="#"><?php echo $free_coursefirst_instructor['email']?></a>
+													</li> -->
+													<li><?php echo $free_course['course_self_time']; ?></li>
+                                                    <span style="color:#090;"><li>Publish date: <?php echo $free_course['freg_date'];?></li></span>
+                                                    <span style="color:#090;"><li> Start Date: <?php echo date("M d, Y", strtotime($free_course['start_at']));?></li></span>
+             										<span style="color:#090;"><li> End Date: <?php echo date("M d, Y", strtotime($free_course['end_at']));?></li></span>
 												</ul>
 		     	                               	<?php if(is_null($course->is_pay['id'])){?>
-												    <a href="javascript:enroll(<?php echo $course->id ?>,<?php echo $course->pay_type ?>,'0')" class="btnBlue">Enroll Now</a>
+												    <a href="javascript:enroll(<?php echo $free_course['id'] ?>,<?php echo $free_course['pay_type'] ?>,'0')" class="btnBlue">Enroll Now</a>
 		                                        <?php }else {?>
-		                                            <a href="javascript:view_course(<?php echo $course->id ?>,0)" class="btnBlue">Access Course</a>
+		                                            <a href="javascript:view_course(<?php echo $free_course['id'] ?>,0)" class="btnBlue">Access Course</a>
 		                                        <?php }?>
-												<a href="<?=base_url()?>learner/demand/view_course/<?=$course->id?>" class="btnBlue">View Course</a>
-                                                
-                                                
-                                                
+												<a href="<?=base_url()?>learner/demand/view_course/<?=$free_course['id']?>" class="btnBlue">View Course</a>
+											</div><!--col-8-->
+										</div><!--row-->
+									</div><!--whitePanel-->
+								<?php  } endforeach; ?>
+
+								<?php foreach($paid_course_list as $paid_course):
+									$enddays = strtotime($paid_course['end_at']);	
+																
+									$currentdays = time();
+									if($currentdays <= $enddays){
+								?>
+                                
+									<div class="whitePanel">
+										<div class="row">
+											<div class="col-lg-4 col-md-5 col-sm-6">
+												<div class="leftImgBox">
+                                                <?php
+													$imgName = end(explode('/', $paid_course['img_path']));
+													if($imgName != '' && file_exists(getcwd().'/assets/uploads/company/course/'.$imgName)){								
+												?>
+													<img src="<?php echo base_url($paid_course['img_path']); ?>">
+                                               <?php }else{ ?>
+               										<img src="<?php echo base_url().'assets/uploads/on-demand-default.png'; ?>">                                		
+                                               <?php } ?>
+												</div><!--leftImgBox-->
+											</div><!--col-4-->
+											<div class="col-lg-8 col-md-7 col-sm-6 courseInfo">
+												<h5><?php echo ucfirst($paid_course['title']);?></h5>
+												<ul class="courseUl">
+													<!-- <li>
+														<a href="#"><?php echo $paid_coursefirst_instructor['email']?></a>
+													</li> -->
+													<li><?php echo $paid_course['course_self_time']; ?></li>
+                                                    <span style="color:#090;"><li>Publish date: <?php echo $paid_course['freg_date'];?></li></span>
+                                                    <span style="color:#090;"><li> Start Date: <?php echo date("M d, Y", strtotime($paid_course['start_at']));?></li></span>
+             										<span style="color:#090;"><li> End Date: <?php echo date("M d, Y", strtotime($paid_course['end_at']));?></li></span>
+												</ul>
+		     	                               	<?php if(is_null($course->is_pay['id'])){?>
+												    <a href="javascript:enroll(<?php echo $paid_course['id'] ?>,<?php echo $paid_course['pay_type'] ?>,'0')" class="btnBlue">Enroll Now</a>
+		                                        <?php }else {?>
+		                                            <a href="javascript:view_course(<?php echo $paid_course['id'] ?>,0)" class="btnBlue">Access Course</a>
+		                                        <?php }?>
+												<a href="<?=base_url()?>learner/demand/view_course/<?=$paid_course['id']?>" class="btnBlue">View Course</a>
 											</div><!--col-8-->
 										</div><!--row-->
 									</div><!--whitePanel-->

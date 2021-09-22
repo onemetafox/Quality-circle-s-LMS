@@ -11,6 +11,7 @@ class Training extends BaseController {
         $this->load->model('Account_model');
 		$this->load->model('Enrollments_model');
 		$this->load->model('Course_model');	
+        $this->load->model('Company_model');
 		
         $this->isLoggedIn();
     }
@@ -61,6 +62,7 @@ class Training extends BaseController {
         $this->load->library('Sidebar');
         $side_params = array('selected_menu_id' => '5');
         $this->global[sidebar] = $this->sidebar->generate($side_params, $this->role);
+        $user = $this->session->userdata();
         // if($this->isLearner()){
             $training_data = array();
             
@@ -72,6 +74,9 @@ class Training extends BaseController {
             $training_data['location'] = $this->Training_model->getLocation();
             $training_data['location_name'] = $location;
             $training_data['course_name'] = $course;
+            $training_data['company'] = $this->Company_model->getListByID($user['company_id'])[0];
+            // print_r($training_data['company']);
+            // die;
             $this->loadViews("learner/training/training_list", $this->global, $training_data, NULL);
         // }else{
         //     $this->loadViews("access", $this->global, NULL, NULL);
@@ -124,7 +129,6 @@ class Training extends BaseController {
             $this->loadViews("access", $this->global, NULL, NULL);
         }
     }
-
     public function pay_training(){
 		$time_id = $this->input->post('time_id');
         $course_id = $this->input->post('course_id');
@@ -139,25 +143,25 @@ class Training extends BaseController {
         $data['object_id'] = $course_id;
         $this->db->set("company_id", "(select create_id from training_course where id = " . $course_id . ")", false);
         $this->Account_model->insert_payment($data);
-		if($ilt_course_id != '' && isset($ilt_course_id)){
-			$course_id = $ilt_course_id;
-		}
-		$course_data = $this->Course_model->getCourseById($course_id);
-		if($time_id != '' && isset($time_id)){
-			$totalCourseEnrollments = $this->Enrollments_model->totalCourseEnrollments($course_id,$time_id);
-			if($totalCourseEnrollments == 0){
-				$enrolled_data = array(
-					'user_id' => $this->session->get_userdata()['user_id'],
-					'course_id' => $course_id,			
-					'course_time_id' => $time_id,					
-					'course_title' => $course_data["title"],
-					'user_name' => $this->session->get_userdata()['user_name'],
-					'user_email' => $this->session->get_userdata()['email'],
-					'create_date' => date("Y-m-d H:i:s"),					
-				);	
-				$this->Enrollments_model->insertEnrolledUser($enrolled_data);	
-			}
-		}
+		// if($ilt_course_id != '' && isset($ilt_course_id)){
+		// 	$course_id = $ilt_course_id;
+		// }
+		// $course_data = $this->Course_model->getCourseById($course_id);
+		// if($time_id != '' && isset($time_id)){
+		// 	$totalCourseEnrollments = $this->Enrollments_model->totalCourseEnrollments($course_id,$time_id);
+		// 	if($totalCourseEnrollments == 0){
+		// 		$enrolled_data = array(
+		// 			'user_id' => $this->session->get_userdata()['user_id'],
+		// 			'course_id' => $course_id,			
+		// 			'course_time_id' => $time_id,					
+		// 			'course_title' => $course_data["title"],
+		// 			'user_name' => $this->session->get_userdata()['user_name'],
+		// 			'user_email' => $this->session->get_userdata()['email'],
+		// 			'create_date' => date("Y-m-d H:i:s"),					
+		// 		);	
+		// 		$this->Enrollments_model->insertEnrolledUser($enrolled_data);	
+		// 	}
+		// }
         /*start send_email*/
         /*end send_email*/
         // $this->response($records);

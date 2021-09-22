@@ -100,6 +100,38 @@ class Course_model extends AbstractModel
 
         return $result->result_array();
     }
+    function getFreeCourses($filter){
+        $user = $this->session->userdata();
+        $query = "SELECT c.* FROM invite_user a
+        LEFT JOIN `user` b ON a.email = b.email
+        LEFT JOIN course c ON a.course_id = c.id
+        WHERE a.email = '".$user['email']."' AND a.course_type = 2 AND pay_type = 0 AND c.create_id = '".$user['company_id']."'";
+        if($filter['category']){
+            $query = $query . " And c.category_id = '".$filter['category']."'";
+        }
+        if($filter['course']){
+            $query = $query . " And c.id = '".$filter['course']."'";
+        }
+        $result = $this->db->query($query);
+        $res=$result->result_array();
+        return $res;
+    }
+
+    function getPaidCourses($filter){
+        $user = $this->session->userdata();
+        $query = "SELECT * FROM course WHERE course_type = 2 and pay_type = 1 AND create_id = '".$user['company_id']."'";
+        if($filter['category']){
+            $query = $query . " And c.category_id = '".$filter['category']."'";
+        }
+        if($filter['course']){
+            $query = $query . " And c.id = '".$filter['course']."'";
+        }
+
+        $result = $this->db->query($query);
+        $res=$result->result_array();
+
+        return $res;
+    }
     /*start front function*/
     function all($filter = NULL, $order = NULL, $direction = 'asc', $fields = "*"){
 		$currentDate = date('Y-m-d');
