@@ -41,7 +41,7 @@ class Live_model extends CI_Model
     }
     function getFreeCourses($filter){
         $user = $this->session->userdata();
-        $query = "SELECT c.id course_id, e.id course_time_id, f.id enroll_id, b.title, e.start_at, c.duration
+        $query = "SELECT c.id course_id, e.id course_time_id, f.id enroll_id, b.title, e.start_at, c.duration, c.img_path
             FROM invite_user a
             LEFT JOIN `user` d ON d.email = a.email
             LEFT JOIN virtual_course b ON b.id = a.course_id
@@ -56,7 +56,6 @@ class Live_model extends CI_Model
         if($filter['course']){
             $query = $query . " And b.id = '".$filter['course']."'";
         }
-        
         $result = $this->db->query($query);
         $res=$result->result_array();
 
@@ -65,9 +64,12 @@ class Live_model extends CI_Model
 
     function getPaidCourses($filter){
         $user = $this->session->userdata();
-        $query = "SELECT * FROM virtual_course a
+        $query = "SELECT b.id course_id, c.id course_time_id, a.id training_id, a.title, a.duration, c.start_at, d.id pay_id, f.id enroll_id, b.pay_price,b.img_path
+        FROM virtual_course a
         LEFT JOIN course b ON a.course_id = b.id
         JOIN virtual_course_time c ON a.id = c.virtual_course_id
+        LEFT JOIN payment_history d ON d.object_id = a.id AND d.object_type = 'live' AND d.user_id = '".$user['user_id']."' AND d.company_id = '".$user['company_id']."'
+        LEFT JOIN enrollments f ON f.course_id = b.id AND f.course_time_id = c.id
         WHERE b.pay_type = 1 AND a.create_id = '".$user['company_id']."'";
         if($filter['location']){
             $query = $query . " And c.location = '".$filter['location']."'";
@@ -75,7 +77,6 @@ class Live_model extends CI_Model
         if($filter['course']){
             $query = $query . " And a.id = '".$filter['course']."'";
         }
-
         $result = $this->db->query($query);
         $res=$result->result_array();
 

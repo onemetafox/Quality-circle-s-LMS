@@ -145,7 +145,7 @@ class Live extends BaseController {
         
     }
     
-    public function pay_course($course_id = NULL,$time_id = NULL){
+    public function pay_course(){
         $course_id = $this->input->post('course_id');
 		$time_id = $this->input->post('time_id');
 		$vilt_course_id = $this->input->post('vilt_course_id');
@@ -160,23 +160,23 @@ class Live extends BaseController {
         $data['object_id'] = $course_id;
         $this->db->set("company_id", "(select create_id from virtual_course where id = " . $course_id . ")", false);
         $this->Account_model->insert_payment($data);
-		if($vilt_course_id != '' && isset($vilt_course_id)){
-			$course_id = $vilt_course_id;
-		}
-		$course_data = $this->Course_model->getCourseById($course_id);
-		$totalCourseEnrollments = $this->Enrollments_model->totalCourseEnrollments($course_id,$time_id);
-		if($totalCourseEnrollments == 0){
-			$enrolled_data = array(
-				'user_id' => $this->session->get_userdata()['user_id'],
-				'course_id' => $course_id,			
-				'course_time_id' => $time_id,					
-				'course_title' => $course_data["title"],
-				'user_name' => $this->session->get_userdata()['user_name'],
-				'user_email' => $this->session->get_userdata()['email'],
-				'create_date' => date("Y-m-d H:i:s"),					
-			);	
-			$this->Enrollments_model->insertEnrolledUser($enrolled_data);	
-		}
+		// if($vilt_course_id != '' && isset($vilt_course_id)){
+		// 	$course_id = $vilt_course_id;
+		// }
+		// $course_data = $this->Course_model->getCourseById($course_id);
+		// $totalCourseEnrollments = $this->Enrollments_model->totalCourseEnrollments($course_id,$time_id);
+		// if($totalCourseEnrollments == 0){
+		// 	$enrolled_data = array(
+		// 		'user_id' => $this->session->get_userdata()['user_id'],
+		// 		'course_id' => $course_id,			
+		// 		'course_time_id' => $time_id,					
+		// 		'course_title' => $course_data["title"],
+		// 		'user_name' => $this->session->get_userdata()['user_name'],
+		// 		'user_email' => $this->session->get_userdata()['email'],
+		// 		'create_date' => date("Y-m-d H:i:s"),					
+		// 	);	
+		// 	$this->Enrollments_model->insertEnrolledUser($enrolled_data);	
+		// }
         /*start send_email*/
         /*end send_email*/
         // $this->response($records);

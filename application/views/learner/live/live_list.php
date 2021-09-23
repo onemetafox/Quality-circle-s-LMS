@@ -176,19 +176,20 @@
 													<?=nl2br(substr($paid_course['about'],0,300));?>...
                                                     </li>                                                    
 												</ul>  
-												<?php if($free_course['enroll_id'] == ''){ ?>
-                                                <a class="btnBlue" href="javascript:booknow(<?=$free_course['course_id']?>,<?=$free_course['course_time_id']?>)" >
-                                                    <?=$term[enrollnow]?>
-                                                </a>
-                                                <?php }else { ?>
-													<a class="btnBlue" href="javascript:viewcourse(<?=$free_course['course_id']?>)" >
+												<?php if(!$paid_course['pay_id']){ ?>
+													<a class="btnBlue" href="javascript:pay_now(<?=$paid_course['course_id']?>,<?=$paid_course['training_id']?>,<?=$paid_course['course_time_id']?>,<?=$paid_course['pay_price']?>)" >
+														Pay Now
+													</a>
+                                                <?php }else if(!$paid_course['enroll_id']){ ?>
+													<a class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
+														<?=$term[enrollnow]?>
+													</a>
+												<?php } else{?>
+													<a class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
 														<?=$term[viewcourse]?>
 													</a>
-												<?php } ?>
-												<?php /*?><a href = "javascript:enroll(<?php echo $paid_course['course_id'] ?>,<?php echo $paid_course['pay_type'] ?>)" class="btnBlue">Enroll Now</a><?php */?>
-                                                
-                                                <?php /*?><a href="<?=base_url()?>learner/live/viewclass/<?=$paid_course['virtual_course_id']?>" class="btnBlue">Course Details</a><?php */?>
-                                                <a href="<?=base_url()?>learner/live/viewclass/<?=$paid_course['id']?>" class="btnBlue">Course Details</a>
+												<?php }?>
+												<a href="<?=base_url()?>learner/live/viewclass/<?=$paid_course['id']?>" class="btnBlue">Course Details</a>
 											</div><!--col-8-->
 										</div><!--row-->
 									</div><!--whitePanel-->
@@ -239,6 +240,36 @@
                 });
             }
         });
+    }
+	function pay_now(course_id,training_id, course_time_id, price) {
+        swal({
+			title: "You have to pay $"+price+" to take part in this course",
+			buttons: true
+		}).then((willDelete) => {
+			if (willDelete) {
+			$.ajax({
+				url: "<?php echo base_url() ?>learner/live/pay_course",
+				type: 'POST',
+				data: {'course_id':training_id,'time_id':course_time_id,'vilt_course_id':course_id},
+				dataType : 'json',
+				success: function(data){
+					if(data == 'success') {
+						swal({
+							title: "You have successfully enroll this course. Please wait until course is started!",
+						});
+						setTimeout(function(){ location.reload(); }, 10000);
+					}else{
+						swal({
+							title: " Error!",
+						});
+					}
+								
+				}
+			});
+			} else {
+			// return;
+			}
+		});
     }
 	function enroll(id,pay_type,time_id){
 		if(!isLogin){
