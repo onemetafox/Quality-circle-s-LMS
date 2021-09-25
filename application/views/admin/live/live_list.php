@@ -50,12 +50,18 @@
                                             <label class="col-sm-2 control-label text-lg-right pt-2"><?=$term[starttime]?></label>
                                             <div class="col-sm-8">
                                                 <div class="input-group">
-                                                            <span class="input-group-prepend">
+                                                            <!-- <span class="input-group-prepend">
                                                                 <span class="input-group-text">
                                                                     <i class="far fa-clock"></i>
                                                                 </span>
                                                             </span>
-                                                    <input type="text" id="starttime" name="starttime" data-plugin-timepicker="" class="form-control" data-plugin-options="{ &quot;showMeridian&quot;: true }">
+                                                    <input type="text" id="starttime" name="starttime" data-plugin-timepicker="" class="form-control" data-plugin-options="{ &quot;showMeridian&quot;: true }"> -->
+                                                    <select class="form-control" id="starttime" name="starttime" style="width:264px;">
+                                                        <option value="7:00 AM">7:00 AM</option>
+                                                        <option value="8:00 AM">8:00 AM</option>
+                                                        <option value="9:00 AM">9:00 AM</option>
+                                                        <option value="10:00 AM">10:00 AM</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>

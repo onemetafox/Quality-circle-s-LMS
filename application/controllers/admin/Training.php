@@ -15,7 +15,8 @@ class Training extends BaseController{
         $this->load->model('Certification_model');
         $this->load->model('Exam_model');
 		$this->load->model('Location_model');
-		$this->load->model('Countries_model');				
+		$this->load->model('Countries_model');	
+        $this->load->helper('common_helper');
         $this->isLoggedIn();
     }
     /**
@@ -223,6 +224,7 @@ class Training extends BaseController{
     public function add_time(){
         $startDays = $this->input->post('startdays');
 		$startTime = $this->input->post('starttime');
+        $endTime = getEndTime($startTime);
 		$startDays = explode('-',$startDays);
 		$year = $startDays[0];
 		$month = $startDays[1];
@@ -253,6 +255,7 @@ class Training extends BaseController{
 		
 		$data['start_day'] = $this->input->post('startdays');
 		$data['start_time'] = $startTime;
+        $data['end_time'] = $endTime;
 		$data['date_str'] = strtotime($data['start_day'].' '.$data['start_time']);	
         $data['training_course_id'] = $id;
         return $this->Training_model->insert_time($data);
@@ -278,6 +281,7 @@ class Training extends BaseController{
     public function update_time(){
 		$startDays = $this->input->post('startdays');
 		$startTime = $this->input->post('starttime');
+        $endTime = getEndTime($startTime);
 		$startDays = explode('-',$startDays);
 		$year = $startDays[0];
 		$month = $startDays[1];
@@ -309,7 +313,8 @@ class Training extends BaseController{
 		
 		$data['start_day'] = $this->input->post('startdays');
 		$data['start_time'] = $startTime;
-		$data['date_str'] = strtotime($data['start_day'].' '.$data['start_time']);		 
+		$data['date_str'] = strtotime($data['start_day'].' '.$data['start_time']);		
+        $data['end_time'] = $endTime;
 		$time_id = $this->input->post('time_id');
         $data['training_course_id'] = $id;
        	return $this->Training_model->update_time($data, array('id' => $time_id));	

@@ -335,7 +335,7 @@
                                  <label class="col-sm-3 control-label text-lg-right pt-2">City</label>
                                  <div class="col-sm-6">
                                      	<select class="form-control" required id="city" name="city" style="width:264px;">
-											<option value="" >Select City</option>
+											         <option value="" >Select City</option>
                                     	</select>
                                  </div>
                               </div>
@@ -348,14 +348,20 @@
                             <div class="form-group row">
                             	<label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[starttime]?></label>
                                 <div class="col-sm-6">
-                                    <div class="input-group">
+                                    <!-- <div class="input-group">
                                     <span class="input-group-prepend">
                                         <span class="input-group-text">
                                             <i class="far fa-clock"></i>
                                         </span>
                                     </span>
                                     <input type="text" id="starttime" name="starttime" data-plugin-timepicker class="form-control" data-plugin-options="{ &quot;showMeridian&quot;: true }">
-                                    </div>
+                                    </div> -->
+                                    <select class="form-control" id="starttime" name="starttime" style="width:264px;">
+                                       <option value="7:00 AM">7:00 AM</option>
+                                       <option value="8:00 AM">8:00 AM</option>
+                                       <option value="9:00 AM">9:00 AM</option>
+                                       <option value="10:00 AM">10:00 AM</option>
+                                    </select>
                                 </div>
                             </div>
                               <input class="hidden" name="year" id="change_year">
@@ -1388,7 +1394,7 @@
                         processData:false,
                         contentType: false,
                         success: function (data, status, xhr) {						 
-                           document.location.reload();
+                           // document.location.reload();
                            $.magnificPopup.close();
                            new PNotify({
                               title: 'Success',
@@ -1413,7 +1419,7 @@
                         processData:false,
                         contentType: false,
                         success: function (data, status, xhr) {
-                           document.location.reload();
+                           // document.location.reload();
                            $.magnificPopup.close();
                            new PNotify({
                               title: 'Success',

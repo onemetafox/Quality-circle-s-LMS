@@ -19,6 +19,7 @@ class Live extends BaseController {
         $this->load->model('Certification_model');
         $this->load->model('Exam_model');
         $this->load->model('Virtualcourse_model');
+        $this->load->helper('common_helper');
         $this->isLoggedIn();
     }
     /**
@@ -324,6 +325,8 @@ class Live extends BaseController {
         $id = $this->input->post('change_id');
         $data['start_at'] = $start_at;
         $data['virtual_course_id'] = $id;
+        $data['start_time'] = $time;
+        $data['end_time'] = getEndTime($time);
         return $this->Live_model->insert_time($data);
     }
     
@@ -337,6 +340,8 @@ class Live extends BaseController {
         $time_id = $this->input->post('time_id');
         $data['start_at'] = $start_at;
         $data['virtual_course_id'] = $id;
+        $data['start_time'] = $time;
+        $data['end_time'] = getEndTime($time);
         return $this->Live_model->update_time($data, array('id' => $time_id));
     }
     

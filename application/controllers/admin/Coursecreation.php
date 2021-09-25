@@ -868,9 +868,9 @@ class Coursecreation extends BaseController{
 			$course_time['country_id'] = $iltCourse['country'];
 			$course_time['state_id'] = $iltCourse['state'];
 			$course_time['city_id'] = $iltCourse['city'];
-			$course_time['start_day'] = date('Y-m-d',$timestamp);
-			$course_time['start_time'] = date('H:m A',$timestamp);
-			$course_time['date_str'] = strtotime($course_time['start_day'].' '.$course_time['start_time']);
+			// $course_time['start_day'] = date('Y-m-d',$timestamp);
+			// $course_time['start_time'] = date('H:m A',$timestamp);
+			// $course_time['date_str'] = strtotime($course_time['start_day'].' '.$course_time['start_time']);
 			$course_time['year'] = date('Y',$timestamp);
 			$course_time['month'] = date('m',$timestamp);
 			$course_time['sday'] = date('d',$timestamp);

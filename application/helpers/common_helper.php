@@ -7,7 +7,18 @@ defined('BASEPATH') OR ('No direct script access allowed');
         $result = $CI->Category_model->getRow($category_id);
         return $result[0]['name'];
     }
-	
+	function getEndTime($startTime){
+		switch($startTime){
+			case "7:00 AM": 
+				return "3:00 PM";
+			case "8:00 AM": 
+				return "4:00 PM";
+			case "9:00 AM": 
+				return "5:00 PM";
+			case "10:00 AM": 
+				return "6:00 PM";
+		}
+	}
 	function getStandardNameById($standard_id =''){
         $CI =& get_instance();
 		$CI->load->model('Standard_model');
