@@ -102,9 +102,11 @@ class Course_model extends AbstractModel
     }
     function getFreeCourses($filter){
         $user = $this->session->userdata();
-        $query = "SELECT c.* FROM invite_user a
+        $query = "SELECT c.id course_id, c.start_at, f.id enroll_id, c.title, c.duration, c.img_path, c.end_at
+        FROM invite_user a
         LEFT JOIN `user` b ON a.email = b.email
         LEFT JOIN course c ON a.course_id = c.id
+        LEFT JOIN enrollments f ON f.user_id = b.id AND f.course_id = c.id
         WHERE a.email = '".$user['email']."' AND a.course_type = 2 AND pay_type = 0 AND c.create_id = '".$user['company_id']."'";
         if($filter['category']){
             $query = $query . " And c.category_id = '".$filter['category']."'";
@@ -112,6 +114,7 @@ class Course_model extends AbstractModel
         if($filter['course']){
             $query = $query . " And c.id = '".$filter['course']."'";
         }
+        
         $result = $this->db->query($query);
         $res=$result->result_array();
         return $res;
@@ -119,14 +122,17 @@ class Course_model extends AbstractModel
 
     function getPaidCourses($filter){
         $user = $this->session->userdata();
-        $query = "SELECT * FROM course WHERE course_type = 2 and pay_type = 1 AND create_id = '".$user['company_id']."'";
+        $query = "SELECT a.id course_id, a.title, a.duration, a.start_at, d.id pay_id, f.id enroll_id, a.pay_price, a.img_path, a.end_at
+        FROM course a
+        LEFT JOIN payment_history d ON d.object_id = a.id AND d.object_type = 'course' AND d.user_id = '".$user['user_id']."' AND d.company_id = '".$user['company_id']."'
+	    LEFT JOIN enrollments f ON f.course_id = a.id
+        WHERE course_type = 2 and pay_type = 1 AND create_id = '".$user['company_id']."'";
         if($filter['category']){
             $query = $query . " And c.category_id = '".$filter['category']."'";
         }
         if($filter['course']){
             $query = $query . " And c.id = '".$filter['course']."'";
         }
-
         $result = $this->db->query($query);
         $res=$result->result_array();
 

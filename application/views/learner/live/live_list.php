@@ -10,6 +10,8 @@
 <link rel="shortcut icon" type="image/png" href="<?php echo base_url(); ?>assets/images/favicon.png" />
 <link href="<?php echo base_url(); ?>assets/css_company/main-style.css" rel="stylesheet">
 <link href="<?php echo base_url(); ?>assets/css_company/responsive.css" rel="stylesheet">
+<script src="https://www.paypal.com/sdk/js?client-id=AfvvmSMlwXTgLnGoXB9ygA7DXst7RDSb0dvScr8NvByZoUUUbrk3X9gGs-R8pXkeZnM8q9XRehZelBfD"> </script>
+<script type="text/javascript" src="https://sandbox-assets.secure.checkout.visa.com/checkout-widget/resources/js/integration/v1/sdk.js"></script>
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -171,25 +173,30 @@
                                                     <?php }else{ ?>
                                                         End Date: <?php echo date("M d, Y", $enddate).' 11:59:59pm';?>
                                                     <?php } ?>
+													<p>USD $: <?= $paid_course['pay_price']?></p>
+
 													</li>                                                    
                                                     <li>
 													<?=nl2br(substr($paid_course['about'],0,300));?>...
                                                     </li>                                                    
 												</ul>  
 												<?php if(!$paid_course['pay_id']){ ?>
-													<a class="btnBlue" href="javascript:pay_now(<?=$paid_course['course_id']?>,<?=$paid_course['training_id']?>,<?=$paid_course['course_time_id']?>,<?=$paid_course['pay_price']?>)" >
+													<div style="width:150px;" id="paypal-button-container"></div>
+													<img style="width:150px; float:left" alt="Visa Checkout" class="v-button" role="button" src="https://sandbox.secure.checkout.visa.com/wallet-services-web/xo/button.png">
+
+													<!-- <a class="btnBlue" href="javascript:pay_now(<?=$paid_course['course_id']?>,<?=$paid_course['training_id']?>,<?=$paid_course['course_time_id']?>,<?=$paid_course['pay_price']?>)" >
 														Pay Now
-													</a>
+													</a> -->
                                                 <?php }else if(!$paid_course['enroll_id']){ ?>
 													<a class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
 														<?=$term[enrollnow]?>
 													</a>
 												<?php } else{?>
-													<a class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
+													<a style = "float:left; margin-top:-20px; margin-left: 20px" class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
 														<?=$term[viewcourse]?>
 													</a>
 												<?php }?>
-												<a href="<?=base_url()?>learner/live/viewclass/<?=$paid_course['id']?>" class="btnBlue">Course Details</a>
+												<a style = "float:left; margin-top:-20px; margin-left: 20px" href="<?=base_url()?>learner/live/viewclass/<?=$paid_course['id']?>" class="btnBlue">Course Details</a>
 											</div><!--col-8-->
 										</div><!--row-->
 									</div><!--whitePanel-->
@@ -215,6 +222,32 @@
 
 
 <script type="text/javascript">
+	paypal.Buttons({
+		style: {
+			layout:  'horizontal',
+			color:   'gold',
+			shape:   'rect',
+			label:   'paypal',
+			tagline: 'false'
+		},
+		createOrder: function(data, actions) {
+		// This function sets up the details of the transaction, including the amount and line item details.
+		return actions.order.create({
+			purchase_units: [{
+			amount: {
+				value: '0.01'
+			}
+			}]
+		});
+		},
+		onApprove: function(data, actions) {
+		// This function captures the funds from the transaction.
+		return actions.order.capture().then(function(details) {
+			// This function shows a transaction success message to your buyer.
+			alert('Transaction completed by ' + details.payer.name.given_name);
+		});
+		}
+	}).render('#paypal-button-container');
 	var isLogin = "<?php echo $this->session->userdata ('isLoggedIn')?>";
 	$(function(){
         $("ul.pagination a").addClass('page-link');

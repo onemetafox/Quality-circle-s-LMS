@@ -177,13 +177,14 @@
                                                     <?php }else{ ?>
                                                         <p>End Date: <?php echo date("M d, Y", $enddate).' 11:59:59pm';?></p>
                                                     <?php } ?>
+													<p>USD $: <?= $paid_course['pay_price']?></p>
                                                 </h5>
                                                 <ul class="courseUl">
 													<li><?=nl2br(substr($paid_course['description'],0,300)); ?>...</li>
 												</ul>
-		     	                               	<?php if(!$paid_course['pay_id']){ ?>
-													<div style="width:100px; height: 45px;" id="paypal-button-container"></div>
-													<img alt="Visa Checkout" class="v-button" role="button" src="https://sandbox.secure.checkout.visa.com/wallet-services-web/xo/button.png">
+												<?php if(!$paid_course['pay_id']){ ?>
+													<div style="width:150px;" id="paypal-button-container"></div>
+													<img style="width:150px; float:left" alt="Visa Checkout" class="v-button" role="button" src="https://sandbox.secure.checkout.visa.com/wallet-services-web/xo/button.png">
 
 													<!-- <a class="btnBlue" href="javascript:pay_now(<?=$paid_course['course_id']?>,<?=$paid_course['training_id']?>,<?=$paid_course['course_time_id']?>,<?=$paid_course['pay_price']?>)" >
 														Pay Now
@@ -193,11 +194,11 @@
 														<?=$term[enrollnow]?>
 													</a>
 												<?php } else{?>
-													<a class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
+													<a style = "float:left; margin-top:-20px; margin-left: 20px" class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
 														<?=$term[viewcourse]?>
 													</a>
 												<?php }?>
-                                                <a class="btnBlue" href="<?=base_url()?>learner/training/viewDetail/<?=$paid_course['id']?>" >
+                                                <a style = "float:left; margin-top:-20px; margin-left: 20px" class="btnBlue" href="<?=base_url()?>learner/training/viewDetail/<?=$paid_course['id']?>" >
                                                      <?=$term[viewdetails] ?>
                                                 </a>
 											</div><!--col-8-->
@@ -222,7 +223,7 @@
 </div>
 </div>
 </section>
-<?php if(!empty($successMessage)) { ?>
+<!-- <?php if(!empty($successMessage)) { ?>
 <div id="success-message"><?php echo $successMessage; ?></div>
 <?php  } ?>
 <div id="error-message"></div>
@@ -331,7 +332,7 @@ function cardValidation () {
     return valid;
 }
 //set your publishable key
-Stripe.setPublishableKey("<?php echo STRIPE_PUBLISHABLE_KEY; ?>");
+Stripe.setPublishableKey("pk_test_51Jd2byEWwNGFgT9SATl3loJc8b14cCa33BId6t2MZenaAFCKQeOHv14BHa3SLHSPtFiLKaoXXlaC2NKgWHVIOrAX00dsSDdfS0");
 
 //callback to handle the response from stripe
 function stripeResponseHandler(status, response) {
@@ -367,39 +368,39 @@ function stripePay(e) {
         //submit from callback
         return false;
     }
-}
+} -->
 </script>
 <script>
 	var company_url = "<?= base_url('company/'.$company['url'])?>";
 	function viewcourse(course_id){
 		window.location = company_url + '/traing/view/' + course_id;	
 	}
-	function onVisaCheckoutReady() {
-		V.init({
-			apikey: '{{VISA_CHECKOUT_ID}}',
-			paymentRequest:{
-			subtotal: '10.00',
-				currencyCode: 'USD'
-			},
-			settings: {
-				displayName: 'My Website'
-			}
-		});
-	}
-	const clientSecret = '{{CLIENT_SECRET}}';
+	// function onVisaCheckoutReady() {
+	// 	V.init({
+	// 		apikey: '{{VISA_CHECKOUT_ID}}',
+	// 		paymentRequest:{
+	// 		subtotal: '10.00',
+	// 			currencyCode: 'USD'
+	// 		},
+	// 		settings: {
+	// 			displayName: 'My Website'
+	// 		}
+	// 	});
+	// }
+	// const clientSecret = '{{CLIENT_SECRET}}';
 
-	V.on('payment.success', async (payment) => {
-	const intent = await stripe.confirmCardPayment(clientSecret, {
-		payment_method: {
-		card: {
-			visa_checkout: {
-			callid: payment.callid,
-			},
-		},
-		},
-	});
+	// V.on('payment.success', async (payment) => {
+	// const intent = await stripe.confirmCardPayment(clientSecret, {
+	// 	payment_method: {
+	// 	card: {
+	// 		visa_checkout: {
+	// 		callid: payment.callid,
+	// 		},
+	// 	},
+	// 	},
+	// });
 	// Perform logic for payment completion here
-	});
+	// });
   	paypal.Buttons({
 		style: {
 			layout:  'horizontal',
