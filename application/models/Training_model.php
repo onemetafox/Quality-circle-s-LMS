@@ -179,13 +179,14 @@ class Training_model extends AbstractModel
     }
     function getFreeCourses($filter){
         $user = $this->session->userdata();
-        $query = "SELECT c.id course_id, b.description, e.id course_time_id, f.id enroll_id, b.title, e.date_str, c.duration
+        $query = "SELECT c.id course_id, b.description, e.id course_time_id, f.id enroll_id, b.title, e.date_str, c.duration, c.course_self_time, g.session_time
             FROM invite_user a
             LEFT JOIN `user` d ON d.email = a.email
             LEFT JOIN training_course b ON b.id = a.course_id
             LEFT JOIN training_course_time e ON e.training_course_id = b.id
             LEFT JOIN course c ON c.id = b.course_id
             LEFT JOIN enrollments f ON f.user_id = d.id AND f.course_id = c.id AND f.course_time_id = e.id
+            LEFT JOIN ( SELECT SUM( course_time ) session_time, user_id, course_id FROM course_session WHERE user_id = '".$user['user_id']."' GROUP BY course_id ) g ON g.course_id = c.id AND d.id = g.user_id
             WHERE a.course_type = 0 AND d.email = '".$user['email']."' AND b.create_id = '".$user['company_id']."' AND c.pay_type = 0 ";
         if($filter['location']){
             $query = $query . " And e.location = '".$filter['location']."'";
@@ -193,6 +194,7 @@ class Training_model extends AbstractModel
         if($filter['course']){
             $query = $query . " And b.id = '".$filter['course']."'";
         }
+       
         $result = $this->db->query($query);
         $res=$result->result_array();
 
@@ -201,12 +203,14 @@ class Training_model extends AbstractModel
 
     function getPaidCourses($filter){
         $user = $this->session->userdata();
-        $query = "SELECT b.id course_id, c.id course_time_id, a.id training_id, a.title, a.description, a.duration, c.date_str, d.id pay_id, f.id enroll_id, b.pay_price
+        $query = "SELECT b.id course_id, c.id course_time_id, a.id training_id, a.title, a.description, 
+                        a.duration, c.date_str, d.id pay_id, f.id enroll_id, b.pay_price, b.course_self_time, g.session_time
                 FROM training_course a
                 LEFT JOIN course b ON a.course_id = b.id
                 LEFT JOIN training_course_time c ON a.id = c.training_course_id 
                 LEFT JOIN payment_history d ON d.object_id = a.id AND d.object_type = 'training' AND d.user_id = '".$user['user_id']."' AND d.company_id = '".$user['company_id']."'
                 LEFT JOIN enrollments f ON f.course_id = b.id AND f.course_time_id = c.id
+                LEFT JOIN ( SELECT SUM( course_time ) session_time, user_id, course_id FROM course_session WHERE user_id = '".$user['user_id']."' GROUP BY course_id ) g ON g.course_id = b.id 
             WHERE b.pay_type = 1  AND a.create_id = '".$user['company_id']."'";
         if($filter['location']){
             $query = $query . " And c.location = '".$filter['location']."'";
