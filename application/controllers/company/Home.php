@@ -46,6 +46,7 @@ class Home extends BaseController
 			$item['date_str'] = $course_time->date_str; 
 			$item['start_day'] = $course_time->start_day; 
 			$item['start_time'] = $course_time->start_time; 
+            $item['end_time'] = $course_time->end_time; 
             $toReturn['trainCourses'][$i] = $item;
         }
         

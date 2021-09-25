@@ -45,10 +45,8 @@ class Trainingcourse_model extends CI_Model
         $this->db->where('a.month',date("m"));
         $this->db->where('a.sday >=',date("d"));
         $this->db->group_end();
-        $this->db->order_by('a.`year`, a.`month`,a.`sday`', 'asc');
+        $this->db->order_by('a.`date_str`', 'desc');
         $training_course_time = $this->db->get('training_course_time a')->result_array();
-        // print_r($this->db->last_query());
-        // die;
         $result = array();
         foreach ($training_course_time as $key1 => $value1) {
             foreach ($training_course as $key2 => $value2) {
@@ -58,9 +56,11 @@ class Trainingcourse_model extends CI_Model
                 }
             }
         }
+       
         if(count($result)>$count){			
             array_splice($result,$count,count($result));
         }
+        
 		foreach($result as $key => $val) {
 			##############################get course####################
 			

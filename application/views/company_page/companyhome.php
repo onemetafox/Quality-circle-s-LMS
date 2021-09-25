@@ -136,16 +136,12 @@
 									
 									$showDuration = $course['duration'] > 1 ? $course['duration']. " Days" : $course['duration']." Day";
 									$duration = $course['duration'] - 1;
-									$cdate = $course['date_str'];	
-									$enddate = strtotime('+'.$duration .' days', $cdate);
+									$enddate = strtotime('+'.$duration .' days', strtotime($course['start_day']. " " . $course['end_time']));
 								?>
                                 <li>Duration: <?php echo $showDuration; ?> </li>
-                                <li> Start Date: <?php echo date("M d, Y h:i:sa", $cdate);?></li>
-                                <?php if($duration > 0){ ?>
-                                    <li> End Date: <?php echo date("M d, Y h:i:sa", $enddate);?></li>
-                                <?php }else{ ?>
-                                    <li> End Date: <?php echo date("M d, Y", $enddate).' 11:59:59pm';?></li>
-                                <?php } ?>
+                                <li> Start Date: <?php echo date("M d, Y h:i:sa", strtotime($course['start_day'] . " " . $course['start_time']));?></li>
+								<li> End Date: <?php echo date("M d, Y h:i:sa", $enddate);?></li>
+                                
                             </ul>
                             <div class="row">
                                 <div class="col-md-6 col-sm-12">
@@ -202,23 +198,14 @@
 							<li>                            
 							<?php echo $course['course_self_time']; ?>
                             </li>
-                            <?php /*?><li>
-							 Publish Date: 
-							 <?php echo $course['reg_date'];?>
-							</li><?php */?>
-                            
-                            <?php
+                            <?php									
 								$showDuration = $course['duration'] > 1 ? $course['duration']. " Days" : $course['duration']." Day";
 								$duration = $course['duration'] - 1;
-								$enddate = strtotime($course['start_at'] .'+'.$duration .'days');
+								$enddate = strtotime('+'.$duration .' days', strtotime($course['start_day']. " " . $course['end_time']));
 							?>
-                            <li>Duration: <?php echo $showDuration; ?> </li>
-                            <li>Start Date: <?php echo date("M d, Y h:i:sa", strtotime($course['start_at']));?></li>
-                            <?php if($duration > 0){ ?>                            	
-                                <li> End Date: <?php echo date("M d, Y h:i:sa", $enddate);?></li>
-                            <?php }else{ ?>
-                                <li> End Date: <?php echo date("M d, Y", $enddate).' 11:59:59pm';?></li>
-                            <?php } ?>
+							<li>Duration: <?php echo $showDuration; ?> </li>
+							<li> Start Date: <?php echo date("M d, Y h:i:sa", strtotime($course['start_day'] . " " . $course['start_time']));?></li>
+							<li> End Date: <?php echo date("M d, Y h:i:sa", $enddate);?></li>
 						</ul>
 					</div><!--courseInfo-->
 					<div class="coursePrice">

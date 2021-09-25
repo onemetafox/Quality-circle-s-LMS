@@ -1394,7 +1394,7 @@
                         processData:false,
                         contentType: false,
                         success: function (data, status, xhr) {						 
-                           // document.location.reload();
+                           document.location.reload();
                            $.magnificPopup.close();
                            new PNotify({
                               title: 'Success',
@@ -1419,7 +1419,7 @@
                         processData:false,
                         contentType: false,
                         success: function (data, status, xhr) {
-                           // document.location.reload();
+                           document.location.reload();
                            $.magnificPopup.close();
                            new PNotify({
                               title: 'Success',
