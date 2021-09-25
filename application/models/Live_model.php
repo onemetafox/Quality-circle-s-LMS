@@ -194,7 +194,7 @@ class Live_model extends CI_Model
     function insert_time($data)
     {
         $data['reg_date'] = date("Y-m-d H:i:s");
-
+        // print_r($data);
         $this->db->insert($this->course_time_table, $data);
         $id = $this->db->insert_id();
         return $id;

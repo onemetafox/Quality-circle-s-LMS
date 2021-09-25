@@ -209,7 +209,7 @@ class Virtualcourse_model extends AbstractModel
         // $this->db->limit(3,0);
         $this->db->select("*,DATE_FORMAT(reg_date,'%b %d,%Y') as freg_date");
         $virtual_course = $this->db->get($this->table)->result_array();
-        $this->db->select('b.*,a.start_at,a.id as virtual_course_time_id, a.virtual_course_id');
+        $this->db->select('b.*, a.start_at, a.start_time, a.end_time, a.id as virtual_course_time_id, a.virtual_course_id');
         $this->db->join($this->table.' b' ,'b.id = a.virtual_course_id','left');
         $this->db->where('a.start_at >=',date('Y-m-d'));
         $this->db->order_by('a.start_at','asc');

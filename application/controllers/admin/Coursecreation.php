@@ -876,7 +876,7 @@ class Coursecreation extends BaseController{
 			$course_time['sday'] = date('d',$timestamp);
 			$course_time['location'] = $course_data['location'];
 		
-            $this->Training_model->insert_time($course_time);
+            // $this->Training_model->insert_time($course_time);
 		}else{
             
         }
@@ -948,9 +948,9 @@ class Coursecreation extends BaseController{
 			}		
 			$row_id = $this->Live_model->insert_course($course_data);
 			$course_time['virtual_course_id'] = $row_id;
-			$course_time['start_at'] = $start_at;
+			// $course_time['start_at'] = $start_at;
 			$course_time['reg_date'] = $start_at;
-			$this->Live_model->insert_time($course_time);
+			// $this->Live_model->insert_time($course_time);
 		}
 	}
     

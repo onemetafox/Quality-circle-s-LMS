@@ -210,13 +210,13 @@
                                                     $sday = date('d', $timestamp);
                                                     if($year == $current_year){?>
                         
-                                                    <a class="btn btn-xs btn-primary " href="javascript:updateTime(<?=$key?>,'<?=$date?>','<?=$hour?>',<?=$j['id']?>)" style="font-size: 8px; color: white">
+                                                    <a class="btn btn-xs btn-primary " href="javascript:updateTime(<?=$key?>,'<?=$j['start_at']?>','<?=$j['start_time']?>',<?=$j['id']?>)" style="font-size: 8px; color: white">
                                                     
                                                         <?= $rows['instructor_email'] ?>
                                                         </br>
                                                         <?= $sday ?>
                                                         :
-                                                        <?= $hour ?>
+                                                        <?= $j['start_time'] ?>
                                                     </a></br>
                                                 <?php }}?>
                                             </td>
@@ -541,11 +541,11 @@
         $('.change-time').click();
     }
 
-    function updateTime(id, date,hour, time_id) {
+    function updateTime(id, date,start_time, time_id) {
         $('.btn-user-list').prop('hidden', false);
 		$('#add_course_id').val(id);
         $('#startday').val(date);
-        $('#starttime').val(hour);
+        $('#starttime').val(start_time);
         $('#change_id').val(id);
         $('#time_id').val(time_id);
 		$('#add_course_time_id').val(time_id);
