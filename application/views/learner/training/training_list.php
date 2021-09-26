@@ -77,134 +77,147 @@
 							<div class="col-sm-12">
 								<?php foreach($free_course_list as $free_course):
 									if($free_course['date_str'] != '' || $free_course['date_str'] != 0){
-									$currentdays = time();
-									$startDateI = $free_course['date_str'];
 
-									$durationI = $free_course['duration'] - 1;
-									$enddateI = strtotime('+'.$duration .' days', $startDateI);
-									if($currentdays <= $enddateI){
-								?> 
-									<div class="whitePanel">
-										<div class="row">
-											<div class="col-lg-4 col-md-5 col-sm-6">
-												<div class="leftImgBox">
-                                                	<?php 
-														$courseimgpath = getCourseImgById($free_course['course_id']);
-                                                        $imgName = end(explode('/', $courseimgpath));
-                                                        if($imgName != '' && file_exists(getcwd().'/assets/uploads/company/course/'.$imgName)){								
-                                                    ?>
-                                                        <img src="<?php echo base_url($courseimgpath); ?>" class="rounded img-fluid" alt="learnerlearner">
-                                                   	<?php }else{ ?>
-                                                        <img src="<?php echo base_url().'assets/uploads/ilt-default.png'; ?>" class="rounded img-fluid" alt="learnerlearner">
-                                                   	<?php } ?>
-												</div><!--leftImgBox-->
-											</div><!--col-4-->
-											<div class="col-lg-8 col-md-7 col-sm-6 courseInfo">
-                                                <h5>
-													<?php
-                                                        $showDuration = $free_course['duration'] > 1 ? $free_course['duration']. " Days" : $free_course['duration']." Day";
-                                                        $duration = $free_course['duration'] - 1;
-                                                        //$enddate = strtotime(date('Y-m-d',$free_course['date_str']) .'+'.$duration .'days');
-														$enddate = strtotime('+'.$duration .' days', $free_course['date_str']);
-                                                    ?>
-													
-													<?php echo ucfirst($free_course['title']);?>, <?php echo $showDuration; ?> <br />
-                                                    <p> Start Date: <?php echo date("M d, Y h:i:sa", $free_course['date_str']);?></p>
-                                                    <?php if($duration > 0){ ?>
-                                                        <p>End Date: <?php echo date("M d, Y h:i:sa", $enddate);?></p>
-                                                    <?php }else{ ?>
-                                                        <p>End Date: <?php echo date("M d, Y", $enddate).' 11:59:59pm';?></p>
-                                                    <?php } ?>
-                                                </h5>
-                                                <ul class="courseUl">
-													<li><?=nl2br(substr($free_course['description'],0,300)); ?>...</li>
-												</ul>
-		     	                               	<?php if($free_course['enroll_id'] == ''){ ?>
-                                                <a class="btnBlue" href="javascript:booknow(<?=$free_course['course_id']?>,<?=$free_course['course_time_id']?>)" >
-                                                    <?=$term[enrollnow]?>
-                                                </a>
-                                                <?php }else { ?>
-													<a class="btnBlue" href="javascript:viewcourse(<?=$free_course['course_id']?>)" >
-														<?=$term[viewcourse]?>
+										if($course['course_self_time'] == "Time Restricted"){
+											$showDuration = $free_course['duration'] > 1 ? $free_course['duration']. " Days" : $free_course['duration']." Day";
+											$duration = $free_course['duration'] - 1;
+											$enddate = strtotime('+'.$duration .' days', strtotime($free_course['start_day']. " " . $free_course['end_time']));
+											$currentdays = time();
+										}else{
+											$enddate = $free_course['duration'] * 8 * 24 * 60;
+											$currentdays = $free_course['session_time']?$free_course['session_time']:0;
+										}
+										// $startDateI = $free_course['date_str'];
+
+										// $durationI = $free_course['duration'] - 1;
+										// $enddateI = strtotime('+'.$duration .' days', $startDateI);
+										if($currentdays <= $enddate){  ?> 
+										<div class="whitePanel">
+											<div class="row">
+												<div class="col-lg-4 col-md-5 col-sm-6">
+													<div class="leftImgBox">
+														<?php 
+															$courseimgpath = getCourseImgById($free_course['course_id']);
+															$imgName = end(explode('/', $courseimgpath));
+															if($imgName != '' && file_exists(getcwd().'/assets/uploads/company/course/'.$imgName)){								
+														?>
+															<img src="<?php echo base_url($courseimgpath); ?>" class="rounded img-fluid" alt="learnerlearner">
+														<?php }else{ ?>
+															<img src="<?php echo base_url().'assets/uploads/ilt-default.png'; ?>" class="rounded img-fluid" alt="learnerlearner">
+														<?php } ?>
+													</div><!--leftImgBox-->
+												</div><!--col-4-->
+												<div class="col-lg-8 col-md-7 col-sm-6 courseInfo">
+													<h5>
+														<?php
+															$showDuration = $free_course['duration'] > 1 ? $free_course['duration']. " Days" : $free_course['duration']." Day";
+															$duration = $free_course['duration'] - 1;
+															//$enddate = strtotime(date('Y-m-d',$free_course['date_str']) .'+'.$duration .'days');
+															$enddate = strtotime('+'.$duration .' days', $free_course['date_str']);
+														?>
+														
+														<?php echo ucfirst($free_course['title']);?>, <?php echo $showDuration; ?> <br />
+														<p> Start Date: <?php echo date("M d, Y h:i:sa", $free_course['date_str']);?></p>
+														<?php if($duration > 0){ ?>
+															<p>End Date: <?php echo date("M d, Y h:i:sa", $enddate);?></p>
+														<?php }else{ ?>
+															<p>End Date: <?php echo date("M d, Y", $enddate).' 11:59:59pm';?></p>
+														<?php } ?>
+													</h5>
+													<ul class="courseUl">
+														<li><?=nl2br(substr($free_course['description'],0,300)); ?>...</li>
+													</ul>
+													<?php if($free_course['enroll_id'] == ''){ ?>
+													<a class="btnBlue" href="javascript:booknow(<?=$free_course['course_id']?>,<?=$free_course['course_time_id']?>)" >
+														<?=$term[enrollnow]?>
 													</a>
-												<?php } ?>
-                                                <a class="btnBlue" href="<?=base_url()?>learner/training/viewDetail/<?=$free_course['id']?>" >
-													<?=$term[viewdetails] ?>
-                                                </a>
-											</div><!--col-8-->
-										</div><!--row-->
-									</div><!--whitePanel-->
-								<?php } } endforeach; ?>
+													<?php }else { ?>
+														<a class="btnBlue" href="javascript:viewcourse(<?=$free_course['course_id']?>)" >
+															<?=$term[viewcourse]?>
+														</a>
+													<?php } ?>
+													<a class="btnBlue" href="<?=base_url()?>learner/training/viewDetail/<?=$free_course['id']?>" >
+														<?=$term[viewdetails] ?>
+													</a>
+												</div><!--col-8-->
+											</div><!--row-->
+										</div><!--whitePanel-->
+									<?php } 
+									} 
+								endforeach; ?>
 
 								<?php foreach($paid_course_list as $paid_course):
 									if($paid_course['date_str'] != '' || $paid_course['date_str'] != 0){
-									$currentdays = time();
-									$startDateI = $paid_course['date_str'];
-
-									$durationI = $paid_course['duration'] - 1;
-									$enddateI = strtotime('+'.$duration .' days', $startDateI);
+										if($course['course_self_time'] == "Time Restricted"){
+											$showDuration = $paid_course['duration'] > 1 ? $paid_course['duration']. " Days" : $paid_course['duration']." Day";
+											$duration = $paid_course['duration'] - 1;
+											$enddate = strtotime('+'.$duration .' days', strtotime($paid_course['start_day']. " " . $paid_course['end_time']));
+											$currentdays = time();
+										}else{
+											$enddate = $paid_course['duration'] * 8 * 24 * 60;
+											$currentdays = $paid_course['session_time']?$paid_course['session_time']:0;
+										}
 									
-									if($currentdays <= $enddateI){
-								?> 
-									<div class="whitePanel">
-										<div class="row">
-											<div class="col-lg-4 col-md-5 col-sm-6">
-												<div class="leftImgBox">
-                                                	<?php 
-														$courseimgpath = getCourseImgById($paid_course['course_id']);
-                                                        $imgName = end(explode('/', $courseimgpath));
-                                                        if($imgName != '' && file_exists(getcwd().'/assets/uploads/company/course/'.$imgName)){								
-                                                    ?>
-                                                        <img src="<?php echo base_url($courseimgpath); ?>" class="rounded img-fluid" alt="learnerlearner">
-                                                   	<?php }else{ ?>
-                                                        <img src="<?php echo base_url().'assets/uploads/ilt-default.png'; ?>" class="rounded img-fluid" alt="learnerlearner">
-                                                   	<?php } ?>
-												</div><!--leftImgBox-->
-											</div><!--col-4-->
-											<div class="col-lg-8 col-md-7 col-sm-6 courseInfo">
-                                                <h5>
-													<?php
-                                                        $showDuration = $paid_course['duration'] > 1 ? $paid_course['duration']. " Days" : $paid_course['duration']." Day";
-                                                        $duration = $paid_course['duration'] - 1;
-                                                        //$enddate = strtotime(date('Y-m-d',$paid_course['date_str']) .'+'.$duration .'days');
-														$enddate = strtotime('+'.$duration .' days', $paid_course['date_str']);
-                                                    ?>
-													
-													<?php echo ucfirst($paid_course['title']);?>, <?php echo $showDuration; ?> <br />
-                                                    <p> Start Date: <?php echo date("M d, Y h:i:sa", $paid_course['date_str']);?></p>
-                                                    <?php if($duration > 0){ ?>
-                                                        <p>End Date: <?php echo date("M d, Y h:i:sa", $enddate);?></p>
-                                                    <?php }else{ ?>
-                                                        <p>End Date: <?php echo date("M d, Y", $enddate).' 11:59:59pm';?></p>
-                                                    <?php } ?>
-													<p>USD $: <?= $paid_course['pay_price']?></p>
-                                                </h5>
-                                                <ul class="courseUl">
-													<li><?=nl2br(substr($paid_course['description'],0,300)); ?>...</li>
-												</ul>
-												<?php if(!$paid_course['pay_id']){ ?>
-													<div style="width:150px;" id="paypal-button-container"></div>
-													<img style="width:150px; float:left" alt="Visa Checkout" class="v-button" role="button" src="https://sandbox.secure.checkout.visa.com/wallet-services-web/xo/button.png">
-
-													<!-- <a class="btnBlue" href="javascript:pay_now(<?=$paid_course['course_id']?>,<?=$paid_course['training_id']?>,<?=$paid_course['course_time_id']?>,<?=$paid_course['pay_price']?>)" >
-														Pay Now
-													</a> -->
-                                                <?php }else if(!$paid_course['enroll_id']){ ?>
-													<a class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
-														<?=$term[enrollnow]?>
+										if($currentdays <= $enddateI){
+									?> 
+										<div class="whitePanel">
+											<div class="row">
+												<div class="col-lg-4 col-md-5 col-sm-6">
+													<div class="leftImgBox">
+														<?php 
+															$courseimgpath = getCourseImgById($paid_course['course_id']);
+															$imgName = end(explode('/', $courseimgpath));
+															if($imgName != '' && file_exists(getcwd().'/assets/uploads/company/course/'.$imgName)){								
+														?>
+															<img src="<?php echo base_url($courseimgpath); ?>" class="rounded img-fluid" alt="learnerlearner">
+														<?php }else{ ?>
+															<img src="<?php echo base_url().'assets/uploads/ilt-default.png'; ?>" class="rounded img-fluid" alt="learnerlearner">
+														<?php } ?>
+													</div><!--leftImgBox-->
+												</div><!--col-4-->
+												<div class="col-lg-8 col-md-7 col-sm-6 courseInfo">
+													<h5>
+														<?php
+															$showDuration = $paid_course['duration'] > 1 ? $paid_course['duration']. " Days" : $paid_course['duration']." Day";
+															$duration = $paid_course['duration'] - 1;
+															//$enddate = strtotime(date('Y-m-d',$paid_course['date_str']) .'+'.$duration .'days');
+															$enddate = strtotime('+'.$duration .' days', $paid_course['date_str']);
+														?>
+														
+														<?php echo ucfirst($paid_course['title']);?>, <?php echo $showDuration; ?> <br />
+														<p> Start Date: <?php echo date("M d, Y h:i:sa", $paid_course['date_str']);?></p>
+														<?php if($duration > 0){ ?>
+															<p>End Date: <?php echo date("M d, Y h:i:sa", $enddate);?></p>
+														<?php }else{ ?>
+															<p>End Date: <?php echo date("M d, Y", $enddate).' 11:59:59pm';?></p>
+														<?php } ?>
+														<p>USD $: <?= $paid_course['pay_price']?></p>
+													</h5>
+													<ul class="courseUl">
+														<li><?=nl2br(substr($paid_course['description'],0,300)); ?>...</li>
+													</ul>
+													<?php if(!$paid_course['pay_id']){ ?>
+														<a class="btnBlue" href="javascript:pay_now(<?=$paid_course['course_id']?>,<?=$paid_course['training_id']?>,<?=$paid_course['course_time_id']?>,<?=$paid_course['pay_price']?>)" >
+															Pay Now
+														</a>
+													<?php }else if(!$paid_course['enroll_id']){ ?>
+														<a class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
+															<?=$term[enrollnow]?>
+														</a>
+													<?php } else{?>
+														<a  class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
+															<?=$term[viewcourse]?>
+														</a>
+													<?php }?>
+													<a  class="btnBlue" href="<?=base_url()?>learner/training/viewDetail/<?=$paid_course['id']?>" >
+														<?=$term[viewdetails] ?>
 													</a>
-												<?php } else{?>
-													<a style = "float:left; margin-top:-20px; margin-left: 20px" class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
-														<?=$term[viewcourse]?>
-													</a>
-												<?php }?>
-                                                <a style = "float:left; margin-top:-20px; margin-left: 20px" class="btnBlue" href="<?=base_url()?>learner/training/viewDetail/<?=$paid_course['id']?>" >
-                                                     <?=$term[viewdetails] ?>
-                                                </a>
-											</div><!--col-8-->
-										</div><!--row-->
-									</div><!--whitePanel-->
-								<?php } } endforeach; ?>
+												</div><!--col-8-->
+											</div><!--row-->
+										</div><!--whitePanel-->
+									<?php } 
+									} 
+								endforeach; ?>
 							</div><!--col-12-->
 							<div class="col-sm-12 paginationBox">
 	                            <?php echo $links ?>
@@ -223,73 +236,95 @@
 </div>
 </div>
 </section>
+<div id="payment_modal" class="modal-block modal-block-primary mfp-hide" style="max-width: 800px!important">
+	<input type="hidden" id="price" name="price" class="form-control" >
+	<section class="card">
+		<header class="card-header">
+			<h2 class="card-title"><?=$term[inviteuser]?></h2>
+		</header>
+		<div class="card-body">
+			<p>You have to pay <strong></strong> to take part in this course</p>
+			<!-- <div style="width:150px;" id="paypal-button-container"></div> -->
+			<img style="width:150px; float:left" alt="Visa Checkout" class="v-button" role="button" src="https://sandbox.secure.checkout.visa.com/wallet-services-web/xo/button.png">
+		</div>
+		<footer class="card-footer">
+			<div class="row">
+				<div class="col-md-12 text-right">
+					<a href="#add_exist_modal" class="btn btn-default add_exist_modal" style="color:#333"><i class="fas fa-plus"></i> <?=$term[inviteuser]?> </a>
+					<a href="#add_modal" class="btn btn-default add_modal" style="color:#333"><i class="fas fa-plus"></i> <?=$term[add]?> </a>
+					<button class="btn btn-default modal-change-dismiss"><?=$term[cancel]?></button>
+				</div>
+			</div>
+			<div class="row">
+				<form id="frmStripePayment" action="" method="post">
+					<div class="field-row">
+						<label>Card Holder Name</label> <span id="card-holder-name-info"
+							class="info"></span><br> <input type="text" id="name"
+							name="name" class="demoInputBox">
+					</div>
+					<div class="field-row">
+						<label>Email</label> <span id="email-info" class="info"></span><br>
+						<input type="text" id="email" name="email" class="demoInputBox">
+					</div>
+					<div class="field-row">
+						<label>Card Number</label> <span id="card-number-info"
+							class="info"></span><br> <input type="text" id="card-number"
+							name="card-number" class="demoInputBox">
+					</div>
+					<div class="field-row">
+						<div class="contact-row column-right">
+							<label>Expiry Month / Year</label> 
+							<span id="userEmail-info" class="info"></span>
+							<br> 
+							<select name="month" id="month" class="demoSelectBox">
+								<option value="08">08</option>
+								<option value="09">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+							</select> 
+							<select name="year" id="year"	class="demoSelectBox">
+								<option value="18">2018</option>
+								<option value="19">2019</option>
+								<option value="20">2020</option>
+								<option value="21">2021</option>
+								<option value="22">2022</option>
+								<option value="23">2023</option>
+								<option value="24">2024</option>
+								<option value="25">2025</option>
+								<option value="26">2026</option>
+								<option value="27">2027</option>
+								<option value="28">2028</option>
+								<option value="29">2029</option>
+								<option value="30">2030</option>
+							</select>
+						</div>
+						<div class="contact-row cvv-box">
+							<label>CVC</label> <span id="cvv-info" class="info"></span><br>
+							<input type="text" name="cvc" id="cvc" class="demoInputBox cvv-input">
+						</div>
+					</div>
+					<div>
+						<input type="submit" name="pay_now" value="Submit" id="submit-btn" class="btnAction" onClick="stripePay(event);">
+						<div id="loader">
+							<img alt="loader" src="LoaderIcon.gif">
+						</div>
+					</div>
+					<input type='hidden' name='amount' value='0.5'> 
+					<input type='hidden' name='currency_code' value='USD'> 
+					<input type='hidden' name='item_name' value='Test Product'> 
+					<input type='hidden' name='item_number' value='PHPPOTEG#1'>
+				</form>
+			</div>
+		</footer>
+	</section>
+</div>
 <!-- <?php if(!empty($successMessage)) { ?>
 <div id="success-message"><?php echo $successMessage; ?></div>
 <?php  } ?>
 <div id="error-message"></div>
 
-<form id="frmStripePayment" action="" method="post">
-    <div class="field-row">
-        <label>Card Holder Name</label> <span id="card-holder-name-info"
-            class="info"></span><br> <input type="text" id="name"
-            name="name" class="demoInputBox">
-    </div>
-    <div class="field-row">
-        <label>Email</label> <span id="email-info" class="info"></span><br>
-        <input type="text" id="email" name="email" class="demoInputBox">
-    </div>
-    <div class="field-row">
-        <label>Card Number</label> <span id="card-number-info"
-            class="info"></span><br> <input type="text" id="card-number"
-            name="card-number" class="demoInputBox">
-    </div>
-    <div class="field-row">
-        <div class="contact-row column-right">
-            <label>Expiry Month / Year</label> <span id="userEmail-info"
-                class="info"></span><br> <select name="month" id="month"
-                class="demoSelectBox">
-                <option value="08">08</option>
-                <option value="09">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-            </select> <select name="year" id="year"
-                class="demoSelectBox">
-                <option value="18">2018</option>
-                <option value="19">2019</option>
-                <option value="20">2020</option>
-                <option value="21">2021</option>
-                <option value="22">2022</option>
-                <option value="23">2023</option>
-                <option value="24">2024</option>
-                <option value="25">2025</option>
-                <option value="26">2026</option>
-                <option value="27">2027</option>
-                <option value="28">2028</option>
-                <option value="29">2029</option>
-                <option value="30">2030</option>
-            </select>
-        </div>
-        <div class="contact-row cvv-box">
-            <label>CVC</label> <span id="cvv-info" class="info"></span><br>
-            <input type="text" name="cvc" id="cvc"
-                class="demoInputBox cvv-input">
-        </div>
-    </div>
-    <div>
-        <input type="submit" name="pay_now" value="Submit"
-            id="submit-btn" class="btnAction"
-            onClick="stripePay(event);">
 
-        <div id="loader">
-            <img alt="loader" src="LoaderIcon.gif">
-        </div>
-    </div>
-    <input type='hidden' name='amount' value='0.5'> <input type='hidden'
-        name='currency_code' value='USD'> <input type='hidden'
-        name='item_name' value='Test Product'> <input type='hidden'
-        name='item_number' value='PHPPOTEG#1'>
-</form>
 
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script src="vendor/jquery/jquery-3.2.1.min.js" type="text/javascript"></script>
@@ -450,34 +485,36 @@ function stripePay(e) {
         });
     }
 	function pay_now(course_id,training_id, course_time_id, price) {
-        swal({
-			title: "You have to pay $"+price+" to take part in this course",
-			buttons: true
-		}).then((willDelete) => {
-			if (willDelete) {
-			$.ajax({
-				url: "<?php echo base_url() ?>learner/training/pay_training",
-				type: 'POST',
-				data: {'course_id':training_id,'time_id':course_time_id,'ilt_course_id':course_id},
-				dataType : 'json',
-				success: function(data){
-					if(data == 'success') {
-						swal({
-							title: "You have successfully enroll this course. Please wait until course is started!",
-						});
-						setTimeout(function(){ location.reload(); }, 10000);
-					}else{
-						swal({
-							title: " Error!",
-						});
-					}
+		$('#price').val(price);
+		$('#payment_modal').modal();
+        // swal({
+		// 	title: "You have to pay $"+price+" to take part in this course",
+		// 	buttons: true
+		// }).then((willDelete) => {
+		// 	if (willDelete) {
+		// 	$.ajax({
+		// 		url: "<?php echo base_url() ?>learner/training/pay_training",
+		// 		type: 'POST',
+		// 		data: {'course_id':training_id,'time_id':course_time_id,'ilt_course_id':course_id},
+		// 		dataType : 'json',
+		// 		success: function(data){
+		// 			if(data == 'success') {
+		// 				swal({
+		// 					title: "You have successfully enroll this course. Please wait until course is started!",
+		// 				});
+		// 				setTimeout(function(){ location.reload(); }, 10000);
+		// 			}else{
+		// 				swal({
+		// 					title: " Error!",
+		// 				});
+		// 			}
 								
-				}
-			});
-			} else {
-			// return;
-			}
-		});
+		// 		}
+		// 	});
+		// 	} else {
+		// 	// return;
+		// 	}
+		// });
     }
     $("#location").on('change',(function () {
         window.location = $('#base_url').val()+ 'learner/training?location='+$("#location").val();

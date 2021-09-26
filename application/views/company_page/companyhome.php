@@ -201,8 +201,6 @@
                             <?php									
 								$showDuration = $course['duration'] > 1 ? $course['duration']. " Days" : $course['duration']." Day";
 								$duration = $course['duration'] - 1;
-								print_r($course['start_time']);
-								
 								$enddate = strtotime('+'.$duration .' days', strtotime($course['start_day']. " " . $course['end_time']));
 							?>
 							<li>Duration: <?php echo $showDuration; ?> </li>
