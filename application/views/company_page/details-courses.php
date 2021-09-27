@@ -126,7 +126,32 @@
         // For Safari
         return 'Sure?';
     };
+    <?php if($course_self_time == 'Self Pace') { ?>
+        setInterval(setSelfPace(), 5000);
+        function setSelfPace(){
+            var course_id = '<?= $course_id?>';
+            var user_id = '<?= $user_id ?>';
+            $.ajax({
+                url: '<?php echo base_url($company['company_url']);?>/demand/setSelfPace',
+                type: 'POST',
+                data: {
+                    'course_id': course_id,
+                    'user_id' : user_id
+                },
+                success: function (data, status, xhr) {
 
+                },
+                error: function () {
+                    new PNotify({
+                        title: '<?php echo $term['error']; ?>',
+                        text: 'You can not select this Session.',
+                        type: 'error'
+                    });
+                }
+            });
+
+        }
+    <?php  } ?>
 
     function next_Lesson() {
         var radios = $(':radio');

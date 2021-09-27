@@ -107,7 +107,7 @@ $route['company/(:any)/demand/showPreviewQuestion/(:num)'] = "company/demand/sho
 $route['company/(:any)/demand/examResult/(:num)'] = "company/demand/examResult/$2";
 $route['company/(:any)/demand/reportCard/(:num)'] = "company/demand/reportCard/$2";
 $route['company/(:any)/demand/saveUserAnswers'] = "company/demand/saveUserAnswers";
-
+$route['company/(:any)/demand/setSelfPace'] = "company/demand/setSelfPace";
 $route['company/(:any)/demand/showCourse'] = "company/demand/showCourse";
 
 $route['company/(:any)/demand/restartCourse'] = "company/demand/restartCourse";

@@ -398,7 +398,7 @@ class Demand  extends BaseController
         if($user_type == 'Learner') { 
 			
             $course = $this->Course_model->select($id);
-
+            $params['course_self_time'] = $course->course_self_time;
             $pay_data = array(
                 'user_id' => $this->session->get_userdata()['user_id'],
                 'amount' => $course->pay_price,
@@ -445,6 +445,7 @@ class Demand  extends BaseController
             $params['course_id'] = $id;
             $this->session->set_userdata(array('using_course_id' => $id));
             $params['course_name'] = $course->title;
+            $params['user_id'] = $this->session->get_userdata()['user_id'];
 			
 			$timesids = 0;
 			if(isset($_REQUEST['type']) && $_REQUEST['type'] == 'ilt' && $_REQUEST['time_id'] > 0){
@@ -464,7 +465,8 @@ class Demand  extends BaseController
 				);	
 				$this->Enrollments_model->insertEnrolledUser($enrolled_data);
 			}
-			
+            // print_r($params);
+            // die;
             $this->loadViews_front('company_page/details-courses', $params);
         }
         else{
@@ -511,10 +513,14 @@ class Demand  extends BaseController
 				);	
 				$this->Enrollments_model->insertEnrolledUser($enrolled_data);
 			}
+           
             $this->loadViews_front('company_page/details-courses', $params);
         }
     }
-
+    public function setSelfPace(){
+        $data = $this->input->post();
+        print_r($data);
+    }
     public function checkAssessment_Chapter($ch_id = 0){
 
         $user_id = $this->session->get_userdata()['user_id'];
