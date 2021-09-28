@@ -132,7 +132,7 @@ $image = $this->session->userdata('user_photo');
                                         <?php if($user->user_type == "Admin") {?>
                                         <label class="col-sm-2 control-label text-sm-right pt-2"><?php echo $term['payment']; ?></label>
                                         <div class="col-sm-3">
-                                            <input type="text" value="<?php print $user->payment ?>" class="form-control"  id="payment" name="payment" >
+                                            <input type="text" value="<?php print $payment ?>" class="form-control"  id="payment" name="payment" >
                                         </div>
                                         <?php } ?>
                                     </div>
