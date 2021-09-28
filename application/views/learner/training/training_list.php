@@ -197,9 +197,11 @@
 														<li><?=nl2br(substr($paid_course['description'],0,300)); ?>...</li>
 													</ul>
 													<?php if(!$paid_course['pay_id']){ ?>
-														<a class="btnBlue" href="javascript:pay_now(<?=$paid_course['course_id']?>,<?=$paid_course['training_id']?>,<?=$paid_course['course_time_id']?>,<?=$paid_course['pay_price']?>)" >
+														<div style="width:150px;" class="paypal-button-container"></div>
+														<img style="width:150px; float:left" alt="Visa Checkout" class="v-button" role="button" src="https://sandbox.secure.checkout.visa.com/wallet-services-web/xo/button.png">
+														<!-- <a class="btnBlue" href="javascript:pay_now(<?=$paid_course['course_id']?>,<?=$paid_course['training_id']?>,<?=$paid_course['course_time_id']?>,<?=$paid_course['pay_price']?>)" >
 															Pay Now
-														</a>
+														</a> -->
 													<?php }else if(!$paid_course['enroll_id']){ ?>
 														<a class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
 															<?=$term[enrollnow]?>
@@ -461,7 +463,7 @@ function stripePay(e) {
 			alert('Transaction completed by ' + details.payer.name.given_name);
 		});
 		}
-	}).render('#paypal-button-container');
+	}).render('.paypal-button-container');
     function booknow(course_id,id) {
         $.ajax({
             url: $('#base_url').val()+'learner/training/booknow',

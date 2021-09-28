@@ -126,9 +126,15 @@ $image = $this->session->userdata('user_photo');
                                     
 				    				<div class="form-group row">
                                         <label class="col-sm-2 control-label text-sm-right pt-2"><?php echo $term['email']; ?></label>
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-3">
                                             <input type="text" value="<?php print $user->email ?>" class="form-control"  id="email" name="email" >
                                         </div>
+                                        <?php if($user->user_type == "Admin") {?>
+                                        <label class="col-sm-2 control-label text-sm-right pt-2"><?php echo $term['payment']; ?></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" value="<?php print $user->payment ?>" class="form-control"  id="payment" name="payment" >
+                                        </div>
+                                        <?php } ?>
                                     </div>
 
                                     <div class="form-group row">

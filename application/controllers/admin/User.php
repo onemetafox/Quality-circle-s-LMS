@@ -237,14 +237,16 @@ class User extends BaseController {
 			$update_data['state'] = $this->input->post('state');
 			$update_data['city'] = $this->input->post('city');
 			unset($update_data['company_name']);
+            unset($update_data['payment']);
 			$company_name = $this->input->post('company_name');
+            $payment = $this->input->post('payment');
 			$update_data['sign'] = $this->input->post('sign');			
 			$this->session->set_userdata('country_code', $update_data['country_code']);
 			$this->session->set_userdata('phone', $update_data['phone']);
 			$this->session->set_userdata('email', $update_data['email']);
 			if($user_profile && isset($update_data[picture])) $this->session->set_userdata('user_photo', base_url() . $update_data[picture]);			
 			$this->session->set_userdata('role', $update_data['role']);
-			$this->Company_model->update(array('name' => $company_name), array('id' => $this->session->userdata('company_id')));
+			$this->Company_model->update(array('name' => $company_name,'payment'=>$payment), array('id' => $this->session->userdata('company_id')));
 			return $this->User_model->update($update_data, array('id' => $id));
 		}
     }
