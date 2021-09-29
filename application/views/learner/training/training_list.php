@@ -10,8 +10,7 @@
 <link rel="shortcut icon" type="image/png" href="<?php echo base_url(); ?>assets/images/favicon.png" />
 <link href="<?php echo base_url(); ?>assets/css_company/main-style.css" rel="stylesheet">
 <link href="<?php echo base_url(); ?>assets/css_company/responsive.css" rel="stylesheet">
-<script src="https://www.paypal.com/sdk/js?client-id=AfvvmSMlwXTgLnGoXB9ygA7DXst7RDSb0dvScr8NvByZoUUUbrk3X9gGs-R8pXkeZnM8q9XRehZelBfD"> </script>
-<script type="text/javascript" src="https://sandbox-assets.secure.checkout.visa.com/checkout-widget/resources/js/integration/v1/sdk.js"></script>
+
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -191,14 +190,21 @@
 														<?php }else{ ?>
 															<p>End Date: <?php echo date("M d, Y", $enddate).' 11:59:59pm';?></p>
 														<?php } ?>
-														<p>USD $: <?= $paid_course['pay_price']?></p>
+														<p>USD: $ <?= $paid_course['pay_price']?></p>
 													</h5>
 													<ul class="courseUl">
 														<li><?=nl2br(substr($paid_course['description'],0,300)); ?>...</li>
 													</ul>
 													<?php if(!$paid_course['pay_id']){ ?>
-														<div style="width:150px;" class="paypal-button-container"></div>
-														<img style="width:150px; float:left" alt="Visa Checkout" class="v-button" role="button" src="https://sandbox.secure.checkout.visa.com/wallet-services-web/xo/button.png">
+														<div style="width:160px; float:left; margin-top: -15px;">
+															<a href="">
+																<img style="width:150px" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/buy-logo-medium.png" alt="Buy now with PayPal" />
+															</a>
+															<br>
+															<a href="">
+																<img style="width:150px; float:left" alt="Visa Checkout" class="v-button" role="button" src="https://sandbox.secure.checkout.visa.com/wallet-services-web/xo/button.png">
+															</a>
+														</div>
 														<!-- <a class="btnBlue" href="javascript:pay_now(<?=$paid_course['course_id']?>,<?=$paid_course['training_id']?>,<?=$paid_course['course_time_id']?>,<?=$paid_course['pay_price']?>)" >
 															Pay Now
 														</a> -->
@@ -238,7 +244,7 @@
 </div>
 </div>
 </section>
-<div id="payment_modal" class="modal-block modal-block-primary mfp-hide" style="max-width: 800px!important">
+<div id="stripe_modal" class="modal-block modal-block-primary mfp-hide" style="max-width: 800px!important">
 	<input type="hidden" id="price" name="price" class="form-control" >
 	<section class="card">
 		<header class="card-header">
@@ -248,6 +254,103 @@
 			<p>You have to pay <strong></strong> to take part in this course</p>
 			<!-- <div style="width:150px;" id="paypal-button-container"></div> -->
 			<img style="width:150px; float:left" alt="Visa Checkout" class="v-button" role="button" src="https://sandbox.secure.checkout.visa.com/wallet-services-web/xo/button.png">
+		</div>
+		<footer class="card-footer">
+			<div class="row">
+				<div class="col-md-12 text-right">
+					<a href="#add_exist_modal" class="btn btn-default add_exist_modal" style="color:#333"><i class="fas fa-plus"></i> <?=$term[inviteuser]?> </a>
+					<a href="#add_modal" class="btn btn-default add_modal" style="color:#333"><i class="fas fa-plus"></i> <?=$term[add]?> </a>
+					<button class="btn btn-default modal-change-dismiss"><?=$term[cancel]?></button>
+				</div>
+			</div>
+			<div class="row">
+				<form id="frmStripePayment" action="" method="post">
+					<div class="field-row">
+						<label>Card Holder Name</label> <span id="card-holder-name-info"
+							class="info"></span><br> <input type="text" id="name"
+							name="name" class="demoInputBox">
+					</div>
+					<div class="field-row">
+						<label>Email</label> <span id="email-info" class="info"></span><br>
+						<input type="text" id="email" name="email" class="demoInputBox">
+					</div>
+					<div class="field-row">
+						<label>Card Number</label> <span id="card-number-info"
+							class="info"></span><br> <input type="text" id="card-number"
+							name="card-number" class="demoInputBox">
+					</div>
+					<div class="field-row">
+						<div class="contact-row column-right">
+							<label>Expiry Month / Year</label> 
+							<span id="userEmail-info" class="info"></span>
+							<br> 
+							<select name="month" id="month" class="demoSelectBox">
+								<option value="08">08</option>
+								<option value="09">9</option>
+								<option value="10">10</option>
+								<option value="11">11</option>
+								<option value="12">12</option>
+							</select> 
+							<select name="year" id="year"	class="demoSelectBox">
+								<option value="18">2018</option>
+								<option value="19">2019</option>
+								<option value="20">2020</option>
+								<option value="21">2021</option>
+								<option value="22">2022</option>
+								<option value="23">2023</option>
+								<option value="24">2024</option>
+								<option value="25">2025</option>
+								<option value="26">2026</option>
+								<option value="27">2027</option>
+								<option value="28">2028</option>
+								<option value="29">2029</option>
+								<option value="30">2030</option>
+							</select>
+						</div>
+						<div class="contact-row cvv-box">
+							<label>CVC</label> <span id="cvv-info" class="info"></span><br>
+							<input type="text" name="cvc" id="cvc" class="demoInputBox cvv-input">
+						</div>
+					</div>
+					<div>
+						<input type="submit" name="pay_now" value="Submit" id="submit-btn" class="btnAction" onClick="stripePay(event);">
+						<div id="loader">
+							<img alt="loader" src="LoaderIcon.gif">
+						</div>
+					</div>
+					<input type='hidden' name='amount' value='0.5'> 
+					<input type='hidden' name='currency_code' value='USD'> 
+					<input type='hidden' name='item_name' value='Test Product'> 
+					<input type='hidden' name='item_number' value='PHPPOTEG#1'>
+				</form>
+			</div>
+		</footer>
+	</section>
+</div>
+<div id="paypal_modal" class="modal-block modal-block-primary mfp-hide" style="max-width: 800px!important">
+	<input type="hidden" id="price" name="price" class="form-control" >
+	<section class="card">
+		<header class="card-header">
+			<h2 class="card-title"><?=$term[inviteuser]?></h2>
+		</header>
+		<div class="card-body">
+			<form method="post" class="form-horizontal" role="form" action="<?= base_url() ?>paypal/create_payment_with_paypal">
+				<fieldset>
+					<input title="item_name" name="item_name" type="hidden" value="ahmed fakhr">
+					<input title="item_number" name="item_number" type="hidden" value="12345">
+					<input title="item_description" name="item_description" type="hidden" value="to buy samsung smart tv">
+					<input title="item_tax" name="item_tax" type="hidden" value="1">
+					<input title="item_price" name="item_price" type="hidden" value="7">
+					<input title="details_tax" name="details_tax" type="hidden" value="7">
+					<input title="details_subtotal" name="details_subtotal" type="hidden" value="7">
+
+					<div class="form-group">
+						<div class="col-sm-offset-5">
+							<button  type="submit"  class="btn btn-success">Pay Now</button>
+						</div>
+					</div>
+				</fieldset>
+			</form>
 		</div>
 		<footer class="card-footer">
 			<div class="row">
@@ -438,32 +541,7 @@ function stripePay(e) {
 	// });
 	// Perform logic for payment completion here
 	// });
-  	paypal.Buttons({
-		style: {
-			layout:  'horizontal',
-			color:   'gold',
-			shape:   'rect',
-			label:   'paypal',
-			tagline: 'false'
-		},
-		createOrder: function(data, actions) {
-		// This function sets up the details of the transaction, including the amount and line item details.
-		return actions.order.create({
-			purchase_units: [{
-			amount: {
-				value: '0.01'
-			}
-			}]
-		});
-		},
-		onApprove: function(data, actions) {
-		// This function captures the funds from the transaction.
-		return actions.order.capture().then(function(details) {
-			// This function shows a transaction success message to your buyer.
-			alert('Transaction completed by ' + details.payer.name.given_name);
-		});
-		}
-	}).render('.paypal-button-container');
+  	
     function booknow(course_id,id) {
         $.ajax({
             url: $('#base_url').val()+'learner/training/booknow',
