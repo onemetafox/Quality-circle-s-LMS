@@ -68,11 +68,14 @@ $image = $this->session->userdata('user_photo');
                             <label class="col-sm-2 control-label text-sm-right pt-2"></label>
                             <div class="col-sm-3">                            
                                 <?php if($company_active == 1):?>
-                                <a href="https://dev.gosmartacademy.com/company/gosmartacademy.com" class="modal-with-form">My company</a>
+                                <!-- <a href="https://dev.gosmartacademy.com/company/gosmartacademy.com" class="modal-with-form">My Company</a> -->
+                                <a href="<?=base_url()?>company/<?=$company_url?>" class="modal-with-form"><?= $company_name?></a>
+
                                 <?php endif;?>
                                 <?php if($company_active == 0):?>
                                 <label style="color:red"><?php echo $term[contactsuperadmin];?></label>
-                                <a href="#" class="modal-with-form">My company</a>
+                                <!-- <a href="#" class="modal-with-form">My Company</a> -->
+                                <a href="#" class="modal-with-form"><?= $company_name?></a>
                                 <?php endif;?>
                             </div>
                             <?php }?>

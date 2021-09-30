@@ -64,7 +64,6 @@ class Account_model extends CI_Model
         }
 
         $query = $this->db->get();
-
         $result_info = array();
         if ($query->num_rows() > 0) {
             $result_info['total'] = $filtertotal;
