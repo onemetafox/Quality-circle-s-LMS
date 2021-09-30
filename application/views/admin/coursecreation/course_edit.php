@@ -114,17 +114,27 @@
                                     <div class="form-group row">
                                        <label class="col-sm-12 control-label text-sm-left pt-1" for="w4-username"><?=$term['selecttypeofcourse']?></label>
                                        <div class="col-sm-12">
-                                          <label class="radioBox col-sm-3"><?=$term['freecourse']?>
+                                          <label class="radioBox col-sm-2"><?=$term['freecourse']?>
                                           <input type="radio" name = "pay_type" value="0" <?php if ($course_data['pay_type'] == 0):?>checked<?php endif;?>>
                                           <span class="checkmark"></span>
                                           </label>
-                                          <label class="radioBox col-sm-4"><?=$term['paidonetimepurchase']?>
+                                          <label class="radioBox col-sm-3"><?=$term['paidonetimepurchase']?>
                                           <input type="radio" name = "pay_type" value="1" <?php if ($course_data['pay_type'] == 1):?>checked<?php endif;?>>
                                           <span class="checkmark"></span>
                                           </label>
-                                          <label class="col-sm-1" style="padding-top: 5px;float: left;"><?=$term['usd']?></label>
-                                          <input type="text" class="form-control col-sm-1 input-form" style="width: 75px;" id="payy_pricee" name="pay_price" value="<?= $course_data['pay_price'] ?>">
                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-1" style="padding-top: 5px;float: left;"><?=$term['usd']?></label>
+                                        <input type="text" class="form-control col-sm-1 input-form" style="width: 75px;" id="payy_pricee" name="pay_price" value="<?= $course_data['pay_price'] ?>">
+                                        <label class="col-sm-1" style="padding-top: 5px;float: left;"><?=$term['tax_type']?></label>
+                                        <select class="form-group" name="tax_type" id="tax_type" onChange="changePrice()">
+                                            <option <?=$course_data['tax_rate'] == 0 ? "selected" : ""?> value="0">Percentage Tax</option>
+                                            <option <?=$course_data['tax_rate'] == 1 ? "selected" : ""?> value="1">Fix Tax</option>
+                                        </select>
+                                        <label class="col-sm-1" style="padding-top: 5px;float: left;"><?=$term['tax_rate']?></label>
+                                        <input type="text" class="form-control col-sm-1 input-form" onChange="changePrice()" style="width: 75px;" id="tax_rate" name="tax_rate" value="<?= $course_data['tax_rate'] ?>">
+                                        
                                     </div>
                                     <div class="form-group row" style="display: none;">
                                        <label class="col-sm-12 control-label text-sm-left pt-1" for="w4-username"><?=$term['courseswillbevisiblefor']?></label>
@@ -2922,5 +2932,20 @@ function statusFun(elm){
    
    
    }
+
+    function changePrice(){
+        var tax_type = $("#tax_type").val();
+        var tax_rate = $("#tax_rate").val();
+        var price = $("#payy_pricee").val();
+        if(price == 0){
+            alert("Input price first");
+            return;
+        }
+        if(tax_type == 1){
+            $("#payy_pricee").val(Number(price) + Number(tax_rate));
+        }else{
+            $("#payy_pricee").val(Number(price) * (1 + Number(tax_rate)/100));
+        }
+    }
    
 </script>
