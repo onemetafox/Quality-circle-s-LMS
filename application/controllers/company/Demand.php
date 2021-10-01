@@ -20,6 +20,7 @@ class Demand  extends BaseController
         $this->load->helper('lms_email');
 		$this->load->model('Company_model');
 		$this->load->helper('common');
+        $this->load->model('Coursesession_model','session_model');
     }
 
     public function index()
@@ -465,8 +466,6 @@ class Demand  extends BaseController
 				);	
 				$this->Enrollments_model->insertEnrolledUser($enrolled_data);
 			}
-            // print_r($params);
-            // die;
             $this->loadViews_front('company_page/details-courses', $params);
         }
         else{
@@ -518,8 +517,17 @@ class Demand  extends BaseController
         }
     }
     public function setSelfPace(){
-        $data = $this->input->post();
-        print_r($data);
+        $filter = $this->input->post();
+        $course_session = (array)$this->session_model->one($filter);
+        if($course_session){
+            $course_session['course_time'] = $course_session['course_time'] + 5;
+            $this->session_model->save($course_session);
+        }else{
+            $data['user_id'] = $filter['user_id'];
+            $data['course_id'] = $filter['course_id'];
+            $data['course_time'] = 0;
+            $this->session_model->save($data);
+        }
     }
     public function checkAssessment_Chapter($ch_id = 0){
 
