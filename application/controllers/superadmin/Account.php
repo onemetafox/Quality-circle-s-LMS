@@ -207,6 +207,8 @@ class Account extends BaseController {
                 $page_data['demand_limit'] = $result->demand_limit;
                 $page_data['vilt_user_limit'] = $result->vilt_user_limit;
                 $page_data['vilt_room_limit'] = $result->vilt_room_limit;
+                $page_data['ilt_user_limit'] = $result->ilt_user_limit;
+                $page_data['ilt_room_limit'] = $result->ilt_room_limit;
             }else{
                 $page_data['price_type'] = - 1;
                 $page_data['id'] = 0;
@@ -217,6 +219,8 @@ class Account extends BaseController {
                 $page_data['demand_limit'] = 0;
                 $page_data['vilt_user_limit'] = 0;
                 $page_data['vilt_room_limit'] = 0;
+                $page_data['ilt_user_limit'] = 0;
+                $page_data['ilt_room_limit'] = 0;
             }
             $this->loadViews($page_path, $this->global, $page_data, NULL);
         }else{

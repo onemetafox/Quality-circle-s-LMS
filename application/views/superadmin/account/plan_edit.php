@@ -19,17 +19,17 @@
                             <h2 class="card-title"><?=$term[form]?></h2>
                         </header>
                         <div class="card-body">
-                            <input type="hidden" name="id" id="id" value="<?php print $id?>">
+                            <input type="hidden" name="id" id="id" value="<?= $id?>">
                             <div class="form-group row">
                                 <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[name]?><span class="required">*</span></label>
                                 <div class="col-sm-4">
-                                    <input type="text" value="<?php print $name ?>" id="name" name="name" class="form-control" placeholder="subscription name"required>
+                                    <input type="text" value="<?= $name ?>" id="name" name="name" class="form-control" placeholder="subscription name"required>
 
                                 </div>
                                 <?php if($price_type == 0):?>
                                 <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[price]?><span class="required">*</span></label>
                                 <div class="col-sm-4">
-                                    <input type="number" value="<?php print $price ?>" id="price" name="price" class="form-control" placeholder="company name" min="0" required>
+                                    <input type="number" value="<?= $price ?>" id="price" name="price" class="form-control" placeholder="company name" min="0" required>
                                 </div>
                                 <?php endif;?>
                             </div>
@@ -37,29 +37,39 @@
                             <div class="form-group row">
                                 <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[user].' '.$term[limit] ?><span class="required">*</span></label>
                                 <div class="col-sm-4">
-                                    <input type="number" value="<?php print $user_limit ?>" id="user_limit" name="user_limit" class="form-control" min="0" required>
+                                    <input type="number" value="<?= $user_limit ?>" id="user_limit" name="user_limit" class="form-control" min="0" required>
                                 </div>
                                 <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[library].' '.$term[limit] ?><span class="required">*</span></label>
                                 <div class="col-sm-4">
-                                    <input type="number" value="<?php print $library_limit ?>" id="library_limit" name="library_limit" class="form-control" min="0" required>
+                                    <input type="number" value="<?= $library_limit ?>" id="library_limit" name="library_limit" class="form-control" min="0" required>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[ondemand].' '.$term[limit] ?><span class="required">*</span></label>
                                 <div class="col-sm-4">
-                                    <input type="number" value="<?php print $demand_limit ?>" id="demand_limit" name="demand_limit" class="form-control" min="0" required>
+                                    <input type="number" value="<?= $demand_limit ?>" id="demand_limit" name="demand_limit" class="form-control" min="0" required>
                                 </div>
                                 <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[viltroom].' '.$term[user].' '.$term[limit] ?><span class="required">*</span></label>
                                 <div class="col-sm-4">
-                                    <input type="number" value="<?php print $vilt_user_limit ?>" id="vilt_user_limit" name="vilt_user_limit" class="form-control" min="0" required>
+                                    <input type="number" value="<?= $vilt_user_limit ?>" id="vilt_user_limit" name="vilt_user_limit" class="form-control" min="0" required>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[viltroom].' '.$term[limit] ?><span class="required">*</span></label>
                                 <div class="col-sm-4">
-                                    <input type="number" value="<?php print $vilt_room_limit ?>" id="vilt_room_limit" name="vilt_room_limit" class="form-control" min="0" required>
+                                    <input type="number" value="<?= $vilt_room_limit ?>" id="vilt_room_limit" name="vilt_room_limit" class="form-control" min="0" required>
+                                </div>
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[iltroom].' '.$term[user].' '.$term[limit] ?><span class="required">*</span></label>
+                                <div class="col-sm-4">
+                                    <input type="number" value="<?= $ilt_user_limit ?>" id="ilt_user_limit" name="ilt_user_limit" class="form-control" min="0" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[iltroom].' '.$term[limit] ?><span class="required">*</span></label>
+                                <div class="col-sm-4">
+                                    <input type="number" value="<?= $ilt_room_limit ?>" id="ilt_room_limit" name="ilt_room_limit" class="form-control" min="0" required>
                                 </div>
                             </div>
                             <?php endif;?>
@@ -67,7 +77,7 @@
                         <footer class="card-footer">
                             <div class="row">
                                 <div class="col-md-12 text-right">
-                                    <a id="sendBtn" data-loading-overlay="" data-loading-overlay-options="{ 'startShowing': false }"  class="btn btn-primary modal-add-confirm" style="color:white; padding-left: 20px;padding-right: 20px;"><?php print $term[update]?></a>
+                                    <a id="sendBtn" data-loading-overlay="" data-loading-overlay-options="{ 'startShowing': false }"  class="btn btn-primary modal-add-confirm" style="color:white; padding-left: 20px;padding-right: 20px;"><?= $term[update]?></a>
                                     <button type="reset" class="btn btn-default"><?=$term[reset]?></button>
                                 </div>
                             </div>

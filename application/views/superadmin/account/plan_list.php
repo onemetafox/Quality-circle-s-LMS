@@ -49,7 +49,7 @@
             },
             "columnDefs": [
             {
-                "targets": [9],
+                "targets": [11],
                 "createdCell": function (td, cellData, rowData, row, col) {
                     $(td).html('<a href="<?= base_url()?>superadmin/account/subscription_edit/'+cellData+'"><i class="fas fa-pencil-alt"></i></a>');
                 }
@@ -121,7 +121,23 @@
                         }else{
                             return data;
                         }
-                    } },                                
+                    } },  
+                    { "title": "<?=$term[iltroom]?> <?=$term[user]?> <?=$term[limit]?>", "data": "ilt_user_limit", "class": "text-center", "width":"*", 
+                    mRender: function (data, type, row) {
+                        if(data == 0){
+                            return "-";
+                        }else{
+                            return data;
+                        }
+                    } },  
+                { "title": "<?=$term[iltroom]?> <?=$term[limit]?>", "data": "ilt_room_limit", "class": "text-center", "width":"*", 
+                    mRender: function (data, type, row) {
+                        if(data == 0){
+                            return "-";
+                        }else{
+                            return data;
+                        }
+                    } },                               
                 { "title": "<?=$term[action]?>", "data": "id", "class": "text-center", "width":80 }
             ],
             "lengthMenu": [
