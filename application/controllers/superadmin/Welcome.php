@@ -51,7 +51,8 @@ class Welcome extends BaseController {
                 //
                 //            $this->load->model('Account_model');
                 //            $page_data[amount] = sprintf("%0.2f", $this->Account_model->getTotalAmount(array()));
-                $page_data[amount] = 999;
+                $this->load->model('Payment_model');
+                $page_data['amount'] = $this->Payment_model->totalAmountForSuper();
                 $list = $this->User_model->getList(array('user_type' => 'Admin'));
                 $cnt = 0;
                 foreach($list as $item){
