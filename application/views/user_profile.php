@@ -152,17 +152,34 @@ $image = $this->session->userdata('user_photo');
                                     </div>
 
                                     <div class="form-group row">
-                                        <label class="col-sm-2 control-label text-sm-right pt-2">Role</label>
+                                        <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term['userrole']?></label>
                                         <div class="col-sm-3">
                                             <input type="text" value="<?php print $user->role ?>" class="form-control"  id="role" name="role" >
                                         </div>
 
-                                        <label class="col-sm-2 control-label text-sm-right pt-2">Company Name</label>
+                                        <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term['companyname']?></label>
                                         <div class="col-sm-3">
                                             <input type="hidden" value="<?php print $user->company_id ?>" class="form-control">
-                                            <input type="text" value="<?php echo $company_name ?>" class="form-control" name="company_name" >
+                                            <input type="text" value="<?php echo $company_name ?>" class="form-control" name="company_name" readonly >
                                         </div>
                                     </div>
+                                    <?php if($user->user_type == "Admin") {?>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 control-label text-sm-right pt-2"><?= $term['companysub']?></label>
+                                            <div class="col-sm-3" style ="padding-top: 7px">
+                                                <?php if($plan->id) {?>
+                                                    <strong><?= $plan->name?></strong>
+                                                <?php }else { ?>  
+                                                    <strong>Trial</strong>
+                                                <?php } ?>
+                                            </div>
+
+                                            <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term['changeplan']?></label>
+                                            <div class="col-sm-3"  style ="padding-top: 7px">
+                                                <a href="<?=base_url()?>pricing" class="modal-with-form"><?= $term['upordown']?></a>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
                                     <div class="row">
                                         <label class="col-sm-2 control-label text-sm-right pt-2">Sign</label>
                                         <div class="card-body">                                            

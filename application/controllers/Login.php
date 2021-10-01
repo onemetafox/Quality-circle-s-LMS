@@ -749,7 +749,9 @@ class Login extends BaseController{
             if(sizeof($this->global['site_theme'])  == 0){
                 $this->global['site_theme'] = array();
             }
-
+        if($user->user_type == "Admin"){
+            $page_data['plan'] = $this->Plan_model->getPlanCompany($this->session->userdata('company_id')->id);
+        }
         $page_data['company_name'] = $this->Company_model->getRow($this->session->userdata('company_id'))->name;
         $page_data['company_url']  = $this->Company_model->getRow($this->session->userdata('company_id'))->url;
         $page_data['payment'] = $this->Company_model->getRow($this->session->userdata('company_id'))->payment;
