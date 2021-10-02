@@ -53,7 +53,19 @@ class Account extends BaseController {
     //         $this->response($records);
     //     }
     // }
-
+    public function invoiceDetail($id){
+        $this->load->library('Sidebar');
+        $side_params = array('selected_menu_id' => '1');
+        $this->global['sidebar'] = $this->sidebar->generate($side_params, $this->role);
+        $filter['object_type'] = 'plan';
+        $filter['id'] = $id;
+        $this->load->model('Payment_model');
+        $page_data['invoice'] = $this->Payment_model->getInoviceDetail($filter)[0];
+        $page_data['user'] = $this->session->userdata();
+        // print_r($page_data['user']);
+        // die;
+        $this->loadViews("superadmin/account/company_invoice", $this->global, $page_data, NULL);
+    }
     public function getinvoicelist(){
         $filter['object_type'] = 'plan';
         $this->load->model('Payment_model');

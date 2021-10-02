@@ -114,25 +114,6 @@
 <script>
 	var $invoice_table = $('#datatable_invoice_list');
 
-	function changestatus(id, status)
-	{
-		$.ajax({
-            url: 'account/updatestatus',
-            type: 'POST',
-            data: {'id': id,'status': status},
-            success: function (data, status, xhr) {	
-            	$invoice_table.DataTable().ajax.reload('', false);	             	
-            },
-            error:function(){
-				new PNotify({
-                    title: '<?php echo $term['error']; ?>',
-                    text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
-					type: 'error'
-				});	
-			}
-        });
-	}
-
     $.fn.dataTable.ext.search.push(
         function( settings, data, dataIndex ) {
             var pay_status = $('#filter_status').val();
@@ -193,7 +174,7 @@
                 {
                     "targets": [7],
                     "createdCell": function (td, cellData, rowData, row, col) {
-                            $(td).html('<a href="javascript:viewDetail('+cellData+')"><i class="fa fa-eye"></i></a><span class="w-20"></span><a href="javascript:printInvoice('+cellData+')" class="delete-row"><i style="color:red" class="fa fa-print"></i></a>');
+                            $(td).html('<a href="<?=base_url()?>superadmin/account/invoiceDetail/'+cellData+'"><i class="fa fa-eye"></i></a><span class="w-20"></span><a href="javascript:printInvoice('+cellData+')" class="delete-row"><i style="color:red" class="fa fa-print"></i></a>');
 
                     }
                 }],
@@ -229,103 +210,5 @@
 		});
 
 	});
-
-
-    // function cancelAccount(id){
-    //     (new PNotify({
-    //         title: '<?php echo $term['confirmation']; ?>',
-    //         text: '<?php echo $term['areyousurethatyouwanttodel']; ?>',
-
-    //         icon: 'fas fa-question',
-    //         confirm: {
-    //             confirm: true
-    //         },
-    //         button: {
-    //             closer: false,
-    //             sticker: false
-    //         },
-    //         addclass: 'stack-modal',
-    //         stack: {
-    //             'dir1': 'down',
-    //             'dir2': 'right',
-    //             'modal':true
-    //         }
-    //     })).get().on('pnotify.confirm', function(){
-    //         $.ajax({
-    //             url: '<?php echo base_url('admin/account/remove_row'); ?>',
-    //             type: 'POST',
-    //             data: {
-    //                 id: id,
-    //                 status: 2   //1 : remove , 2: cancel (set price 0)
-    //             },
-    //             success: function (data, status, xhr) {
-    //                 if(status == "success") {
-    //                     $invoice_table.DataTable().ajax.reload('', false);
-    //                 } else {
-    //                     new PNotify({
-    //                         title: '<?php echo $term['error']; ?>',
-    //                         text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
-    //                         type: 'danger'
-    //                     });
-    //                 }
-    //             },
-    //             error: function(){
-    //                 new PNotify({
-    //                     title: '<?php echo $term['error']; ?>',
-    //                     text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
-    //                     type: 'error'
-    //                 });
-    //             }
-    //         });
-    //     });
-    // }
-    // function deleteAccount(id){
-    //     (new PNotify({
-    //         title: "<?php echo $term['confirmation']; ?>",
-    //         text: "<?php echo $term['areyousuretodelete']; ?>",
-    //         icon: 'fas fa-question',
-    //         confirm: {
-    //             confirm: true
-    //         },
-    //         button: {
-    //             closer: false,
-    //             sticker: false
-    //         },
-    //         addclass: 'stack-modal',
-    //         stack: {
-    //             'dir1': 'down',
-    //             'dir2': 'right',
-    //             'modal':true
-    //         }
-    //     })).get().on('pnotify.confirm', function(){
-    //         $.ajax({
-    //             url: '<?php echo base_url('admin/account/remove_row'); ?>',
-    //             type: 'POST',
-    //             data: {
-    //                 id: id,
-    //                 status: 1   //1 : remove , 2: cancel (set price 0)
-    //             },
-    //             success: function (data, status, xhr) {
-    //                 if(status == "success") {
-    //                     $invoice_table.DataTable().ajax.reload('', false);
-    //                 } else {
-    //                     new PNotify({
-    //                         title: '<?php echo $term['error']; ?>',
-    //                         text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
-    //                         type: 'danger'
-    //                     });
-    //                 }
-    //             },
-    //             error: function(){
-    //                 new PNotify({
-    //                     title: '<?php echo $term['error']; ?>',
-    //                     text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
-    //                     type: 'error'
-    //                 });
-    //             }
-    //         });
-    //     });
-    // }
 	</script>
-	<!-- end: page -->
 </section>

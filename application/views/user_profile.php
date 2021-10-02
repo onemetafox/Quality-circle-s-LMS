@@ -137,6 +137,11 @@ $image = $this->session->userdata('user_photo');
                                         <div class="col-sm-3">
                                             <input type="text" value="<?php print $payment ?>" class="form-control"  id="payment" name="payment" >
                                         </div>
+                                        <?php }else if($user->user_type == "Superadmin"){?> 
+                                        <label class="col-sm-2 control-label text-sm-right pt-2"><?php echo $term['tax_rate']; ?></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" value="<?= $tax_rate ?>" class="form-control"  id="tax_rate" name="tax_rate" >
+                                        </div>
                                         <?php } ?>
                                     </div>
 

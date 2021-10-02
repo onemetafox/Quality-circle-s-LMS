@@ -38,7 +38,16 @@ class Settings_model extends CI_Model
         $res=$result->result_array();
         return $res;
     }
+    function getTaxRate(){
+        return $this->db->get_where($this->global_table, "action='tax_rate'")->row();
+    }
+    function setTaxRate($rate){
 
+        $data = $this->db->get_where($this->global_table, "action='tax_rate'")->row_array();
+        $data['value'] = $rate;
+        $this->db->where("id", $data['id']);
+        $result = $this->db->update($this->global_table, $data);
+    }
     function getMenu($where)
     {
     	

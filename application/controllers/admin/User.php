@@ -236,6 +236,15 @@ class User extends BaseController {
             $update_data['country'] = $this->input->post('country');
 			$update_data['state'] = $this->input->post('state');
 			$update_data['city'] = $this->input->post('city');
+            $user = $this->session->userdata();
+            
+            if($this->isSuperAdmin()){
+                $tax_rate = $this->input->post('tax_rate');
+                unset($update_data['tax_rate']);
+                $this->load->model('Settings_model');
+                $this->Settings_model->setTaxRate($tax_rate);
+            }
+            
 			unset($update_data['company_name']);
             unset($update_data['payment']);
 			$company_name = $this->input->post('company_name');
@@ -244,6 +253,7 @@ class User extends BaseController {
 			$this->session->set_userdata('country_code', $update_data['country_code']);
 			$this->session->set_userdata('phone', $update_data['phone']);
 			$this->session->set_userdata('email', $update_data['email']);
+
 			if($user_profile && isset($update_data[picture])) $this->session->set_userdata('user_photo', base_url() . $update_data[picture]);			
 			$this->session->set_userdata('role', $update_data['role']);
 			$this->Company_model->update(array('name' => $company_name,'payment'=>$payment), array('id' => $this->session->userdata('company_id')));
