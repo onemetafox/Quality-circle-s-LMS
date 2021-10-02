@@ -100,7 +100,7 @@
 									<div class="summary">
 										<h4 class="title"><?=$term[totalinvoice]?></h4>
 										<div class="info">
-											<strong class="amount"><?= "$ ".$amount->total_amount==null?$amount->total_amount:0;?></strong>
+											<strong class="amount">$ <?= $amount->total_amount!=null?$amount->total_amount:0;?></strong>
 										</div>
 									</div>
 									<div class="summary-footer">

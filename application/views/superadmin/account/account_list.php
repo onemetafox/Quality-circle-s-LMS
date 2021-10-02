@@ -3,7 +3,7 @@
 		<h2><?=$term[invoicingaccounting]?></h2>
 	
 	</header>
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-sm-12 col-md-6 col-xl-4">
         <section class="card card-featured-left card-featured-secondary mb-4">
             <div class="card-body">
@@ -76,7 +76,7 @@
                 </div>
             </section>
         </div>
-    </div>
+    </div> -->
 	<!-- start: page -->
 	<div class="row" style="padding-top: 0px;">
 		<div class="col-lg-12">
@@ -88,7 +88,7 @@
                             <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-export"><i class="fa fa-download"></i><?=$term[exportexcel]?></button>
                         </a>
                     </div>
-					<h2 class="card-title"><?=$term[accountlist]?></h2>
+					<h2 class="card-title"><?=$term[invoicelist]?></h2>
 				</header>
 				<div class="card-body">
                     <div class="row" style="margin-bottom: 15px;">
@@ -106,13 +106,13 @@
                             <button type="button" class="btn btn-primary" onclick="filterTable();" style="width: 100%;"><?=$term[filtertable]?></button>
                         </div>
                     </div>
-					<table class="table table-responsive-md table-hover mb-0" id="datatable_account_list" ></table>
+					<table class="table table-responsive-md table-hover mb-0" id="datatable_invoice_list" ></table>
 				</div>
 			</section>
 		</div>
 	</div>
 <script>
-	var $account_table = $('#datatable_account_list');
+	var $invoice_table = $('#datatable_invoice_list');
 
 	function changestatus(id, status)
 	{
@@ -121,7 +121,7 @@
             type: 'POST',
             data: {'id': id,'status': status},
             success: function (data, status, xhr) {	
-            	$account_table.DataTable().ajax.reload('', false);	             	
+            	$invoice_table.DataTable().ajax.reload('', false);	             	
             },
             error:function(){
 				new PNotify({
@@ -146,14 +146,14 @@
     );
 
     function filterTable() {
-        $account_table.DataTable().draw();
+        $invoice_table.DataTable().draw();
     }
 
 	jQuery(document).ready(function() {
 	    $('#anchor_export').on('click', function (e) {
             e.preventDefault();
 
-            var selected = $account_table.DataTable().column(0).checkboxes.selected();
+            var selected = $invoice_table.DataTable().column(0).checkboxes.selected();
             var ids = [];
             $.each(selected, function(index, rowId){
                 ids.push(rowId);
@@ -163,7 +163,7 @@
             window.location.href = link;
         });
 
-		var tbdata = $account_table.dataTable({
+		var tbdata = $invoice_table.dataTable({
 			"ordering": true,
 			"info": true,
 			"searching": true,
@@ -171,30 +171,17 @@
 			"ajax": {
 	            "type": "POST",
 	            "async": true,
-				"url": "<?=base_url()?>admin/account/getlist",
+				"url": "<?=base_url()?>superadmin/account/getinvoicelist",
+				// "url": "<?=base_url()?>admin/account/getList",
+
 				"data": '',		
 				"dataSrc": "data",
 				"dataType": "json",
 				"cache":    false,
 	        },
 	        
-	        "columnDefs": [
-                {
-                    'targets': [0],
-                    'checkboxes': {
-                        'selectRow': true
-                    }
-                }, {
-                    "targets": [1],
-                    "createdCell": function (td, cellData, rowData, row, col) {
-                        if(cellData == '1'){
-                            $(td).html('Exam');
-                        } else {
-                            $(td).html('Training');
-                        }
-                    }
-                }, {
-                "targets": [7],
+	        "columnDefs": [{
+                "targets": [6],
                 "createdCell": function (td, cellData, rowData, row, col) {
                     if(cellData != ''){
                         $(td).html(rowData['pay_date']);
@@ -202,43 +189,23 @@
                         $(td).html('---');
                     }
                 }
-            }, {
-                "targets": [8],
-                "createdCell": function (td, cellData, rowData, row, col) {
-                    if(cellData == '1'){
-                        $(td).html('<a href="javascript:changestatus('+rowData['id']+',0);"><span class="badge badge-success">'+'<?=$term[paid]?>'+'</span></a>');
-
-                    } else if(cellData == '2'){
-                        $(td).html('<a href="javascript: return false;"><span class="badge badge-danger">'+'<?=$term[canceled]?>'+'</span></a>');
-                    } else{
-                        $(td).html('<a href="javascript:changestatus('+rowData['id']+',1);"><span class="badge badge-warning">'+'<?=$term[open]?>'+'</span></a>');
-                    }
-                }
             },
                 {
-                    "targets": [9],
+                    "targets": [7],
                     "createdCell": function (td, cellData, rowData, row, col) {
-                        if(rowData['pay_status'] == '2'){
-                            $(td).html('<span class="w-20"></span><a href="javascript:deleteAccount('+cellData+')" class="delete-row"><i style="color:red" class="far fa-trash-alt"></i></a>');
-                        }
-                        else{
-                            $(td).html('<a href="javascript:cancelAccount('+cellData+')"><i class="fa fa-times"></i></a><span class="w-20"></span><a href="javascript:deleteAccount('+cellData+')" class="delete-row"><i style="color:red" class="far fa-trash-alt"></i></a>');
-                        }
+                            $(td).html('<a href="javascript:viewDetail('+cellData+')"><i class="fa fa-eye"></i></a><span class="w-20"></span><a href="javascript:printInvoice('+cellData+')" class="delete-row"><i style="color:red" class="fa fa-print"></i></a>');
 
                     }
                 }],
 	        "columns": [
-                { "title": "Select", "data": "id", "class": "text-left", "width": 20 },
-                { "title": "<?=$term[type]?>", "data": "history_type", "class": "text-left", "width":30 },
-	        	{ "title": "<?=$term[companyname]?>", "data": "company_name", "class": "text-left", "width":150 },
-				{ "title": "<?=$term[firstname]?>", "data": "first_name", "class": "text-left", "width":60 },
-	        	{ "title": "<?=$term[lastname]?>", "data": "last_name", "class": "text-left", "width":60 },
-				{ "title": "<?=$term[title]?>", "data": "history_title", "class": "text-left", "width":"*" },
-				{ "title": "<?=$term[price]?>", "data": "amount", "class": "text-right", "width":60 },
-				/*{ "title": "FASI", "data": "fasi_name", "class": "text-left", "width":100 },*/
-				{ "title": "<?=$term[paydate]?>", "data": "pay_date", "class": "text-center", "width":60 },
-				{ "title": "<?=$term[status]?>", "data": "pay_status", "class": "text-center", "width":60 },
-                { "title": "<?=$term[action]?>", "data": "id", "class": "text-center", "width":60 }
+                { "title": "<?=$term[type]?>", "data": "payment_method", "class": "text-left" },
+	        	{ "title": "<?=$term[companyname]?>", "data": "company_name", "class": "text-left"},
+				{ "title": "<?=$term[firstname]?>", "data": "first_name", "class": "text-left"},
+	        	{ "title": "<?=$term[lastname]?>", "data": "last_name", "class": "text-left"},
+				{ "title": "<?=$term[title]?>", "data": "payment_title", "class": "text-left"},
+				{ "title": "<?=$term[price]?>", "data": "amount", "class": "text-right"},
+				{ "title": "<?=$term[paydate]?>", "data": "pay_date", "class": "text-center"},
+                { "title": "<?=$term[action]?>", "data": "id", "class": "text-center"}
 			],
 			"lengthMenu": [
 	            [5, 10, 20, 50, 150, -1],
@@ -264,101 +231,101 @@
 	});
 
 
-    function cancelAccount(id){
-        (new PNotify({
-            title: '<?php echo $term['confirmation']; ?>',
-            text: '<?php echo $term['areyousurethatyouwanttodel']; ?>',
+    // function cancelAccount(id){
+    //     (new PNotify({
+    //         title: '<?php echo $term['confirmation']; ?>',
+    //         text: '<?php echo $term['areyousurethatyouwanttodel']; ?>',
 
-            icon: 'fas fa-question',
-            confirm: {
-                confirm: true
-            },
-            button: {
-                closer: false,
-                sticker: false
-            },
-            addclass: 'stack-modal',
-            stack: {
-                'dir1': 'down',
-                'dir2': 'right',
-                'modal':true
-            }
-        })).get().on('pnotify.confirm', function(){
-            $.ajax({
-                url: '<?php echo base_url('admin/account/remove_row'); ?>',
-                type: 'POST',
-                data: {
-                    id: id,
-                    status: 2   //1 : remove , 2: cancel (set price 0)
-                },
-                success: function (data, status, xhr) {
-                    if(status == "success") {
-                        $account_table.DataTable().ajax.reload('', false);
-                    } else {
-                        new PNotify({
-                            title: '<?php echo $term['error']; ?>',
-                            text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
-                            type: 'danger'
-                        });
-                    }
-                },
-                error: function(){
-                    new PNotify({
-                        title: '<?php echo $term['error']; ?>',
-                        text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
-                        type: 'error'
-                    });
-                }
-            });
-        });
-    }
-    function deleteAccount(id){
-        (new PNotify({
-            title: "<?php echo $term['confirmation']; ?>",
-            text: "<?php echo $term['areyousuretodelete']; ?>",
-            icon: 'fas fa-question',
-            confirm: {
-                confirm: true
-            },
-            button: {
-                closer: false,
-                sticker: false
-            },
-            addclass: 'stack-modal',
-            stack: {
-                'dir1': 'down',
-                'dir2': 'right',
-                'modal':true
-            }
-        })).get().on('pnotify.confirm', function(){
-            $.ajax({
-                url: '<?php echo base_url('admin/account/remove_row'); ?>',
-                type: 'POST',
-                data: {
-                    id: id,
-                    status: 1   //1 : remove , 2: cancel (set price 0)
-                },
-                success: function (data, status, xhr) {
-                    if(status == "success") {
-                        $account_table.DataTable().ajax.reload('', false);
-                    } else {
-                        new PNotify({
-                            title: '<?php echo $term['error']; ?>',
-                            text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
-                            type: 'danger'
-                        });
-                    }
-                },
-                error: function(){
-                    new PNotify({
-                        title: '<?php echo $term['error']; ?>',
-                        text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
-                        type: 'error'
-                    });
-                }
-            });
-        });
-    }
+    //         icon: 'fas fa-question',
+    //         confirm: {
+    //             confirm: true
+    //         },
+    //         button: {
+    //             closer: false,
+    //             sticker: false
+    //         },
+    //         addclass: 'stack-modal',
+    //         stack: {
+    //             'dir1': 'down',
+    //             'dir2': 'right',
+    //             'modal':true
+    //         }
+    //     })).get().on('pnotify.confirm', function(){
+    //         $.ajax({
+    //             url: '<?php echo base_url('admin/account/remove_row'); ?>',
+    //             type: 'POST',
+    //             data: {
+    //                 id: id,
+    //                 status: 2   //1 : remove , 2: cancel (set price 0)
+    //             },
+    //             success: function (data, status, xhr) {
+    //                 if(status == "success") {
+    //                     $invoice_table.DataTable().ajax.reload('', false);
+    //                 } else {
+    //                     new PNotify({
+    //                         title: '<?php echo $term['error']; ?>',
+    //                         text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
+    //                         type: 'danger'
+    //                     });
+    //                 }
+    //             },
+    //             error: function(){
+    //                 new PNotify({
+    //                     title: '<?php echo $term['error']; ?>',
+    //                     text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
+    //                     type: 'error'
+    //                 });
+    //             }
+    //         });
+    //     });
+    // }
+    // function deleteAccount(id){
+    //     (new PNotify({
+    //         title: "<?php echo $term['confirmation']; ?>",
+    //         text: "<?php echo $term['areyousuretodelete']; ?>",
+    //         icon: 'fas fa-question',
+    //         confirm: {
+    //             confirm: true
+    //         },
+    //         button: {
+    //             closer: false,
+    //             sticker: false
+    //         },
+    //         addclass: 'stack-modal',
+    //         stack: {
+    //             'dir1': 'down',
+    //             'dir2': 'right',
+    //             'modal':true
+    //         }
+    //     })).get().on('pnotify.confirm', function(){
+    //         $.ajax({
+    //             url: '<?php echo base_url('admin/account/remove_row'); ?>',
+    //             type: 'POST',
+    //             data: {
+    //                 id: id,
+    //                 status: 1   //1 : remove , 2: cancel (set price 0)
+    //             },
+    //             success: function (data, status, xhr) {
+    //                 if(status == "success") {
+    //                     $invoice_table.DataTable().ajax.reload('', false);
+    //                 } else {
+    //                     new PNotify({
+    //                         title: '<?php echo $term['error']; ?>',
+    //                         text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
+    //                         type: 'danger'
+    //                     });
+    //                 }
+    //             },
+    //             error: function(){
+    //                 new PNotify({
+    //                     title: '<?php echo $term['error']; ?>',
+    //                     text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
+    //                     type: 'error'
+    //                 });
+    //             }
+    //         });
+    //     });
+    // }
 	</script>
 	<!-- end: page -->
 </section>

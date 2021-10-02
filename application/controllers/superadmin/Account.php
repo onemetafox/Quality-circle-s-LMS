@@ -39,19 +39,31 @@ class Account extends BaseController {
     /**
      * This function used to load All account list
      */
-    public function getList(){
-        if($this->isSuperAdmin()){
-            $table_data = $this->Account_model->getAccountList();
-            $records["data"] = $table_data['data'];
-            $records['recordsTotal'] = $table_data["total"];
-            $records['recordsFiltered'] = $table_data['filtertotal'];
-            $this->response($records);
-        }else{
-            $records["data"] = array();
-            $records['recordsTotal'] = 0;
-            $records['recordsFiltered'] = 0;
-            $this->response($records);
-        }
+    // public function getList(){
+    //     if($this->isSuperAdmin()){
+    //         $table_data = $this->Account_model->getAccountList();
+    //         $records["data"] = $table_data['data'];
+    //         $records['recordsTotal'] = $table_data["total"];
+    //         $records['recordsFiltered'] = $table_data['filtertotal'];
+    //         $this->response($records);
+    //     }else{
+    //         $records["data"] = array();
+    //         $records['recordsTotal'] = 0;
+    //         $records['recordsFiltered'] = 0;
+    //         $this->response($records);
+    //     }
+    // }
+
+    public function getinvoicelist(){
+        $filter['object_type'] = 'plan';
+        $this->load->model('Payment_model');
+        $data = $this->Payment_model->getInvoices($filter);
+        $records["data"] = $data;
+        $records['recordsTotal'] = $table_data["total"];
+        $records['recordsFiltered'] = $table_data['filtertotal'];
+        $this->response($records);
+        $filtertotal = $this->db->count_all_results('', FALSE);
+        $this->response($data);
     }
     
     public function getpaymentlist(){
