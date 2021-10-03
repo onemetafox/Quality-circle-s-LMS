@@ -211,6 +211,7 @@
         <div><?= $invoice->company_name?></div>
         <div><?= $invoice->phone?></div>
         <div><a href="mailto:<?=$invoice->email ?>"><?=$invoice->email ?></a></div>
+        <div><a href="<?= base_url() . "company/". $invoice->url ?>"><?=$invoice->url ?></a></div>
       </div>
       </div>
     </header>
@@ -218,14 +219,14 @@
       <div id="details" class="clearfix">
         <div id="client">
           <div class="to">INVOICE TO:</div>
-          <h2 class="name">John Doe</h2>
-          <div class="address">796 Silver Harbour, TX 79273, US</div>
-          <div class="email"><a href="mailto:john@example.com">john@example.com</a></div>
+          <h2 class="name"><?=$user[name]?></h2>
+          <div class="address"><?=$user['phone']?></div>
+          <div class="email"><a href="mailto:<?=$user['email'] ?>"><?=$user['email'] ?></a></div>
         </div>
         <div id="invoice">
-          <h1>INVOICE 3-2-1</h1>
-          <div class="date">Date of Invoice: 01/06/2014</div>
-          <div class="date">Due Date: 30/06/2014</div>
+          <h1>INVOICE <?=$invoice->id?></h1>
+          <div class="date">Date of Invoice: <?= date("Y/m/d", strtotime($invoice->pay_date))?></div>
+          <!-- <div class="date">Due Date: 30/06/2014</div> -->
         </div>
       </div>
       <table border="0" cellspacing="0" cellpadding="0">
@@ -233,35 +234,35 @@
           <tr>
             <th class="no">#</th>
             <th class="desc">DESCRIPTION</th>
-            <th class="unit">UNIT PRICE</th>
-            <th class="qty">QUANTITY</th>
+            <th class="unit">PAYMENT METHOD</th>
+            <th class="qty">COMPANY NAME</th>
             <th class="total">TOTAL</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td class="no">01</td>
-            <td class="desc"><h3>Website Design</h3>Creating a recognizable design solution based on the company's existing visual identity</td>
-            <td class="unit">$40.00</td>
-            <td class="qty">30</td>
-            <td class="total">$1,200.00</td>
+            <td class="desc"><h3><?= $invoice->payment_title?></h3><?= $invoice->description?></td>
+            <td class="unit"><?= $invoice->payment_method?></td>
+            <td class="qty"><?= $invoice->company_name?></td>
+            <td class="total">$<?=$invoice->amount?></td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
             <td colspan="2"></td>
             <td colspan="2">SUBTOTAL</td>
-            <td>$5,200.00</td>
+            <td>$<?= (100 - $tax->value)/100 * $invoice->amount?></td>
           </tr>
           <tr>
             <td colspan="2"></td>
-            <td colspan="2">TAX 25%</td>
-            <td>$1,300.00</td>
+            <td colspan="2">TAX <?= $tax->value?>%</td>
+            <td>$<?= ($tax->value/100) * $invoice->amount?></td>
           </tr>
           <tr>
             <td colspan="2"></td>
             <td colspan="2">GRAND TOTAL</td>
-            <td>$6,500.00</td>
+            <td>$<?= $invoice->amount?></td>
           </tr>
         </tfoot>
       </table>

@@ -1,5 +1,0 @@
-<?php
-// PHP permanent URL redirection test
-header("Location: http://demo.aus-schulung.de/login", true, 301);
-exit();
-?>

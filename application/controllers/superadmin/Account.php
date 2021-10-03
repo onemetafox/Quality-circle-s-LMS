@@ -61,9 +61,11 @@ class Account extends BaseController {
         $filter['id'] = $id;
         $this->load->model('Payment_model');
         $page_data['invoice'] = $this->Payment_model->getInoviceDetail($filter)[0];
-        $page_data['user'] = $this->session->userdata();
-        // print_r($page_data['user']);
+        $this->load->model('Settings_model');
+        $page_data['tax'] = $this->Settings_model->getTaxRate();
+        // print_r($this->db->last_query());
         // die;
+        $page_data['user'] = $this->session->userdata();
         $this->loadViews("superadmin/account/company_invoice", $this->global, $page_data, NULL);
     }
     public function getinvoicelist(){
@@ -74,8 +76,8 @@ class Account extends BaseController {
         $records['recordsTotal'] = $table_data["total"];
         $records['recordsFiltered'] = $table_data['filtertotal'];
         $this->response($records);
-        $filtertotal = $this->db->count_all_results('', FALSE);
-        $this->response($data);
+        // $filtertotal = $this->db->count_all_results('', FALSE);
+        // $this->response($data);
     }
     
     public function getpaymentlist(){
