@@ -66,7 +66,7 @@ class Account extends BaseController {
         // print_r($this->db->last_query());
         // die;
         $page_data['user'] = $this->session->userdata();
-        $this->loadViews("superadmin/account/company_invoice", $this->global, $page_data, NULL);
+        $this->loadViews("_templates/company_invoice", $this->global, $page_data, NULL);
     }
     public function getinvoicelist(){
         $filter['object_type'] = 'plan';
