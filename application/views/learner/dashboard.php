@@ -72,7 +72,7 @@
 										</div>
 									</div>
 									<div class="summary-footer">
-										<a class="text-muted text-uppercase" href="<?php echo base_url('superadmin/account');?>">(<?=$term[viewall]?>)</a>
+										<a class="text-muted text-uppercase" href="<?php echo base_url('learner/account/payment');?>">(<?=$term[viewall]?>)</a>
 									</div>
 								</div>
 							</div>

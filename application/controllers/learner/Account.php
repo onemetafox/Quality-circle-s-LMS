@@ -1,6 +1,6 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 require APPPATH . '/libraries/BaseController.php';
-require APPPATH . '/third_party/PHPExcel.php';
+// require APPPATH . '/third_party/PHPExcel.php';
 /**
  * Class : Account (AccountController)
  * Account Class to control all account related operations.
@@ -61,7 +61,7 @@ class Account extends BaseController {
             return $this->Account_model->updateaccountstatus($id, $status);
         }
     }
-
+    
     public function account_export(){
         $ids = $this->input->get('ids');
         $ids = explode(',', $ids);
@@ -164,8 +164,11 @@ class Account extends BaseController {
 
     public function getpaymentlist(){
         if($this->isLearner()){
-            $cond = array("user_type" => $this->session->get_userdata() ['user_type']);
-            $table_data = $this->Account_model->getPaymentList($cond);
+            // $cond = array("user_type" => $this->session->get_userdata() ['user_type']);
+            $sessiondata = $this->session->get_userdata();
+            $filter ['user_id'] = $sessiondata['user_id'];
+            $this->load->model("Payment_model");
+            $table_data = $this->Payment_model->getLearnerPayment($filter);
             $records["data"] = $table_data['data'];
             $records['recordsTotal'] = $table_data["total"];
             $records['recordsFiltered'] = $table_data['filtertotal'];

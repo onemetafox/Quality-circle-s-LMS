@@ -26,7 +26,40 @@ class Payment_model extends AbstractModel
         }
         return parent::all($filter);
     }
-
+    public function getLearnerPayment($filter){
+        $query = "SELECT a.*, b.title, c.`name` FROM `payment_history` a
+        LEFT JOIN course b on a.object_id = b.id
+        LEFT JOIN company c ON c.id = a.company_id
+        WHERE user_id = '$filter[user_id]' AND (object_type <> 'book' OR object_type <> 'plan')
+        
+        UNION
+        
+        SELECT a.*, b.title, c.`name` FROM `payment_history` a
+        LEFT JOIN book_shop b on a.object_id = b.id
+        LEFT JOIN company c ON c.id = a.company_id
+        WHERE user_id = '1743' AND object_type = 'book'";
+        $result = $this->db->query($query)->result_array();
+        $filtertotal = $this->db->count_all_results('', FALSE);
+        if(isset($limit) && isset($offset))
+        {
+            $this->db->limit($limit, $offset);
+        }
+        else if(isset($limit))
+        {
+            $this->db->limit($limit);
+        }
+        $result_info = array();
+        if (sizeof($result) > 0) {
+            $result_info['total'] = $filtertotal;
+            $result_info['filtertotal'] = $filtertotal;
+            $result_info['data'] = $result;
+        } else {
+            $result_info['total'] = 0;
+            $result_info['filtertotal'] = 0;
+            $result_info['data'] = array();
+        }
+        return $result_info;
+    }
     public function getInoviceDetail($filter){
         $this->db->select("$this->_table.*, user.first_name, user.email, user.phone, user.last_name, company.url, company.name company_name");
         $this->db->join('user', "user.id = $this->_table.user_id", 'left');
