@@ -174,7 +174,7 @@
                 {
                     "targets": [7],
                     "createdCell": function (td, cellData, rowData, row, col) {
-                            $(td).html('<a href="<?=base_url()?>superadmin/account/invoiceDetail/'+cellData+'"><i class="fa fa-eye"></i></a><span class="w-20"></span><a href="javascript:printInvoice('+cellData+')" class="delete-row"><i style="color:red" class="fa fa-print"></i></a>');
+                            $(td).html('<a href="<?=base_url()?>superadmin/account/invoiceDetail/'+cellData+'"><i class="fa fa-eye"></i></a><span class="w-20"></span><a href="<?=base_url()?>superadmin/account/export/'+cellData+'" class="delete-row"><i style="color:red" class="fa fa-print"></i></a>');
 
                     }
                 }],

@@ -1,6 +1,7 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 require APPPATH . '/libraries/BaseController.php';
 // require APPPATH . '/third_party/PHPExcel.php';
+// require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
 /**
  * Class : Account (AccountController)
  * Account Class to control all account related operations.
@@ -67,6 +68,24 @@ class Account extends BaseController {
         // die;
         $page_data['user'] = $this->session->userdata();
         $this->loadViews("_templates/company_invoice", $this->global, $page_data, NULL);
+    }
+    public function export($id){
+        $filter['object_type'] = 'plan';
+        $filter['id'] = $id;
+        $this->load->model('Payment_model');
+        $page_data['invoice'] = $this->Payment_model->getInoviceDetail($filter)[0];
+        $this->load->model('Settings_model');
+        $page_data['tax'] = $this->Settings_model->getTaxRate();
+        // print_r($this->db->last_query());
+        // die;
+        $page_data['user'] = $this->session->userdata();
+        $html = $this->load->view('_templates/company_invoice', $page_data, false);
+        // print_r($html);
+        // die;
+        $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $pdf->writeHTML($html);
+        $pdf->Output('invoice.pdf', 'I');
+
     }
     public function getinvoicelist(){
         $filter['object_type'] = 'plan';
