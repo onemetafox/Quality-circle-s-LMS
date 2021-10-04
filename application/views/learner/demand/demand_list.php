@@ -142,7 +142,7 @@
 													<li><?php echo $paid_course['course_self_time']; ?></li>
                                                     <span style="color:#090;"><li> Start Date: <?php echo date("M d, Y", strtotime($paid_course['start_at']));?></li></span>
              										<span style="color:#090;"><li> End Date: <?php echo date("M d, Y", strtotime($paid_course['end_at']));?></li></span>
-													 <span style="color:#090;"><li>USD $: <?= $paid_course['pay_price']?></li></span>
+													<span style="color:#090;"><li>USD $: <?= $paid_course['pay_price']?></li></span>
 
 												</ul>
 												<?php if(!$paid_course['pay_id']){ ?>
