@@ -93,7 +93,7 @@
     }
 
     table th, table td {
-        padding: 20px;
+        padding: 13px;
         background: #EEEEEE;
         text-align: center;
         border-bottom: 1px solid #FFFFFF;
@@ -201,7 +201,7 @@
     }
 </style>
 
-<section role="main" class="content-body" style="margin-left:0px;">
+<section role="main" class="content-body" style="margin-left:0px; padding-top 75px;">
     <header class="clearfix">
       <div id="logo">
         <img src="<?= base_url()?>assets/images/logo.png">
@@ -235,6 +235,7 @@
             <th class="no">#</th>
             <th class="desc">DESCRIPTION</th>
             <th class="unit">PAYMENT METHOD</th>
+            <th class="qty">QUANTITY</th>
             <th class="qty">COMPANY NAME</th>
             <th class="total">TOTAL</th>
           </tr>
@@ -244,12 +245,13 @@
             <td class="no">01</td>
             <td class="desc"><h3><?= $invoice->payment_title?></h3><?= $invoice->description?></td>
             <td class="unit"><?= $invoice->payment_method?></td>
+            <td class="qty"><?= $invoice->amount/$invoice->price?></td>
             <td class="qty"><?= $invoice->company_name?></td>
             <td class="total">$<?=$invoice->amount?></td>
           </tr>
         </tbody>
         <tfoot>
-          <tr>
+          <!-- <tr>
             <td colspan="2"></td>
             <td colspan="2">SUBTOTAL</td>
             <td>$<?= (100 - $tax->value)/100 * $invoice->amount?></td>
@@ -258,9 +260,9 @@
             <td colspan="2"></td>
             <td colspan="2">TAX <?= $tax->value?>%</td>
             <td>$<?= ($tax->value/100) * $invoice->amount?></td>
-          </tr>
+          </tr> -->
           <tr>
-            <td colspan="2"></td>
+            <td colspan="3"></td>
             <td colspan="2">GRAND TOTAL</td>
             <td>$<?= $invoice->amount?></td>
           </tr>

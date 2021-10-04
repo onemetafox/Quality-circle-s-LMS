@@ -27,7 +27,7 @@ class Payment_model extends AbstractModel
         $this->db->join('company', "company.id = user.company_id", 'left');
         if($filter['object_type'] == 'plan'){
             $this->db->join('plan', "plan.id = payment_history.object_id", 'left');
-            $this->db->select('plan.name payment_title');
+            $this->db->select('plan.name payment_title, plan.price');
         }
         return parent::all($filter);
     }
