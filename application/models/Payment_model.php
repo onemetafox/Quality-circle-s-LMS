@@ -24,7 +24,8 @@ class Payment_model extends AbstractModel
             $this->db->join('plan', "plan.id = payment_history.object_id", 'left');
             $this->db->select('plan.name payment_title');
         }
-        return parent::all($filter);
+        $result = parent::all($filter);
+        return $result;
     }
     public function getLearnerPayment($filter){
         $query = "SELECT a.*, b.title, c.`name` FROM `payment_history` a
@@ -67,6 +68,12 @@ class Payment_model extends AbstractModel
         if($filter['object_type'] == 'plan'){
             $this->db->join('plan', "plan.id = payment_history.object_id", 'left');
             $this->db->select('plan.name payment_title, plan.price');
+        }else if($filter['object_type'] == 'training' || $filter['object_type'] == 'live' || $filter['object_type'] == 'course'){
+            $this->db->join('course', "course.id = payment_history.object_id", 'left');
+            $this->db->select('course.title payment_title, course.tax_type, course.tax_rate');
+        } else if($filter['object_type'] == 'book'){
+            $this->db->join('book_shop', "book_shop.id = payment_history.object_id", 'left');
+            $this->db->select('book_shop.title payment_title');
         }
         return parent::all($filter);
     }

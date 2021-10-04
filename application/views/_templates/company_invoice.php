@@ -210,7 +210,6 @@
         <h2 class="name"><?= $term['companyname']?></h2>
         <div><?= $invoice->company_name?></div>
         <div><?= $invoice->phone?></div>
-        <div><a href="mailto:<?=$invoice->email ?>"><?=$invoice->email ?></a></div>
         <div><a href="<?= base_url() . "company/". $invoice->url ?>"><?=$invoice->url ?></a></div>
       </div>
       </div>
