@@ -44,6 +44,9 @@ class Welcome extends BaseController {
                 $course_data = $this->Course_model->getHistoryByUserID($user_id);
                 $header_data['course_count'] = count($course_data);
                 $this->load->model('Settings_model');
+                $filter['user_id'] = $user_id;
+                $this->load->model('Payment_model');
+                $page_data['amount'] = $this->Payment_model->totalAmountForLearner($filter);
                 $header_data['site_theme'] = $this->Settings_model->getTheme();
                 if (sizeof($header_data['site_theme']) >= 1){
                     $header_data['site_theme'] = $header_data['site_theme'][0];

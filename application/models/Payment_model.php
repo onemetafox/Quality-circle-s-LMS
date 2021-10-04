@@ -10,6 +10,12 @@ class Payment_model extends AbstractModel
         return $this->db->query($query)->row();
     }
 
+    public function totalAmountForLearner($filter){
+        $query = "SELECT SUM(amount) total_amount FROM payment_history
+        WHERE user_id = '$filter[user_id]'";
+        return $this->db->query($query)->row();
+    }
+
     public function getInvoices($filter = NULL){
         $this->db->select("$this->_table.*, user.first_name, user.last_name, company.name company_name");
         $this->db->join('user', "user.id = $this->_table.user_id", 'left');

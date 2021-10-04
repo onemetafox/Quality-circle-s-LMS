@@ -55,7 +55,30 @@
 						</div>
 					</section>
 				</div>
-				
+				<div class="col-sm-12 col-md-6 col-xl-6">
+					<section class="card card-featured-left card-featured-secondary mb-3">
+						<div class="card-body">
+							<div class="widget-summary">
+								<div class="widget-summary-col widget-summary-col-icon">
+									<div class="summary-icon bg-secondary">
+										<i class="fas fa-euro-sign"></i>
+									</div>
+								</div>
+								<div class="widget-summary-col">
+									<div class="summary">
+										<h4 class="title"><?=$term[totalinvoice]?></h4>
+										<div class="info">
+											<strong class="amount">$ <?= $amount->total_amount!=null?$amount->total_amount:0;?></strong>
+										</div>
+									</div>
+									<div class="summary-footer">
+										<a class="text-muted text-uppercase" href="<?php echo base_url('superadmin/account');?>">(<?=$term[viewall]?>)</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+				</div>
 			</div>							
 		</div>
 	</div>
