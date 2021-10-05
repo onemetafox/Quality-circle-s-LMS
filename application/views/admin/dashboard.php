@@ -151,7 +151,7 @@
 										</div>
 									</div>
 									<div class="summary-footer">
-										<a class="text-muted text-uppercase" href="#">(<?=$term[viewall]?>)</a>
+										<a class="text-muted text-uppercase" href="<?php echo base_url('admin/account/payment');?>">(<?=$term[viewall]?>)</a>
 									</div>
 								</div>
 							</div>

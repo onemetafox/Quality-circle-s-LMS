@@ -33,6 +33,55 @@ class Payment_model extends AbstractModel
         $result = parent::all($filter);
         return $result;
     }
+
+    public function getAdminPayment($filter){
+        $query = "SELECT a.*, b.title title, c.`name`, c.url, d.first_name, d.last_name, d.email 
+        FROM payment_history a
+        LEFT JOIN course b ON b.id = a.object_id
+        LEFT JOIN company c ON c.id = a.company_id
+        LEFT JOIN `user` d ON d.id = a.user_id
+        WHERE a.company_id = '" .$filter['company_id']. "' AND  a.object_type <> 'plan' AND a.object_type <> 'book'
+        
+        UNION
+        
+        SELECT a.*, b.title title, c.`name`, c.url, d.first_name, d.last_name, d.email 
+        FROM payment_history a
+        LEFT JOIN book_shop b ON b.id = a.object_id
+        LEFT JOIN company c ON c.id = a.company_id
+        LEFT JOIN `user` d ON d.id = a.user_id
+        WHERE a.company_id = '" .$filter['company_id']. "' AND a.object_type = 'book'
+        
+        UNION
+        
+        SELECT a.*, b.name title, c.`name`, c.url, d.first_name, d.last_name, d.email 
+        FROM payment_history a
+        LEFT JOIN plan b ON b.id = a.object_id
+        LEFT JOIN company c ON c.id = a.company_id
+        LEFT JOIN `user` d ON d.id = a.user_id
+        WHERE a.company_id = '" .$filter['company_id']. "' AND a.object_type = 'plan'";
+
+        $result = $this->db->query($query)->result_array();
+        $filtertotal = $this->db->count_all_results('', FALSE);
+        if(isset($limit) && isset($offset))
+        {
+            $this->db->limit($limit, $offset);
+        }
+        else if(isset($limit))
+        {
+            $this->db->limit($limit);
+        }
+        $result_info = array();
+        if (sizeof($result) > 0) {
+            $result_info['total'] = $filtertotal;
+            $result_info['filtertotal'] = $filtertotal;
+            $result_info['data'] = $result;
+        } else {
+            $result_info['total'] = 0;
+            $result_info['filtertotal'] = 0;
+            $result_info['data'] = array();
+        }
+        return $result_info;
+    }
     public function getLearnerPayment($filter){
         $query = "SELECT a.*, b.title, c.`name` FROM `payment_history` a
         LEFT JOIN course b on a.object_id = b.id

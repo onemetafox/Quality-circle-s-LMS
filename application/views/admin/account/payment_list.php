@@ -179,12 +179,23 @@
 	        },
 	        
 	        "columnDefs": [
-                {
-                    'targets': [0],
-                    'checkboxes': {
-                        'selectRow': true
+            {
+                "targets": [4],
+                "createdCell": function (td, cellData, rowData, row, col) {
+                    if(cellData == 'training'){
+                        $(td).html('ILT Course');
+                    } else if(cellData == 'live') {
+                        $(td).html('VILT Course');
+                    } else if (cellData == 'course'){
+                        $(td).html('Demand Course');
+                    }else if(cellData == 'plan'){
+                        $(td).html('MemeberShip');
+                    }else {
+                        $(td).html('Book shopping');
                     }
-                }, {
+                }
+            },
+               {
                 "targets": [5],
                 "createdCell": function (td, cellData, rowData, row, col) {
                     if(cellData != ''){
@@ -193,23 +204,19 @@
                         $(td).html('---');
                     }
                 }
-            }, {
-//                "targets": [9],
-//                "createdCell": function (td, cellData, rowData, row, col) {
-//                    if(rowData['pay_status'] == '2'){
-//                        $(td).html('<span class="w-20"></span><a href="javascript:deleteAccount('+cellData+')" class="delete-row"><i style="color:red" class="far fa-trash-alt"></i></a>');
-//                    }
-//                    else{
-//                        $(td).html('<a href="javascript:cancelAccount('+cellData+')"><i class="fa fa-times"></i></a><span class="w-20"></span><a href="javascript:deleteAccount('+cellData+')" class="delete-row"><i style="color:red" class="far fa-trash-alt"></i></a>');
-//                    }
-//                }
-                }],
+            },{
+                    "targets": [6],
+                    "createdCell": function (td, cellData, rowData, row, col) {
+                            $(td).html('<a href="<?=base_url()?>learner/account/invoiceDetail/'+cellData+'"><i class="fa fa-eye"></i></a><span class="w-20"></span><a href="<?=base_url()?>learner/account/export/'+cellData+'" class="delete-row"><i style="color:red" class="fa fa-print"></i></a>');
+
+                    }
+            }],
 	        "columns": [
-                { "title": "Select", "data": "id", "class": "text-left", "width": 20 },
-                { "title": "<?=$term[username]?>", "data": "fullname", "class": "text-left", "width":30 },
+                { "title": "<?=$term[title]?>", "data": "title", "class": "text-left", "width":30 },
 	        	{ "title": "<?=$term[paymentmethod]?>", "data": "payment_method", "class": "text-left", "width":150 },
 				{ "title": "<?=$term[amount]?>", "data": "amount", "class": "text-left", "width":60 },
-	        	{ "title": "<?=$term[description]?>", "data": "description", "class": "text-left", "width":60 },
+	        	{ "title": "<?=$term[companyname]?>", "data": "name", "class": "text-left", "width":60 },
+                { "title": "<?=$term[paymentreason]?>", "data": "object_type", "class": "text-left", "width":60 },
 				{ "title": "<?=$term[paydate]?>", "data": "pay_date", "class": "text-center", "width":60 },
                 { "title": "<?=$term[action]?>", "data": "id", "class": "text-center", "width":60 }
 			],

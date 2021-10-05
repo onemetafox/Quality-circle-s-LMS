@@ -53,8 +53,10 @@ class Account extends BaseController
 
     public function getpaymentlist(){
         if($this->isMasterAdmin()){
-            $cond = ["user_type" => $this->session->get_userdata()['user_type']];
-            $table_data = $this->Account_model->getPaymentList($cond);
+            $sessiondata = $this->session->get_userdata();
+            $filter ['company_id'] = $sessiondata['company_id'];
+            $this->load->model("Payment_model");
+            $table_data = $this->Payment_model->getAdminPayment($filter);
             $records["data"] = $table_data['data'];
             $records['recordsTotal'] = $table_data["total"];
             $records['recordsFiltered'] = $table_data['filtertotal'];
