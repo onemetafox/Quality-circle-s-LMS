@@ -76,6 +76,25 @@ class Account extends BaseController
             return $this->Account_model->updateaccountstatus($id, $status);
         }
     }
+    public function invoiceDetail($id){
+        $this->load->library('Sidebar');
+        $side_params = array('selected_menu_id' => '1');
+        $this->global['sidebar'] = $this->sidebar->generate($side_params, $this->role);
+        
+        $filter['id'] = $id;
+        
+        $this->load->model('Payment_model');
+        $filter['object_type'] = $this->Payment_model->select($id)->object_type;
+        $page_data['invoice'] = $this->Payment_model->getInoviceDetail($filter)[0];
+
+        // print_r($this->db->last_query());
+        // die;
+        $this->load->model('Settings_model');
+        $page_data['tax'] = $this->Settings_model->getTaxRate();
+        
+        $page_data['user'] = $this->session->userdata();
+        $this->loadViews("_templates/company_invoice", $this->global, $page_data, NULL);
+    }
 
     public function account_export(){
         if($this->isMasterAdmin()){

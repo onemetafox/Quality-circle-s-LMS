@@ -180,6 +180,17 @@
 	        
 	        "columnDefs": [
             {
+                "targets": [2],
+                "createdCell": function (td, cellData, rowData, row, col) {
+                    if(rowData['object_type'] != 'plan'){
+                        $(td).html(cellData);
+                        $(td).css("color","green");
+                    } else {
+                        $(td).html('-' + cellData);
+                        $(td).css("color","red");
+                    }
+                }
+            }, {
                 "targets": [4],
                 "createdCell": function (td, cellData, rowData, row, col) {
                     if(cellData == 'training'){
@@ -194,8 +205,7 @@
                         $(td).html('Book shopping');
                     }
                 }
-            },
-               {
+            },{
                 "targets": [5],
                 "createdCell": function (td, cellData, rowData, row, col) {
                     if(cellData != ''){
@@ -205,11 +215,11 @@
                     }
                 }
             },{
-                    "targets": [6],
-                    "createdCell": function (td, cellData, rowData, row, col) {
-                            $(td).html('<a href="<?=base_url()?>learner/account/invoiceDetail/'+cellData+'"><i class="fa fa-eye"></i></a><span class="w-20"></span><a href="<?=base_url()?>learner/account/export/'+cellData+'" class="delete-row"><i style="color:red" class="fa fa-print"></i></a>');
+                "targets": [6],
+                "createdCell": function (td, cellData, rowData, row, col) {
+                        $(td).html('<a href="<?=base_url()?>admin/account/invoiceDetail/'+cellData+'"><i class="fa fa-eye"></i></a><span class="w-20"></span><a href="<?=base_url()?>admin/account/export/'+cellData+'" class="delete-row"><i style="color:red" class="fa fa-print"></i></a>');
 
-                    }
+                }
             }],
 	        "columns": [
                 { "title": "<?=$term[title]?>", "data": "title", "class": "text-left", "width":30 },
