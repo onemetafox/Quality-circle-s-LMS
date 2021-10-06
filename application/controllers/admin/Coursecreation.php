@@ -633,6 +633,7 @@ class Coursecreation extends BaseController{
         $course_data['pass_mark'] = $this->input->post('pass_mark');
         $course_data['tax_rate'] = $this->input->post('tax_rate');
         $course_data['tax_type'] = $this->input->post('tax_type');
+        $course_data['discount'] = $this->input->post('discount');
         
         $course_data['number_of_participants'] = $this->input->post('number_of_participants');
         $course_data['assesment_end_course_date'] = date('Y-m-d', strtotime($this->input->post('assesment_end_course_date')));

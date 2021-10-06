@@ -127,13 +127,15 @@
                                     <div class="form-group row">
                                         <label class="col-sm-1" style="padding-top: 5px;float: left;"><?=$term['usd']?></label>
                                         <input type="text" class="form-control col-sm-1 input-form" style="width: 75px;" id="payy_pricee" name="pay_price" value="<?= $course_data['pay_price'] ?>">
-                                        <label class="col-sm-1" style="padding-top: 5px;float: left;"><?=$term['tax_type']?></label>
+                                        <label class="col-sm-1" style="text-align:right; padding-top: 5px;float: left;"><?=$term['tax_type']?></label>
                                         <select class="form-group" name="tax_type" id="tax_type" onChange="changePrice()">
                                             <option <?=$course_data['tax_rate'] == 0 ? "selected" : ""?> value="0">Percentage Tax</option>
                                             <option <?=$course_data['tax_rate'] == 1 ? "selected" : ""?> value="1">Fix Tax</option>
                                         </select>
-                                        <label class="col-sm-1" style="padding-top: 5px;float: left;"><?=$term['tax_rate']?></label>
-                                        <input type="text" class="form-control col-sm-1 input-form" onChange="changePrice()" style="width: 75px;" id="tax_rate" name="tax_rate" value="<?= $course_data['tax_rate'] ?>">
+                                        <label class="col-sm-1" style="text-align:right;padding-top: 5px;float: left;"><?=$term['tax_rate']?></label>
+                                        <input type="number" class="form-control col-sm-1 input-form" onChange="changePrice()" style="width: 75px;" id="tax_rate" name="tax_rate" value="<?= $course_data['tax_rate'] ?>">
+                                        <label class="col-sm-2" style="text-align:right;padding-top: 5px;float: left;"><?=$term['discount']?>(%)</label>
+                                        <input type="number" class="form-control col-sm-1 input-form" onChange="calcDiscount()" style="width: 75px;" id="discount" name="discount" value="<?= $course_data['discount'] ?>">
                                         
                                     </div>
                                     <div class="form-group row" style="display: none;">
@@ -2946,6 +2948,17 @@ function statusFun(elm){
         }else{
             $("#payy_pricee").val(Number(price) * (1 + Number(tax_rate)/100));
         }
+    }
+
+    function calcDiscount(){
+        var price = $("#payy_pricee").val();
+        var discount = $("#discount").val();
+        if(price == 0){
+            alert("Input price first");
+            return;
+        }
+        $("#payy_pricee").val(Number(price)  * (1 - Number(discount)/100));
+        
     }
    
 </script>
