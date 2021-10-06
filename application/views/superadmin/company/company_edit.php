@@ -59,6 +59,13 @@
                                             <input type="checkbox" name="active" id="active" data-plugin-ios-switch <?php echo $active==1?'checked="checked"':'';?> />
                                         </div>
                                     </div>
+                                    <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[discount]?>(%)</label>
+                                    <div class="col-sm-4">
+                                        <div class="switch switch-primary">
+                                            <input type="number" name="discount" id="discount"  class="form-control" value="<?= $discount?>"/>
+                                        </div>
+                                    </div>
+
 
                             </div>
 

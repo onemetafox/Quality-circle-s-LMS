@@ -42,6 +42,7 @@ class Company extends BaseController {
                 $page_data['logo_image'] = $user_data['logo_image'];
                 $page_data['active'] = $user_data['active'];
                 $page_data['url'] = $user_data['url'];
+                $page_data['discount'] = $user_data['discount'];
 				
 				$page_data['verify_by'] = $datas['verify_by'];
 				$page_data['otp_login'] = $datas['otp_login'];
@@ -52,6 +53,7 @@ class Company extends BaseController {
                 $page_data['active'] = 1;
                 $page_data['url'] = '';
 				$page_data['verify_by'] = '';
+                $page_data['discount'] = 0;
 				$page_data['otp_login'] = '';
             }
             $this->loadViews($page_path, $this->global, $page_data, NULL);
@@ -155,6 +157,7 @@ class Company extends BaseController {
 		if ($rslt['possible'] == 1) {
             $setData['logo_path'] = str_replace("./", "", $rslt['path']);
         }
+        $setData['discount'] = $this->input->post('discount');
 		$setData['name'] = $update_data['name'];
 		$setData['url'] = $update_data['url'];
 		
