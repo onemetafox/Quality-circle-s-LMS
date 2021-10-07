@@ -1217,19 +1217,21 @@
    
    if (class_name_profile.indexOf("active") > 0){   ////////////////////////////Profile////////////////////////////
        var price = $("#payy_pricee").val();
-   alert("11");
-       $.ajax({
+        $.ajax({
            url: $('#base_url').val()+'admin/coursecreation/save_course_profile?price='+price,
            type: 'POST',
            data: formData,
-           processData:false,
-           contentType: false,
+        //    processData:false,
+        //    contentType: false,
            success: function (data, status, xhr) {
-               new PNotify({
-                   title: '<?php echo $term['success']; ?>',
-                   text: '<?php echo 'Successfully Save Profile'; ?>',
-                   type: 'success'
-               });
+                if(data.success == 'false'){
+                    new PNotify({
+                        title: 'Failed',
+                        text: data.msg,
+                        type: 'error'
+                    });
+                }
+               
            },
            error: function(){
                $("#sendBtn").trigger('loading-overlay:hide');
@@ -1239,7 +1241,7 @@
                    type: 'error'
                });
            }
-       });
+        });
    }
    
    });
@@ -1257,12 +1259,46 @@
        }
    });
    
-   $w4finish.on('click', function (ev) {
-   ev.preventDefault();
-   var price = $("#payy_pricee").val();
-   $("#form_course").attr("action", "<?=base_url()?>admin/coursecreation/save_course_profile?price="+price);
-   $("#form_course").submit();
-   });
+    $w4finish.on('click', function (ev) {
+        ev.preventDefault();
+        // var price = $("#payy_pricee").val();
+        // $("#form_course").attr("action", "<?=base_url()?>admin/coursecreation/save_course_profile?price="+price);
+        // $("#form_course").submit();
+        var formData = new FormData($('#form_course')[0]);
+        var price = $("#payy_pricee").val();
+        $.ajax({
+           url: $('#base_url').val()+'admin/coursecreation/save_course_profile?price='+price,
+           type: 'POST',
+           data: formData,
+           processData:false,
+           contentType: false,
+           success: function (data, status, xhr) {
+                if(!data.success){
+                    new PNotify({
+                        title: 'Failed',
+                        text: data.msg,
+                        type: 'error'
+                    });
+                }else{
+                    new PNotify({
+                        title: 'Success',
+                        text: data.msg,
+                        type: 'success'
+                    });
+                    window.location.href= '<?php echo base_url() ?>admin/coursecreation/getList';
+                }
+               
+           },
+           error: function(){
+               $("#sendBtn").trigger('loading-overlay:hide');
+               new PNotify({
+                   title: '<?php echo $term['error']; ?>',
+                   text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
+                   type: 'error'
+               });
+           }
+        });
+    });
    
     
    $('#w4').bootstrapWizard({
@@ -2956,11 +2992,11 @@ function statusFun(elm){
             alert("Input price first");
             return;
         }
-        cost = cost * (100 - Number(discount))/100;
+        cost = price * (100 - Number(discount))/100;
         if(tax_type == 1){
-            cost = Number(price) + Number(tax_rate);
+            cost = Number(cost) + Number(tax_rate);
         }else{
-            cost = Number(price) * (1 + Number(tax_rate)/100);
+            cost = Number(cost) * (1 + Number(tax_rate)/100);
         }
         
         $('#amount').val(cost);

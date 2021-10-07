@@ -312,7 +312,11 @@ class Course_model extends AbstractModel
         $result->highlights = $this->db->where('course_id',$result->id)->get('highlight')->result();
         return $result;
     }
-
+    function getLimitation($filter){
+        $query = "SELECT COUNT(*) count FROM course WHERE course_type = '".$filter['course_type']."' and create_id = '".$filter['company_id']."'";
+        $result = $this->db->query($query)->row();
+        return $result->count;
+    }
     function getLibrary($id = NULL){
         $this->db->select('a.*,b.name,b.file_path');
         $this->db->from($this->chapter_table." a");

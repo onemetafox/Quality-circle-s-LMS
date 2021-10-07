@@ -675,139 +675,170 @@ class Coursecreation extends BaseController{
 		$course_data['course_self_time'] = $this->input->post('course_self_time');
 		$course_data['learning_objective'] = $this->input->post('learning_objectivevalue');
 		$course_data['agenda'] = $this->input->post('agendavalue');		
-		$upload_path = sprintf('%scompany/course/', PATH_UPLOAD);
-		$courseData = $this->Course_model->select($course_data['id']);
-		if($_FILES['objective_img']['name'] != ''){
-			$upload_path = sprintf('%scompany/course/', PATH_UPLOAD);
-			if(!file_exists($upload_path)){
-				$this->makeDirectory($upload_path);
-			}			
-			$rslt = $this->doUpload('objective_img', $upload_path);		
-			if($rslt['possible'] == 1){
-				if(!empty($courseData->objective_img)){
-					if(file_exists($courseData->objective_img)){
-						unlink($courseData->objective_img);
-					}
-				}
-				$course_data['objective_img'] = str_replace("./", "", $rslt['path']);
-			}else $course_data['objective_img'] = str_replace("./", "", "assets/img/" . 'default.png');		
-		} 
-		$course_data['attend'] = $this->input->post('attendvalue');
-		
-		if($_FILES['attend_img']['name'] != ''){
-			$upload_path = sprintf('%scompany/course/', PATH_UPLOAD);
-			if(!file_exists($upload_path)){
-				$this->makeDirectory($upload_path);
-			}
-			
-			$rslt = $this->doUpload('attend_img', $upload_path);		
-			if($rslt['possible'] == 1){
-				if(!empty($courseData->attend_img)){
-					if(file_exists($courseData->attend_img)){
-						unlink($courseData->attend_img);
-					}
-				}
-				$course_data['attend_img'] = str_replace("./", "", $rslt['path']);
-			}else $course_data['attend_img'] = str_replace("./", "", "assets/img/" . 'default.png');		
-		}
-		if($_FILES['agenda_img']['name'] != ''){
-			$upload_path = sprintf('%scompany/course/', PATH_UPLOAD);
-			if(!file_exists($upload_path)){
-				$this->makeDirectory($upload_path);
-			}
-			$rslt = $this->doUpload('agenda_img', $upload_path);		
-			if($rslt['possible'] == 1){
-				if(!empty($courseData->agenda_img)){
-					if(file_exists($courseData->agenda_img)){
-						unlink($courseData->agenda_img);
-					}
-				}
-				$course_data['agenda_img'] = str_replace("./", "", $rslt['path']);
-			}else $course_data['agenda_img'] = str_replace("./", "", "assets/img/" . 'default.png');		
-		}
-		$course_data['duration'] = $this->input->post('duration');
-        if($this->input->post('course_type') == 0){
-			$course_data['address'] = $this->input->post('address');
-			$course_data['country'] = $this->input->post('country');
-			$course_data['state'] = $this->input->post('state');
-			$course_data['city'] = $this->input->post('city');
-			$course_data['location'] = $this->input->post('address').', '.$countryName.', '.$stateName.', '.$cityName;	
-		}else{
-			$course_data['location'] = 'Online';
-			$course_data['address'] = NULL;
-			$course_data['country'] = 0;
-			$course_data['state'] = 0;
-			$course_data['city'] = 0;
-		}
-		if($this->input->post('course_type') == 2){
-			$course_data['start_at'] = $this->input->post('start_at');
-			$course_data['end_at'] = $this->input->post('end_at');	
-		}else{
-			$course_data['start_at'] = NULL;
-			$course_data['end_at'] = NULL;	
-		}
-        $course_data['course_type'] = $this->input->post('course_type');		
-		
-		$newstring = preg_replace('~[^A-Za-z0-9 ?.!]~','',$this->input->post('number'));
-		$return = '';
-		foreach(explode(' ', $newstring) as $word){
-			$return .= strtoupper($word[0]);
-		}
-		$course_data['number'] = $return.'_'.$course_data['id'];
-		
-        if($this->input->post('status') == 'on'){
-            $course_data['active'] = 1;
+
+        $course_data['course_type'] = $this->input->post('course_type');
+
+        $this->load->model('Plan_model');
+		$plan = $this->Plan_model->getPlanCompany($this->session->get_userdata()['company_id']);
+        $filter['company_id'] = $company_id;
+        $filter['course_type'] = $course_data['course_type'];
+        $limit = $this->Course_model->getLimitation($filter);
+
+        $result = array('success'=>true, 'msg'=>'Success Course created');
+        if($course_data['course_type'] == 2){
+            if($limit >= $plan->demand_limit ){
+                $result = array('success'=>false, 'msg'=>'Full maximum demand course');
+                
+            }
+        }else if($course_data['course_type'] == 1){
+            if($limit >= $plan->vilt_room_limit ){
+                $result = array('success'=>false, 'msg'=>'Full maximum VILT course');
+            }
         }else{
-            $course_data['active'] = 2;
-		}			
-        $highlight = $this->input->post('highlight[]');
-		$prerequisitehighlight = $this->input->post('prerequisitehighlight[]');
-		 
-        if($_FILES['image_path']['name'] != ""){
-            /*random upload filename*/
-            $_FILES['image_path']['name'] = microtime(true) . '.' . pathInfo($_FILES['image_path']['name'], PATHINFO_EXTENSION);
-            $course_data['img_path'] = COURSE_FILE_PATH . $_FILES['image_path']["name"];
-        }				
-        $this->Course_model->update_course($course_data, $course_data['id']);
-        $this->Course_model->delete_highlight($course_data['id']);
-		$this->Course_model->delete_prerequisite_highlight($course_data['id']);
-        if($_FILES['image_path']['name'] != ""){
+            if($limit >= $plan->ilt_room_limit ){
+                $result = array('success'=>false, 'msg'=>'Full maximum ILT course');
+            }
+        }
+        if(!$result['success']){
+            $this->Course_model->remove($course_data['id']);
+            $this->response($result);
+        }else{
             $upload_path = sprintf('%scompany/course/', PATH_UPLOAD);
-            if(!file_exists($upload_path)){
-                $this->makeDirectory($upload_path);
+            $courseData = $this->Course_model->select($course_data['id']);
+            if($_FILES['objective_img']['name'] != ''){
+                $upload_path = sprintf('%scompany/course/', PATH_UPLOAD);
+                if(!file_exists($upload_path)){
+                    $this->makeDirectory($upload_path);
+                }			
+                $rslt = $this->doUpload('objective_img', $upload_path);		
+                if($rslt['possible'] == 1){
+                    if(!empty($courseData->objective_img)){
+                        if(file_exists($courseData->objective_img)){
+                            unlink($courseData->objective_img);
+                        }
+                    }
+                    $course_data['objective_img'] = str_replace("./", "", $rslt['path']);
+                }else $course_data['objective_img'] = str_replace("./", "", "assets/img/" . 'default.png');		
+            } 
+            $course_data['attend'] = $this->input->post('attendvalue');
+            
+            if($_FILES['attend_img']['name'] != ''){
+                $upload_path = sprintf('%scompany/course/', PATH_UPLOAD);
+                if(!file_exists($upload_path)){
+                    $this->makeDirectory($upload_path);
+                }
+                
+                $rslt = $this->doUpload('attend_img', $upload_path);		
+                if($rslt['possible'] == 1){
+                    if(!empty($courseData->attend_img)){
+                        if(file_exists($courseData->attend_img)){
+                            unlink($courseData->attend_img);
+                        }
+                    }
+                    $course_data['attend_img'] = str_replace("./", "", $rslt['path']);
+                }else $course_data['attend_img'] = str_replace("./", "", "assets/img/" . 'default.png');		
             }
-            $_FILES['image_path']['name'] = sprintf('%s', $_FILES['image_path']['name']);
-            $_FILES['image_path']['type'] = $_FILES['image_path']['type'];
-            $_FILES['image_path']['tmp_name'] = $_FILES['image_path']['tmp_name'];
-            $_FILES['image_path']['size'] = $_FILES['image_path']['size'];
-            $_FILES['image_path']['error'] = $_FILES['image_path']['error'];
-            $config['upload_path'] = $upload_path;
-            $config['allowed_types'] = '*';
-            $this->load->library('upload', $config);
-            $this->upload->initialize($config);
-            if(!$this->upload->do_upload('image_path')){
-                $error = array('error' => $this->upload->display_errors());
+            if($_FILES['agenda_img']['name'] != ''){
+                $upload_path = sprintf('%scompany/course/', PATH_UPLOAD);
+                if(!file_exists($upload_path)){
+                    $this->makeDirectory($upload_path);
+                }
+                $rslt = $this->doUpload('agenda_img', $upload_path);		
+                if($rslt['possible'] == 1){
+                    if(!empty($courseData->agenda_img)){
+                        if(file_exists($courseData->agenda_img)){
+                            unlink($courseData->agenda_img);
+                        }
+                    }
+                    $course_data['agenda_img'] = str_replace("./", "", $rslt['path']);
+                }else $course_data['agenda_img'] = str_replace("./", "", "assets/img/" . 'default.png');		
+            }
+            $course_data['duration'] = $this->input->post('duration');
+            if($this->input->post('course_type') == 0){
+                $course_data['address'] = $this->input->post('address');
+                $course_data['country'] = $this->input->post('country');
+                $course_data['state'] = $this->input->post('state');
+                $course_data['city'] = $this->input->post('city');
+                $course_data['location'] = $this->input->post('address').', '.$countryName.', '.$stateName.', '.$cityName;	
             }else{
-                $data = array('upload_data' => $this->upload->data());
+                $course_data['location'] = 'Online';
+                $course_data['address'] = NULL;
+                $course_data['country'] = 0;
+                $course_data['state'] = 0;
+                $course_data['city'] = 0;
             }
+            if($course_data['course_type'] == 2){
+                $course_data['start_at'] = $this->input->post('start_at');
+                $course_data['end_at'] = $this->input->post('end_at');	
+            }else{
+                $course_data['start_at'] = NULL;
+                $course_data['end_at'] = NULL;	
+            }
+                    
+            
+            $newstring = preg_replace('~[^A-Za-z0-9 ?.!]~','',$this->input->post('number'));
+            $return = '';
+            foreach(explode(' ', $newstring) as $word){
+                $return .= strtoupper($word[0]);
+            }
+            $course_data['number'] = $return.'_'.$course_data['id'];
+            
+            if($this->input->post('status') == 'on'){
+                $course_data['active'] = 1;
+            }else{
+                $course_data['active'] = 2;
+            }			
+            $highlight = $this->input->post('highlight[]');
+            $prerequisitehighlight = $this->input->post('prerequisitehighlight[]');
+            
+            if($_FILES['image_path']['name'] != ""){
+                /*random upload filename*/
+                $_FILES['image_path']['name'] = microtime(true) . '.' . pathInfo($_FILES['image_path']['name'], PATHINFO_EXTENSION);
+                $course_data['img_path'] = COURSE_FILE_PATH . $_FILES['image_path']["name"];
+            }				
+            $this->Course_model->update_course($course_data, $course_data['id']);
+            $this->Course_model->delete_highlight($course_data['id']);
+            $this->Course_model->delete_prerequisite_highlight($course_data['id']);
+            if($_FILES['image_path']['name'] != ""){
+                $upload_path = sprintf('%scompany/course/', PATH_UPLOAD);
+                if(!file_exists($upload_path)){
+                    $this->makeDirectory($upload_path);
+                }
+                $_FILES['image_path']['name'] = sprintf('%s', $_FILES['image_path']['name']);
+                $_FILES['image_path']['type'] = $_FILES['image_path']['type'];
+                $_FILES['image_path']['tmp_name'] = $_FILES['image_path']['tmp_name'];
+                $_FILES['image_path']['size'] = $_FILES['image_path']['size'];
+                $_FILES['image_path']['error'] = $_FILES['image_path']['error'];
+                $config['upload_path'] = $upload_path;
+                $config['allowed_types'] = '*';
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+                if(!$this->upload->do_upload('image_path')){
+                    $error = array('error' => $this->upload->display_errors());
+                }else{
+                    $data = array('upload_data' => $this->upload->data());
+                }
+            }
+            for ($i = 0;$i < count($highlight);$i++){
+                $this->Course_model->insert_highlight(array("course_id" => $course_data['id'], "content" => $highlight[$i]));
+            }
+            for($i = 0;$i < count($prerequisitehighlight);$i++){
+                $this->Course_model->insert_prerequisite_highlight(array("course_id" => $course_data['id'], "content" => $prerequisitehighlight[$i]));
+            }
+            if($course_data['course_type'] == 1){
+                $this->addLive($course_data);
+            }
+            if($course_data['course_type'] == 0){
+                $this->addIltCourse($course_data);
+            }
+            
+            // Add Course Detail To WooCommerce Store
+            $courseData = array('name' => $course_data['title'], 'type' => 'simple', 'regular_price' => $price, 'description' => $course_data['about'], 'short_description' => $course_data['about'], 'categories' => [['id' => 35]], 'images' => [['src' => 'https://shop.gosmartacademy.com/wp-content/uploads/2020/06/course.png']]);
+            $ccResult = $this->woocommerce->post('products', $courseData);
+            $this->response($result);
+            // redirect('admin/coursecreation/getList');
         }
-        for ($i = 0;$i < count($highlight);$i++){
-            $this->Course_model->insert_highlight(array("course_id" => $course_data['id'], "content" => $highlight[$i]));
-        }
-		for($i = 0;$i < count($prerequisitehighlight);$i++){
-            $this->Course_model->insert_prerequisite_highlight(array("course_id" => $course_data['id'], "content" => $prerequisitehighlight[$i]));
-        }
-		if($course_data['course_type'] == 1){
-			$this->addLive($course_data);
-		}
-		if($course_data['course_type'] == 0){
-			$this->addIltCourse($course_data);
-		}
 		
-        // Add Course Detail To WooCommerce Store
-        $courseData = array('name' => $course_data['title'], 'type' => 'simple', 'regular_price' => $price, 'description' => $course_data['about'], 'short_description' => $course_data['about'], 'categories' => [['id' => 35]], 'images' => [['src' => 'https://shop.gosmartacademy.com/wp-content/uploads/2020/06/course.png']]);
-        $ccResult = $this->woocommerce->post('products', $courseData);
-        redirect('admin/coursecreation/getList');
     }
 	
 	public function addIltCourse($iltCourse){
