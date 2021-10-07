@@ -133,20 +133,36 @@ class Library extends BaseController {
     public function createDirectory(){
         $user_id = $this->session->get_userdata() ['userId'];
         $company_id = $this->session->get_userdata() ['company_id'];
-        $dir_name = $this->input->post('new_directory');
-        $upload_path = sprintf('%sdirectory/%d/%s', PATH_UPLOAD, $user_id, $dir_name);
-        if(!file_exists($upload_path)){
-            $this->makeDirectory($upload_path);
+        $this->load->model('Plan_model');
+		$plan = $this->Plan_model->getPlanCompany($company_id);
+        $directories = $this->Library_model->getLibraryCount(array('company_id'=>$company_id, 'file_type'=> 'DIRECTORY'));
+        if($directories < $plan->library_limit){
+            $dir_name = $this->input->post('new_directory');
+            $upload_path = sprintf('%sdirectory/%d/%s', PATH_UPLOAD, $user_id, $dir_name);
+            if(!file_exists($upload_path)){
+                $this->makeDirectory($upload_path);
+                $insert_data['name'] = $dir_name;
+                $insert_data['file_type'] = 'DIRECTORY';
+                $insert_data['file_path'] = $upload_path;
+                $insert_data['user_id'] = $user_id;
+                $insert_data['create_id'] = $company_id;
+                $insert_data['parent_id'] = 0;
+                $this->Library_model->insert($insert_data);
+                $data['success'] = true;
+                $data['msg'] = "Directory Created";
+                $this->response($data);
+            }else{
+                $data['success'] = false;
+                $data['msg'] = "Directory already exist";
+                $this->response($data);
+            }
+            
+        }else{
+            $data['success'] = false;
+            $data['msg'] = "Full maximum library limitation";
+            $this->response($data);
         }
-        $insert_data['name'] = $dir_name;
-        $insert_data['file_type'] = 'DIRECTORY';
-        $insert_data['file_path'] = $upload_path;
-        $insert_data['user_id'] = $user_id;
-        $insert_data['create_id'] = $company_id;
-        $insert_data['parent_id'] = 0;
-        $this->Library_model->insert($insert_data);
-        $data['failed_count'] = 0;
-        $this->response($data);
+        
     }
     
     public function unsetShopping(){

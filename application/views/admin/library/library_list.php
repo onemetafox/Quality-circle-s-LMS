@@ -582,25 +582,21 @@
             processData:false,
             contentType: false,
             success: function (data, status, xhr) {
-
-                $table.DataTable().ajax.reload('', false);
-                $.magnificPopup.close();
-
-                if(data.failed_count > 0){
-                    new PNotify({
-                        title: 'Fail!',
-                        text: 'Already Exist',
-                        type: 'danger'
-                    });
-                }else{
+                if(data.success == 'true'){
                     new PNotify({
                         title: 'Success',
-                        text: 'Create Directory',
+                        text: data.msg,
                         type: 'success'
                     });
+                    $table.DataTable().ajax.reload('', false);
+                    $.magnificPopup.close();
+                }else{
+                    new PNotify({
+                        title: 'Failed',
+                        text: data.msg,
+                        type: 'error'
+                    });
                 }
-
-
             },
             error: function(){
 

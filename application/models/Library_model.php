@@ -154,4 +154,10 @@ class Library_model extends CI_Model
             return $this->db->protect_identifiers($this->table) . "." . $field;
         return $field;
     }
+
+    function getLibraryCount($filter){
+        $query = "SELECT COUNT(*) count FROM library WHERE create_id = '". $filter['company_id']."' AND file_type = 'DIRECTORY'";
+        $result = $this->db->query($query)->row();
+        return $result->count;
+    }
 }

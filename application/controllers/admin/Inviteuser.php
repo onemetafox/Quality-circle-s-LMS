@@ -117,8 +117,13 @@ class Inviteuser extends BaseController{
 		$data['user_id'] = $this->input->post('user_id');
 		$data['company_id'] = $this->session->userdata('company_id');
 		$result = array("success"=> true, "msg"=>"success");
+
+		$this->load->model('Plan_model');
+		$plan = $this->Plan_model->getPlanCompany($data['company_id']);
+
 		if($this->Inviteuser_model->getAll($data)){
-			echo "false";
+			$result = array("success"=> false, "msg"=>"User already invited");
+			$this->response($result);
 		}else{
 			$user_data = $this->User_model->getList(array('id' => $data['user_id'])) [0];
 
@@ -253,6 +258,7 @@ class Inviteuser extends BaseController{
 		$plan = $this->Plan_model->getPlanCompany($data['company_id']);
 		$this->load->model('User_model');
 		$total_count = $this->User_model->count(array('company_id'=>$data['company_id']));
+
 		$result = array("success"=> true, "msg"=>"success");
 		if($total_count >= $plan->user_limit){
 			$result = array("success"=> false, "msg"=>"Full of User Limitation");
