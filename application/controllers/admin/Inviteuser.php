@@ -115,6 +115,8 @@ class Inviteuser extends BaseController{
 		$data['ilt_course_time_id'] = $this->input->post('add_ilt_time_id');		
         $data['course_type'] = $this->input->post('course_type');
 		$data['user_id'] = $this->input->post('user_id');
+		$data['company_id'] = $this->session->userdata('company_id');
+		$result = array("success"=> true, "msg"=>"success");
 		if($this->Inviteuser_model->getAll($data)){
 			echo "false";
 		}else{
@@ -129,11 +131,26 @@ class Inviteuser extends BaseController{
 			}else{
 				if($data['course_type'] == 1){
 					$time_id = $data['virtual_course_time_id'];	
+					$limit = $this->Inviteuser_model->getLimitation($data['company_id'], 1);
+					if($limit >= $plan->vilt_user_limit){
+						$result = array("success"=> false, "msg"=>"Full maximum VILT user");
+						$this->response($result);
+					}
+					
 				}else{
 					$time_id = $data['ilt_course_time_id'];	
+					$limit = $this->Inviteuser_model->getLimitation($data['company_id'], 0);
+					if($limit >= $plan->ilt_user_limit){
+						$result = array("success"=> false, "msg"=>"Full maximum ILT user");
+						$this->response($result);
+					}
 				}
 				$temp = $this->Inviteuser_model->getInviteUserCountFront($data['course_id'],$data['course_type'],$data['email'],$time_id);
-			}		
+				if($temp != 0 ){
+					$result = array("success"=> false, "msg"=>"User already invited");
+					$this->response($result);
+				}
+			}	
 			
 			if($flag == '1' && $temp == 0){
 				$res = $this->Inviteuser_model->insert($data);
@@ -196,7 +213,7 @@ class Inviteuser extends BaseController{
 			//$courseArr = ['enroll_users' => $course_data['enroll_users']+1];
 			//$this->Course_model->update_course($courseArr,$data['course_id']);
 			$this->load->library('email');
-			$email_temp = $this->getEmailTemp('assign_course',$company_id);
+			$email_temp = $this->getEmailTemp('assign_course',$data['company_id']);
 			$content = $email_temp['message'];
 			$title = $email_temp['subject'];
 	
@@ -237,7 +254,6 @@ class Inviteuser extends BaseController{
 		$this->load->model('User_model');
 		$total_count = $this->User_model->count(array('company_id'=>$data['company_id']));
 		$result = array("success"=> true, "msg"=>"success");
-		$limit = 0;
 		if($total_count >= $plan->user_limit){
 			$result = array("success"=> false, "msg"=>"Full of User Limitation");
 			$this->response($result);
@@ -349,6 +365,7 @@ class Inviteuser extends BaseController{
 			    $content = str_replace("{LOCATION}", '', $content);
 			}
 			$this->sendemail($data['email'],$data['first_name'].' '.$data['last_name'],$content,$title);
+			$this->response($result);
 		}
     }
 

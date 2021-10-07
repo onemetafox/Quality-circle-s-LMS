@@ -1540,13 +1540,21 @@
             processData: false,
             contentType: false,
             success: function (data, status, xhr) {
-               // $.magnificPopup.close();
-               new PNotify({
+               if(data.succss == "true"){
+                  $.magnificPopup.close();
+                  new PNotify({
                      title: 'Success',
-                     text: 'Add',
+                     text: data.msg,
                      type: 'success'
-               });
-               //document.location.reload();
+                  });
+                  document.location.reload();
+               }else{
+                  new PNotify({
+                     title: 'Faild',
+                     text: data.msg,
+                     type: 'error'
+                  });
+               }
             },
             error: function(){   
             }
@@ -1570,13 +1578,21 @@
                processData: false,
                contentType: false,
                success: function (data, status, xhr) {
-                  // $.magnificPopup.close();
-                  // new PNotify({
-                  //       title: 'Success',
-                  //       text: 'Add',
-                  //       type: 'success'
-                  // });
-                  //document.location.reload();
+                  if(data.succss == "true"){
+                     $.magnificPopup.close();
+                     new PNotify({
+                        title: 'Success',
+                        text: data.msg,
+                        type: 'success'
+                     });
+                     document.location.reload();
+                  }else{
+                     new PNotify({
+                        title: 'Faild',
+                        text: data.msg,
+                        type: 'error'
+                     });
+                  }
                },
                error: function(){   
                }

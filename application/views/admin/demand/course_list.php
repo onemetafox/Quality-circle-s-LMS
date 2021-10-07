@@ -639,20 +639,27 @@
         }else{
             $.magnificPopup.close();
             $.ajax({
-                // url: '<?=base_url()?>admin/inviteuser/createInviteuser/demand/1',
 				url: '<?=base_url()?>admin/inviteuser/addExistUser/demand/1',
                 type: 'POST',
                 data: formData,
                 processData: false,
                 contentType: false,
                 success: function (data, status, xhr) {
-                    $.magnificPopup.close();
-                    new PNotify({
-                        title: 'Success',
-                        text: 'Add',
-                        type: 'success'
-                    });
-                    //document.location.reload();
+					if(data.succss == "true"){
+						$.magnificPopup.close();
+						new PNotify({
+							title: 'Success',
+							text: data.msg,
+							type: 'success'
+						});
+						document.location.reload();
+					}else{
+						new PNotify({
+							title: 'Faild',
+							text: data.msg,
+							type: 'error'
+						});
+					}
                 },
                 error: function () {
 
@@ -689,15 +696,24 @@
 				course_type:course_type
             },
             success: function (data, status, xhr) {
-                $(obj).removeAttr("disabled");
+                
 
-                //$.magnificPopup.close();
-                new PNotify({
-                    title: 'Success',
-                    text: 'Resend',
-                    type: 'success'
-                });
-                //document.location.reload();
+                if(data.succss == "true"){
+					$.magnificPopup.close();
+					new PNotify({
+						title: 'Success',
+						text: data.msg,
+						type: 'success'
+					});
+					$(obj).removeAttr("disabled");
+					// document.location.reload();
+				}else{
+					new PNotify({
+						title: 'Faild',
+						text: data.msg,
+						type: 'error'
+					});
+				}
             },
             error: function () {
 
