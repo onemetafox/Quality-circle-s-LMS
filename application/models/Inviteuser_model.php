@@ -83,7 +83,13 @@ class Inviteuser_model extends AbstractModel
 
         return count($res);
     }
-	
+	function getLimitation($company_id, $course_type){
+        $query = "SELECT * FROM invite_user WHERE course_type = '$course_type' AND company_id = '$company_id'" ;
+        $result = $this->db->query($query);
+        $res=$result->result_array();
+
+        return count($res);
+    }
     function getInviteUserCount($tid,$type,$email){
         $query = "SELECT
                         *
