@@ -114,11 +114,11 @@
                                     <div class="form-group row">
                                        <label class="col-sm-12 control-label text-sm-left pt-1" for="w4-username"><?=$term['selecttypeofcourse']?></label>
                                        <div class="col-sm-12">
-                                          <label class="radioBox col-sm-2"><?=$term['freecourse']?>
+                                          <label class="radioBox col-sm-2"><?=$term['opencourse']?>
                                           <input type="radio" name = "pay_type" value="0" <?php if ($course_data['pay_type'] == 0):?>checked<?php endif;?>>
                                           <span class="checkmark"></span>
                                           </label>
-                                          <label class="radioBox col-sm-3"><?=$term['paidonetimepurchase']?>
+                                          <label class="radioBox col-sm-3"><?=$term['closedcourse']?>
                                           <input type="radio" name = "pay_type" value="1" <?php if ($course_data['pay_type'] == 1):?>checked<?php endif;?>>
                                           <span class="checkmark"></span>
                                           </label>
@@ -127,6 +127,8 @@
                                     <div class="form-group row">
                                         <label class="col-sm-1" style="padding-top: 5px;float: left;"><?=$term['usd']?></label>
                                         <input type="text" class="form-control col-sm-1 input-form" style="width: 75px;" id="payy_pricee" name="pay_price" value="<?= $course_data['pay_price'] ?>">
+                                        <label class="col-sm-2" style="text-align:right;padding-top: 5px;float: left;"><?=$term['discount']?>(%)</label>
+                                        <input type="number" class="form-control col-sm-1 input-form" onChange="changePrice()" style="width: 75px;" id="discount" <?=$course_data['pay_type'] == 0? 'readonly': ''?> name="discount" value="<?= $course_data['discount'] ?>">
                                         <label class="col-sm-1" style="text-align:right; padding-top: 5px;float: left;"><?=$term['tax_type']?></label>
                                         <select class="form-group" name="tax_type" id="tax_type" onChange="changePrice()">
                                             <option <?=$course_data['tax_rate'] == 0 ? "selected" : ""?> value="0">Percentage Tax</option>
@@ -134,9 +136,9 @@
                                         </select>
                                         <label class="col-sm-1" style="text-align:right;padding-top: 5px;float: left;"><?=$term['tax_rate']?></label>
                                         <input type="number" class="form-control col-sm-1 input-form" onChange="changePrice()" style="width: 75px;" id="tax_rate" name="tax_rate" value="<?= $course_data['tax_rate'] ?>">
-                                        <label class="col-sm-2" style="text-align:right;padding-top: 5px;float: left;"><?=$term['discount']?>(%)</label>
-                                        <input type="number" class="form-control col-sm-1 input-form" onChange="calcDiscount()" style="width: 75px;" id="discount" name="discount" value="<?= $course_data['discount'] ?>">
                                         
+                                        <label class="col-sm-1" style="padding-top: 5px;float: left;">Total <?=$term['usd']?></label>
+                                        <input type="text" class="form-control col-sm-1 input-form" style="width: 75px;" id="amount" name="amount" value="<?= $course_data['amount'] ?>" readonly>
                                     </div>
                                     <div class="form-group row" style="display: none;">
                                        <label class="col-sm-12 control-label text-sm-left pt-1" for="w4-username"><?=$term['courseswillbevisiblefor']?></label>
@@ -996,6 +998,17 @@
 		}
 	});
 	jQuery(document).ready(function() {
+        $('input[type=radio][name="pay_type"]').change(function() {
+            if($(this).val() == 0){
+                $('#discount').val('100');
+                $('#discount').prop('readonly', true);
+                $('#amount').val(0);
+            }else{
+                $('#discount').val('0');
+                $('#discount').prop('readonly', false);
+            }
+                
+        });
 		getCategoryTitle();
 		$('.form_datetime').change(function() {
 			var date = $(this).val();
@@ -1577,17 +1590,15 @@
    add_new_chap = add_new_detail = '';
    
    $('.create-exam').magnificPopup({
-   type: 'inline',
-   preloader: false,
-   modal: true,
-   
-   // When elemened is focused, some mobile browsers in some cases zoom in
-   // It looks not nice, so we disable it:
-   callbacks: {
-   beforeOpen: function() {
-   
-   }
-   }
+    type: 'inline',
+    preloader: false,
+    modal: true,
+    
+    // When elemened is focused, some mobile browsers in some cases zoom in
+    // It looks not nice, so we disable it:
+    callbacks: {
+        beforeOpen: function() {}
+    }
    });
    
    $('.create-page').magnificPopup({
@@ -2938,27 +2949,21 @@ function statusFun(elm){
     function changePrice(){
         var tax_type = $("#tax_type").val();
         var tax_rate = $("#tax_rate").val();
-        var price = $("#payy_pricee").val();
-        if(price == 0){
-            alert("Input price first");
-            return;
-        }
-        if(tax_type == 1){
-            $("#payy_pricee").val(Number(price) + Number(tax_rate));
-        }else{
-            $("#payy_pricee").val(Number(price) * (1 + Number(tax_rate)/100));
-        }
-    }
-
-    function calcDiscount(){
-        var price = $("#payy_pricee").val();
         var discount = $("#discount").val();
+        var price = $("#payy_pricee").val();
+        var cost = 0;
         if(price == 0){
             alert("Input price first");
             return;
         }
-        $("#payy_pricee").val(Number(price)  * (1 - Number(discount)/100));
         
+        if(tax_type == 1){
+            cost = Number(price) + Number(tax_rate);
+        }else{
+            cost = Number(price) * (1 + Number(tax_rate)/100);
+        }
+        cost = cost * (100 - Number(discount))/100;
+        $('#amount').val(cost);
+
     }
-   
 </script>
