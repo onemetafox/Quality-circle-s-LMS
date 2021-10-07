@@ -231,7 +231,7 @@ class Inviteuser extends BaseController{
 		$data['virtual_course_time_id'] = $this->input->post('add_course_time_id');
 		$data['ilt_course_time_id'] = $this->input->post('add_ilt_time_id');		
         $data['course_type'] = $this->input->post('course_type');
-		$data['company_id'] = $this->session->userdata('company_id');
+		$data['company_id'] = $this->session->userdata('company_id');  // add company ID in invite user table
 		$this->load->model('Plan_model');
 		$plan = $this->Plan_model->getPlanCompany($data['company_id']);
 		$this->load->model('User_model');
