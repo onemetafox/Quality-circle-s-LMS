@@ -114,11 +114,11 @@
                                     <div class="form-group row">
                                        <label class="col-sm-12 control-label text-sm-left pt-1" for="w4-username"><?=$term['selecttypeofcourse']?></label>
                                        <div class="col-sm-12">
-                                          <label class="radioBox col-sm-2"><?=$term['opencourse']?>
+                                          <label class="radioBox col-sm-2"><?=$term['closedcourse']?>
                                           <input type="radio" name = "pay_type" value="0" <?php if ($course_data['pay_type'] == 0):?>checked<?php endif;?>>
                                           <span class="checkmark"></span>
                                           </label>
-                                          <label class="radioBox col-sm-3"><?=$term['closedcourse']?>
+                                          <label class="radioBox col-sm-3"><?=$term['opencourse']?>
                                           <input type="radio" name = "pay_type" value="1" <?php if ($course_data['pay_type'] == 1):?>checked<?php endif;?>>
                                           <span class="checkmark"></span>
                                           </label>
@@ -2956,13 +2956,13 @@ function statusFun(elm){
             alert("Input price first");
             return;
         }
-        
+        cost = cost * (100 - Number(discount))/100;
         if(tax_type == 1){
             cost = Number(price) + Number(tax_rate);
         }else{
             cost = Number(price) * (1 + Number(tax_rate)/100);
         }
-        cost = cost * (100 - Number(discount))/100;
+        
         $('#amount').val(cost);
 
     }
