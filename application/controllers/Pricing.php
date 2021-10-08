@@ -76,7 +76,17 @@ class Pricing  extends BaseController
         $headerInfo[term] = $this->term;
         $this->loadViews_front('pricing', $headerInfo);
     }
+    public function payment($id, $type){
+        $this->isLoggedIn();
+        if($type == 'plan'){
 
+        }else if($type == 'course'){
+
+        }else{
+            
+        }
+        $this->loadViews_front('payment');
+    }
     public function add_purchase($plan_id = 0){
         if($this->session->userdata('user_type') === 'Admin'){
             $plan = $this->Plan_model->select($plan_id);

@@ -470,7 +470,6 @@ class Login extends BaseController{
         $headerInfo['token'] = $token;
         $this->loadViews_front('otp-login', $headerInfo);        
     }
-
     function resend_otp($token){
 		$query = $this->db->get_where('user', ['security_key' => $token]);
 		$response = $query->row();

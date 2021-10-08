@@ -572,7 +572,7 @@ $userID = $this->session->userdata('userId');
 		
 		//alert(bookshop_id);
 
-		window.location = 'https://shop.gosmartacademy.com/shop/?add-to-cart='+ id+'&user_id='+user__id+'&subscription_type='+type;
+		window.location = '<?= base_url()."pricing/payment/" ?>' +id + "/" + type;
 		
 
 	/*	.then((willDelete) => {

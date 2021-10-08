@@ -12,20 +12,12 @@
                     </div>
 
                     <div class="paymentWrap">
-                        <div class="paymentRow">
-                            <input type="text" class="texPayment" placeholder="Price: $999">
+                        <div class="col-lg-6 payment-type">
+                            
                         </div>
-                        <div class="paymentRow feildMaring30">
-                            <input type="text" class="texPayment borderNone" placeholder="langlangFan@hotmail.com">
-                        </div>
+                        <div class="col-lg-6 payment-detail">
 
-                        <div class="paymentRow feildMaring30">
-                                <input type="text" class="texPayment" placeholder="Card Number">
-                            </div>
-                            <div class="paymentRow feildMaring30">
-                                    <input type="text" class="texPayment width50 borderNoneRight" placeholder="MM/YY">
-                                    <input type="text" class="texPayment width50" placeholder="CVC">
-                                </div>
+                        </div>
                     </div>
                     <div class="wrapNext">
                             <a href="#" class="nextBTN outlineBTN">Back</a>
