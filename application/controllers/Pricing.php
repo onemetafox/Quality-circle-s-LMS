@@ -141,9 +141,7 @@ class Pricing  extends BaseController
             $data['tax'] = $this->Settings_model->getTaxRate()->value;
             $data['discount'] = $this->Company_model->getRow($user['company_id'])->discount;
             
-            $data['price'] = $plan->price;
             $data['sub_total'] = $plan->price * (100 - $data['discount'])/100;
-            $data['discount_amount'] = $data['price'] * ($data['discount'])/100;
             $data['total'] = $data['sub_total'] * (100 + $data['tax'])/100;
         }else if($filter['type'] == "course"){
 
@@ -162,25 +160,36 @@ class Pricing  extends BaseController
         $total, $description, $intent );
     }
     function success_payment($id, $type){
+        $user = $this->session->userdata();
+        $data['user_id'] = $user['user_id'];
+        $data['pay_date'] = date("Y-m-d H:s:i");
+        $data['company_id'] = $user['company_id'];
+        $data['object_type'] = $type;
+        $data['object_id'] = $id;
         if($type == "plan"){
             $plan = $this->Plan_model->select($filter['id']);
-            $data['title'] = $plan->name;
-            $data['description'] = "Subscription";
-            $data['tax'] = $this->Settings_model->getTaxRate()->value;
+            $data['description'] = $plan->name;
+            $data['tax_rate'] = $this->Settings_model->getTaxRate()->value;
+            $data['tax_type'] = "0";
+
             $data['discount'] = $this->Company_model->getRow($user['company_id'])->discount;
             
             $data['price'] = $plan->price;
-            $data['sub_total'] = $plan->price * (100 - $data['discount'])/100;
-            $data['discount_amount'] = $data['price'] * ($data['discount'])/100;
-            $data['tax_amount'] = $data['sub_total'] * ($data['tax'])/100;
-            $data['total'] = $data['sub_total'] * (100 + $data['tax'])/100;
-            $data['tax_type'] = "%";
+            
+            $sub_total = $plan->price * (100 - $data['discount'])/100;
+            $data['amount'] = $sub_total * (100 + $data['tax_rate'])/100;
+            
         }else if($type == "course"){
 
         }else{
             
         }
-        
+        if ( !empty( $_GET['paymentId'] ) && !empty( $_GET['PayerID'] ) ) {
+
+		    $this->paypal->execute_payment( $_GET['paymentId'], $_GET['PayerID'] );
+            $insert = $this->Payment_model->save($data);
+            $this->loadViews_front('payment_success', $data);
+		}
     }
     public function cancel(){
 

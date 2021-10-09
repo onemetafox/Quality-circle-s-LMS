@@ -274,17 +274,9 @@ $userID = $this->session->userdata('userId');
                               <td></td>
                               <td class="tier_left">
                                 <?php if($this->session->userdata('is_trialed') != 1):?>
-                                 <!-- <a class="iris_btn iris_btn--primary iris_btn--lg" data-fatal-attraction="container:product_comparison_chart|component:marketing_upgrade|keyword:pro" href="javascript:set_plan('<?php //echo base_url('index.php/pricing/add_purchase/'.$plans_trial->id)?>')">
-                                 Get Started                       </a> -->
                                 <a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(1, 'trail')">Buy Now</a>
                                <?php endif;?> 
                               </td>
-                              <?php //foreach($plans_month as $key=>$val):?>
-                              <!-- <td class="tier_center">
-                                 <a class="iris_btn iris_btn--secondary iris_btn--lg" data-fatal-attraction="container:product_comparison_chart|component:marketing_upgrade|keyword:pro" href="javascript:set_plan('<?php //echo base_url('index.php/pricing/add_purchase/'.$val->id)?>')">
-                                 Get Started                        </a>
-                              </td> -->
-                              <?php //endforeach;?>
                               <td class="tier_left"><a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(2, 'monthly')">Buy Now</a></td>
                           <td class="tier_left"><a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(3, 'monthly')">Buy Now</a></td>
                           <td class="tier_left"><a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(4, 'monthly')">Buy Now</a></td>
@@ -347,21 +339,11 @@ $userID = $this->session->userdata('userId');
                                     <path d="M22.11.4c-.608-.577-1.65-.522-2.332.122L9.082 10.658 4.126 5.962c-.608-.575-1.594-.575-2.202 0L.456 7.354c-.608.575-.608 1.51 0 2.086l7.524 7.128c.608.576 1.594.577 2.202 0L23.45 4c.68-.644.737-1.634.13-2.21L22.11.4z" fill="#1AB7EB" fill-rule="evenodd"></path>
                                  </svg>                                          
                               </td>
-                             
                            </tr>
-
                           <?php endforeach; ?>
                           <?php if( $this->session->userdata("userId")){ ?>
-                          <!-- <tr> <td class="tier_left"></td>
-                          <td class="tier_left"><a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(629, 'trail')">Buy Now</a></td>
-                          <td class="tier_left"><a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(624, 'monthly')">Buy Now</a></td>
-                          <td class="tier_left"><a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(626, 'monthly')">Buy Now</a></td>
-                          <td class="tier_left"><a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(627, 'monthly')">Buy Now</a></td>
-                          </tr> -->
                           <?php } ?>
                         </tbody>
-                        <!-- FOOTER -->
-                       
                      </table>
                   </div>
                </div>
@@ -504,8 +486,6 @@ $userID = $this->session->userdata('userId');
                           </tr>
                           <?php } ?>
                         </tbody>
-                        <!-- FOOTER -->
-                       
                      </table>
                   </div>
                </div>
@@ -562,49 +542,9 @@ $userID = $this->session->userdata('userId');
 
    var isLogin = "<?php echo $this->session->userdata ( 'isLoggedIn' )?>";
 	if(isLogin){
-		/*swal({
-		  title: "Are you sure?",
-		  buttons: true
-
-		})*/
-		
 		var user__id = "<?php echo $userID; ?>";
-		
-		//alert(bookshop_id);
-
 		window.location = '<?= base_url()."pricing/payment/" ?>' +id + "/plan";
-		
-
-	/*	.then((willDelete) => {
-		  if (willDelete) {
-		        $.ajax({
-	        url : company_url + '/bookshop/pay/' + id,
-	        type : 'post',
-	        success : function(res) {
-	                if(res.type == 1){
-	                    swal({
-	                      text: "You pay successfully!",
-	                      icon: "success"
-	                    })
-	                    .then((willDelete) =>{
-	                    	if(willDelete)
-	                    		location.reload();
-	                    });
-	                }else{
-	                    if(res.msg){
-	                        swal({
-	                          text: res.msg,
-	                          icon: "warning",
-	                          dangerMode: true
-	                        });
-	                    }
-	                }
-	            }
-	        });
-		  } else {
-		    return;
-		  }
-		});*/
+	
 	}else{
 		location.href = "<?php echo base_url().'login'?>";
 	}
