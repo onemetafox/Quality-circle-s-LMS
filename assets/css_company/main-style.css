@@ -696,7 +696,7 @@ footer {
 }
 
 .paymentWrap {
-	max-width: 500px;
+	/* max-width: 500px; */
 	margin: 0px auto;
 	width: 100%;
 	float: none;
@@ -2344,7 +2344,7 @@ footer {
 }
 
 .paymentWrap {
-	max-width: 500px;
+	/* max-width: 500px; */
 	margin: 0px auto;
 	width: 100%;
 	float: none;

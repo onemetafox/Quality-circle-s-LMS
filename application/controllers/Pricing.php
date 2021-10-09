@@ -20,6 +20,8 @@ class Pricing  extends BaseController
         $this->load->helper(array('cookie', 'string', 'language', 'url'));
         $this->load->helper('lms_email');
         $this->load->model('Plan_model');
+        $this->load->library("paypal");
+        $this->load->model('Company_model');
     }
 
     public function index()
@@ -77,15 +79,83 @@ class Pricing  extends BaseController
         $this->loadViews_front('pricing', $headerInfo);
     }
     public function payment($id, $type){
+        
         $this->isLoggedIn();
+        $user = $this->session->userdata();
+        
         if($type == 'plan'){
 
+            $plan = $this->Plan_model->select($id);
+            $data['title'] = $plan->name;
+            $data['description'] = "";
+            $data['tax'] = $this->Settings_model->getTaxRate()->value;
+            $data['discount'] = $this->Company_model->getRow($user['company_id'])->discount;
+            
+            $data['price'] = $plan->price;
+            $data['sub_total'] = $plan->price * (100 - $data['discount'])/100;
+            $data['discount_amount'] = $data['price'] * ($data['discount'])/100;
+            $data['tax_amount'] = $data['sub_total'] * ($data['tax'])/100;
+            $data['total'] = $data['sub_total'] * (100 + $data['tax'])/100;
+            $data['tax_type'] = "%";
+           
         }else if($type == 'course'){
+            $this->load->model('Course_model');
+
+            $course = $this->Course_model->select($id);
+            $data['title'] = $course->title;
+            $data['description'] = $course->desciption;
+            
+            $data['discount'] = $course->discount;
+            
+            $data['price'] = $course->price;
+            $data['sub_total'] = $course->price * (100 - $data['discount'])/100;
+            $data['discount_amount'] = $data['price'] * ($data['discount'])/100;
+            $data['tax'] = $course->tax_rate;
+            if($course->tax_type == 0){
+                $data['tax_amount'] = $data['sub_total'] * ($data['tax'])/100;
+                $data['tax_type'] = "%";
+            }else{
+                $data['tax_type'] = "$";
+                $data['tax_amount'] = $data['sub_total'] + $data['tax'];
+            }
+            
+            $data['total'] = $course->amount;
+        }else{
+
+        }
+        $data['type'] = $type;
+        $data['id'] = $id;
+        $this->loadViews_front('payment', $data);
+    }
+    public function paypalPayment(){
+        $this->paypal->set_api_context();
+        $data = $this->input->post();
+        if($data['type'] == "plan"){
+
+        }else if($data['type'] == "course"){
+
+        }else{
+
+        }
+
+        $payment_method = "paypal";
+		$return_url     = base_url()."index.php/payment/success_payment";
+		$cancel_url     = base_url()."index.php/payment/cancel";
+		$total          = 10;
+		$description    = "Paypal product payment";
+		$intent         = "sale";
+
+		$this->paypal->create_payment( $payment_method, $return_url, $cancel_url, 
+        $total, $description, $intent );
+    }
+    public function stripePayment(){
+        if($data['type'] == "plan"){
+
+        }else if($data['type'] == "course"){
 
         }else{
             
         }
-        $this->loadViews_front('payment');
     }
     public function add_purchase($plan_id = 0){
         if($this->session->userdata('user_type') === 'Admin'){

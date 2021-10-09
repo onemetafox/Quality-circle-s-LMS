@@ -276,7 +276,7 @@ $userID = $this->session->userdata('userId');
                                 <?php if($this->session->userdata('is_trialed') != 1):?>
                                  <!-- <a class="iris_btn iris_btn--primary iris_btn--lg" data-fatal-attraction="container:product_comparison_chart|component:marketing_upgrade|keyword:pro" href="javascript:set_plan('<?php //echo base_url('index.php/pricing/add_purchase/'.$plans_trial->id)?>')">
                                  Get Started                       </a> -->
-                                <a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(629, 'trail')">Buy Now</a>
+                                <a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(1, 'trail')">Buy Now</a>
                                <?php endif;?> 
                               </td>
                               <?php //foreach($plans_month as $key=>$val):?>
@@ -285,9 +285,9 @@ $userID = $this->session->userdata('userId');
                                  Get Started                        </a>
                               </td> -->
                               <?php //endforeach;?>
-                              <td class="tier_left"><a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(624, 'monthly')">Buy Now</a></td>
-                          <td class="tier_left"><a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(626, 'monthly')">Buy Now</a></td>
-                          <td class="tier_left"><a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(627, 'monthly')">Buy Now</a></td>
+                              <td class="tier_left"><a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(2, 'monthly')">Buy Now</a></td>
+                          <td class="tier_left"><a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(3, 'monthly')">Buy Now</a></td>
+                          <td class="tier_left"><a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(4, 'monthly')">Buy Now</a></td>
                               <td class="tier_right">
 
                               </td>
@@ -497,10 +497,10 @@ $userID = $this->session->userdata('userId');
                           <?php endforeach;?>
                           <?php if( $this->session->userdata("userId")){ ?>
                           <tr> <td class="tier_left"></td>
-                          <td class="tier_left"><a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(629, 'trail')">Buy Now</a></td>
-                          <td class="tier_left"><a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(631, 'yearly')">Buy Now</a></td>
-                          <td class="tier_left"><a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(632, 'yearly')">Buy Now</a></td>
-                          <td class="tier_left"><a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(633, 'yearly')">Buy Now</a></td>
+                          <td class="tier_left"><a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(5, 'trail')">Buy Now</a></td>
+                          <td class="tier_left"><a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(6, 'yearly')">Buy Now</a></td>
+                          <td class="tier_left"><a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(7, 'yearly')">Buy Now</a></td>
+                          <td class="tier_left"><a class="iris_btn iris_btn--secondary iris_btn--lg" href="javascript:purchase(8, 'yearly')">Buy Now</a></td>
                           </tr>
                           <?php } ?>
                         </tbody>
@@ -572,7 +572,7 @@ $userID = $this->session->userdata('userId');
 		
 		//alert(bookshop_id);
 
-		window.location = '<?= base_url()."pricing/payment/" ?>' +id + "/" + type;
+		window.location = '<?= base_url()."pricing/payment/" ?>' +id + "/plan";
 		
 
 	/*	.then((willDelete) => {
