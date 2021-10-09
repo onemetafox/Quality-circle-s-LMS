@@ -53,6 +53,26 @@ class Settings_model extends CI_Model
     function getStripeSecretId(){
         return $this->db->get_where($this->global_table, "action='stripe_secret_id'")->row();
     }
+    function setPaypal($pk, $sk){
+        $data = $this->db->get_where($this->global_table, "action='paypal_client_id'")->row_array();
+        $data['value'] = $pk;
+        $this->db->where("id", $data['id']);
+        $result = $this->db->update($this->global_table, $data);
+        $data = $this->db->get_where($this->global_table, "action='paypal_secret_id'")->row_array();
+        $data['value'] = $sk;
+        $this->db->where("id", $data['id']);
+        $result = $this->db->update($this->global_table, $data);
+    }
+    function setStripe($pk, $sk){
+        $data = $this->db->get_where($this->global_table, "action='stripe_client_id'")->row_array();
+        $data['value'] = $pk;
+        $this->db->where("id", $data['id']);
+        $result = $this->db->update($this->global_table, $data);
+        $data = $this->db->get_where($this->global_table, "action='stripe_secret_id'")->row_array();
+        $data['value'] = $sk;
+        $this->db->where("id", $data['id']);
+        $result = $this->db->update($this->global_table, $data);
+    }
     function setTaxRate($rate){
 
         $data = $this->db->get_where($this->global_table, "action='tax_rate'")->row_array();

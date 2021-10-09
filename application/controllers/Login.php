@@ -754,10 +754,10 @@ class Login extends BaseController{
         }else if ($user->user_type == "Superadmin"){
             $this->load->model('Settings_model');
             $page_data['tax_rate'] = $this->Settings_model->getTaxRate()->value;
-            $page_data['paypal_client_id'] = $this->Setting_model->getPaypalClientId();
-            $page_data['paypal_secret_id'] = $this->Setting_model->getPaypalSecretId();
-            $page_data['stripe_client_id'] = $this->Setting_model->getStripeClientId();
-            $page_data['stripe_client_id'] = $this->Setting_model->getStripeClientId();
+            $page_data['paypal_client_id'] = $this->Settings_model->getPaypalClientId();
+            $page_data['paypal_secret_id'] = $this->Settings_model->getPaypalSecretId();
+            $page_data['stripe_client_id'] = $this->Settings_model->getStripeClientId();
+            $page_data['stripe_client_id'] = $this->Settings_model->getStripeClientId();
 
         }
         $page_data['company_name'] = $this->Company_model->getRow($this->session->userdata('company_id'))->name;

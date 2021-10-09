@@ -243,12 +243,18 @@ class User extends BaseController {
                 unset($update_data['tax_rate']);
                 $this->load->model('Settings_model');
                 $this->Settings_model->setTaxRate($tax_rate);
+                $this->Settings_model->setStripe($this->input->post('stipe_client_id'),$this->input->post('stipe_secret_id'));
+                $this->Settings_model->setPaypal($this->input->post('paypal_client_id'), $this->input->post('paypal_secret_id'));
+            }else if($this->isMasterAdmin()){
+                $company['stipe_client_id'] = $this->input->post('stipe_client_id');
+                $company['stipe_secret_id'] = $this->input->post('stipe_secret_id');
+                $company['paypal_client_id'] = $this->input->post('paypal_client_id');
+                $company['paypal_secret_id'] = $this->input->post('paypal_secret_id');
             }
             
 			unset($update_data['company_name']);
             unset($update_data['payment']);
-			$company_name = $this->input->post('company_name');
-            $payment = $this->input->post('payment');
+			$company['company_name'] = $this->input->post('company_name');
 			$update_data['sign'] = $this->input->post('sign');			
 			$this->session->set_userdata('country_code', $update_data['country_code']);
 			$this->session->set_userdata('phone', $update_data['phone']);
@@ -256,7 +262,7 @@ class User extends BaseController {
 
 			if($user_profile && isset($update_data[picture])) $this->session->set_userdata('user_photo', base_url() . $update_data[picture]);			
 			$this->session->set_userdata('role', $update_data['role']);
-			$this->Company_model->update(array('name' => $company_name,'payment'=>$payment), array('id' => $this->session->userdata('company_id')));
+			$this->Company_model->update($company, array('id' => $this->session->userdata('company_id')));
 			return $this->User_model->update($update_data, array('id' => $id));
 		}
     }

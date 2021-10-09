@@ -144,7 +144,28 @@ $image = $this->session->userdata('user_photo');
                                         </div>
                                         <?php } ?>
                                     </div>
-
+                                    <?php if($user->user_type == "Admin" || $user->user_type == "Superadmin") {?>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 control-label text-sm-right pt-2"><?php echo $term['paypalpk']; ?></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" value="<?= $paypal_pk ?>" class="form-control"  id="paypal_client_id" name="paypal_client_id" >
+                                        </div>
+                                        <label class="col-sm-2 control-label text-sm-right pt-2"><?php echo $term['paypalsk']; ?></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" value="<?= $paypal_sk ?>" class="form-control"  id="paypal_secret_id" name="paypal_secret_id" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 control-label text-sm-right pt-2"><?php echo $term['stripepk']; ?></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" value="<?= $stripe_pk ?>" class="form-control"  id="stripe_client_id" name="stripe_client_id" >
+                                        </div>
+                                        <label class="col-sm-2 control-label text-sm-right pt-2"><?php echo $term['stripesk']; ?></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" value="<?= $stripe_sk ?>" class="form-control"  id="stripe_secret_id" name="stripe_secret_id" >
+                                        </div>
+                                    </div>
+                                    <?php }?>
                                     <div class="form-group row">
                                         <label class="col-sm-2 control-label text-sm-right pt-2"><?php echo $term['password']; ?></label>
                                         <div class="col-sm-3">
