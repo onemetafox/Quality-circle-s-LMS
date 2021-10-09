@@ -221,7 +221,7 @@
                                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                                 <span id="successMsg"></span>
                             </div>
-                            <form action="" id = "stripePayment" class="needs-validation" method="post" novalidate="novalidate" data-stripe-publishable-key="<?=$stripe_client_id?>">
+                            <form id = "stripePayment" class="needs-validation" method="post" novalidate="novalidate" data-stripe-publishable-key="<?=$stripe_client_id?>">
 								<!-- <div class="form-group text-center">
 									<ul class="list-inline">
 										<li class="list-inline-item"><i class="text-muted fa fa-cc-visa fa-2x"></i></li>
@@ -231,6 +231,8 @@
 									</ul>
 								</div> -->
                                 <input type="hidden" name="amount" value="<?=$total?>">
+                                <input type="hidden" name="id" value="<?=$id?>">
+                                <input type="hidden" name="type" value="<?=$type?>">
 								<div class="row">
 									<div class="col-md-12">
 										<label for="cc-name" class="control-label">Name on card</label>
@@ -365,7 +367,6 @@
         });
     });
     
-    window.appFilePath = '<?php echo base_url(); ?>';
     var stripeForm = $('.needs-validation');
 
     // this identifies your website in the createToken call below
@@ -382,7 +383,7 @@
             stripeForm.append("<input type='hidden' name='stripeToken' value='" + token + "' />");
             var dataPost = stripeForm.serializeArray();
 
-            $.post( '<?=base_url()?>' + "pricing/stripPayment/" + $id + "/" + $type, dataPost, function(response) {
+            $.post( '<?=base_url()?>' + "pricing/stripPayment", dataPost, function(response) {
 
                 $.unblockUI();
                 

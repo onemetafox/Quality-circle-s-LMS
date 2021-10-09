@@ -127,20 +127,27 @@ class Pricing  extends BaseController
         }else{
 
         }
-        if($user->user_type == "Admin"){
-            $data['stripe_client_id'] = $this->Settings->getStripeClientId()->value;
-        }else if($user->user_type == "Learner"){
+        
+        if($user['user_type'] == "Admin"){
+            
+            $data['stripe_client_id'] = $this->Settings_model->getStripeClientId()->value;
+        }else if($user['user_type'] == "Learner"){
             $data['stripe_client_id'] = $this->Company_model->getRow($user->company_id)->stripe_client_id;
         }
+        
         $data['type'] = $type;
         $data['id'] = $id;
         $this->loadViews_front('payment', $data);
     }
-    public function stripPayment($id, $type)
+    public function stripPayment()
     {
-        if($user->user_type == "Admin"){
-            $stripe_secret_id = $this->Settings->getStripeClientId()->value;
-        }else if($user->user_type == "Learner"){
+        $this->isLoggedIn();
+        $type = $this->input->post('type');
+        $id = $this->input->post('id');
+        $user = $this->session->userdata();
+        if($user['user_type'] == "Admin"){
+            $stripe_secret_id =  $this->Settings_model->getStripeSecretId()->value;
+        }else if($user['user_type'] == "Learner"){
             $stripe_secret_id = $this->Company_model->getRow($user->company_id)->stripe_client_id;
         }
         \Stripe\Stripe::setApiKey($stripe_secret_id);
@@ -184,13 +191,17 @@ class Pricing  extends BaseController
             $message = $err['message'];
         } catch (\Stripe\Error\RateLimit $e) {
             // Too many requests made to the API too quickly
+            $message = "Too many requests made to the API too quickly";
         } catch (\Stripe\Error\InvalidRequest $e) {
             // Invalid parameters were supplied to Stripe's API
+            $message = "Invalid parameters were supplied to Stripe's API";
         } catch (\Stripe\Error\Authentication $e) {
             // Authentication with Stripe's API failed
+            $message = "Authentication with Stripe's API failed";
             // (maybe you changed API keys recently)
         } catch (\Stripe\Error\ApiConnection $e) {
             // Network communication with Stripe failed
+            $message = "Network communication with Stripe failed";
         } catch (\Stripe\Error\Base $e) {
             // Display a very generic error to the user, and maybe send
             // yourself an email
@@ -249,6 +260,7 @@ class Pricing  extends BaseController
         }
     }
     public function paypalPayment(){
+        $this->isLoggedIn();
         $filter = $this->input->post();
         if($filter['type'] == "plan"){
             $clientId = $this->Settings_model->getPaypalClientId()->value;
