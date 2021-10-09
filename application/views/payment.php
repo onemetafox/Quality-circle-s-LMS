@@ -222,14 +222,14 @@
                                 <span id="successMsg"></span>
                             </div>
                             <form id = "stripePayment" class="needs-validation" method="post" novalidate="novalidate" data-stripe-publishable-key="<?=$stripe_client_id?>">
-								<!-- <div class="form-group text-center">
-									<ul class="list-inline">
+								<div class="form-group text-center">
+									<ul class="list-inline" style="text-align:center">
 										<li class="list-inline-item"><i class="text-muted fa fa-cc-visa fa-2x"></i></li>
 										<li class="list-inline-item"><i class="fa fa-cc-mastercard fa-2x"></i></li>
 										<li class="list-inline-item"><i class="fa fa-cc-amex fa-2x"></i></li>
 										<li class="list-inline-item"><i class="fa fa-cc-discover fa-2x"></i></li>
 									</ul>
-								</div> -->
+								</div>
                                 <input type="hidden" name="amount" value="<?=$total?>">
                                 <input type="hidden" name="id" value="<?=$id?>">
                                 <input type="hidden" name="type" value="<?=$type?>">
@@ -243,7 +243,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<label for="cc-number" class="control-label">Card number</label>
-										<input id="cc-number" name="cc-number" type="tel" class="form-control cc-number identified visa number" maxlength="19" value="4242424242424242" required>
+										<input id="cc-number" name="cc-number" type="tel" class="form-control cc-number identified number" maxlength="19" value="4242424242424242" required>
 										<!-- <div class="invalid-feedback">Please enter the card number</div> -->
 									</div>
 								</div>
