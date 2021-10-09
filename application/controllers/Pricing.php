@@ -25,6 +25,7 @@ class Pricing  extends BaseController
         $this->load->library("paypal");
         $this->load->model('Company_model');
         $this->load->model('Payment_model');
+        $this->load->model('Course_model');
       
     	$this->config->load('paypal');
     }
@@ -104,15 +105,14 @@ class Pricing  extends BaseController
            
         }else if($type == 'course'){
             $this->load->model('Course_model');
-
             $course = $this->Course_model->select($id);
             $data['title'] = $course->title;
             $data['description'] = $course->desciption;
             
             $data['discount'] = $course->discount;
             
-            $data['price'] = $course->price;
-            $data['sub_total'] = $course->price * (100 - $data['discount'])/100;
+            $data['price'] = $course->pay_price;
+            $data['sub_total'] = $course->pay_price * (100 - $data['discount'])/100;
             $data['discount_amount'] = $data['price'] * ($data['discount'])/100;
             $data['tax'] = $course->tax_rate;
             if($course->tax_type == 0){
@@ -129,12 +129,11 @@ class Pricing  extends BaseController
         }
         
         if($user['user_type'] == "Admin"){
-            
             $data['stripe_client_id'] = $this->Settings_model->getStripeClientId()->value;
         }else if($user['user_type'] == "Learner"){
-            $data['stripe_client_id'] = $this->Company_model->getRow($user->company_id)->stripe_client_id;
+            $data['stripe_client_id'] = $this->Company_model->getRow($user['company_id'])->stripe_client_id;
         }
-        
+       
         $data['type'] = $type;
         $data['id'] = $id;
         $this->loadViews_front('payment', $data);
@@ -148,7 +147,7 @@ class Pricing  extends BaseController
         if($user['user_type'] == "Admin"){
             $stripe_secret_id =  $this->Settings_model->getStripeSecretId()->value;
         }else if($user['user_type'] == "Learner"){
-            $stripe_secret_id = $this->Company_model->getRow($user->company_id)->stripe_client_id;
+            $stripe_secret_id = $this->Company_model->getRow($user['company_id'])->stripe_client_id;
         }
         \Stripe\Stripe::setApiKey($stripe_secret_id);
 
@@ -168,12 +167,13 @@ class Pricing  extends BaseController
             //charge a credit or a debit card
             $charge = \Stripe\Charge::create([
                 'amount'      => $this->input->post('amount') * 100,
-                'currency'    => 'gbp',
+                'currency'    => 'usd',
                 'source'      => $this->input->post('stripeToken'),
-                'description' => 'TEST PAYMENT',
-                'metadata'    => [
-                    'order_id' => $orderid,
-                ],
+                'description' => 'TEST PAYMENT'
+                // ,
+                // 'metadata'    => [
+                //     'order_id' => $orderid,
+                // ],
             ]);
         } catch (\Stripe\Error\Card $e) {
             // Since it's a decline, \Stripe\Error\Card will be caught
@@ -205,8 +205,10 @@ class Pricing  extends BaseController
         } catch (\Stripe\Error\Base $e) {
             // Display a very generic error to the user, and maybe send
             // yourself an email
+            $message = "Display a very generic error to the user, and maybe send";
         } catch (Exception $e) {
             // Something else happened, completely unrelated to Stripe
+            $message = " Something else happened, completely unrelated to Stripe";
         }
 
         if ($charge) {
@@ -249,7 +251,7 @@ class Pricing  extends BaseController
                 $sub_total = $plan->price * (100 - $data['discount'])/100;
                 $data['amount'] = $sub_total * (100 + $data['tax_rate'])/100;
             }else if($type == "course"){
-
+                
             }else{
                 
             }
@@ -261,6 +263,7 @@ class Pricing  extends BaseController
     }
     public function paypalPayment(){
         $this->isLoggedIn();
+        $user = $this->session->userdata();
         $filter = $this->input->post();
         if($filter['type'] == "plan"){
             $clientId = $this->Settings_model->getPaypalClientId()->value;
@@ -275,7 +278,23 @@ class Pricing  extends BaseController
             $data['sub_total'] = $plan->price * (100 - $data['discount'])/100;
             $data['total'] = $data['sub_total'] * (100 + $data['tax'])/100;
         }else if($filter['type'] == "course"){
-
+            $company = $this->Company_model->getRow($user['company_id']);
+            $clientId = $company->paypal_client_id;
+            $secretId = $company->paypal_secret_id;
+            $this->config->set_item('client_id', $clientId);
+            $this->config->set_item('client_secret', $secretId);
+            $course = $this->Course_model->select($filter['id']);
+            $data['title'] = $course->title;
+            $data['description'] = $course->desciption;
+            
+            $data['discount'] = $course->discount;
+            
+            $data['price'] = $course->pay_price;
+            $data['sub_total'] = $course->pay_price * (100 - $data['discount'])/100;
+            $data['discount_amount'] = $data['price'] * ($data['discount'])/100;
+            $data['tax'] = $course->tax_rate;
+            
+            $data['total'] = $course->amount;
         }else{
 
         }
@@ -296,9 +315,10 @@ class Pricing  extends BaseController
         $data['pay_date'] = date("Y-m-d H:s:i");
         $data['company_id'] = $user['company_id'];
         $data['payment_method'] = $payment_method;
-        $data['object_type'] = $type;
         $data['object_id'] = $id;
         if($type == "plan"){
+            $data['object_type'] = $type;
+
             $plan = $this->Plan_model->select($id);
             $data['description'] = $plan->name;
             $data['tax_rate'] = $this->Settings_model->getTaxRate()->value;
@@ -312,7 +332,22 @@ class Pricing  extends BaseController
             $data['amount'] = $sub_total * (100 + $data['tax_rate'])/100;
             
         }else if($type == "course"){
-
+            
+            $course = $this->Course_model->select($id);
+            if($course->course_type == "0"){
+                $data['object_type'] = "training";
+            }else if($course->course_type == "1"){
+                $data['object_type'] = "live";
+            }else{
+                $data['object_type'] = "course";
+            }
+            $data['title'] = $course->title;
+            $data['description'] = $course->desciption;
+            $data['discount'] = $course->discount;
+            $data['price'] = $course->pay_price;
+            $data['tax_rate'] = $course->tax_rate;
+            $data['tax_type'] = $course->tax_type;
+            $data['amount'] = $course->amount;
         }else{
             
         }

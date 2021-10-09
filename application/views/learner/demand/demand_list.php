@@ -165,12 +165,9 @@
 
 												</ul>
 												<?php if(!$paid_course['pay_id']){ ?>
-													<div style="width:150px;" id="paypal-button-container"></div>
-													<img style="width:150px; float:left" alt="Visa Checkout" class="v-button" role="button" src="https://sandbox.secure.checkout.visa.com/wallet-services-web/xo/button.png">
-
-													<!-- <a class="btnBlue" href="javascript:pay_now(<?=$paid_course['course_id']?>,<?=$paid_course['training_id']?>,<?=$paid_course['course_time_id']?>,<?=$paid_course['pay_price']?>)" >
+													<a class="btnBlue" href="<?=base_url()?>pricing/payment/<?=$paid_course['course_id']?>/course" >
 														Pay Now
-													</a> -->
+													</a>
                                                 <?php }else if(!$paid_course['enroll_id']){ ?>
 													<a class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
 														<?=$term[enrollnow]?>
