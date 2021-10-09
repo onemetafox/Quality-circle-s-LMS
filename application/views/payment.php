@@ -148,7 +148,7 @@
                                 <div class="border-top px-2 mx-2"></div>
                                 <div class="p-2 d-flex pt-3">
                                     <div class="col-8"><b>Total</b></div>
-                                    <div class="ms-auto"><b class="text-success"><?=$total?></b></div>
+                                    <div class="ms-auto"><b class="text-success">$<?=$total?></b></div>
                                 </div>
                             </div>
                         </div>

@@ -750,14 +750,19 @@ class Login extends BaseController{
             }
         if($user->user_type == "Admin"){
             $page_data['plan'] = $this->Plan_model->getPlanCompany($this->session->userdata('company_id')->id);
+
+        }else if ($user->user_type == "Superadmin"){
+            $this->load->model('Settings_model');
+            $page_data['tax_rate'] = $this->Settings_model->getTaxRate()->value;
+            $page_data['paypal_client_id'] = $this->Setting_model->getPaypalClientId();
+            $page_data['paypal_secret_id'] = $this->Setting_model->getPaypalSecretId();
+            $page_data['stripe_client_id'] = $this->Setting_model->getStripeClientId();
+            $page_data['stripe_client_id'] = $this->Setting_model->getStripeClientId();
+
         }
         $page_data['company_name'] = $this->Company_model->getRow($this->session->userdata('company_id'))->name;
         $page_data['company_url']  = $this->Company_model->getRow($this->session->userdata('company_id'))->url;
         $page_data['payment'] = $this->Company_model->getRow($this->session->userdata('company_id'))->payment;
-        if($user->user_type == "Superadmin"){
-            $this->load->model('Settings_model');
-            $page_data['tax_rate'] = $this->Settings_model->getTaxRate()->value;
-        }
         $page_data['company_active'] = $this->Company_model->getRow($this->session->userdata('company_id'))->active;
         $query = "Select * from user_login_log where user_id =".$sessiondata['userId']." order by crdate desc limit 10 ";
         $result = $this->db->query($query);

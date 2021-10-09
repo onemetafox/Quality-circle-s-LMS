@@ -22,6 +22,7 @@ class Pricing  extends BaseController
         $this->load->model('Plan_model');
         $this->load->library("paypal");
         $this->load->model('Company_model');
+        $this->load->model('Payment_model');
       
     	$this->config->load('paypal');
     }
@@ -132,8 +133,8 @@ class Pricing  extends BaseController
     public function paypalPayment(){
         $filter = $this->input->post();
         if($filter['type'] == "plan"){
-            $clientId = $this->Settings_model->getClientId()->value;
-            $secretId = $this->Settings_model->getSecretId()->value;
+            $clientId = $this->Settings_model->getPaypalClientId()->value;
+            $secretId = $this->Settings_model->getPaypalSecretId()->value;
             $this->config->set_item('client_id', $clientId);
             $this->config->set_item('client_secret', $secretId);
             $plan = $this->Plan_model->select($filter['id']);
@@ -150,7 +151,7 @@ class Pricing  extends BaseController
         }
         $this->paypal->set_api_context();
         $payment_method = "paypal";
-		$return_url     = base_url()."pricing/success_payment/".$filter['id']."/".$filter['type'];
+		$return_url     = base_url()."pricing/success_payment/".$filter['id']."/".$filter['type']."/paypal";
 		$cancel_url     = base_url()."pricing/cancel";
 		$total          = $data['total'];
 		$description    = $data['title'];
@@ -159,15 +160,16 @@ class Pricing  extends BaseController
 		$this->paypal->create_payment( $payment_method, $return_url, $cancel_url, 
         $total, $description, $intent );
     }
-    function success_payment($id, $type){
+    function success_payment($id, $type, $payment_method){
         $user = $this->session->userdata();
         $data['user_id'] = $user['user_id'];
         $data['pay_date'] = date("Y-m-d H:s:i");
         $data['company_id'] = $user['company_id'];
+        $data['payment_method'] = $payment_method;
         $data['object_type'] = $type;
         $data['object_id'] = $id;
         if($type == "plan"){
-            $plan = $this->Plan_model->select($filter['id']);
+            $plan = $this->Plan_model->select($id);
             $data['description'] = $plan->name;
             $data['tax_rate'] = $this->Settings_model->getTaxRate()->value;
             $data['tax_type'] = "0";
@@ -184,12 +186,13 @@ class Pricing  extends BaseController
         }else{
             
         }
-        if ( !empty( $_GET['paymentId'] ) && !empty( $_GET['PayerID'] ) ) {
-
-		    $this->paypal->execute_payment( $_GET['paymentId'], $_GET['PayerID'] );
-            $insert = $this->Payment_model->save($data);
-            $this->loadViews_front('payment_success', $data);
-		}
+        if($payment_method == "paypal"){
+            if ( !empty( $_GET['paymentId'] ) && !empty( $_GET['PayerID'] ) ) {
+                // $this->paypal->execute_payment( $_GET['paymentId'], $_GET['PayerID'] );
+                $insert = $this->Payment_model->save($data);
+                $this->loadViews_front('payment_success', $data);
+            }
+        }
     }
     public function cancel(){
 
