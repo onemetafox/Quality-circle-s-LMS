@@ -7,6 +7,8 @@
  */
 
 require APPPATH . '/libraries/BaseController.php';
+require_once APPPATH.'third_party/stripe-php/init.php';
+
 
 class Pricing  extends BaseController
 {
@@ -77,7 +79,6 @@ class Pricing  extends BaseController
             }
         }
 
-        //print_r($headerInfo['plans_month']);
         $headerInfo[term] = $this->term;
         $this->loadViews_front('pricing', $headerInfo);
     }
@@ -126,9 +127,126 @@ class Pricing  extends BaseController
         }else{
 
         }
+        if($user->user_type == "Admin"){
+            $data['stripe_client_id'] = $this->Settings->getStripeClientId()->value;
+        }else if($user->user_type == "Learner"){
+            $data['stripe_client_id'] = $this->Company_model->getRow($user->company_id)->stripe_client_id;
+        }
         $data['type'] = $type;
         $data['id'] = $id;
         $this->loadViews_front('payment', $data);
+    }
+    public function stripPayment($id, $type)
+    {
+        if($user->user_type == "Admin"){
+            $stripe_secret_id = $this->Settings->getStripeClientId()->value;
+        }else if($user->user_type == "Learner"){
+            $stripe_secret_id = $this->Company_model->getRow($user->company_id)->stripe_client_id;
+        }
+        \Stripe\Stripe::setApiKey($stripe_secret_id);
+
+        $message = null;
+        $success = false;
+        $charge = null;
+        $err = null;
+        $data = [];
+
+        try {
+
+            //Creates timestamp that is needed to make up orderid
+            $timestamp = strftime('%Y%m%d%H%M%S');
+            //You can use any alphanumeric combination for the orderid. Although each transaction must have a unique orderid.
+            $orderid = $timestamp.'-'.mt_rand(1, 999);
+
+            //charge a credit or a debit card
+            $charge = \Stripe\Charge::create([
+                'amount'      => $this->input->post('amount') * 100,
+                'currency'    => 'gbp',
+                'source'      => $this->input->post('stripeToken'),
+                'description' => 'TEST PAYMENT',
+                'metadata'    => [
+                    'order_id' => $orderid,
+                ],
+            ]);
+        } catch (\Stripe\Error\Card $e) {
+            // Since it's a decline, \Stripe\Error\Card will be caught
+            $body = $e->getJsonBody();
+            $err = $body['error'];
+
+            /* print('Status is:' . $e->getHttpStatus() . "\n");
+            print('Type is:' . $err['type'] . "\n");
+            print('Code is:' . $err['code'] . "\n");
+
+            // param is '' in this case
+            print('Param is:' . $err['param'] . "\n");
+            print('Message is:' . $err['message'] . "\n"); */
+
+            $message = $err['message'];
+        } catch (\Stripe\Error\RateLimit $e) {
+            // Too many requests made to the API too quickly
+        } catch (\Stripe\Error\InvalidRequest $e) {
+            // Invalid parameters were supplied to Stripe's API
+        } catch (\Stripe\Error\Authentication $e) {
+            // Authentication with Stripe's API failed
+            // (maybe you changed API keys recently)
+        } catch (\Stripe\Error\ApiConnection $e) {
+            // Network communication with Stripe failed
+        } catch (\Stripe\Error\Base $e) {
+            // Display a very generic error to the user, and maybe send
+            // yourself an email
+        } catch (Exception $e) {
+            // Something else happened, completely unrelated to Stripe
+        }
+
+        if ($charge) {
+            //retrieve charge details
+            $chargeJson = $charge->jsonSerialize();
+
+            //check whether the charge is successful
+            if ($chargeJson['amount_refunded'] == 0 && empty($chargeJson['failure_code']) && $chargeJson['paid'] == 1 && $chargeJson['captured'] == 1) {
+
+                $data = [
+                    'balance_transaction' => $chargeJson['balance_transaction'],
+                    'receipt_url'         => $chargeJson['receipt_url'],
+                    'order_id'            => $orderid,
+                ];
+
+                $success = true;
+                $message = 'Payment made successfully.';
+            } else {
+
+                $success = true;
+                $message = 'Something went wrong.';
+            }
+        }
+
+        if ($success) {
+            $user = $this->session->userdata();
+            $data['user_id'] = $user['user_id'];
+            $data['pay_date'] = date("Y-m-d H:s:i");
+            $data['company_id'] = $user['company_id'];
+            $data['payment_method'] = "stripe";
+            $data['object_type'] = $type;
+            $data['object_id'] = $id;
+            if($type == "plan"){
+                $plan = $this->Plan_model->select($id);
+                $data['description'] = $plan->name;
+                $data['tax_rate'] = $this->Settings_model->getTaxRate()->value;
+                $data['tax_type'] = "0";
+                $data['discount'] = $this->Company_model->getRow($user['company_id'])->discount;
+                $data['price'] = $plan->price;
+                $sub_total = $plan->price * (100 - $data['discount'])/100;
+                $data['amount'] = $sub_total * (100 + $data['tax_rate'])/100;
+            }else if($type == "course"){
+
+            }else{
+                
+            }
+            $insert = $this->Payment_model->save($data);
+            echo json_encode(['success' => $success, 'message' => $message, 'data' => $data]);
+        } else {
+            echo json_encode(['success' => $success, 'message' => $message, 'data' => $data]);
+        }
     }
     public function paypalPayment(){
         $filter = $this->input->post();
@@ -186,26 +304,16 @@ class Pricing  extends BaseController
         }else{
             
         }
-        if($payment_method == "paypal"){
-            if ( !empty( $_GET['paymentId'] ) && !empty( $_GET['PayerID'] ) ) {
-                // $this->paypal->execute_payment( $_GET['paymentId'], $_GET['PayerID'] );
-                $insert = $this->Payment_model->save($data);
-                $this->loadViews_front('payment_success', $data);
-            }
+        if ( !empty( $_GET['paymentId'] ) && !empty( $_GET['PayerID'] ) ) {
+            // $this->paypal->execute_payment( $_GET['paymentId'], $_GET['PayerID'] );
+            $insert = $this->Payment_model->save($data);
+            $this->loadViews_front('payment_success', $data);
         }
     }
     public function cancel(){
 
     }
-    public function stripePayment(){
-        if($data['type'] == "plan"){
-
-        }else if($data['type'] == "course"){
-
-        }else{
-            
-        }
-    }
+    
     public function add_purchase($plan_id = 0){
         if($this->session->userdata('user_type') === 'Admin'){
             $plan = $this->Plan_model->select($plan_id);
