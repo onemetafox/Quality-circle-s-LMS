@@ -243,18 +243,21 @@ class User extends BaseController {
                 unset($update_data['tax_rate']);
                 $this->load->model('Settings_model');
                 $this->Settings_model->setTaxRate($tax_rate);
-                $this->Settings_model->setStripe($this->input->post('stipe_client_id'),$this->input->post('stipe_secret_id'));
-                $this->Settings_model->setPaypal($this->input->post('paypal_client_id'), $this->input->post('paypal_secret_id'));
+                $this->Settings_model->setStripe($update_data['stripe_client_id'],$update_data['stripe_secret_id']);
+                $this->Settings_model->setPaypal($update_data['paypal_client_id'], $update_data['paypal_secret_id']);
             }else if($this->isMasterAdmin()){
-                $company['stipe_client_id'] = $this->input->post('stipe_client_id');
-                $company['stipe_secret_id'] = $this->input->post('stipe_secret_id');
-                $company['paypal_client_id'] = $this->input->post('paypal_client_id');
-                $company['paypal_secret_id'] = $this->input->post('paypal_secret_id');
+                $company['stripe_client_id'] = $update_data['stripe_client_id'];
+                $company['stripe_secret_id'] = $update_data['stripe_secret_id'];
+                $company['paypal_client_id'] = $update_data['paypal_client_id'];
+                $company['paypal_secret_id'] = $update_data['paypal_secret_id'];
             }
             
 			unset($update_data['company_name']);
-            unset($update_data['payment']);
-			$company['company_name'] = $this->input->post('company_name');
+            unset($update_data['stripe_client_id']);
+            unset($update_data['stripe_secret_id']);
+            unset($update_data['paypal_client_id']);
+            unset($update_data['paypal_secret_id']);
+			$company['name'] = $this->input->post('company_name');
 			$update_data['sign'] = $this->input->post('sign');			
 			$this->session->set_userdata('country_code', $update_data['country_code']);
 			$this->session->set_userdata('phone', $update_data['phone']);

@@ -741,29 +741,34 @@ class Login extends BaseController{
         $this->global['term'] = $this->term;
 
         $this->load->model('Settings_model');
-            $this->global['site_theme'] = $this->Settings_model->getTheme();
-            if(sizeof($this->global['site_theme']) >= 1){
-                $this->global['site_theme'] = $this->global['site_theme'][0];
-            }
-            if(sizeof($this->global['site_theme'])  == 0){
-                $this->global['site_theme'] = array();
-            }
+        $this->global['site_theme'] = $this->Settings_model->getTheme();
+        if(sizeof($this->global['site_theme']) >= 1){
+            $this->global['site_theme'] = $this->global['site_theme'][0];
+        }
+        if(sizeof($this->global['site_theme'])  == 0){
+            $this->global['site_theme'] = array();
+        }
+        $company = $this->Company_model->getRow($this->session->userdata('company_id'));
         if($user->user_type == "Admin"){
             $page_data['plan'] = $this->Plan_model->getPlanCompany($this->session->userdata('company_id')->id);
+            // $page_data['paypal_pk'] = $this
+            $page_data['paypal_pk'] = $company->paypal_client_id;
+            $page_data['paypal_sk'] = $company->paypal_secret_id;
+            $page_data['stripe_pk'] = $company->stripe_client_id;
+            $page_data['stripe_sk'] = $company->stripe_secret_id;
 
         }else if ($user->user_type == "Superadmin"){
             $this->load->model('Settings_model');
             $page_data['tax_rate'] = $this->Settings_model->getTaxRate()->value;
-            $page_data['paypal_client_id'] = $this->Settings_model->getPaypalClientId();
-            $page_data['paypal_secret_id'] = $this->Settings_model->getPaypalSecretId();
-            $page_data['stripe_client_id'] = $this->Settings_model->getStripeClientId();
-            $page_data['stripe_client_id'] = $this->Settings_model->getStripeClientId();
+            $page_data['paypal_pk'] = $this->Settings_model->getPaypalClientId()->value;
+            $page_data['paypal_sk'] = $this->Settings_model->getPaypalSecretId()->value;
+            $page_data['stripe_pk'] = $this->Settings_model->getStripeClientId()->value;
+            $page_data['stripe_sk'] = $this->Settings_model->getStripeClientId()->value;
 
         }
-        $page_data['company_name'] = $this->Company_model->getRow($this->session->userdata('company_id'))->name;
-        $page_data['company_url']  = $this->Company_model->getRow($this->session->userdata('company_id'))->url;
-        $page_data['payment'] = $this->Company_model->getRow($this->session->userdata('company_id'))->payment;
-        $page_data['company_active'] = $this->Company_model->getRow($this->session->userdata('company_id'))->active;
+        $page_data['company_name'] = $company->name;
+        $page_data['company_url']  = $company->url;
+        $page_data['company_active'] = $company->active;
         $query = "Select * from user_login_log where user_id =".$sessiondata['userId']." order by crdate desc limit 10 ";
         $result = $this->db->query($query);
         $loginRes = $result->result();

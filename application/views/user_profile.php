@@ -132,12 +132,7 @@ $image = $this->session->userdata('user_photo');
                                         <div class="col-sm-3">
                                             <input type="text" value="<?php print $user->email ?>" class="form-control"  id="email" name="email" >
                                         </div>
-                                        <?php if($user->user_type == "Admin") {?>
-                                        <label class="col-sm-2 control-label text-sm-right pt-2"><?php echo $term['payment']; ?></label>
-                                        <div class="col-sm-3">
-                                            <input type="text" value="<?php print $payment ?>" class="form-control"  id="payment" name="payment" >
-                                        </div>
-                                        <?php }else if($user->user_type == "Superadmin"){?> 
+                                        <?php if($user->user_type == "Superadmin"){?> 
                                         <label class="col-sm-2 control-label text-sm-right pt-2"><?php echo $term['tax_rate']; ?></label>
                                         <div class="col-sm-3">
                                             <input type="text" value="<?= $tax_rate ?>" class="form-control"  id="tax_rate" name="tax_rate" >
