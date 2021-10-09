@@ -22,6 +22,8 @@ class Pricing  extends BaseController
         $this->load->model('Plan_model');
         $this->load->library("paypal");
         $this->load->model('Company_model');
+      
+    	$this->config->load('paypal');
     }
 
     public function index()
@@ -128,25 +130,60 @@ class Pricing  extends BaseController
         $this->loadViews_front('payment', $data);
     }
     public function paypalPayment(){
-        $this->paypal->set_api_context();
-        $data = $this->input->post();
-        if($data['type'] == "plan"){
-
-        }else if($data['type'] == "course"){
+        $filter = $this->input->post();
+        if($filter['type'] == "plan"){
+            $clientId = $this->Settings_model->getClientId()->value;
+            $secretId = $this->Settings_model->getSecretId()->value;
+            $this->config->set_item('client_id', $clientId);
+            $this->config->set_item('client_secret', $secretId);
+            $plan = $this->Plan_model->select($filter['id']);
+            $data['title'] = $plan->name;
+            $data['tax'] = $this->Settings_model->getTaxRate()->value;
+            $data['discount'] = $this->Company_model->getRow($user['company_id'])->discount;
+            
+            $data['price'] = $plan->price;
+            $data['sub_total'] = $plan->price * (100 - $data['discount'])/100;
+            $data['discount_amount'] = $data['price'] * ($data['discount'])/100;
+            $data['total'] = $data['sub_total'] * (100 + $data['tax'])/100;
+        }else if($filter['type'] == "course"){
 
         }else{
 
         }
-
+        $this->paypal->set_api_context();
         $payment_method = "paypal";
-		$return_url     = base_url()."index.php/payment/success_payment";
-		$cancel_url     = base_url()."index.php/payment/cancel";
-		$total          = 10;
-		$description    = "Paypal product payment";
-		$intent         = "sale";
+		$return_url     = base_url()."pricing/success_payment/".$filter['id']."/".$filter['type'];
+		$cancel_url     = base_url()."pricing/cancel";
+		$total          = $data['total'];
+		$description    = $data['title'];
+		$intent         = 'sale';
 
 		$this->paypal->create_payment( $payment_method, $return_url, $cancel_url, 
         $total, $description, $intent );
+    }
+    function success_payment($id, $type){
+        if($type == "plan"){
+            $plan = $this->Plan_model->select($filter['id']);
+            $data['title'] = $plan->name;
+            $data['description'] = "Subscription";
+            $data['tax'] = $this->Settings_model->getTaxRate()->value;
+            $data['discount'] = $this->Company_model->getRow($user['company_id'])->discount;
+            
+            $data['price'] = $plan->price;
+            $data['sub_total'] = $plan->price * (100 - $data['discount'])/100;
+            $data['discount_amount'] = $data['price'] * ($data['discount'])/100;
+            $data['tax_amount'] = $data['sub_total'] * ($data['tax'])/100;
+            $data['total'] = $data['sub_total'] * (100 + $data['tax'])/100;
+            $data['tax_type'] = "%";
+        }else if($type == "course"){
+
+        }else{
+            
+        }
+        
+    }
+    public function cancel(){
+
     }
     public function stripePayment(){
         if($data['type'] == "plan"){

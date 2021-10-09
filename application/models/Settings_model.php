@@ -41,6 +41,12 @@ class Settings_model extends CI_Model
     function getTaxRate(){
         return $this->db->get_where($this->global_table, "action='tax_rate'")->row();
     }
+    function getClientId(){
+        return $this->db->get_where($this->global_table, "action='client_id'")->row();
+    }
+    function getSecretId(){
+        return $this->db->get_where($this->global_table, "action='secret_id'")->row();
+    }
     function setTaxRate($rate){
 
         $data = $this->db->get_where($this->global_table, "action='tax_rate'")->row_array();
