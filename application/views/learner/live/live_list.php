@@ -20,7 +20,7 @@
 <![endif]-->
 <script src="<?php echo base_url(); ?>assets/js_company/sweetalert.js"></script>
 
-<section role="main" class="content-body" style="width:initial;">
+<section role="main" class="content-body" style="width:85%;">
     <header class="page-header">
         <h2>Virtual Instructor Led Training</h2>
 

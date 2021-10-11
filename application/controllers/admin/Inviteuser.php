@@ -241,9 +241,9 @@ class Inviteuser extends BaseController{
 			}else{
 				$content = str_replace("{LOCATION}", '', $content);
 			}
-			// $this->sendemail($data['email'],$data['first_name'].' '.$data['last_name'],$content,$title);
+			$this->sendemail($data['email'],$data['first_name'].' '.$data['last_name'],$content,$title);
 	
-			echo "success";
+			$this->response($result);
 		}
 		
 	}

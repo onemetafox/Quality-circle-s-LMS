@@ -1,8 +1,8 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
 require APPPATH . '/libraries/BaseController.php';
-// require APPPATH . '/third_party/PHPExcel.php';
-// require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
+require APPPATH . '/third_party/PHPExcel.php';
+require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
 include_once (APPPATH . '/third_party/iio/index.php');
 require APPPATH . '/libraries/FPDI/fpdi.php';
 require APPPATH . 'third_party/woocommerce/autoload.php';
@@ -828,6 +828,9 @@ class Coursecreation extends BaseController{
             for($i = 0;$i < count($prerequisitehighlight);$i++){
                 $this->Course_model->insert_prerequisite_highlight(array("course_id" => $course_data['id'], "content" => $prerequisitehighlight[$i]));
             }
+
+            $course_data['startday'] = $this->input->post('start_at');
+
             if($course_data['course_type'] == 1){
                 $this->addLive($course_data);
             }
@@ -851,7 +854,7 @@ class Coursecreation extends BaseController{
 			$startday = NULL; 
 			$endday = NULL; 
 			$starttime = date('H:i:s');
-			$course_data['startday'] = $startday;
+			$course_data['startday'] = $iltCourse['startday'];
 			$course_data['endday'] = $endday;
 			$course_data['title'] = $iltCourse['title'];
 			$course_data['subtitle'] = $iltCourse['subtitle'];
@@ -908,6 +911,7 @@ class Coursecreation extends BaseController{
 			$course_time['state_id'] = $iltCourse['state'];
 			$course_time['city_id'] = $iltCourse['city'];
 			// $course_time['start_day'] = date('Y-m-d',$timestamp);
+            $course_time['start_day'] = $iltCourse['startday'];
 			// $course_time['start_time'] = date('H:m A',$timestamp);
 			// $course_time['date_str'] = strtotime($course_time['start_day'].' '.$course_time['start_time']);
 			$course_time['year'] = date('Y',$timestamp);
@@ -915,7 +919,7 @@ class Coursecreation extends BaseController{
 			$course_time['sday'] = date('d',$timestamp);
 			$course_time['location'] = $course_data['location'];
 		
-            // $this->Training_model->insert_time($course_time);
+            $this->Training_model->insert_time($course_time);
 		}else{
             
         }
@@ -927,7 +931,7 @@ class Coursecreation extends BaseController{
 			$startday = NULL; 
 			$endday = NULL; 
 			$starttime = date('H:i:s');
-			$course_data['startday'] = $startday;
+			$course_data['startday'] = $liveCourse['startday'];
 			$course_data['endday'] = $endday;
 			$course_data['title'] = $liveCourse['title'];
 			$course_data['subtitle'] = $liveCourse['subtitle'];
@@ -988,8 +992,9 @@ class Coursecreation extends BaseController{
 			$row_id = $this->Live_model->insert_course($course_data);
 			$course_time['virtual_course_id'] = $row_id;
 			// $course_time['start_at'] = $start_at;
+            $course_time['start_at'] = $liveCourse['startday'];
 			$course_time['reg_date'] = $start_at;
-			// $this->Live_model->insert_time($course_time);
+			$this->Live_model->insert_time($course_time);
 		}
 	}
     
