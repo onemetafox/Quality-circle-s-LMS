@@ -680,6 +680,9 @@ class Coursecreation extends BaseController{
 
         $this->load->model('Plan_model');
 		$plan = $this->Plan_model->getPlanCompany($this->session->get_userdata()['company_id']);
+        if(!$plan->id){
+            $plan = $this->Plan_model->select('1');
+        }
         $filter['company_id'] = $company_id;
         $filter['course_type'] = $course_data['course_type'];
         $limit = $this->Course_model->getLimitation($filter);

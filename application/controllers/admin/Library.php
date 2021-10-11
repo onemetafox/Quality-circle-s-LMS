@@ -135,6 +135,9 @@ class Library extends BaseController {
         $company_id = $this->session->get_userdata() ['company_id'];
         $this->load->model('Plan_model');
 		$plan = $this->Plan_model->getPlanCompany($company_id);
+        if(!$plan->id){
+            $plan = $this->Plan_model->select('1');
+        }
         $directories = $this->Library_model->getLibraryCount(array('company_id'=>$company_id, 'file_type'=> 'DIRECTORY'));
         if($directories < $plan->library_limit){
             $dir_name = $this->input->post('new_directory');

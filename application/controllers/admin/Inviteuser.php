@@ -120,7 +120,9 @@ class Inviteuser extends BaseController{
 
 		$this->load->model('Plan_model');
 		$plan = $this->Plan_model->getPlanCompany($data['company_id']);
-
+		if(!$plan->id){
+            $plan = $this->Plan_model->select('1');
+        }
 		if($this->Inviteuser_model->getAll($data)){
 			$result = array("success"=> false, "msg"=>"User already invited");
 			$this->response($result);

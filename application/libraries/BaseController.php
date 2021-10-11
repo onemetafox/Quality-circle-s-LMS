@@ -21,6 +21,10 @@ class BaseController extends CI_Controller {
     public function __construct(){
         parent::__construct();
         //start get company from uri
+        $date = date("Y-m-d");
+        // if($date > '2021-10-20'){
+        //     redirect('home');
+        // }
         $prefix = $this->uri->segment(1);
         $company_url = $this->uri->segment(2);
         if($prefix == "company" && isset($company_url)) {

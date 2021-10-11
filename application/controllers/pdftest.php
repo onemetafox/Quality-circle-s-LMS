@@ -5,7 +5,7 @@ require APPPATH . '/libraries/BaseController.php';
 // require APPPATH . '/libraries/tcpdf/tcpdf.php';
 // require APPPATH . '/libraries/tcpdf/examples/example_039.php';
 // require APPPATH . '/libraries/fpdf/fpdf.php';
-require APPPATH . '/libraries/fpdf/tutorial/tuto2.php';
+// require APPPATH . '/libraries/fpdf/tutorial/tuto2.php';
 // require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
 // require APPPATH . '/third_party/TCPDF-master/examples/example_001.php';
 /**
