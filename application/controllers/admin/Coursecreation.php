@@ -1,10 +1,10 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
 require APPPATH . '/libraries/BaseController.php';
-require APPPATH . '/third_party/PHPExcel.php';
-require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
-include_once (APPPATH . '/third_party/iio/index.php');
-require APPPATH . '/libraries/FPDI/fpdi.php';
+// require APPPATH . '/third_party/PHPExcel.php';
+// require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
+// include_once (APPPATH . '/third_party/iio/index.php');
+// require APPPATH . '/libraries/FPDI/fpdi.php';
 require APPPATH . 'third_party/woocommerce/autoload.php';
 use Automattic\WooCommerce\Client;
 use Automattic\WooCommerce\HttpClient\HttpClientException;
@@ -683,22 +683,22 @@ class Coursecreation extends BaseController{
         if(!$plan->id){
             $plan = $this->Plan_model->select('1');
         }
-        $filter['company_id'] = $company_id;
+        $filter['company_id'] = $this->session->get_userdata()['company_id'];
         $filter['course_type'] = $course_data['course_type'];
         $limit = $this->Course_model->getLimitation($filter);
 
         $result = array('success'=>true, 'msg'=>'Success Course created');
         if($course_data['course_type'] == 2){
-            if($limit >= $plan->demand_limit ){
+            if($limit > $plan->demand_limit ){
                 $result = array('success'=>false, 'msg'=>'Full maximum demand course');
                 
             }
         }else if($course_data['course_type'] == 1){
-            if($limit >= $plan->vilt_room_limit ){
+            if($limit > $plan->vilt_room_limit ){
                 $result = array('success'=>false, 'msg'=>'Full maximum VILT course');
             }
         }else{
-            if($limit >= $plan->ilt_room_limit ){
+            if($limit > $plan->ilt_room_limit ){
                 $result = array('success'=>false, 'msg'=>'Full maximum ILT course');
             }
         }
