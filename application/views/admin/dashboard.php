@@ -147,7 +147,7 @@
 									<div class="summary">
 										<h4 class="title"><?=$term[totalinvoice]?></h4>
 										<div class="info">
-											<strong class="amount"><?php echo "€ ".$amount;?></strong>
+											<strong class="amount">$ <?= $amount?$amount:0;?></strong>
 										</div>
 									</div>
 									<div class="summary-footer">
