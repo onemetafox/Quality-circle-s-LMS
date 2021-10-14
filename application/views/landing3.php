@@ -40,12 +40,12 @@
         	</div>
 	        </li>
 	        <li class="active"><a href="https://gosmartacademy.com">Home</a></li>
-	        <li><a href="https://dev.gosmartacademy.com/about-us">About Us</a></li>
-	        <li><a href="https://dev.gosmartacademy.com/company/gosmartacademy.com">Academy</a></li>
-	        <li><a href="https://dev.gosmartacademy.com/pricing">Pricing</a></li>
-	        <li><a href="https://dev.gosmartacademy.com/contact">Contact Us</a></li>
+	        <li><a href="<?=base_url()?>about-us">About Us</a></li>
+	        <li><a href="<?=base_url()?>company/gosmartacademy.com">Academy</a></li>
+	        <li><a href="<?=base_url()?>pricing">Pricing</a></li>
+	        <li><a href="<?=base_url()?>contact">Contact Us</a></li>
 	        <!-- <li class="sign-up-btn"><a href="https://dev.gosmartacademy.com/login">Login</a><a href="https://dev.gosmartacademy.com/login">/Signup</a></li> -->
-	        <li class="sign-up-btn"><a href="http://192.168.107.183:8002/login">Login</a><a href="http://192.168.107.183:8002/login">/Signup</a></li>
+	        <li class="sign-up-btn"><a href="<?=base_url()?>login">Login</a><a href="<?=base_url()?>login">/Signup</a></li>
 
 	    </ul>
 	  </div>
