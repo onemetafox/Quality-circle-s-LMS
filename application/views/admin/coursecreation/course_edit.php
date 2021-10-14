@@ -1285,8 +1285,8 @@
                         text: data.msg,
                         type: 'success'
                     });
-                    window.location.href= '<?php echo base_url() ?>admin/coursecreation/getList';
                 }
+                window.location.href= '<?php echo base_url() ?>admin/coursecreation/getList';
                
            },
            error: function(){
