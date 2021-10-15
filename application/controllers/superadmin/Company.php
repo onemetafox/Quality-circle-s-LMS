@@ -111,6 +111,7 @@ class Company extends BaseController {
         }
         unset($insert_data['id']);
         $insert_id = $this->Company_model->insert($insert_data);
+        unset($insert_data);
         $insert_data['company_id'] = $insert_id;
         $insert_data['name'] = "Online Courses";
         $this->Category_model->insert($insert_data);

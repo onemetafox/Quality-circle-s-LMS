@@ -33,16 +33,20 @@ class User extends BaseController {
 
     public function edit_view($row_id = 0) {
         $this->load->library('Sidebar');
+        $this->load->model('Location_model');
         $lang_ar = $this->Translate_model->getLanguageList(array('active_flag' => 1, 'add_flag' => 1));
         $page_data['lang_ar'] = $lang_ar['data'];
         $side_params = array('selected_menu_id' => '2');
         $this->global['sidebar'] = $this->sidebar->generate($side_params, $this->role);
         if($this->isSuperAdmin()){
             $page_path = "superadmin/user/admin_edit";
+            $this->global['countries'] = $this->Location_model->getAllCounties();
             if ($row_id != 0) {
                 $user_data = $this->User_model->getList(array('id' => $row_id)) [0];
                 unset($user_data['password']);
 				$user_data['country_list'] = $this->Countries_model->getList();
+                $this->global['states'] = $this->Location_model->getStateByCountryId($user_data["country"]);
+                $this->global['cities'] = $this->Location_model->getCityByStateId($user_data["state"]);
             } else {
                 $user_data['id'] = 0;
                 $user_data['first_name'] = '';

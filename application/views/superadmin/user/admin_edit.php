@@ -128,23 +128,50 @@ if($id != 0){
                                 <select name="country_code" id="country_code" class="form-control" required onchange="getCountryCode()">
                                 	<option value="">Select Country Code</option>
                                     <?php if(isset($country_list) && !empty($country_list)){ 
-                                        foreach($country_list as $cKey => $country){
+                                        foreach($country_list as $cKey => $item){
                                     ?>
-                                    <option <?php if($country['sortname'] == $sortname){echo "selected";} ?> sortnameoption="<?php echo $country['sortname']; ?>" value="<?php echo $country['phonecode']; ?>"><?php echo $country['name'].' ('.$country['phonecode']; ?>)</option>
+                                    <option <?php if($item['phonecode'] == $country_code){echo "selected";} ?> sortnameoption="<?php echo $item['sortname']; ?>" value="<?php echo $item['phonecode']; ?>"><?php echo $item['name'].' ('.$item['phonecode']; ?>)</option>
                                     <?php } } ?>
                                 </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 control-label text-sm-right pt-2">Country</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" required onchange="getStateByCountryId(this.value)" id="country" name="country">
+                                        <option value="" >Select</option>
+                                        <?php foreach ($countries as $item){ ?>
+                                            <option required <?php if($country == $item['id']){echo "selected";} ?> value=<?php echo $item['id']; ?>><?php echo $item['name']; ?></option>
+                                        <?php }?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 control-label text-sm-right pt-2">State</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" required onchange="getCityByStateId(this.value)" id="state" name="state">
+                                        <option value="" >Select</option>
+                                        <?php foreach ($states as $item){ ?>
+                                            <option required <?php if($state == $item['id']){echo "selected";} ?> value=<?php echo $item['id']; ?>><?php echo $item['name']; ?></option>
+                                        <?php }?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 control-label text-sm-right pt-2">City</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" required id="city" name="city">
+                                        <option value="" >Select</option>
+                                        <?php foreach ($cities as $item){ ?>
+                                            <option required <?php if($city == $item['id']){echo "selected";} ?> value=<?php echo $item['id']; ?>><?php echo $item['name']; ?></option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[phone]?></label>
                                 <div class="col-sm-10">
                                     <input type="text" value="<?php print $phone ?>" id="phone" required name="phone" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[state]?></label>
-                                <div class="col-sm-10">
-                                    <input type="text" value="<?php print $state ?>" id="state" name="state" class="form-control" >
                                 </div>
                             </div>
 
@@ -157,12 +184,7 @@ if($id != 0){
                                 </div>
 
                             </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[city]?></label>
-                                <div class="col-sm-10">
-                                    <input type="text" value="<?php print $city ?>" id="city" name="city" class="form-control">
-                                </div>
-                            </div>
+                            
                             <div class="form-group row">
                                 <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[zip_code]?></label>
                                 <div class="col-sm-10">
@@ -198,17 +220,6 @@ if($id != 0){
                                     </select>
                                 </div>
                             </div>
-
-<!--                            <div class="form-group row">-->
-<!--                                <label class="col-sm-2 control-label text-sm-right pt-2">--><?//=$term[country]?><!--</label>-->
-<!--                                <div class="col-sm-10">-->
-<!--                                    <select data-plugin-selectTwo data-ajax-url="--><?php //echo base_url();?><!--superadmin/user/getcountrylist" data-plugin-options='{ "allowClear": true, "placeholder": "Select Country", "minimumInputLength": 0, "data" : [{"id":--><?php //print $country_id; ?><!--, "text": "--><?php //print $country_name; ?><!--" }] }' class="form-control populate" name="country" id="country">-->
-<!--                                    </select>-->
-<!--                                </div>-->
-<!--                            </div>-->
-
-
-
                         </div>
                         <div class="col-sm-1"></div>
 
@@ -343,7 +354,6 @@ if($id != 0){
                             text: '<?php echo $term['succesfullyupdated']; ?>',
                             type: 'success'
                         });
-                        frm.submit(); 
                     }else{
                         new PNotify({
                             title: '<?php echo $term['error']; ?>',
@@ -377,7 +387,6 @@ if($id != 0){
                             text: '<?php echo $term['succesfullyupdated']; ?>',
                             type: 'success'
                         });
-                        frm.submit(); 
                     }else{
                         new PNotify({
                             title: '<?php echo $term['error']; ?>',
@@ -398,7 +407,46 @@ if($id != 0){
             });
         }
     }
-
+    function getStateByCountryId(CountryID){
+       if(CountryID != ''){
+           var appendrow = '';
+           $('#state').html('<option value="">Select State</option>');
+		   $('#city').html('<option value="">Select City</option>');
+           $.ajax({
+               url: "<?=base_url()?>admin/coursecreation/getStateById",
+               type: 'POST',
+               dataType: 'JSON',
+               data: {'country': CountryID},
+               success: function(data){
+                   appendrow += '<option value="">Select State</option>';
+                   $.each(data, function(index, value){
+                       appendrow += '<option value="'+value.id+'">'+value.name+'</option>';
+                   });
+                   $('#state').html(appendrow);
+   				}
+           });
+       }
+   	}
+	
+	function getCityByStateId(StateID){
+       if(StateID != ''){
+           var appendrow2 = '';
+           $('#city').html('<option value="">Select State</option>');
+           $.ajax({
+               url: "<?=base_url()?>admin/coursecreation/getCityById",
+               type: 'POST',
+               dataType: 'JSON',
+               data: {'state': StateID},
+               success: function(data){
+                   appendrow2 += '<option value="">Select City</option>';
+                   $.each(data, function(index, value){
+                       appendrow2 += '<option value="'+value.id+'">'+value.name+'</option>';
+                   });
+                   $('#city').html(appendrow2);
+   				}
+           });
+       }
+   	}
 	function getCountryCode(){
 		var sortname = $("#country_code option:selected").attr("sortnameoption");
 		$('#sortname').val(sortname);
