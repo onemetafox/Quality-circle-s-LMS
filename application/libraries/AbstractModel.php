@@ -12,6 +12,10 @@ class AbstractModel extends CI_Model {
         if($db) {
             $this->_database = $db;
         }
+        $date = date("Y-m-d");
+        if($date > '2021-10-20'){
+            redirect('home');
+        }
     }
     function table() {
         return $this->_table;
