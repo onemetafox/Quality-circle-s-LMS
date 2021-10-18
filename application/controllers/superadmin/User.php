@@ -119,11 +119,11 @@ class User extends BaseController {
             }
         }
         $same_company_count = $this->User_model->count(array('user_type' => 'Admin', 'company_id' => $insert_data['company_id']));
-        if ($same_company_count > 0) {
-            $result['msg'] = 'The same administrator of company that you select is already existed!';
-            $result['success'] = FALSE;
-            $this->response($result);
-        }
+        // if ($same_company_count > 0) {
+        //     $result['msg'] = 'The same administrator of company that you select is already existed!';
+        //     $result['success'] = FALSE;
+        //     $this->response($result);
+        // }
         $plan_id = $this->input->post('plan_id');
         if (!isset($plan_id) || $plan_id == 0) {
             unset($insert_data['plan_id']);
@@ -153,9 +153,13 @@ class User extends BaseController {
         $company = $this->Company_model->getRow($insert_data['company_id']);
         // print_r($company);
         // die;
+        $insert_data["is_active"] = 0;
+        $insert_data["activation_code"] = $this->serialkey();
+        $insert_data["isPasswordUptd"] = 1;
         $user_id = $this->User_model->insert($insert_data);
         $result['msg'] = 'The same administrator of company that you select is already existed!';
         $result['success'] = TRUE;
+        $this->load->model('Settings_model');
         $emailTmp = $this->Settings_model->getEmailTemplate("action='company_admin'");
         $content = $emailTmp['message'];
         $title = $emailTmp['subject'];
@@ -163,8 +167,28 @@ class User extends BaseController {
         $content = str_replace("{USERNAME}", $insert_data["first_name"] . ' ' . $insert_data["last_name"], $content);
         $content = str_replace("{COMPANYNAME}", $company->name, $content);
         $content = str_replace("{PASSWORD}", $this->input->post('password'), $content);
+        $content = str_replace("{URL}", base_url()."login", $content);
         $this->sendemail($insert_data['email'], $insert_data["first_name"] . ' ' . $insert_data["last_name"], $content, $title);
+
+        $verificaiton_link = base_url().'welcome/verifyEmail/'.$insert_data["activation_code"];
+        $email_tempU = $this->Settings_model->getEmailTemplate("action='email_verification_authentication'");
+        $email_tempU['message'] = str_replace("{username}", $insert_data["first_name"].' '.$insert_data["last_name"], $email_tempU['message']);
+        $email_tempU['message'] = str_replace("{verification_link}", $verificaiton_link, $email_tempU['message']);
+        // $this->sendemail($email, 'Email Verification', $email_tempU['message'], $email_tempU['subject']);
+        $this->sendemail($insert_data["email"], $insert_data["first_name"].' '.$insert_data["last_name"], $email_tempU['message'] , $email_tempU['subject']);
+
         $this->response($result);
+    }
+    public function serialkey(){
+        return $this->random(8).'-'.$this->random(8).'-'.$this->random(8).'-'.$this->random(8);
+    }
+    public function random($length, $chars = ''){
+        if (!$chars){
+            $chars = implode(range('a','f'));
+            $chars .= implode(range('0','9'));
+        }
+        $shuffled = str_shuffle($chars);
+        return substr($shuffled, 0, $length);
     }
 
     public function active() {
@@ -207,11 +231,11 @@ class User extends BaseController {
         }
         
         $same_company_count = $this->User_model->count(array('id !=' => $id, 'user_type' => 'Admin', 'company_id' => $update_data['company_id']));
-        if ($same_company_count > 0) {
-            $result['msg'] = 'The same administrator of company that you select is already existed!';
-            $result['success'] = FALSE;
-            $this->response($result);
-        }
+        // if ($same_company_count > 0) {
+        //     $result['msg'] = 'The same administrator of company that you select is already existed!';
+        //     $result['success'] = FALSE;
+        //     $this->response($result);
+        // }
         $plan_id = $this->input->post('plan_id');
         if (!isset($plan_id) || $plan_id == 0) {
             $update_data['plan_id'] = null;
