@@ -121,11 +121,11 @@ class User extends BaseController {
             }
         }
         $same_company_count = $this->User_model->count(array('user_type' => 'Admin', 'company_id' => $insert_data['company_id']));
-        // if ($same_company_count > 0) {
-        //     $result['msg'] = 'The same administrator of company that you select is already existed!';
-        //     $result['success'] = FALSE;
-        //     $this->response($result);
-        // }
+        if ($same_company_count > 0) {
+            $result['msg'] = 'The same administrator of company that you select is already existed!';
+            $result['success'] = FALSE;
+            $this->response($result);
+        }
         $plan_id = $this->input->post('plan_id');
         if (!isset($plan_id) || $plan_id == 0) {
             unset($insert_data['plan_id']);
@@ -186,6 +186,7 @@ class User extends BaseController {
         $content = str_replace("{COMPANYNAME}", $company->name, $content);
         $content = str_replace("{PASSWORD}", $this->input->post('password'), $content);
         $content = str_replace("{URL}", base_url()."login", $content);
+        $content = str_replace("{LINK}", base_url()."admin/video", $content);
         $this->sendemail($insert_data['email'], $insert_data["first_name"] . ' ' . $insert_data["last_name"], $content, $title);
 
         $verificaiton_link = base_url().'welcome/verifyEmail/'.$insert_data["activation_code"];
@@ -249,11 +250,11 @@ class User extends BaseController {
         }
         
         $same_company_count = $this->User_model->count(array('id !=' => $id, 'user_type' => 'Admin', 'company_id' => $update_data['company_id']));
-        // if ($same_company_count > 0) {
-        //     $result['msg'] = 'The same administrator of company that you select is already existed!';
-        //     $result['success'] = FALSE;
-        //     $this->response($result);
-        // }
+        if ($same_company_count > 0) {
+            $result['msg'] = 'The same administrator of company that you select is already existed!';
+            $result['success'] = FALSE;
+            $this->response($result);
+        }
         $plan_id = $this->input->post('plan_id');
         if (!isset($plan_id) || $plan_id == 0) {
             $update_data['plan_id'] = null;
