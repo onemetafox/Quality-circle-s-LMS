@@ -72,9 +72,7 @@
                 { "title": "<?=$term[subscription]?> <?=$term[name]?>", "data": "name", "class": "text-center", "width":"*" },
                 { "title": "<?=$term[price]?>", "data": "price", "class": "text-center", "width":"*",
                     mRender: function (data, type, row) {
-                        if(row.price_type == 2){
-                            return "<?=$term[callforpricing]?>";
-                        }else if(row.price_type == 1){
+                        if(row.price_type == 1){
                             return "---";
                         }else{
                             return data;

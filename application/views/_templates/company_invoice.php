@@ -244,7 +244,7 @@
             <td class="no">01</td>
             <td class="desc"><h3><?= $invoice->payment_title?></h3><?= $invoice->description?></td>
             <td class="unit"><?= $invoice->payment_method?></td>
-            <td class="qty"><?= $invoice->amount/$invoice->price?></td>
+            <td class="qty">1</td>
             <td class="qty"><?= $invoice->company_name?></td>
             <td class="total">$<?=$invoice->amount?></td>
           </tr>
@@ -267,8 +267,8 @@
           </tr>
           <tr>
             <td colspan="3"></td>
-            <td colspan="2">TAX<?= $invoice->tax_type=='1'? '$':''?><?=$invoice->tax_rate?><?= $invoice->tax_type=='0'? '(%)':''?></td>
-            <td><?php 
+            <td colspan="2">TAX <?= $invoice->tax_type=='1'? '$':''?><?=$invoice->tax_rate?><?= $invoice->tax_type=='0'? '(%)':''?></td>
+            <td>$<?php 
               if($invoice->tax_type == '1'){
                 echo $invoice->price * (100 - $invoice->discount)/100 + $invoice->tax_rate;
               }else{
