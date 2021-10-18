@@ -358,7 +358,7 @@ class User_model extends CI_Model
     }
 
     function getfrEmail($id = 0, $email = ''){
-        $sql = "select * from user where id != $id and email = '$email'";
+        $sql = "select * from user where email = '$email'";
         return count($this->db->query($sql)->result_array());
     }
     function getInstructorByCompany($id){
