@@ -257,23 +257,24 @@
           </tr>
           <tr>
             <td colspan="3"></td>
-            <td colspan="2">DISCOUNT(%)</td>
-            <td><?= $invoice->discount?>(%)</td>
-          </tr>
-          <tr>
-            <td colspan="3"></td>
-            <td colspan="2">SUBTOTAL</td>
+            <td colspan="2">DISCOUNT(<?= $invoice->discount?>%)</td>
             <td>-$<?= $invoice->price * ($invoice->discount/100)?></td>
           </tr>
           <tr>
             <td colspan="3"></td>
-            <td colspan="2">TAX TYPE </td>
-            <td><?= $invoice->tax_type=='0'? 'Percentage':'Fixed'?></td>
+            <td colspan="2">SUBTOTAL</td>
+            <td>$<?= $invoice->price * (100 - $invoice->discount)/100?></td>
           </tr>
           <tr>
             <td colspan="3"></td>
-            <td colspan="2">TAX</td>
-            <td><?= $invoice->tax_type=='1'? '$':''?><?=$invoice->tax_rate?><?= $invoice->tax_type=='0'? '(%)':''?></td>
+            <td colspan="2">TAX<?= $invoice->tax_type=='1'? '$':''?><?=$invoice->tax_rate?><?= $invoice->tax_type=='0'? '(%)':''?></td>
+            <td><?php 
+              if($invoice->tax_type == '1'){
+                echo $invoice->price * (100 - $invoice->discount)/100 + $invoice->tax_rate;
+              }else{
+                echo ($invoice->price * (100 - $invoice->discount)/100) * $invoice->tax_rate/100;
+              }
+            ?></td>
           </tr>
           <tr>
             <td colspan="3"></td>
