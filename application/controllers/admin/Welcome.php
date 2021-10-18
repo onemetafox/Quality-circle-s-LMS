@@ -239,7 +239,7 @@ class Welcome extends BaseController {
         $title = $emailTmp['subject'];
         $content = str_replace("{FIRSTNAME}", $firstname, $content);
         $content = str_replace("{LASTNAME}", $lastname, $content);
-        // $this->sendemail($email, $firstname.' '. $lastname, $content,$title );
+        $this->sendemail($email, $firstname.' '. $lastname, $content,$title );
         //$this->sendemail();
         
     }

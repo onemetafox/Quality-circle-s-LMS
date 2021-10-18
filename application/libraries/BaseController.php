@@ -364,6 +364,7 @@ class BaseController extends CI_Controller {
         return $this->User_model->getSuperEmailAddress();
     }
 
+    // public function sendemail($to, $toname, $content, $title, $type = 0, $from = NULL, $fromname = NULL) {
     public function sendemail($to, $toname, $content, $title, $type = 0) {
         require_once (APPPATH . "third_party/phpmailer/class.phpmailer.php");
         $mail = new PHPMailer;
@@ -372,6 +373,11 @@ class BaseController extends CI_Controller {
         // Replace sender@example.com with your "From" address.
         // This address must be verified with Amazon SES.
         $mail->setFrom('support@gosmartacademy.com', 'gosmartacademy');
+        // if(!$from){
+        //     $mail->setFrom('support@gosmartacademy.com', 'gosmartacademy');
+        // }else{
+        //     $mail->setFrom($from, $fromname);
+        // }
         // Replace recipient@example.com with a "To" address. If your account
         // is still in the sandbox, this address must be verified.
         // Also note that you can include several addAddress() lines to send

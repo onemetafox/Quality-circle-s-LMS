@@ -927,6 +927,14 @@ class Login extends BaseController{
                 $insert_company_data['name'] = $data["organization"];
                 $insert_company_id = $this->Company_model->insert($insert_company_data);
                 $data["company_id"] = $insert_company_id;
+                /*start send_email*/
+
+                // $this->load->library('email');
+                // $email_temp = $this->getEmailTemp('welcome_email',$data['company_id']);
+                // $from_email = $this->getSuperEmailAddress();
+                // $email_class  = new Email();
+                // $email_class->send_email($data['email'],$email_temp['subject'],$email_temp['message'],$from_email);
+                /*end send_email*/
             }else{
                 $data["company_id"] = $this->input->post('company_id');
             }   

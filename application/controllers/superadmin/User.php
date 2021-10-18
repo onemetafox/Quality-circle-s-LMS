@@ -149,9 +149,21 @@ class User extends BaseController {
         $pool = '0123456789';
         $api_key = substr(str_shuffle(str_repeat($pool, ceil(10 / strlen($pool)))), 0, 10);
         $insert_data['api_key'] = $api_key;
+        $this->load->model('Company_model');
+        $company = $this->Company_model->getRow($insert_data['company_id']);
+        // print_r($company);
+        // die;
         $user_id = $this->User_model->insert($insert_data);
         $result['msg'] = 'The same administrator of company that you select is already existed!';
         $result['success'] = TRUE;
+        $emailTmp = $this->Settings_model->getEmailTemplate("action='company_admin'");
+        $content = $emailTmp['message'];
+        $title = $emailTmp['subject'];
+        
+        $content = str_replace("{USERNAME}", $insert_data["first_name"] . ' ' . $insert_data["last_name"], $content);
+        $content = str_replace("{COMPANYNAME}", $company->name, $content);
+        $content = str_replace("{PASSWORD}", $this->input->post('password'), $content);
+        $this->sendemail($insert_data['email'], $insert_data["first_name"] . ' ' . $insert_data["last_name"], $content, $title);
         $this->response($result);
     }
 
@@ -193,6 +205,7 @@ class User extends BaseController {
                 $update_data[$key] = $value == 'on' ? 1 : 0;
             }
         }
+        
         $same_company_count = $this->User_model->count(array('id !=' => $id, 'user_type' => 'Admin', 'company_id' => $update_data['company_id']));
         if ($same_company_count > 0) {
             $result['msg'] = 'The same administrator of company that you select is already existed!';
