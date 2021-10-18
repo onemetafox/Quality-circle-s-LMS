@@ -157,6 +157,22 @@ class User extends BaseController {
         $insert_data["activation_code"] = $this->serialkey();
         $insert_data["isPasswordUptd"] = 1;
         $user_id = $this->User_model->insert($insert_data);
+        if (isset($plan_id) || $plan_id != 0) {
+            $payment['user_id'] = $user_id;
+            $payment['pay_date'] = date("Y-m-d H:s:i");
+            $payment['company_id'] = $company->id;
+            $payment['payment_method'] = "manual";
+            $payment['object_type'] = 'plan';
+            $payment['object_id'] = $plan_id;
+            $payment['description'] = $plan->name;
+            $payment['tax_rate'] = $this->Settings_model->getTaxRate()->value;
+            $payment['tax_type'] = "0";
+            $payment['discount'] = $this->Company_model->getRow($company->id)->discount;
+            $payment['price'] = $plan->price;
+            $sub_total = $plan->price * (100 - $payment['discount'])/100;
+            $payment['amount'] = $sub_total * (100 + $payment['tax_rate'])/100;
+            $insert = $this->Payment_model->save($payment);
+        }
         $result['msg'] = 'The same administrator of company that you select is already existed!';
         $result['success'] = TRUE;
         $this->load->model('Settings_model');
@@ -262,6 +278,26 @@ class User extends BaseController {
             $update_data['password'] = md5($this->input->post('password'));
         }
         $this->User_model->update($update_data, array('id' => $id));
+        $this->load->model('Settings_model');
+        $this->load->model('Company_model');
+
+        $company = $this->Company_model->getRow($insert_data['company_id']);
+        if (isset($plan_id) || $plan_id != 0) {
+            $payment['user_id'] = $id;
+            $payment['pay_date'] = date("Y-m-d H:s:i");
+            $payment['company_id'] = $company->id;
+            $payment['payment_method'] = "manual";
+            $payment['object_type'] = 'plan';
+            $payment['object_id'] = $plan_id;
+            $payment['description'] = $plan->name;
+            $payment['tax_rate'] = $this->Settings_model->getTaxRate()->value;
+            $payment['tax_type'] = "0";
+            $payment['discount'] = $this->Company_model->getRow($company->id)->discount;
+            $payment['price'] = $plan->price;
+            $sub_total = $plan->price * (100 - $payment['discount'])/100;
+            $payment['amount'] = $sub_total * (100 + $payment['tax_rate'])/100;
+            $insert = $this->Payment_model->save($payment);
+        }
         $result['msg'] = 'Success!';
         $result['success'] = TRUE;
         $this->response($result);

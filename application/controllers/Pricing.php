@@ -251,7 +251,21 @@ class Pricing  extends BaseController
                 $sub_total = $plan->price * (100 - $data['discount'])/100;
                 $data['amount'] = $sub_total * (100 + $data['tax_rate'])/100;
             }else if($type == "course"){
-                
+                $course = $this->Course_model->select($id);
+                if($course->course_type == "0"){
+                    $data['object_type'] = "training";
+                }else if($course->course_type == "1"){
+                    $data['object_type'] = "live";
+                }else{
+                    $data['object_type'] = "course";
+                }
+                $data['title'] = $course->title;
+                $data['description'] = $course->desciption;
+                $data['discount'] = $course->discount;
+                $data['price'] = $course->pay_price;
+                $data['tax_rate'] = $course->tax_rate;
+                $data['tax_type'] = $course->tax_type;
+                $data['amount'] = $course->amount;
             }else{
                 
             }
