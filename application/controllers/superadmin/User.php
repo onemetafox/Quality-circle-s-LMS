@@ -16,12 +16,14 @@ class User extends BaseController {
         $this->load->model('User_model');
         $this->load->model('Certification_model');
         $this->load->model('Notification_model');
-        $this->load->model('Company_model');
         $this->load->model('Examassignemployee_model');
         $this->load->model('Exam_model');
         $this->load->model('Translate_model');
         $this->load->model('Plan_model');
 		$this->load->model('Countries_model');
+        $this->load->model('Company_model');
+        $this->load->model('Settings_model');
+        $this->load->model('Payment_model');
         $this->isLoggedIn();
     }
     /**
@@ -149,7 +151,7 @@ class User extends BaseController {
         $pool = '0123456789';
         $api_key = substr(str_shuffle(str_repeat($pool, ceil(10 / strlen($pool)))), 0, 10);
         $insert_data['api_key'] = $api_key;
-        $this->load->model('Company_model');
+        
         $company = $this->Company_model->getRow($insert_data['company_id']);
         // print_r($company);
         // die;
@@ -157,6 +159,7 @@ class User extends BaseController {
         $insert_data["activation_code"] = $this->serialkey();
         $insert_data["isPasswordUptd"] = 1;
         $user_id = $this->User_model->insert($insert_data);
+        
         if (isset($plan_id) || $plan_id != 0) {
             $payment['user_id'] = $user_id;
             $payment['pay_date'] = date("Y-m-d H:s:i");
@@ -175,7 +178,6 @@ class User extends BaseController {
         }
         $result['msg'] = 'The same administrator of company that you select is already existed!';
         $result['success'] = TRUE;
-        $this->load->model('Settings_model');
         $emailTmp = $this->Settings_model->getEmailTemplate("action='company_admin'");
         $content = $emailTmp['message'];
         $title = $emailTmp['subject'];
@@ -278,9 +280,6 @@ class User extends BaseController {
             $update_data['password'] = md5($this->input->post('password'));
         }
         $this->User_model->update($update_data, array('id' => $id));
-        $this->load->model('Settings_model');
-        $this->load->model('Company_model');
-
         $company = $this->Company_model->getRow($insert_data['company_id']);
         if (isset($plan_id) || $plan_id != 0) {
             $payment['user_id'] = $id;
