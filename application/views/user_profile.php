@@ -175,7 +175,7 @@ $image = $this->session->userdata('user_photo');
                                     <div class="form-group row">
                                         <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term['userrole']?></label>
                                         <div class="col-sm-3">
-                                            <input type="text" value="<?php print $user->role ?>" class="form-control"  id="role" name="role" >
+                                            <input type="text" value="<?php print $user->role ?>" class="form-control"  id="role" name="role" readonly>
                                         </div>
 
                                         <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term['companyname']?></label>

@@ -750,7 +750,8 @@ class Login extends BaseController{
         }
         $company = $this->Company_model->getRow($this->session->userdata('company_id'));
         if($user->user_type == "Admin"){
-            $page_data['plan'] = $this->Plan_model->getPlanCompany($this->session->userdata('company_id')->id);
+            // $page_data['plan'] = $this->Plan_model->getPlanCompany($this->session->userdata('company_id')->id);
+            $page_data['plan'] = $this->Plan_model->select($user->plan_id);
             // $page_data['paypal_pk'] = $this
             $page_data['paypal_pk'] = $company->paypal_client_id;
             $page_data['paypal_sk'] = $company->paypal_secret_id;

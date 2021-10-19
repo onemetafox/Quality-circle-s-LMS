@@ -582,7 +582,8 @@
             processData:false,
             contentType: false,
             success: function (data, status, xhr) {
-                if(data.success == 'true'){
+                alert(data.success);
+                if(data.success){
                     new PNotify({
                         title: 'Success',
                         text: data.msg,

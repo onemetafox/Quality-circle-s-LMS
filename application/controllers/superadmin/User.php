@@ -158,6 +158,7 @@ class User extends BaseController {
         $insert_data["is_active"] = 0;
         $insert_data["activation_code"] = $this->serialkey();
         $insert_data["isPasswordUptd"] = 1;
+        $insert_data["role"] = $insert_data["user_type"];
         $user_id = $this->User_model->insert($insert_data);
         
         if (isset($plan_id) || $plan_id != 0) {
