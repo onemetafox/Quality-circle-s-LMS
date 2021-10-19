@@ -1,6 +1,6 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 require APPPATH . '/libraries/BaseController.php';
-// require APPPATH . '/third_party/PHPExcel.php';
+require APPPATH . '/third_party/PHPExcel.php';
 /**
  * Created by PhpStorm.
  * User: Timon
@@ -41,6 +41,7 @@ class Company extends BaseController {
                 $page_data['name'] = $user_data['name'];
                 $page_data['logo_image'] = $user_data['logo_image'];
                 $page_data['active'] = $user_data['active'];
+                $page_data['status'] = $user_data['status'];
                 $page_data['url'] = $user_data['url'];
                 $page_data['discount'] = $user_data['discount'];
 				
@@ -105,7 +106,7 @@ class Company extends BaseController {
         }
         foreach ($this->input->post() as $key => $value) {
             $insert_data[$key] = $value;
-            if ($key == 'active') {
+            if ($key == 'active' || $key == 'status') {
                 $insert_data[$key] = $value == 'on' ? 1 : 0;
             }
         }
@@ -154,6 +155,10 @@ class Company extends BaseController {
 		$setData['active'] = 0;
 		if($update_data['active'] == 'on'){
 			$setData['active'] = 1;
+		}
+        $setData['status'] = 0;
+		if($update_data['status'] == 'on'){
+			$setData['status'] = 1;
 		}
 		if ($rslt['possible'] == 1) {
             $setData['logo_path'] = str_replace("./", "", $rslt['path']);

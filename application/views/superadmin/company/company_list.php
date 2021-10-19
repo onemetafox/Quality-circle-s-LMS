@@ -250,6 +250,16 @@
             }, {
                 "targets": [6],
                 "createdCell": function (td, cellData, rowData, row, col) {
+                    if(cellData == '1'){
+                        $(td).html('<span class="badge badge-success"><?=$term[yes]?></span>');
+                    } else {
+                        $(td).html('<span class="badge badge-dark"><?=$term[no]?></span>');
+                    }
+
+                }
+            }, {
+                "targets": [7],
+                "createdCell": function (td, cellData, rowData, row, col) {
                     $(td).html('<a href="<?= base_url()?>superadmin/company/edit_view/'+cellData+'"><i class="fas fa-pencil-alt"></i></a><span class="w-20"></span><a href="javascript:deleteCategory('+cellData+')" class="delete-row"><i class="far fa-trash-alt"></i></a>');
                 }
             }],
@@ -260,6 +270,7 @@
                 { "title": "<?=$term[picture]?>", "data": "logo_path", "class": "text-center", "width":110 },
                 { "title": "<?=$term[discount]?>(%)", "data": "discount", "class": "text-center", "width":50 },
                 { "title": "<?=$term[status]?>", "data": "active", "class": "text-center", "width":50 },
+                { "title": "<?=$term[enrollstatus]?>", "data": "status", "class": "text-center", "width":50 },
                 { "title": "<?=$term[action]?>", "data": "id", "class": "text-center", "width":80 }
             ],
             "lengthMenu": [

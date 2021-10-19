@@ -118,10 +118,12 @@
                                           <input type="radio" name = "pay_type" value="0" <?php if ($course_data['pay_type'] == 0):?>checked<?php endif;?>>
                                           <span class="checkmark"></span>
                                           </label>
+                                          <?php if($company['status'] == 1){ ?>
                                           <label class="radioBox col-sm-3"><?=$term['opencourse']?>
                                           <input type="radio" name = "pay_type" value="1" <?php if ($course_data['pay_type'] == 1):?>checked<?php endif;?>>
                                           <span class="checkmark"></span>
                                           </label>
+                                          <?php } ?>
                                        </div>
                                     </div>
                                     <div class="form-group row">

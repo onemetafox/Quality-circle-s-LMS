@@ -51,25 +51,25 @@
                         	<?php } ?>
                         
                             <div class="form-group row">
-
-
-                                    <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[active]?></label>
-                                    <div class="col-sm-4">
-                                        <div class="switch switch-primary">
-                                            <input type="checkbox" name="active" id="active" data-plugin-ios-switch <?php echo $active==1?'checked="checked"':'';?> />
-                                        </div>
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[active]?></label>
+                                <div class="col-sm-2">
+                                    <div class="switch switch-primary">
+                                        <input type="checkbox" name="active" id="active" data-plugin-ios-switch <?php echo $active==1?'checked="checked"':'';?> />
                                     </div>
-                                    <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[discount]?>(%)</label>
-                                    <div class="col-sm-4">
-                                        <div class="switch switch-primary">
-                                            <input type="number" name="discount" id="discount"  class="form-control" value="<?= $discount?>"/>
-                                        </div>
+                                </div>
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[enrollstatus]?></label>
+                                <div class="col-sm-2">
+                                    <div class="switch switch-primary">
+                                        <input type="checkbox" name="status" id="status" data-plugin-ios-switch <?php echo $status==1?'checked="checked"':'';?> />
                                     </div>
-
-
+                                </div>
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[discount]?>(%)</label>
+                                <div class="col-sm-2">
+                                    <div class="switch switch-primary">
+                                        <input type="number" name="discount" id="discount"  class="form-control" value="<?= $discount?>"/>
+                                    </div>
+                                </div>
                             </div>
-
-
                             <div class="form-group row">
                                 <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[name]?><span class="required">*</span></label>
                                 <div class="col-sm-4">
