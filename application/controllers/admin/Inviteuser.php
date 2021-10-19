@@ -12,6 +12,8 @@ class Inviteuser extends BaseController{
 		$this->load->model('Trainingcourse_model');		
 		$this->load->model('Category_model');
 		$this->load->model('Standard_model');
+		$this->load->model('User_model');
+		$this->load->model('Plan_model');
 		
         $this->isLoggedIn();
         $this->load->library('Sidebar');
@@ -118,8 +120,9 @@ class Inviteuser extends BaseController{
 		$data['company_id'] = $this->session->userdata('company_id');
 		$result = array("success"=> true, "msg"=>"success");
 
-		$this->load->model('Plan_model');
-		$plan = $this->Plan_model->getPlanCompany($data['company_id']);
+		$user = (array) $this->User_model->select($this->session->get_userdata()['user_id']);
+		// $plan = $this->Plan_model->getPlanCompany($this->session->get_userdata()['company_id']);
+        $plan = $this->Plan_model->select($user['plan_id']);
 		if(!$plan->id){
             $plan = $this->Plan_model->select('1');
         }
@@ -256,9 +259,9 @@ class Inviteuser extends BaseController{
 		$data['ilt_course_time_id'] = $this->input->post('add_ilt_time_id');		
         $data['course_type'] = $this->input->post('course_type');
 		$data['company_id'] = $this->session->userdata('company_id');  // add company ID in invite user table
-		$this->load->model('Plan_model');
-		$plan = $this->Plan_model->getPlanCompany($data['company_id']);
-		$this->load->model('User_model');
+		$user = (array) $this->User_model->select($this->session->get_userdata()['user_id']);
+		// $plan = $this->Plan_model->getPlanCompany($this->session->get_userdata()['company_id']);
+        $plan = $this->Plan_model->select($user['plan_id']);
 		$total_count = $this->User_model->count(array('company_id'=>$data['company_id']));
 
 		$result = array("success"=> true, "msg"=>"success");

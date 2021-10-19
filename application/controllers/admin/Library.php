@@ -1,7 +1,7 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 require APPPATH . '/libraries/BaseController.php';
-// require APPPATH . '/third_party/PHPExcel.php';
-// require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
+require APPPATH . '/third_party/PHPExcel.php';
+require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
 include_once (APPPATH . '/third_party/iio/index.php');
 require APPPATH . '/libraries/FPDI/fpdi.php';
 /**
@@ -133,8 +133,9 @@ class Library extends BaseController {
     public function createDirectory(){
         $user_id = $this->session->get_userdata() ['userId'];
         $company_id = $this->session->get_userdata() ['company_id'];
-        $this->load->model('Plan_model');
-		$plan = $this->Plan_model->getPlanCompany($company_id);
+		$user = (array) $this->User_model->select($user_id);
+		// $plan = $this->Plan_model->getPlanCompany($this->session->get_userdata()['company_id']);
+        $plan = $this->Plan_model->select($user['plan_id']);
         if(!$plan->id){
             $plan = $this->Plan_model->select('1');
         }

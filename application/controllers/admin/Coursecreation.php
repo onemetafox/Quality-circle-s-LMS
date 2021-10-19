@@ -1,10 +1,10 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
 require APPPATH . '/libraries/BaseController.php';
-// require APPPATH . '/third_party/PHPExcel.php';
-// require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
-// include_once (APPPATH . '/third_party/iio/index.php');
-// require APPPATH . '/libraries/FPDI/fpdi.php';
+require APPPATH . '/third_party/PHPExcel.php';
+require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
+include_once (APPPATH . '/third_party/iio/index.php');
+require APPPATH . '/libraries/FPDI/fpdi.php';
 require APPPATH . 'third_party/woocommerce/autoload.php';
 use Automattic\WooCommerce\Client;
 use Automattic\WooCommerce\HttpClient\HttpClientException;
@@ -678,8 +678,9 @@ class Coursecreation extends BaseController{
 
         $course_data['course_type'] = $this->input->post('course_type');
 
-        $this->load->model('Plan_model');
-		$plan = $this->Plan_model->getPlanCompany($this->session->get_userdata()['company_id']);
+        $user = (array) $this->User_model->select($this->session->get_userdata()['user_id']);
+		// $plan = $this->Plan_model->getPlanCompany($this->session->get_userdata()['company_id']);
+        $plan = $this->Plan_model->select($user['plan_id']);
         if(!$plan->id){
             $plan = $this->Plan_model->select('1');
         }
