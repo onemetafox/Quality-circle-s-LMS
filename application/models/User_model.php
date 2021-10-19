@@ -6,7 +6,7 @@
  * Time: 6:24 PM
  */
 
-class User_model extends CI_Model
+class User_model extends AbstractModel
 {
     /**
      * This function used to manage categories
@@ -15,6 +15,7 @@ class User_model extends CI_Model
 
     function __construct(){
         parent::__construct();
+        $this->_table = 'user';
         $this->table = 'user';
         $this->company_table = 'company';
         $this->companyuser_table = 'company_user';

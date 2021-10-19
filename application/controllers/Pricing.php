@@ -250,6 +250,22 @@ class Pricing  extends BaseController
                 $data['price'] = $plan->price;
                 $sub_total = $plan->price * (100 - $data['discount'])/100;
                 $data['amount'] = $sub_total * (100 + $data['tax_rate'])/100;
+
+                $user = (array) $this->User_model->select($user['user_id']);
+                if ($plan->price_type == 1) {
+                    $insert_data['is_trialed'] = 1;
+                    $expired = date('Y-m-d', strtotime($date . ' + 15 days'));
+                    $user['expired'] = $expired;
+                } else if ($plan->price_type == 0) {
+                    if ($plan->term_type == 0) {
+                        $expired = date('Y-m-d', strtotime($date . ' + 30 days'));
+                    } else if ($plan->term_type == 1) {
+                        $expired = date('Y-m-d', strtotime($date . ' + 365 days'));
+                    }
+                    $user['expired'] = $expired;
+                }
+                $this->User_model->update($user, array('id'=>$user['id']));
+
             }else if($type == "course"){
                 $course = $this->Course_model->select($id);
                 if($course->course_type == "0"){
@@ -344,6 +360,20 @@ class Pricing  extends BaseController
             
             $sub_total = $plan->price * (100 - $data['discount'])/100;
             $data['amount'] = $sub_total * (100 + $data['tax_rate'])/100;
+            $user = (array) $this->User_model->select($user['user_id']);
+            if ($plan->price_type == 1) {
+                $insert_data['is_trialed'] = 1;
+                $expired = date('Y-m-d', strtotime($date . ' + 15 days'));
+                $user['expired'] = $expired;
+            } else if ($plan->price_type == 0) {
+                if ($plan->term_type == 0) {
+                    $expired = date('Y-m-d', strtotime($date . ' + 30 days'));
+                } else if ($plan->term_type == 1) {
+                    $expired = date('Y-m-d', strtotime($date . ' + 365 days'));
+                }
+                $user['expired'] = $expired;
+            }
+            $this->User_model->update($user, array('id'=>$user['id']));
             
         }else if($type == "course"){
             
