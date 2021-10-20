@@ -1,10 +1,10 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
 require APPPATH . '/libraries/BaseController.php';
-require APPPATH . '/third_party/PHPExcel.php';
-require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
-include_once (APPPATH . '/third_party/iio/index.php');
-require APPPATH . '/libraries/FPDI/fpdi.php';
+// require APPPATH . '/third_party/PHPExcel.php';
+// require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
+// include_once (APPPATH . '/third_party/iio/index.php');
+// require APPPATH . '/libraries/FPDI/fpdi.php';
 require APPPATH . 'third_party/woocommerce/autoload.php';
 use Automattic\WooCommerce\Client;
 use Automattic\WooCommerce\HttpClient\HttpClientException;
@@ -1079,6 +1079,7 @@ class Coursecreation extends BaseController{
                 $course_data['limit_time'] = 0;
                 $course_data['pay_type'] = 0;
                 $course_data['pay_price'] = 0;
+                $course_data['amount'] = 0;
                 $course_data['show_user'] = 0;
                 $course_data['pass_mark'] = 0;
                 $course_data['is_ass_end'] = 0;
@@ -1090,6 +1091,7 @@ class Coursecreation extends BaseController{
 				$course_data['city'] = 0;
 				$course_data['state'] = 0;
                 $course_data['subtitle'] = "";
+                $course_data['discount'] = "100";
                 $course_data['about'] = "";
                 $course_data['location'] = "";
                 $course_data['start_at'] = date("Y-m-d");
