@@ -48,7 +48,7 @@ class Live_model extends CI_Model
             LEFT JOIN virtual_course_time e ON e.virtual_course_id = b.id
             LEFT JOIN course c ON c.id = b.course_id
             LEFT JOIN enrollments f ON f.user_id = d.id AND f.course_id = c.id AND f.course_time_id = e.id
-            WHERE a.course_type = 1 AND d.email = '".$user['email']."' AND b.create_id = '".$user['company_id']."' AND c.pay_type = 0 ";
+            WHERE a.course_type = 1 AND d.payment_status = '1' AND d.email = '".$user['email']."' AND b.create_id = '".$user['company_id']."' AND c.pay_type = 0 ";
             
         if($filter['location']){
             $query = $query . " And e.location = '".$filter['location']."'";

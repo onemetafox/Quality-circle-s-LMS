@@ -86,7 +86,8 @@ class Payment_model extends AbstractModel
         $query = "SELECT a.*, b.title, c.`name` FROM `payment_history` a
         LEFT JOIN course b on a.object_id = b.id
         LEFT JOIN company c ON c.id = a.company_id
-        WHERE user_id = '$filter[user_id]' AND (object_type <> 'book' OR object_type <> 'plan')
+        -- WHERE user_id = '$filter[user_id]' AND (object_type <> 'book' OR object_type <> 'plan')
+        WHERE user_id = '$filter[user_id]' AND (object_type <> 'plan')
         
         UNION
         

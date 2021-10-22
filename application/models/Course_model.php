@@ -107,7 +107,7 @@ class Course_model extends AbstractModel
         LEFT JOIN `user` b ON a.email = b.email
         LEFT JOIN course c ON a.course_id = c.id
         LEFT JOIN enrollments f ON f.user_id = b.id AND f.course_id = c.id
-        WHERE a.email = '".$user['email']."' AND a.course_type = 2 AND pay_type = 0 AND c.create_id = '".$user['company_id']."'";
+        WHERE a.email = '".$user['email']."' AND b.payment_statue = '1' AND a.course_type = 2 AND pay_type = 0 AND c.create_id = '".$user['company_id']."'";
         if($filter['category']){
             $query = $query . " And c.category_id = '".$filter['category']."'";
         }

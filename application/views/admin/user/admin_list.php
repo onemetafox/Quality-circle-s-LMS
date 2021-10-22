@@ -212,6 +212,16 @@
             }, {
                 "targets": [8],
                 "createdCell": function (td, cellData, rowData, row, col) {
+                    if(cellData == '1'){
+                        $(td).html('<span class="badge badge-success"><?=$term[yes]?></span>');
+                    } else {
+                        $(td).html('<span class="badge badge-dark"><?=$term[no]?></span>');
+                    }
+
+                }
+            }, {
+                "targets": [9],
+                "createdCell": function (td, cellData, rowData, row, col) {
                     $(td).html('<a href="<?=base_url()?>admin/user/add_view/'+cellData+'"><i class="fas fa-pencil-alt"></i></a><span class="w-20"></span><a href="javascript:deleteUser('+cellData+')" class="delete-row"><i class="far fa-trash-alt"></i></a>');
                 }
             }],
@@ -224,6 +234,7 @@
 				{ "title": "<?=$term[phone]?>", "data": "phone", "class": "text-left", "width":100 },
                 { "title": "<?=$term[role]?>", "data": "user_type", "class": "text-center", "width":110 },
                 { "title": "<?=$term[active]?>", "data": "active", "class": "text-center", "width":50 },
+                { "title": "<?=$term[paymentstatus]?>", "data": "payment_status", "class": "text-center", "width":50 },
                 { "title": "<?=$term[action]?>", "data": "id", "class": "text-center", "width":80 },
             ],
             "lengthMenu": [

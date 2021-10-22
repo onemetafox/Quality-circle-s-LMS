@@ -123,6 +123,12 @@ if($id != 0){
                                 </div>
                             </div>
                             <div class="form-group row">
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[phone]?></label>
+                                <div class="col-sm-10">
+                                    <input type="text" value="<?php print $phone ?>" id="phone" name="phone" required class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label class="col-sm-2 control-label text-sm-right pt-2">Country</label>
                                 <div class="col-sm-10">
                                     <select class="form-control" required onchange="getStateByCountryId(this.value)" id="country" name="country">
@@ -155,12 +161,7 @@ if($id != 0){
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[phone]?></label>
-                                <div class="col-sm-10">
-                                    <input type="text" value="<?php print $phone ?>" id="phone" name="phone" required class="form-control">
-                                </div>
-                            </div>
+                            
                             <div class="form-group row">
                                 <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[active]?></label>
                                 <div class="col-sm-10">
@@ -168,7 +169,14 @@ if($id != 0){
                                         <input type="checkbox" name="active" id="active" data-plugin-ios-switch <?php echo $active==1?'checked="checked"':'';?> />
                                     </div>
                                 </div>
-
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[paymentstatus]?></label>
+                                <div class="col-sm-10">
+                                    <div class="switch switch-primary">
+                                        <input type="checkbox" name="payment_status" id="payment_status" data-plugin-ios-switch <?php echo $payment_status==1?'checked="checked"':'';?> />
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[zip_code]?></label>
@@ -329,6 +337,7 @@ if($id != 0){
                 }
             });
         } else {
+            formData.append('user_update',"true");
             $.ajax({
                 url: $('#base_url').val()+'admin/user/change',
                 type: 'POST',
@@ -342,7 +351,7 @@ if($id != 0){
                         text: '<?php echo $term['succesfullyupdated']; ?>',
                         type: 'success'
                     });
-                    window.location.href= '<?php echo base_url() ?>admin/user';
+                    // window.location.href= '<?php echo base_url() ?>admin/user';
                 },
                 error: function(){
                     $("#sendBtn").trigger('loading-overlay:hide');

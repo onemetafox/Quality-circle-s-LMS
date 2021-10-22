@@ -23,6 +23,7 @@ class User extends BaseController {
         $this->load->model('Translate_model');
         $this->load->model('Plan_model');
 		$this->load->model('Countries_model');	
+        $this->load->model('Payment_model');	
         $this->load->model('Location_model');		
         $this->isLoggedIn();
     }
@@ -222,7 +223,7 @@ class User extends BaseController {
 			foreach ($this->input->post() as $key => $value){
 				//if($key == 'type_update') continue;
 				$update_data[$key] = $value;
-				if($key == 'active'){
+				if($key == 'active' || $key == 'payment_status'){
 					$update_data[$key] = $value == 'on' ? 1 : 0;
 				}
 			}
@@ -240,6 +241,7 @@ class User extends BaseController {
             $user = $this->session->userdata();
             
             if($this->isSuperAdmin()){
+			    $company['name'] = $this->input->post('company_name');
                 $tax_rate = $this->input->post('tax_rate');
                 unset($update_data['tax_rate']);
                 $this->load->model('Settings_model');
@@ -247,21 +249,46 @@ class User extends BaseController {
                 $this->Settings_model->setStripe($update_data['stripe_client_id'],$update_data['stripe_secret_id']);
                 $this->Settings_model->setPaypal($update_data['paypal_client_id'], $update_data['paypal_secret_id']);
             }else if($this->isMasterAdmin()){
-                $company['stripe_client_id'] = $update_data['stripe_client_id'];
-                $company['stripe_secret_id'] = $update_data['stripe_secret_id'];
-                $company['paypal_client_id'] = $update_data['paypal_client_id'];
-                $company['paypal_secret_id'] = $update_data['paypal_secret_id'];
-                $company['onetime_pay'] = $update_data['onetime_pay'];
-                unset($update_data['company_name']);
-                unset($update_data['stripe_client_id']);
-                unset($update_data['stripe_secret_id']);
-                unset($update_data['paypal_client_id']);
-                unset($update_data['paypal_secret_id']);
-                unset($update_data['onetime_pay']);
+                if(!$update_data['user_update']){
+                    $company['stripe_client_id'] = $update_data['stripe_client_id'];
+                    $company['stripe_secret_id'] = $update_data['stripe_secret_id'];
+                    $company['paypal_client_id'] = $update_data['paypal_client_id'];
+                    $company['paypal_secret_id'] = $update_data['paypal_secret_id'];
+                    $company['onetime_pay'] = $update_data['onetime_pay'];
+                    unset($update_data['company_name']);
+                    unset($update_data['stripe_client_id']);
+                    unset($update_data['stripe_secret_id']);
+                    unset($update_data['paypal_client_id']);
+                    unset($update_data['paypal_secret_id']);
+                    unset($update_data['onetime_pay']);
+			        $this->Company_model->update($company, array('id' => $this->session->userdata('company_id')));
+
+                }else{
+                    $temp = $this->Company_model->getRow($this->session->userdata('company_id'));
+
+                    if($update_data['payment_status'] == "1"){
+                        $payment = $this->Payment_model->one(array("object_type"=>"onetime", "user_id"=>$id));
+                        if(!$payment){
+                            $data['user_id'] = $id;
+                            $data['pay_date'] = date("Y-m-d H:s:i");
+                            $data['company_id'] = $temp->id;
+                            $data['payment_method'] = "manual";
+                            $data['object_type'] = "onetime";
+                            $data['title'] = "One Time Payment";
+                            $data['description'] = "One time payment to see all closed course";
+                            $data['discount'] = 0;
+                            $data['price'] = $temp->onetime_pay;
+                            $data['tax_rate'] = 0;
+                            $data['tax_type'] = 0;
+                            $data['amount'] = $temp->onetime_pay;
+                            $this->Payment_model->save($data);
+                        }
+                    }else{
+                        $this->Payment_model->delete(array("object_type"=>"onetime", "user_id"=>$id));
+                    }
+                    unset($update_data['user_update']);
+                }
             }
-            
-			
-			$company['name'] = $this->input->post('company_name');
 			$update_data['sign'] = $this->input->post('sign');			
 			$this->session->set_userdata('country_code', $update_data['country_code']);
 			$this->session->set_userdata('phone', $update_data['phone']);
@@ -269,7 +296,6 @@ class User extends BaseController {
 
 			if($user_profile && isset($update_data[picture])) $this->session->set_userdata('user_photo', base_url() . $update_data[picture]);			
 			$this->session->set_userdata('role', $update_data['role']);
-			$this->Company_model->update($company, array('id' => $this->session->userdata('company_id')));
 			return $this->User_model->update($update_data, array('id' => $id));
 		}
     }
