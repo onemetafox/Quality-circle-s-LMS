@@ -68,13 +68,11 @@ $image = $this->session->userdata('user_photo');
                             <label class="col-sm-2 control-label text-sm-right pt-2"></label>
                             <div class="col-sm-3">                            
                                 <?php if($company_active == 1):?>
-                                <!-- <a href="https://dev.gosmartacademy.com/company/gosmartacademy.com" class="modal-with-form">My Company</a> -->
                                 <a href="<?=base_url()?>company/<?=$company_url?>" class="modal-with-form"><?= $company_name?></a>
 
                                 <?php endif;?>
                                 <?php if($company_active == 0):?>
                                 <label style="color:red"><?php echo $term[contactsuperadmin];?></label>
-                                <!-- <a href="#" class="modal-with-form">My Company</a> -->
                                 <a href="#" class="modal-with-form"><?= $company_name?></a>
                                 <?php endif;?>
                             </div>
@@ -136,6 +134,12 @@ $image = $this->session->userdata('user_photo');
                                         <label class="col-sm-2 control-label text-sm-right pt-2"><?php echo $term['tax_rate']; ?></label>
                                         <div class="col-sm-3">
                                             <input type="text" value="<?= $tax_rate ?>" class="form-control"  id="tax_rate" name="tax_rate" >
+                                        </div>
+                                        <?php } ?>
+                                        <?php if($user->user_type == "Admin"){?> 
+                                        <label class="col-sm-2 control-label text-sm-right pt-2"><?php echo $term['onetimepay']; ?></label>
+                                        <div class="col-sm-3">
+                                            <input type="Number" value="<?= $onetime_pay ?>" class="form-control"  id="onetime_pay" name="onetime_pay" >
                                         </div>
                                         <?php } ?>
                                     </div>

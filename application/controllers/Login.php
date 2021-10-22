@@ -757,6 +757,7 @@ class Login extends BaseController{
             $page_data['paypal_sk'] = $company->paypal_secret_id;
             $page_data['stripe_pk'] = $company->stripe_client_id;
             $page_data['stripe_sk'] = $company->stripe_secret_id;
+            $page_data['onetime_pay']  = $company->onetime_pay;
 
         }else if ($user->user_type == "Superadmin"){
             $this->load->model('Settings_model');

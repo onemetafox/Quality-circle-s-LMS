@@ -98,6 +98,7 @@ class User extends BaseController {
                 $user_data['user_type'] = '';
                 $user_data['active'] = 1;
                 $user_data['company_id'] = '';
+                $user_data['payment_status'] = '0';
 				$user_data['country_list'] = $this->Countries_model->getList();
                
             }
@@ -250,13 +251,16 @@ class User extends BaseController {
                 $company['stripe_secret_id'] = $update_data['stripe_secret_id'];
                 $company['paypal_client_id'] = $update_data['paypal_client_id'];
                 $company['paypal_secret_id'] = $update_data['paypal_secret_id'];
+                $company['onetime_pay'] = $update_data['onetime_pay'];
+                unset($update_data['company_name']);
+                unset($update_data['stripe_client_id']);
+                unset($update_data['stripe_secret_id']);
+                unset($update_data['paypal_client_id']);
+                unset($update_data['paypal_secret_id']);
+                unset($update_data['onetime_pay']);
             }
             
-			unset($update_data['company_name']);
-            unset($update_data['stripe_client_id']);
-            unset($update_data['stripe_secret_id']);
-            unset($update_data['paypal_client_id']);
-            unset($update_data['paypal_secret_id']);
+			
 			$company['name'] = $this->input->post('company_name');
 			$update_data['sign'] = $this->input->post('sign');			
 			$this->session->set_userdata('country_code', $update_data['country_code']);
