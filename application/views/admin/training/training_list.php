@@ -519,8 +519,9 @@
                   <div id="getCourseAlllist">
                      <?php foreach($course_list as $key => $rows){ ?>
                      <tr>
-                        <td width="6%">                                
+                        <td width="12%">                                
                            <a class="btn btn-danger" onclick="deleteIltCourse(<?=$key?>)" href="javascript:void(0);">Delete</a>
+                           <a class="btn btn-success" onclick="deleteIltCourse(<?=$key?>)" href="javascript:void(0);">Republish</a>
                         </td>
                         <td>
                            <a href="javascript:updateCourse(<?=$key?>,<?=$rows['course_id']?>)"><?=$rows['title']?></a>
@@ -588,6 +589,43 @@
          </section>
       </div>
    </div>
+   <div id="republishForm" class="modal-block modal-block-primary mfp-hide" style="max-width: 800px!important">
+		<form id="republish_form" action="" method="POST" novalidate="novalidate">
+		    <input type="hidden" id="sel_id" name="sel_id" class="form-control" >
+		    <section class="card">
+		        <header class="card-header">
+		            <h2 class="card-title"><?=$term[republish]?></h2>
+		        </header>
+		        <div class="card-body">
+					<div class="form-group row">
+						<label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[startday]?></label>
+						<div class="col-sm-6">
+						<input data-plugin-datepicker id="startdays" name="startdays"  class="form-control" data-date-format="yyyy-mm-dd">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[starttime]?></label>
+						<div class="col-sm-6">
+							<select class="form-control" id="starttime" name="starttime" style="width:264px;">
+								<option value="7:00 AM">7:00 AM</option>
+								<option value="8:00 AM">8:00 AM</option>
+								<option value="9:00 AM">9:00 AM</option>
+								<option value="10:00 AM">10:00 AM</option>
+							</select>
+						</div>
+					</div>
+		        </div>
+		        <footer class="card-footer">
+		            <div class="row">
+		                <div class="col-md-12 text-right">
+							<a href="#add_modal" class="btn btn-default add_modal" style="color:#333"><i class="fas fa-plus"></i> <?=$term[republish]?> </a>
+		                    <button class="btn btn-default modal-change-dismiss"><?=$term[cancel]?></button>
+		                </div>
+		            </div>
+		        </footer>
+		    </section>
+		</form>
+	</div>
    <a class="modal-with-form invite_modal" href="#modalForm" hidden>
    </a>
    <div id="modalForm" class="modal-block modal-block-primary mfp-hide" style="max-width: 800px!important">

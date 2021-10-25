@@ -1701,7 +1701,7 @@
                type: 'success'
            });
            $.magnificPopup.close();
-           viewList();
+        //    viewList();
        },
        error: function(){
            $("#sendBtn").trigger('loading-overlay:hide');
@@ -2815,18 +2815,18 @@ function statusFun(elm){
    });
    }
    
-   function viewList() {
-   window.location.href= '<?php echo base_url() ?>admin/coursecreation/edit_course_tab/'+$('#course_id').val()+'/2';
-   }
-   
-   function btn_func(id){
-   $('.cpPage_btn').removeClass('active');
-   $('input').removeClass('active');
-   $('.cptitle_btn').attr('type', 'radio');
-   $('.cpPage_btn').attr('type', 'radio');
-   
-   $('#'+id).addClass('active');
-   }
+    function viewList() {
+        window.location.href= '<?php echo base_url() ?>admin/coursecreation/edit_course_tab/'+$('#course_id').val()+'/2';
+    }
+
+    function btn_func(id){
+        $('.cpPage_btn').removeClass('active');
+        $('input').removeClass('active');
+        $('.cptitle_btn').attr('type', 'radio');
+        $('.cpPage_btn').attr('type', 'radio');
+        
+        $('#'+id).addClass('active');
+    }
    
    function page_updated(){
    formData = "activity=update_chapterpage_detail&course_id="+$('#course_id').val();

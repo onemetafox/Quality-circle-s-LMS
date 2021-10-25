@@ -842,7 +842,7 @@ class Coursecreation extends BaseController{
             
             // Add Course Detail To WooCommerce Store
             $courseData = array('name' => $course_data['title'], 'type' => 'simple', 'regular_price' => $price, 'description' => $course_data['about'], 'short_description' => $course_data['about'], 'categories' => [['id' => 35]], 'images' => [['src' => 'https://shop.gosmartacademy.com/wp-content/uploads/2020/06/course.png']]);
-            $ccResult = $this->woocommerce->post('products', $courseData);
+            // $ccResult = $this->woocommerce->post('products', $courseData);
             $this->response($result);
             // redirect('admin/coursecreation/getList');
         }

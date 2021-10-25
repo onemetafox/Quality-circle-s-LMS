@@ -224,6 +224,7 @@
 		    </section>
 		</form>
 	</div>
+	
     <div id="add_modal" class="modal-block modal-block-primary mfp-hide">
 		<form id="add_modal_form" action="" method="POST" novalidate="novalidate">
 		    <input type="hidden" id="add_course_id" name="course_id" class="form-control" >            
