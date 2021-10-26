@@ -675,7 +675,6 @@ class Coursecreation extends BaseController{
     public function republishCourse(){
         $data = $this->input->post();
         $mainCourse = (array)$this->Course_model->select($data['republish-id']);
-        $mainCourse['pay_price'] = $data['republish-price'];
         $mainCourse['discount'] = $data['republish-discount'];
         $mainCourse['amount'] = $data['republish-amount'];
         $mainCourse['reg_date'] = date("Y-m-d H:s:i");
@@ -702,28 +701,35 @@ class Coursecreation extends BaseController{
             $course_time['date_str'] = strtotime($data['start_day'].' '.$data['start_time']);		
             $course_time['end_time'] = $endTime;
 			$course_time['reg_date'] = date("Y-m-d H:s:i");
+
             unset($course_time['id']);
             $this->Training_model->insert_time($course_time);
 
             $this->response(array("success"=>true, "msg"=>"Course Republished"));
+
         }else if($data['republish-type'] == "1"){
+
             $subCourse = (array)$this->Live_model->one(array("course_id"=>$mainCourse['id']));
+
             unset($mainCourse['id']);
             $course_id = $this->Course_model->insert($mainCourse);
-            $startTime = $this->input->post('starttime');
-            $endTime = getEndTime($startTime);
+
             $subCourse['startday'] = $this->input->post('startdays');
             $subCourse['course_id'] = $course_id;
+
             unset($subCourse["id"]);
             $sub_id = $this->Live_model->insert($subCourse);
+
             $course_time['virtual_course_id'] = $sub_id;
 			$startTime = $this->input->post('starttime');
             $endTime = getEndTime($startTime);
-            $course_time['start_day'] = $this->input->post('startdays');
+            $course_time['start_at'] = $this->input->post('startdays');
             $course_time['start_time'] = $startTime;
             $course_time['end_time'] = $endTime;
 			$course_time['reg_date'] = date("Y-m-d H:s:i");
+
 			$this->Live_model->insert_time($course_time);
+
             $this->response(array("success"=>true, "msg"=>"Course Republished"));
         }
 
