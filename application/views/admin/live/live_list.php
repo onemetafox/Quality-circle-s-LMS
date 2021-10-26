@@ -175,8 +175,9 @@
                             foreach ($course_list as $key => $rows) {
                         ?>
                             <tr>
-                                <td width="6%">                                
+                                <td width="15%">                                
                                 	<a class="btn btn-danger" onclick="deleteLiveClass(<?=$key?>)" href="javascript:void(0);">Delete</a>
+                                    <a href="#republish_modal" class="btn btn-success republish_modal" onclick="republishCourse(<?=$key?>)" href="javascript:void(0);">Republish</a>
                                 </td>
                                 <td>
                                 	<a href="<?= base_url()?>admin/live/editLive/<?=$key?>"><?=$rows['title']?></a>
@@ -243,6 +244,68 @@
     </div>
     <a class="modal-with-form invite_modal" href="#modalForm" hidden>
     </a>
+    <div id="republish_modal" class="modal-block modal-block-primary mfp-hide" style="max-width: 800px!important">
+		<form id="republish_form" action="" method="POST" novalidate="novalidate">
+		    <input type="hidden" id="republish-id" name="republish-id" class="form-control" >
+          <input type="hidden" id="republish-type" name="republish-type" class="form-control" >
+		    <section class="card">
+		        <header class="card-header">
+		            <h2 class="card-title"><?=$term[republish]?></h2>
+		        </header>
+		        <div class="card-body">
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[title]?></label>
+                     <div class="col-sm-6">
+                        <input type="text" class="form-control" readonly id="republish-title">
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[price]?></label>
+                     <div class="col-sm-6">
+                        <input id="republish-price" readonly class="form-control">
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[discount]?></label>
+                     <div class="col-sm-6">
+                        <input id="republish-discount" onchange="changePrice()" name= "republish-discount" class="form-control">
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[amount]?></label>
+                     <div class="col-sm-6">
+                        <input id="republish-amount" name="republish-amount" readonly class="form-control">
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[startday]?></label>
+                     <div class="col-sm-6">
+                     <input data-plugin-datepicker id="startdays" name="startdays"  class="form-control" data-date-format="yyyy-mm-dd">
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[starttime]?></label>
+                     <div class="col-sm-6">
+                        <select class="form-control" id="starttime" name="starttime" style="width:264px;">
+                           <option value="7:00 AM">7:00 AM</option>
+                           <option value="8:00 AM">8:00 AM</option>
+                           <option value="9:00 AM">9:00 AM</option>
+                           <option value="10:00 AM">10:00 AM</option>
+                        </select>
+                     </div>
+                  </div>
+		        </div>
+		        <footer class="card-footer">
+		            <div class="row">
+		                <div class="col-md-12 text-right">
+							<a class="btn btn-default" href="javascript:republish()" style="color:#333"><i class="fas fa-plus"></i> <?=$term[republish]?> </a>
+		                    <button class="btn btn-default modal-change-dismiss"><?=$term[cancel]?></button>
+		                </div>
+		            </div>
+		        </footer>
+		    </section>
+		</form>
+	</div>
     <div id="modalForm" class="modal-block modal-block-primary mfp-hide" style="max-width: 800px!important">
         <form id="modal_form" action="" method="POST" novalidate="novalidate">
             <input type="hidden" id="sel_id" name="sel_id" class="form-control" >
@@ -339,6 +402,65 @@
 </section>
 
 <script>
+    function changePrice(){
+        var price = $("#republish-price").val();
+        var discount = $("#republish-discount").val();
+        var amount = price * (100 - discount) / 100;
+        $("#republish-amount").val(amount);
+    }
+    function republish(){
+      var formData = new FormData($('#republish_form')[0]);
+        $.ajax({
+            url: $('#base_url').val() + 'admin/coursecreation/republishCourse',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data, status, xhr){
+                // $.magnificPopup.close();
+                // new PNotify({
+                //    title: 'Success',
+                //    text: 'Upload',
+                //    type: 'success'
+                // });
+                // document.location.reload();
+            },
+            error: function(){
+                new PNotify({
+                title: '<?php echo $term['error']; ?>',
+                text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
+                type: 'error'
+                });
+                $.magnificPopup.close();
+            }
+        });
+    }
+    function republishCourse(course_id){
+        var url = '<?= base_url()?>admin/coursecreation/getCourse';
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                id:course_id,
+                type : 1
+            },
+            success: function (data, status, xhr){
+                console.log(data);
+                $("#republish-title").val(data.title);
+                $("#republish-price").val(data.pay_price);
+                $("#republish-id").val(data.id);
+                $("#republish-type").val(data.course_type);
+                $("#republishForm").modal('show');
+            },
+            error: function(){
+                new PNotify({
+                title: '<?php echo $term['error']; ?>',
+                text: '<?php echo $term['youcantdeletethisitem']; ?>',
+                type: 'error'
+                });
+            }
+        });
+    }
     var isShowList = false;
     var $user_table = $('#datatable_user');
     function showPayUser() {
@@ -701,13 +823,21 @@
         }
     });
     $('.add_exist_modal').magnificPopup({
-            type: 'inline',
-            preloader: false,
-            callbacks: {
-               beforeOpen: function() {
-               }
+        type: 'inline',
+        preloader: false,
+        callbacks: {
+            beforeOpen: function() {
             }
-      });
+        }
+    });
+    $('.republish_modal').magnificPopup({
+        type: 'inline',
+        preloader: false,
+        callbacks: {
+            beforeOpen: function() {
+            }
+        }
+    });
     var inviteuser_table = $("#datatable_inviteuser");
     var ajaxData = {"id":0,'course_type':1};
     inviteuser_table.dataTable({

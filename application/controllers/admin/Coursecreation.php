@@ -664,7 +664,10 @@ class Coursecreation extends BaseController{
     public function getCourse(){
         $filter = $this->input->post();
         if($filter['type'] == 0){
-            $subCourse = (array)$this->Training_model->select($filter[id]);
+            $subCourse = (array)$this->Training_model->select($filter["id"]);
+            $mainCourse = $this->Course_model->select($subCourse['course_id']);
+        }else if($filter['type'] == 1){
+            $subCourse = (array)$this->Live_model->select($filter["id"]);
             $mainCourse = $this->Course_model->select($subCourse['course_id']);
         }
         $this->response($mainCourse);
@@ -677,37 +680,51 @@ class Coursecreation extends BaseController{
         $mainCourse['amount'] = $data['republish-amount'];
         $mainCourse['reg_date'] = date("Y-m-d H:s:i");
         if($data['republish-type'] == "0"){
+
             $subCourse = (array)$this->Training_model->one(array("course_id"=>$mainCourse['id']));
+
             unset($mainCourse['id']);
             $course_id = $this->Course_model->save($mainCourse);
+
+            $subCourse['course_id'] = $course_id;
+
+            $course_time_model = new AbstractModel("training_course_time");
+            $course_time = (array)$course_time_model->one(array("training_course_id"=>$subCourse["id"]));
+
+            unset($subCourse["id"]);
+            $sub_id = $this->Training_model->insert($subCourse);
+
+            $course_time['training_course_id'] = $sub_id;
             $startTime = $this->input->post('starttime');
             $endTime = getEndTime($startTime);
-            $subCourse['start_day'] = $this->input->post('startdays');
-            $subCourse['start_time'] = $startTime;
-            $subCourse['date_str'] = strtotime($data['start_day'].' '.$data['start_time']);		
-            $subCourse['end_time'] = $endTime;
+            $course_time['start_day'] = $this->input->post('startdays');
+            $course_time['start_time'] = $startTime;
+            $course_time['date_str'] = strtotime($data['start_day'].' '.$data['start_time']);		
+            $course_time['end_time'] = $endTime;
+			$course_time['reg_date'] = date("Y-m-d H:s:i");
+            unset($course_time['id']);
+            $this->Training_model->insert_time($course_time);
+
+            $this->response(array("success"=>true, "msg"=>"Course Republished"));
+        }else if($data['republish-type'] == "1"){
+            $subCourse = (array)$this->Live_model->one(array("course_id"=>$mainCourse['id']));
+            unset($mainCourse['id']);
+            $course_id = $this->Course_model->insert($mainCourse);
+            $startTime = $this->input->post('starttime');
+            $endTime = getEndTime($startTime);
+            $subCourse['startday'] = $this->input->post('startdays');
             $subCourse['course_id'] = $course_id;
             unset($subCourse["id"]);
-            $sub = $this->Training_model->save($subCourse);
-            
-            $course_time['training_course_id'] = $sub['id'];
-			$course_time['country_id'] = $subCourse['country'];
-			$course_time['state_id'] = $subCourse['state'];
-			$course_time['city_id'] = $subCourse['city'];
-			// $course_time['start_day'] = date('Y-m-d',$timestamp);
-            $course_time['start_day'] = $subCourse['startday'];
-			// $course_time['start_time'] = date('H:m A',$timestamp);
-			// $course_time['date_str'] = strtotime($course_time['start_day'].' '.$course_time['start_time']);
-            $timestamp = time();
-			$course_time['year'] = date('Y',$timestamp);
-			$course_time['month'] = date('m',$timestamp);
-			$course_time['sday'] = date('d',$timestamp);
-			$course_time['location'] = $mainCourse['location'];
-		
-            $this->Training_model->insert_time($course_time);
+            $sub_id = $this->Live_model->insert($subCourse);
+            $course_time['virtual_course_id'] = $sub_id;
+			$startTime = $this->input->post('starttime');
+            $endTime = getEndTime($startTime);
+            $course_time['start_day'] = $this->input->post('startdays');
+            $course_time['start_time'] = $startTime;
+            $course_time['end_time'] = $endTime;
+			$course_time['reg_date'] = date("Y-m-d H:s:i");
+			$this->Live_model->insert_time($course_time);
             $this->response(array("success"=>true, "msg"=>"Course Republished"));
-        }else{
-
         }
 
     }

@@ -6,7 +6,7 @@
  * Time: 6:24 PM
  */
 
-class Live_model extends CI_Model
+class Live_model extends AbstractModel
 {
     /**
      * This function used to manage categories
@@ -17,7 +17,7 @@ class Live_model extends CI_Model
     protected $user_table;
     protected $table;
 
-    var $_table = 'training_course';
+    var $_table = 'virtual_course';
 
     function __construct()
     {
