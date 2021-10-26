@@ -669,6 +669,8 @@ class Coursecreation extends BaseController{
         }else if($filter['type'] == 1){
             $subCourse = (array)$this->Live_model->select($filter["id"]);
             $mainCourse = $this->Course_model->select($subCourse['course_id']);
+        }else{
+            $mainCourse = $this->Course_model->select($filter["id"]);
         }
         $this->response($mainCourse);
     }
@@ -729,6 +731,13 @@ class Coursecreation extends BaseController{
 			$course_time['reg_date'] = date("Y-m-d H:s:i");
 
 			$this->Live_model->insert_time($course_time);
+
+            $this->response(array("success"=>true, "msg"=>"Course Republished"));
+        }else{
+            $mainCourse['start_at'] = $this->input->post("startdays");
+            $mainCourse['end_at'] = $this->input->post("enddays");
+            unset($mainCourse['id']);
+            $this->Course_model->insert($mainCourse);
 
             $this->response(array("success"=>true, "msg"=>"Course Republished"));
         }

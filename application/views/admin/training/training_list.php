@@ -709,13 +709,13 @@
          processData: false,
          contentType: false,
          success: function (data, status, xhr){
-            // $.magnificPopup.close();
-            // new PNotify({
-            //    title: 'Success',
-            //    text: 'Upload',
-            //    type: 'success'
-            // });
-            // document.location.reload();
+            $.magnificPopup.close();
+            new PNotify({
+               title: 'Success',
+               text: 'Upload',
+               type: 'success'
+            });
+            document.location.reload();
          },
          error: function(){
             new PNotify({
