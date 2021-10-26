@@ -1263,9 +1263,6 @@
    
     $w4finish.on('click', function (ev) {
         ev.preventDefault();
-        // var price = $("#payy_pricee").val();
-        // $("#form_course").attr("action", "<?=base_url()?>admin/coursecreation/save_course_profile?price="+price);
-        // $("#form_course").submit();
         var formData = new FormData($('#form_course')[0]);
         var price = $("#payy_pricee").val();
         $.ajax({
@@ -1288,7 +1285,7 @@
                         type: 'success'
                     });
                 }
-                window.location.href= '<?php echo base_url() ?>admin/coursecreation/getList';
+                // window.location.href= '<?php echo base_url() ?>admin/coursecreation/getList';
                
            },
            error: function(){

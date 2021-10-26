@@ -24,6 +24,7 @@ class Coursecreation extends BaseController{
 		$this->load->model('Live_model');		
 		$this->load->model('Training_model');
         $this->load->model('Company_model');
+        $this->load->helper('common_helper');
         $this->isLoggedIn();
         $this->load->library('Sidebar');
         $side_params = array('selected_menu_id' => '13');
@@ -660,7 +661,56 @@ class Coursecreation extends BaseController{
         }
         $this->response($row_id);
     }
-    
+    public function getCourse(){
+        $filter = $this->input->post();
+        if($filter['type'] == 0){
+            $subCourse = (array)$this->Training_model->select($filter[id]);
+            $mainCourse = $this->Course_model->select($subCourse['course_id']);
+        }
+        $this->response($mainCourse);
+    }
+    public function republishCourse(){
+        $data = $this->input->post();
+        $mainCourse = (array)$this->Course_model->select($data['republish-id']);
+        $mainCourse['pay_price'] = $data['republish-price'];
+        $mainCourse['discount'] = $data['republish-discount'];
+        $mainCourse['amount'] = $data['republish-amount'];
+        $mainCourse['reg_date'] = date("Y-m-d H:s:i");
+        if($data['republish-type'] == "0"){
+            $subCourse = (array)$this->Training_model->one(array("course_id"=>$mainCourse['id']));
+            unset($mainCourse['id']);
+            $course_id = $this->Course_model->save($mainCourse);
+            $startTime = $this->input->post('starttime');
+            $endTime = getEndTime($startTime);
+            $subCourse['start_day'] = $this->input->post('startdays');
+            $subCourse['start_time'] = $startTime;
+            $subCourse['date_str'] = strtotime($data['start_day'].' '.$data['start_time']);		
+            $subCourse['end_time'] = $endTime;
+            $subCourse['course_id'] = $course_id;
+            unset($subCourse["id"]);
+            $sub = $this->Training_model->save($subCourse);
+            
+            $course_time['training_course_id'] = $sub['id'];
+			$course_time['country_id'] = $subCourse['country'];
+			$course_time['state_id'] = $subCourse['state'];
+			$course_time['city_id'] = $subCourse['city'];
+			// $course_time['start_day'] = date('Y-m-d',$timestamp);
+            $course_time['start_day'] = $subCourse['startday'];
+			// $course_time['start_time'] = date('H:m A',$timestamp);
+			// $course_time['date_str'] = strtotime($course_time['start_day'].' '.$course_time['start_time']);
+            $timestamp = time();
+			$course_time['year'] = date('Y',$timestamp);
+			$course_time['month'] = date('m',$timestamp);
+			$course_time['sday'] = date('d',$timestamp);
+			$course_time['location'] = $mainCourse['location'];
+		
+            $this->Training_model->insert_time($course_time);
+            $this->response(array("success"=>true, "msg"=>"Course Republished"));
+        }else{
+
+        }
+
+    }
     public function save_course_profile(){
 		$countryName = $this->Location_model->getCountryNameById($this->input->post('country'));
 		$stateName = $this->Location_model->getStateNameById($this->input->post('state'));
@@ -991,13 +1041,16 @@ class Coursecreation extends BaseController{
 				$course_data['state'] = '';
 				$course_data['city'] = '';
 			}		
+            
 			$row_id = $this->Live_model->insert_course($course_data);
 			$course_time['virtual_course_id'] = $row_id;
 			// $course_time['start_at'] = $start_at;
             $course_time['start_at'] = $liveCourse['startday'];
 			$course_time['reg_date'] = $start_at;
 			$this->Live_model->insert_time($course_time);
-		}
+		}else{
+            print_r("This is the update function");
+        }
 	}
     
     public function edit_course_tab($row_id = 0, $tab_id = 1){

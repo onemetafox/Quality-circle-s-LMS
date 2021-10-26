@@ -348,14 +348,6 @@
                             <div class="form-group row">
                             	<label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[starttime]?></label>
                                 <div class="col-sm-6">
-                                    <!-- <div class="input-group">
-                                    <span class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="far fa-clock"></i>
-                                        </span>
-                                    </span>
-                                    <input type="text" id="starttime" name="starttime" data-plugin-timepicker class="form-control" data-plugin-options="{ &quot;showMeridian&quot;: true }">
-                                    </div> -->
                                     <select class="form-control" id="starttime" name="starttime" style="width:264px;">
                                        <option value="7:00 AM">7:00 AM</option>
                                        <option value="8:00 AM">8:00 AM</option>
@@ -368,45 +360,6 @@
                               <input class="hidden" name="month" id="change_month">
                               <input class="hidden" name="change_day" id="change_day">      
                               <input class="hidden" name = "year" id="change_year">
-                              <?php /*?>
-                              <div class="form-group row">
-                                 <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[month]?></label>
-                                 <div class="col-sm-6">
-                                    <select class="form-control mb3" id="change_month" name="change_month" >
-                                       <option value='1'>Jan</option>
-                                       <option value='2'>Feb</option>
-                                       <option value='3'>Mar</option>
-                                       <option value='4'>Apr</option>
-                                       <option value='5'>May</option>
-                                       <option value='6'>Jun</option>
-                                       <option value='7'>Jul</option>
-                                       <option value='8'>Aug</option>
-                                       <option value='9'>Sep</option>
-                                       <option value='10'>Oct</option>
-                                       <option value='11'>Nov</option>
-                                       <option value='12'>Dec</option>
-                                    </select>
-                                 </div>
-                              </div>
-                              <div class="form-group row">
-                                 <label class="col-sm-3 control-label text-lg-right pt-2">Start Day</label>
-                                 <div class="col-sm-6">
-                                    <div data-plugin-spinner="" data-plugin-options="{ &quot;value&quot;:1, &quot;min&quot;: 1, &quot;max&quot;: 30 }">
-                                       <div class="input-group" style="width:150px;">
-                                          <input type="text" id="change_day" name="change_day" class="spinner-input form-control" maxlength="2" >
-                                          <div class="input-group-append">
-                                             <button type="button" class="btn btn-default spinner-up">
-                                             <i class="fas fa-angle-up"></i>
-                                             </button>
-                                             <button type="button" class="btn btn-default spinner-down">
-                                             <i class="fas fa-angle-down"></i>
-                                             </button>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <?php */?>
                               <div class="form-group row">
                                  <div class="col-sm-1"></div>
                                  <div class="col-sm-10">
@@ -519,9 +472,9 @@
                   <div id="getCourseAlllist">
                      <?php foreach($course_list as $key => $rows){ ?>
                      <tr>
-                        <td width="12%">                                
+                        <td width="15%">                                
                            <a class="btn btn-danger" onclick="deleteIltCourse(<?=$key?>)" href="javascript:void(0);">Delete</a>
-                           <a class="btn btn-success" onclick="deleteIltCourse(<?=$key?>)" href="javascript:void(0);">Republish</a>
+                           <a href="#republish_modal" class="btn btn-success republish_modal" onclick="republishCourse(<?=$key?>)" href="javascript:void(0);">Republish</a>
                         </td>
                         <td>
                            <a href="javascript:updateCourse(<?=$key?>,<?=$rows['course_id']?>)"><?=$rows['title']?></a>
@@ -589,36 +542,61 @@
          </section>
       </div>
    </div>
-   <div id="republishForm" class="modal-block modal-block-primary mfp-hide" style="max-width: 800px!important">
+   <div id="republish_modal" class="modal-block modal-block-primary mfp-hide" style="max-width: 800px!important">
 		<form id="republish_form" action="" method="POST" novalidate="novalidate">
-		    <input type="hidden" id="sel_id" name="sel_id" class="form-control" >
+		    <input type="hidden" id="republish-id" name="republish-id" class="form-control" >
+          <input type="hidden" id="republish-type" name="republish-type" class="form-control" >
 		    <section class="card">
 		        <header class="card-header">
 		            <h2 class="card-title"><?=$term[republish]?></h2>
 		        </header>
 		        <div class="card-body">
-					<div class="form-group row">
-						<label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[startday]?></label>
-						<div class="col-sm-6">
-						<input data-plugin-datepicker id="startdays" name="startdays"  class="form-control" data-date-format="yyyy-mm-dd">
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[starttime]?></label>
-						<div class="col-sm-6">
-							<select class="form-control" id="starttime" name="starttime" style="width:264px;">
-								<option value="7:00 AM">7:00 AM</option>
-								<option value="8:00 AM">8:00 AM</option>
-								<option value="9:00 AM">9:00 AM</option>
-								<option value="10:00 AM">10:00 AM</option>
-							</select>
-						</div>
-					</div>
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[title]?></label>
+                     <div class="col-sm-6">
+                        <input type="text" class="form-control" readonly id="republish-title">
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[price]?></label>
+                     <div class="col-sm-6">
+                        <input id="republish-price" readonly class="form-control">
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[discount]?></label>
+                     <div class="col-sm-6">
+                        <input id="republish-discount" onchange="changePrice()" name= "republish-discount" class="form-control">
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[amount]?></label>
+                     <div class="col-sm-6">
+                        <input id="republish-amount" name="republish-amount" readonly class="form-control">
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[startday]?></label>
+                     <div class="col-sm-6">
+                     <input data-plugin-datepicker id="startdays" name="startdays"  class="form-control" data-date-format="yyyy-mm-dd">
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[starttime]?></label>
+                     <div class="col-sm-6">
+                        <select class="form-control" id="starttime" name="starttime" style="width:264px;">
+                           <option value="7:00 AM">7:00 AM</option>
+                           <option value="8:00 AM">8:00 AM</option>
+                           <option value="9:00 AM">9:00 AM</option>
+                           <option value="10:00 AM">10:00 AM</option>
+                        </select>
+                     </div>
+                  </div>
 		        </div>
 		        <footer class="card-footer">
 		            <div class="row">
 		                <div class="col-md-12 text-right">
-							<a href="#add_modal" class="btn btn-default add_modal" style="color:#333"><i class="fas fa-plus"></i> <?=$term[republish]?> </a>
+							<a class="btn btn-default" href="javascript:republish()" style="color:#333"><i class="fas fa-plus"></i> <?=$term[republish]?> </a>
 		                    <button class="btn btn-default modal-change-dismiss"><?=$term[cancel]?></button>
 		                </div>
 		            </div>
@@ -722,6 +700,39 @@
    <!-- end: page -->
 </section>
 <script>
+   function republish(){
+      var formData = new FormData($('#republish_form')[0]);
+      $.ajax({
+         url: $('#base_url').val() + 'admin/coursecreation/republishCourse',
+         type: 'POST',
+         data: formData,
+         processData: false,
+         contentType: false,
+         success: function (data, status, xhr){
+            // $.magnificPopup.close();
+            // new PNotify({
+            //    title: 'Success',
+            //    text: 'Upload',
+            //    type: 'success'
+            // });
+            // document.location.reload();
+         },
+         error: function(){
+            new PNotify({
+               title: '<?php echo $term['error']; ?>',
+               text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
+               type: 'error'
+            });
+            $.magnificPopup.close();
+         }
+      });
+   }
+   function changePrice(){
+      var price = $("#republish-price").val();
+      var discount = $("#republish-discount").val();
+      var amount = price * (100 - discount) / 100;
+      $("#republish-amount").val(amount);
+   }
    function getCategoryTitle(){
 		$('#number').val($( "#category option:selected" ).text());
    }
@@ -732,6 +743,33 @@
    
    function deletehighlight(delid){
 		$('#deletebtn_'+delid).remove();
+   }
+
+   function republishCourse(course_id){
+      var url = '<?= base_url()?>admin/coursecreation/getCourse';
+      $.ajax({
+         url: url,
+         type: 'POST',
+         data: {
+            id:course_id,
+            type : 0
+         },
+         success: function (data, status, xhr){
+            console.log(data);
+            $("#republish-title").val(data.title);
+            $("#republish-price").val(data.pay_price);
+            $("#republish-id").val(data.id);
+            $("#republish-type").val(data.course_type);
+            $("#republishForm").modal('show');
+         },
+         error: function(){
+            new PNotify({
+               title: '<?php echo $term['error']; ?>',
+               text: '<?php echo $term['youcantdeletethisitem']; ?>',
+               type: 'error'
+            });
+         }
+      });
    }
    
    function deleteIltCourse(deleteId){
@@ -1496,6 +1534,14 @@
             }
       });
       $('.add_exist_modal').magnificPopup({
+            type: 'inline',
+            preloader: false,
+            callbacks: {
+               beforeOpen: function() {
+               }
+            }
+      });
+      $('.republish_modal').magnificPopup({
             type: 'inline',
             preloader: false,
             callbacks: {
