@@ -282,7 +282,7 @@ class User extends BaseController {
             $update_data['password'] = md5($this->input->post('password'));
         }
         $this->User_model->update($update_data, array('id' => $id));
-        $company = $this->Company_model->getRow($insert_data['company_id']);
+        $company = $this->Company_model->getRow($update_data['company_id']);
         if (isset($plan_id) || $plan_id != 0) {
             $payment['user_id'] = $id;
             $payment['pay_date'] = date("Y-m-d H:s:i");
