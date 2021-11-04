@@ -142,7 +142,7 @@ class Inviteuser extends BaseController{
 				if($data['course_type'] == 1){
 					$time_id = $data['virtual_course_time_id'];	
 					$limit = $this->Inviteuser_model->getLimitation($data['company_id'], 1);
-					if($limit >= $plan->vilt_user_limit){
+					if($limit >= $plan->user_limit){
 						$result = array("success"=> false, "msg"=>"Full maximum VILT user");
 						$this->response($result);
 					}
@@ -150,7 +150,7 @@ class Inviteuser extends BaseController{
 				}else{
 					$time_id = $data['ilt_course_time_id'];	
 					$limit = $this->Inviteuser_model->getLimitation($data['company_id'], 0);
-					if($limit >= $plan->ilt_user_limit){
+					if($limit >= $plan->user_limit){
 						$result = array("success"=> false, "msg"=>"Full maximum ILT user");
 						$this->response($result);
 					}
@@ -275,7 +275,7 @@ class Inviteuser extends BaseController{
 				if($data['course_type'] == 1){
 					$time_id = $data['virtual_course_time_id'];	
 					$limit = $this->Inviteuser_model->getLimitation($data['company_id'], 1);
-					if($limit >= $plan->vilt_user_limit){
+					if($limit >= $plan->user_limit){
 						$result = array("success"=> false, "msg"=>"Full maximum VILT user");
 						$this->response($result);
 					}
@@ -283,7 +283,7 @@ class Inviteuser extends BaseController{
 				}else{
 					$time_id = $data['ilt_course_time_id'];	
 					$limit = $this->Inviteuser_model->getLimitation($data['company_id'], 0);
-					if($limit >= $plan->ilt_user_limit){
+					if($limit >= $plan->user_limit){
 						$result = array("success"=> false, "msg"=>"Full maximum ILT user");
 						$this->response($result);
 					}
