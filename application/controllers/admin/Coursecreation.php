@@ -5,9 +5,9 @@ require APPPATH . '/libraries/BaseController.php';
 // require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
 // include_once (APPPATH . '/third_party/iio/index.php');
 // require APPPATH . '/libraries/FPDI/fpdi.php';
-require APPPATH . 'third_party/woocommerce/autoload.php';
-use Automattic\WooCommerce\Client;
-use Automattic\WooCommerce\HttpClient\HttpClientException;
+// require APPPATH . 'third_party/woocommerce/autoload.php';
+// use Automattic\WooCommerce\Client;
+// use Automattic\WooCommerce\HttpClient\HttpClientException;
 
 class Coursecreation extends BaseController{
     public function __construct(){
@@ -1081,7 +1081,8 @@ class Coursecreation extends BaseController{
 			$course_time['reg_date'] = $start_at;
 			$this->Live_model->insert_time($course_time);
 		}else{
-            print_r("This is the update function");
+            // print_r($liveDetail);
+            print_r($liveCourse);
         }
 	}
     
