@@ -4,8 +4,8 @@
 
 require APPPATH . '/libraries/BaseController.php';
 require APPPATH . 'third_party/woocommerce/autoload.php';
-use Automattic\WooCommerce\Client;
-use Automattic\WooCommerce\HttpClient\HttpClientException;
+// use Automattic\WooCommerce\Client;
+// use Automattic\WooCommerce\HttpClient\HttpClientException;
 /**
  * Class : Category (CategoryController)
  * Category Class to control all category related operations.
@@ -22,7 +22,7 @@ class Article extends BaseController {
         $this->load->model('Article_model');
         $this->load->model('Standard_model');
         $this->isLoggedIn();
-        $this->woocommerce = new Client('https://shop.gosmartacademy.com/', 'ck_b6411a22ed11f224a13d68bc2bb642a4227b69c3', 'cs_ae6ff61f63bed83c2d2e1880b1634449f30a2c04', ['version' => 'wc/v3', ]);
+        // $this->woocommerce = new Client('https://shop.gosmartacademy.com/', 'ck_b6411a22ed11f224a13d68bc2bb642a4227b69c3', 'cs_ae6ff61f63bed83c2d2e1880b1634449f30a2c04', ['version' => 'wc/v3', ]);
     }
     public function index(){
         $this->viewList();

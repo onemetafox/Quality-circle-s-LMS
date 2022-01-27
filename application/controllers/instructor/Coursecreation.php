@@ -5,9 +5,9 @@ require APPPATH . '/third_party/PHPExcel.php';
 require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
 include_once (APPPATH . '/third_party/iio/index.php');
 require APPPATH . '/libraries/FPDI/fpdi.php';
-require APPPATH . 'third_party/woocommerce/autoload.php';
-use Automattic\WooCommerce\Client;
-use Automattic\WooCommerce\HttpClient\HttpClientException;
+// require APPPATH . 'third_party/woocommerce/autoload.php';
+// use Automattic\WooCommerce\Client;
+// use Automattic\WooCommerce\HttpClient\HttpClientException;
 
 class Coursecreation extends BaseController{
     public function __construct(){
@@ -29,12 +29,12 @@ class Coursecreation extends BaseController{
         $this->global['sidebar'] = $this->sidebar->generate($side_params, $this->role);
         $this->load->library('pdf');
 
-        $this->woocommerce = new Client(
-            'https://shop.gosmartacademy.com/', 
-            'ck_b6411a22ed11f224a13d68bc2bb642a4227b69c3', 
-            'cs_ae6ff61f63bed83c2d2e1880b1634449f30a2c04',
-            ['version' => 'wc/v3', ]
-        );
+        // $this->woocommerce = new Client(
+        //     'https://shop.gosmartacademy.com/', 
+        //     'ck_b6411a22ed11f224a13d68bc2bb642a4227b69c3', 
+        //     'cs_ae6ff61f63bed83c2d2e1880b1634449f30a2c04',
+        //     ['version' => 'wc/v3', ]
+        // );
     }
     
     public function index(){
@@ -788,8 +788,8 @@ class Coursecreation extends BaseController{
 			$this->addIltCourse($course_data);
 		}
         // Add Course Detail To WooCommerce Store
-        $courseData = array('name' => $course_data['title'], 'type' => 'simple', 'regular_price' => $price, 'description' => $course_data['about'], 'short_description' => $course_data['about'], 'categories' => [['id' => 35]], 'images' => [['src' => 'https://shop.gosmartacademy.com/wp-content/uploads/2020/06/course.png']]);
-        $ccResult = $this->woocommerce->post('products', $courseData);
+        // $courseData = array('name' => $course_data['title'], 'type' => 'simple', 'regular_price' => $price, 'description' => $course_data['about'], 'short_description' => $course_data['about'], 'categories' => [['id' => 35]], 'images' => [['src' => 'https://shop.gosmartacademy.com/wp-content/uploads/2020/06/course.png']]);
+        // $ccResult = $this->woocommerce->post('products', $courseData);
         redirect('instructor/coursecreation/getList');
     }
 	

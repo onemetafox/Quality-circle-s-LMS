@@ -1,8 +1,8 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 require APPPATH . '/libraries/BaseController.php';
-require APPPATH . 'third_party/woocommerce/autoload.php';
-use Automattic\WooCommerce\Client;
-use Automattic\WooCommerce\HttpClient\HttpClientException;
+// require APPPATH . 'third_party/woocommerce/autoload.php';
+// use Automattic\WooCommerce\Client;
+// use Automattic\WooCommerce\HttpClient\HttpClientException;
 /**
  * Class : Category (CategoryController)
  * Category Class to control all category related operations.
@@ -21,7 +21,7 @@ class Category extends BaseController{
 		$this->load->model('Location_model');
 				
         $this->isLoggedIn();
-        $this->woocommerce = new Client('https://shop.gosmartacademy.com/', 'ck_b6411a22ed11f224a13d68bc2bb642a4227b69c3', 'cs_ae6ff61f63bed83c2d2e1880b1634449f30a2c04', ['version' => 'wc/v3', ]);
+        // $this->woocommerce = new Client('https://shop.gosmartacademy.com/', 'ck_b6411a22ed11f224a13d68bc2bb642a4227b69c3', 'cs_ae6ff61f63bed83c2d2e1880b1634449f30a2c04', ['version' => 'wc/v3', ]);
     }
 
     public function index(){
