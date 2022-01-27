@@ -3,7 +3,7 @@
 }
 
 require APPPATH . '/libraries/BaseController.php';
-require APPPATH . 'third_party/woocommerce/autoload.php';
+// require APPPATH . 'third_party/woocommerce/autoload.php';
 // use Automattic\WooCommerce\Client;
 // use Automattic\WooCommerce\HttpClient\HttpClientException;
 /**

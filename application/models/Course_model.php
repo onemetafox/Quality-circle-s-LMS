@@ -107,7 +107,7 @@ class Course_model extends AbstractModel
         LEFT JOIN `user` b ON a.email = b.email
         LEFT JOIN course c ON a.course_id = c.id
         LEFT JOIN enrollments f ON f.user_id = b.id AND f.course_id = c.id
-        WHERE a.email = '".$user['email']."' AND b.payment_statue = '1' AND a.course_type = 2 AND pay_type = 0 AND c.create_id = '".$user['company_id']."'";
+        WHERE a.email = '".$user['email']."' AND b.payment_status = '1' AND a.course_type = 2 AND pay_type = 0 AND c.create_id = '".$user['company_id']."'";
         if($filter['category']){
             $query = $query . " And c.category_id = '".$filter['category']."'";
         }
@@ -273,6 +273,7 @@ class Course_model extends AbstractModel
 		//$this->db->where ("(reg_date >= now())");
         $this->db->select("*,DATE_FORMAT(reg_date,'%b %d,%Y') as freg_date");
         $result = $this->db->get($this->table)->result_array();
+       
         //while (list($key, $val) = each($result)) {
         foreach($result as $key => $val) {
             $result[$key]['enrolls'] = count(json_decode($val['enroll_users']));
