@@ -22,45 +22,13 @@ class Trainingcourse_model extends CI_Model
     }
 
     function getRecent($count = null,$company_id = null){
-         if(!isset($count)){
-             $count = 3;
-         }
-        // if(isset($company_id)){
-        //     $this->db->where('create_id',$company_id);
-        // }
-        // $this->db->order_by('reg_date','desc');
-        // $this->db->limit($count,0);
-        // $this->db->select("*,DATE_FORMAT(reg_date,'%b %d,%Y') as freg_date");
-        // $result = $this->db->get($this->table)->result_array();
-
-        $this->db->select("*,DATE_FORMAT(reg_date,'%b %d,%Y') as freg_date");
-        $training_course = $this->db->get($this->table)->result_array();
-        
-        $this->db->select('b.*,a.year,a.month,a.sday,a.id as training_course_time_id, a.training_course_id');
-        $this->db->join($this->table.' b' ,'b.id = a.training_course_id','left');
-        $this->db->where('a.year >=',date("Y"));
-        $this->db->where('a.month >',date("m"));
-        $this->db->or_group_start();
-        $this->db->where('a.year >=',date("Y"));
-        $this->db->where('a.month',date("m"));
-        $this->db->where('a.sday >=',date("d"));
-        $this->db->group_end();
-        $this->db->order_by('a.`date_str`', 'desc');
-        $training_course_time = $this->db->get('training_course_time a')->result_array();
-        $result = array();
-        foreach ($training_course_time as $key1 => $value1) {
-            foreach ($training_course as $key2 => $value2) {
-                if($value1['training_course_id'] == $value2['id']){
-                    array_push($result, $value1);
-                    array_splice($training_course,$key2,1);
-                }
-            }
-        }
-       
-        if(count($result)>$count){			
-            array_splice($result,$count,count($result));
-        }
-        
+        $this->db->select("*");
+        $this->db->join("training_course", "training_course.course_id = course.id", "LEFT");
+        $this->db->join("training_course_time", "training_course.id = training_course_time.training_course_id", "LEFT");
+        $this->db->where("course.course_type ","0");
+        $this->db->where("training_course_time.start_day >", date('Y-m-d'));
+        $this->db->limit('3');
+        $result = $this->db->get("course")->result_array();
 		foreach($result as $key => $val) {
 			##############################get course####################
 			

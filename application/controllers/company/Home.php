@@ -35,21 +35,6 @@ class Home extends BaseController
         $toReturn['company'] = $result;
         $toReturn['demandCourses'] = $this->Course_model->getRecent(3,$result['id']);
         $toReturn['trainCourses'] = $this->Trainingcourse_model->getRecent(3,$result['id']);
-        for ($i = 0 ; $i < sizeof($toReturn['trainCourses']) ; $i++){
-            $item = $toReturn['trainCourses'][$i];
-            $course_item = $this->Course_model->getCourseById($item['course_id']);
-           
-            $item['img_path'] = $course_item['img_path'];
-            $course_time = $this->Training_model->get_course_time_id($item['id']);
-            
-            $item['course_time_id'] = $course_time->id; 
-			$item['date_str'] = $course_time->date_str; 
-			$item['start_day'] = $course_time->start_day; 
-			$item['start_time'] = $course_time->start_time; 
-            $item['end_time'] = $course_time->end_time; 
-            $toReturn['trainCourses'][$i] = $item;
-        }
-        
         $toReturn['virtualCourses'] = $this->Virtualcourse_model->getRecent(3,$result['id']);
         $this->loadViews_front('company_page/companyhome', $toReturn);
     }

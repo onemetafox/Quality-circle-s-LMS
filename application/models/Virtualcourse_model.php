@@ -199,31 +199,13 @@ class Virtualcourse_model extends AbstractModel
         return $result;
     }
     function getRecent($count = null,$company_id = null){
-        // if(!isset($count)){
-        //     $count = 3;
-        // }
-        // if(isset($company_id)){
-        //     $this->db->where('create_id',$company_id);
-        // }
-        // $this->db->order_by('reg_date','desc');
-        // $this->db->limit(3,0);
-        $this->db->select("*,DATE_FORMAT(reg_date,'%b %d,%Y') as freg_date");
-        $virtual_course = $this->db->get($this->table)->result_array();
-        $this->db->select('b.*, a.start_at, a.start_time, a.end_time, a.id as virtual_course_time_id, a.virtual_course_id');
-        $this->db->join($this->table.' b' ,'b.id = a.virtual_course_id','left');
-        $this->db->where('a.start_at >=',date('Y-m-d'));
-        $this->db->order_by('a.start_at','asc');
-        $virtual_course_time = $this->db->get('virtual_course_time a')->result_array();
-        $result = array();
-        foreach ($virtual_course_time as $key1 => $value1) {
-            foreach($virtual_course as $key2 => $value2) {
-                if($value1['virtual_course_id'] == $value2['id']){
-                    array_push($result, $value1);
-                    //array_splice($virtual_course,$key2,1);
-                }
-
-            }
-        }
+        $this->db->select("*");
+        $this->db->join("virtual_course", "virtual_course.course_id = course.id", "LEFT");
+        $this->db->join("virtual_course_time", "virtual_course.id = virtual_course_time.virtual_course_id", "LEFT");
+        $this->db->where("course.course_type ","1");
+        $this->db->where("virtual_course_time.start_at >= '". date('Y-m-d') . "'" );
+        $this->db->limit('3');
+        $result = $this->db->get("course")->result_array();
         /*if(count($result)>$count){
             array_splice($result,$count,count($result));
         }*/

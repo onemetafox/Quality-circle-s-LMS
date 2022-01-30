@@ -48,13 +48,16 @@
                             <?php $start_date = date("M d, Y", strtotime($course['start_at'])); ?>
                             <li> Start Date: <?php echo $start_date; ?></li>
              				<li> End Date: <?php echo date("M d, Y", strtotime($course['end_at']));?></li>
+							<li> Price: $<?= $course['pay_price']?></li>
+							<li> Discount: <?= $course['discount']?>%</li>
+							<li> Cost: $<?= $course['amount']?></li>
 						</ul>
 					</div><!--courseInfo-->
 					<div class="coursePrice">
 						<div class="row">
 							<div class="col-sm-6 col-xs-6">
 								<span class="price" style="font-size: 22px;">
-								<?php echo $course['pay_type'] == 0 ? 'Onsite Training' : '$'.number_format($course['pay_price'],2); ?>
+								<?php echo $course['pay_type'] == 0 ? 'Onsite Training' : '$'.number_format($course['amount'],2); ?>
 								</span>
 							</div>
 							<div class="col-sm-6 col-xs-6">
@@ -126,7 +129,7 @@
                         </div> <!--courseImg-->
 
                         <div class="courseInfo">
-                            <h5 style="border-bottom: 1px #ececec solid;padding-bottom: 15px;"><?php echo ucfirst($course['title'])?></h5>                    
+                            <h5 style="padding-bottom: 15px;"><?php echo ucfirst($course['title'])?></h5>                    
                             <ul class="courseUl">
                             	<li style="height:25px"><a href="#"><?php echo $course['first_instructor']['email']?></a></li>
                                 <li>                            
@@ -141,14 +144,43 @@
                                 <li>Duration: <?php echo $showDuration; ?> </li>
                                 <li> Start Date: <?php echo date("M d, Y h:i:sa", strtotime($course['start_day'] . " " . $course['start_time']));?></li>
 								<li> End Date: <?php echo date("M d, Y h:i:sa", $enddate);?></li>
-                                
+                                <li> Price: $<?= $course['pay_price']?></li>
+								<li> Discount: <?= $course['discount']?>%</li>
+								<li> Cost: $<?= $course['amount']?></li>
                             </ul>
-                            <div class="row">
-                                <div class="col-md-6 col-sm-12">
-                                    <a href="<?php echo base_url($company['company_url'].'/training/view/'.$course['course_time_id'])?>" class="enrollNow">View Details</a>
-                                </div>
-                            </div><!--row-->
-                        </div><!--courseInfo-->
+						</div>
+						<div class="row coursePrice">
+							<div class="col-sm-6 col-xs-6">
+								<span class="price" style="font-size: 22px;">
+								<?php echo $course['pay_type'] == 0 ? 'Onsite Training' : '$'.$course['amount']; ?>
+								</span>
+							</div>
+							<?php if($course['pay_type']){
+									$pay = $course['pay_type'];
+								}else{
+									$pay = '0';
+								}
+							?>
+							<div class="col-sm-6 col-xs-6">
+								<a href="javascript:enroll_virtual(<?php echo $course['id'] ?>,<?php echo $pay ?>,<?php echo $course['virtual_course_time_id'] ?>,<?php echo $course['course_id']; ?>)" class="btnBlue">Enroll Now</a>
+								<?php /*
+									$activev = 'No';
+									$start_datev = strtotime($course['start_at']);
+									$currentDatevilt = time();
+									if($currentDatevilt >= $start_datev && $currentDatevilt <= $enddate){
+										$activev = 'Yes';
+									}
+									if($activev == 'Yes'){
+								?>
+								<a href="javascript:enroll_virtual(<?php echo $course['virtual_course_time_id'] ?>,<?php echo $pay; ?>,'<?php echo $course['url']?>')" class="enrollNow">Enroll Now</a>
+								<?php } else{ ?>
+								<?php
+									$startdatetime = date('d, M Y h:i:sa',strtotime($course['start_at']));
+								?>
+									<a href="javascript:void(0)" onclick='swal({title: "Please wait until course is started! Course start date time is: <?php echo $startdatetime ;?>"});' class="enrollNow">Enroll Now</a>
+								<?php } */?>
+							</div>
+						</div><!--row-->
                     </div><!--courseBox-->
                 </div><!--col-4-->
 		<?php } } } else{ ?>
@@ -201,27 +233,29 @@
                             <?php									
 								$showDuration = $course['duration'] > 1 ? $course['duration']. " Days" : $course['duration']." Day";
 								$duration = $course['duration'] - 1;
-								$enddate = strtotime('+'.$duration .' days', strtotime($course['start_day']. " " . $course['end_time']));
+								$enddate = strtotime('+'.$duration .' days', strtotime($course['startday']. " " . $course['end_time']));
 							?>
 							<li>Duration: <?php echo $showDuration; ?> </li>
-							<li> Start Date: <?php echo date("M d, Y h:i:sa", strtotime($course['start_day'] . " " . $course['start_time']));?></li>
+							<li> Start Date: <?php echo date("M d, Y h:i:sa", strtotime($course['startday'] . " " . $course['start_time']));?></li>
 							<li> End Date: <?php echo date("M d, Y h:i:sa", $enddate);?></li>
+							<li> Price: $<?= $course['pay_price']?></li>
+							<li> Discount: <?= $course['discount']?>%</li>
+							<li> Cost: $<?= $course['amount']?></li>
 						</ul>
 					</div><!--courseInfo-->
 					<div class="coursePrice">
 						<div class="row">
 							<div class="col-sm-6 col-xs-6">
 								<span class="price" style="font-size: 22px;">
-								<?php echo $course['pay_type'] == 0 ? 'Onsite Training' : '$'.$course['pay_price']; ?>
+								<?php echo $course['pay_type'] == 0 ? 'Onsite Training' : '$'.$course['amount']; ?>
 								</span>
 							</div>
 							<?php if($course['pay_type']){
-								$pay = $course['pay_type'];
-							}else{
-								$pay = '0';
-							}
-						?>
-                            
+									$pay = $course['pay_type'];
+								}else{
+									$pay = '0';
+								}
+							?>
 							<div class="col-sm-6 col-xs-6">
                                 <a href="javascript:enroll_virtual(<?php echo $course['id'] ?>,<?php echo $pay ?>,<?php echo $course['virtual_course_time_id'] ?>,<?php echo $course['course_id']; ?>)" class="btnBlue">Enroll Now</a>
                             	<?php /*
