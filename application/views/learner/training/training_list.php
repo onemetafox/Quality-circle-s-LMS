@@ -204,9 +204,7 @@
 															<?=$term[viewcourse]?>
 														</a>
 													<?php }?>
-													<a  class="btnBlue" href="<?=base_url()?>learner/training/viewDetail/<?=$paid_course['training_id']?>" >
-														<?=$term[viewdetails] ?>
-													</a>
+													<!-- <a  class="btnBlue" href="<?=base_url()?>learner/training/viewDetail/<?=$paid_course['training_id']?>" ><?=$term[viewdetails] ?></a> -->
 												</div><!--col-8-->
 											</div><!--row-->
 										</div><!--whitePanel-->

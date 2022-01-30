@@ -177,7 +177,7 @@
 														<?=$term[viewcourse]?>
 													</a>
 												<?php }?>
-												<a  href="<?=base_url()?>learner/demand/view_course/<?=$paid_course['id']?>" class="btnBlue">View Course</a>
+												<!-- <a  href="<?=base_url()?>learner/demand/view_course/<?=$paid_course['id']?>" class="btnBlue">View Course</a> -->
 											</div><!--col-8-->
 										</div><!--row-->
 									</div><!--whitePanel-->

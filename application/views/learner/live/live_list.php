@@ -206,7 +206,7 @@
 															<?=$term[viewcourse]?>
 														</a>
 													<?php }?>
-													<a href="<?=base_url()?>learner/live/viewclass/<?=$paid_course['training_id']?>" class="btnBlue">Course Details</a>
+													<!-- <a href="<?=base_url()?>learner/live/viewclass/<?=$paid_course['training_id']?>" class="btnBlue">Course Details</a> -->
 												</div><!--col-8-->
 											</div><!--row-->
 										</div><!--whitePanel-->
