@@ -131,7 +131,7 @@
 															<?=$term[viewcourse]?>
 														</a>
 													<?php } ?>
-													<a class="btnBlue" href="<?=base_url()?>learner/training/viewDetail/<?=$free_course['id']?>" >
+													<a class="btnBlue" href="<?=base_url()?>learner/training/viewDetail/<?=$free_course['training_id']?>" >
 														<?=$term[viewdetails] ?>
 													</a>
 												</div><!--col-8-->
@@ -204,7 +204,7 @@
 															<?=$term[viewcourse]?>
 														</a>
 													<?php }?>
-													<a  class="btnBlue" href="<?=base_url()?>learner/training/viewDetail/<?=$paid_course['id']?>" >
+													<a  class="btnBlue" href="<?=base_url()?>learner/training/viewDetail/<?=$paid_course['training_id']?>" >
 														<?=$term[viewdetails] ?>
 													</a>
 												</div><!--col-8-->

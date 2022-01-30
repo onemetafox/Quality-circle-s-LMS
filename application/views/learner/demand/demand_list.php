@@ -173,11 +173,11 @@
 														<?=$term[enrollnow]?>
 													</a>
 												<?php } else{?>
-													<a style = "float:left; margin-top:-20px; margin-left: 20px" class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
+													<a  class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
 														<?=$term[viewcourse]?>
 													</a>
 												<?php }?>
-												<a  style = "float:left; margin-top:-20px; margin-left: 20px" href="<?=base_url()?>learner/demand/view_course/<?=$paid_course['id']?>" class="btnBlue">View Course</a>
+												<a  href="<?=base_url()?>learner/demand/view_course/<?=$paid_course['id']?>" class="btnBlue">View Course</a>
 											</div><!--col-8-->
 										</div><!--row-->
 									</div><!--whitePanel-->

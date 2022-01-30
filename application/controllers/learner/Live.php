@@ -67,7 +67,8 @@ class Live extends BaseController {
 			$training['free_course_list'] = $this->Live_model->getFreeCourses($this->input->get());
             $training['paid_course_list'] = $this->Live_model->getPaidCourses($this->input->get());
 			$training['coursesfilter'] = $this->Live_model->getListByCompanyId($this->session->get_userdata() ['company_id']);
-			$this->global['courses_id'] = $course;							
+			$this->global['courses_id'] = $course;		
+            // print_r($training);
             $this->loadViews("learner/live/live_list", $this->global, $training, NULL);
         }else{
             $this->loadViews("access", $this->global, NULL, NULL);

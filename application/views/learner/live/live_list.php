@@ -131,7 +131,7 @@
 															<?=$term[viewcourse]?>
 														</a>
 													<?php } ?>
-													<a href="<?=base_url()?>learner/live/viewclass/<?=$free_course['id']?>" class="btnBlue">Course Details</a>
+													<a href="<?=base_url()?>learner/live/viewclass/<?=$free_course['training_id']?>" class="btnBlue">Course Details</a>
 												</div><!--col-8-->
 											</div><!--row-->
 										</div><!--whitePanel-->
@@ -139,19 +139,18 @@
 									} 
 								} ?>
 
-								<?php foreach($paid_course_list as $paid_course){									
-									if($paid_course['date_str'] != '' || $paid_course['date_str'] != 0){
-										if($course['course_self_time'] == "Time Restricted"){
-											$showDuration = $paid_course['duration'] > 1 ? $paid_course['duration']. " Days" : $paid_course['duration']." Day";
-											$duration = $paid_course['duration'] - 1;
-											$enddate = strtotime('+'.$duration .' days', strtotime($paid_course['start_day']. " " . $paid_course['end_time']));
-											$currentdays = time();
-										}else{
-											$enddate = $paid_course['duration'] * 8 * 24 * 60;
-											$currentdays = $paid_course['session_time']?$paid_course['session_time']:0;
-										}
+								<?php foreach($paid_course_list as $paid_course){		
+									if($course['course_self_time'] == "Time Restricted"){
+										$showDuration = $paid_course['duration'] > 1 ? $paid_course['duration']. " Days" : $paid_course['duration']." Day";
+										$duration = $paid_course['duration'] - 1;
+										$enddate = strtotime('+'.$duration .' days', strtotime($paid_course['start_at']. " " . $paid_course['end_time']));
+										$currentdays = time();
+									}else{
+										$enddate = $paid_course['duration'] * 8 * 24 * 60;
+										$currentdays = $paid_course['session_time']?$paid_course['session_time']:0;
+									}
 									
-										if($currentdays <= $enddate){ ?> 
+									if($currentdays <= $enddate){ ?> 
 										<div class="whitePanel">
 											<div class="row">
 												<div class="col-lg-4 col-md-5 col-sm-6">
@@ -203,16 +202,15 @@
 															<?=$term[enrollnow]?>
 														</a>
 													<?php } else{?>
-														<a style = "float:left; margin-top:-20px; margin-left: 20px" class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
+														<a class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
 															<?=$term[viewcourse]?>
 														</a>
 													<?php }?>
-													<a style = "float:left; margin-top:-20px; margin-left: 20px" href="<?=base_url()?>learner/live/viewclass/<?=$paid_course['id']?>" class="btnBlue">Course Details</a>
+													<a href="<?=base_url()?>learner/live/viewclass/<?=$paid_course['training_id']?>" class="btnBlue">Course Details</a>
 												</div><!--col-8-->
 											</div><!--row-->
 										</div><!--whitePanel-->
 									<?php } 
-									} 
 								} ?>
 							</div><!--col-12-->
 							<div class="col-sm-12 paginationBox">

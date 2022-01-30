@@ -41,7 +41,7 @@ class Live_model extends AbstractModel
     }
     function getFreeCourses($filter){
         $user = $this->session->userdata();
-        $query = "SELECT c.id course_id, e.id course_time_id, f.id enroll_id, b.title, e.start_at, c.duration, c.img_path
+        $query = "SELECT c.id course_id, e.id course_time_id, f.id enroll_id, b.id training_id, b.title, e.start_at, c.duration, c.img_path
             FROM invite_user a
             LEFT JOIN `user` d ON d.email = a.email
             LEFT JOIN virtual_course b ON b.id = a.course_id

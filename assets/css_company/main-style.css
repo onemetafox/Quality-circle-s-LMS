@@ -2476,7 +2476,7 @@ footer {
 
 .courseUl {
 	margin-bottom: 0 !important;
-    width: 90%;
+    width: 100%;
     display: inline-block;
     min-height: 45px;
 }
