@@ -62,7 +62,7 @@
 							</div>
 							<div class="col-sm-6 col-xs-6">
                                 <?php if(is_null($course['is_pay']['id'])){ ?>
-									<a href="javascript:enroll(<?php echo $course['id'] ?>,<?php echo $course['pay_type'] ?>)" class="btnBlue">Enroll Now</a>
+									<a href="javascript:enroll_virtual(<?= $course['id'] ?>,<?=$course['pay_type'] ?>,'<?= $course['virtual_course_time_id'] ?>','<?= $course['course_id'];?>', '/learner/demand')" class="btnBlue">Enroll Now</a>
 								<?php
 									
 									/*
@@ -162,7 +162,7 @@
 								}
 							?>
 							<div class="col-sm-6 col-xs-6">
-								<a href="javascript:enroll_virtual(<?php echo $course['id'] ?>,<?php echo $pay ?>,<?php echo $course['virtual_course_time_id'] ?>,<?php echo $course['course_id']; ?>)" class="btnBlue">Enroll Now</a>
+								<a href="javascript:enroll_virtual(<?= $course['id'] ?>,<?=$course['pay_type'] ?>,'<?= $course['virtual_course_time_id'] ?>',<?= $course['course_id']; ?>, '/learner/training')" class="btnBlue">Enroll Now</a>
 								<?php /*
 									$activev = 'No';
 									$start_datev = strtotime($course['start_at']);
@@ -209,7 +209,7 @@
 		<h2 class="titleH2 text-center">Virtual Instructor Led Training</h2>
 		<div class="row">	
 		<?php if(!empty($virtualCourses)) {  ?>		
-		<?php foreach($virtualCourses as $course){ ?>				
+		<?php foreach($virtualCourses as $course){?>				
 			<div class="col-md-4 col-sm-4 col-xs-6 col-full">
 				<div class="courseBox">
 					<div class="courseImg">
@@ -257,8 +257,8 @@
 								}
 							?>
 							<div class="col-sm-6 col-xs-6">
-                                <a href="javascript:enroll_virtual(<?php echo $course['id'] ?>,<?php echo $pay ?>,<?php echo $course['virtual_course_time_id'] ?>,<?php echo $course['course_id']; ?>)" class="btnBlue">Enroll Now</a>
-                            	<?php /*
+                                <a href="javascript:enroll_virtual(<?php echo $course['id'] ?>,<?php echo $pay ?>,'<?php echo $course['virtual_course_time_id'] ?>',<?php echo $course['course_id']; ?>, '/learner/live')" class="btnBlue">Enroll Now</a>
+								<?php /*
 									$activev = 'No';
 									$start_datev = strtotime($course['start_at']);
 									$currentDatevilt = time();
@@ -355,9 +355,9 @@
         }
     }
 	
-	function enroll_virtual(id,pay_type,time_id,course_id){			
+	function enroll_virtual(id,pay_type,time_id,course_id, url){
 		if(!isLogin){
-			showLogin();
+			showAcademyLogin(url);
 		}else{
 			if(pay_type == 1){
 				if(user_type !== "Learner"){

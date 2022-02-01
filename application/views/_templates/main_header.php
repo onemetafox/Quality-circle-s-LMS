@@ -285,6 +285,8 @@
                 <li class="signout-tab" style="text-align:center;width:50%;font-size:23px"><a data-toggle="tab" href="#company_signout">Sign Up</a></li>
             </ul>
             <div class="tab-content">
+                <p id="title"></p>
+                <input type="hidden" id="falg" value="0"/>
                 <div id="company_signin" class="tab-pane fade in active">
                     <?php echo form_open(base_url($company['company_url'].'/loginuser'),['id'=>'company_login_frm']);?>
                     <div class="row">
@@ -298,10 +300,10 @@
                                     <input type="password" id="password" data-toggle="password" name="password" placeholder="Password" class="loginFeild">
                                 </div>
                                 <div class="loginRow">
-                                    <!-- <div class="g-recaptcha" data-sitekey="6LciUf0UAAAAANP2mefF3glkoF3NRzTTO6ZEJmge"></div>  -->
                                     <div id="recaptcha1"></div>
                                     <div id="errormessage" style="color: red; margin: 5px 0 0 0px"></div> 
                                 </div>
+                                <!-- <div class="g-recaptcha" data-sitekey="6LciUf0UAAAAANP2mefF3glkoF3NRzTTO6ZEJmge"></div>  -->
                                 <div style="float: right; font-size: 14px; font-weight: 500;">
                                     <a href="<?php echo base_url(); ?>forgotPassword" style="color: #03a9f4;">Forgot password?</a>
                                 </div>
@@ -367,6 +369,7 @@
 
 
 <script>
+  var url = "";
   var recaptcha1;
   var recaptcha2;
   var myCallBack = function() {
@@ -389,8 +392,9 @@
 
 <script>
     $('#company_login_frm .signin').on('click', function(e){
+        var flag =  $("#flag").val();
         e.preventDefault();
-        if(grecaptcha.getResponse(recaptcha1) == "") { 
+        if(grecaptcha.getResponse(recaptcha1) != "") { 
             $("#errormessage").text("Please Fill The Google Captcha");
             return false;
         } else {
@@ -403,8 +407,14 @@
                 data : formdata,
                 success : function(res) {
                     if(res.type == 1){
-                        if(res.msg)
-                            location.reload();
+                        if(res.msg){
+                            console.log(url);
+                            if(url== ""){
+                                location.reload();
+                            }else{
+                                window.location.href = "<?=base_url()?>"+ url;
+                            }
+                        }
                     }
                     else
                         msg.html('<div class="alert alert-danger"><p class="m-0">'+res.msg+'</p></div>');
@@ -470,7 +480,22 @@
     });
 
     function showLogin(){
+        $("#title").text("");
         $('.signin-tab').addClass('active');
+        $("#flag").val("1");
+        $('.signout-tab').removeClass('active');
+        $('#company_signin').addClass('active in');
+        $('#company_signout').removeClass('active in');
+        $('.login_errMsg').html('');
+        $('.signup_errMsg').html('');
+        $('#company_signup_frm')[0].reset();
+        $('#loginModal').modal('show');
+    }
+    function showAcademyLogin(path){
+        url = path;
+        $('.signin-tab').addClass('active');
+        $("#title").text("Thanks for choosing Quality Circle’s Learning Academy. Please signup if you are not registered to the academy or sign-in to your profile to register for the training.");
+        $("#flag").val("0");
         $('.signout-tab').removeClass('active');
         $('#company_signin').addClass('active in');
         $('#company_signout').removeClass('active in');
