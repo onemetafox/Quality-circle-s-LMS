@@ -134,21 +134,7 @@
 															<a href="javascript:viewcourse(<?php echo $course->course_id ?>,<?php echo $course->pay_type ?>,<?php echo $course->training_time_id ?>)" class="btnBlue">View Course</a>															
 														<?php }else{?>
 															<?php if(is_null($course->is_pay['id'])){?>
-                                                            	<a href="javascript:enroll(<?php echo $course->training_course_id ?>,<?php echo $course->pay_type ?>,<?php echo $course->course_id ?>,<?php echo $course->training_time_id ?>)" class="btnBlue">Enroll Now</a>                                                        	
-                                                                <?php /*
-																	$startdatetime = date('d, M Y h:i:sa',$course->date_str);
-																	$active = 'No';
-																	$start_date = $course->date_str;
-																	$currentDate = time();
-																	if($currentDate >= $start_date && $currentDate <= $enddate){
-																		$active = 'Yes';
-																	}
-																	if($active == 'Yes'){
-																?>																
-															    <a href="javascript:enroll(<?php echo $course->training_course_id ?>,<?php echo $course->pay_type ?>,<?php echo $course->course_id ?>,<?php echo $course->training_time_id ?>)" class="btnBlue">Enroll Now</a>
-                                                                <?php }else{ ?>
-                                                                	<a href="javascript:void(0)" onclick='swal({title: "Please wait until course is started! Course start date time is: <?php echo $startdatetime ;?>"});' class="btnBlue">Enroll Now</a>
-                                                                <?php } */ ?>
+                                                            	<a href="javascript:enroll(<?php echo $course->training_course_id ?>,<?php echo $course->pay_type ?>,<?php echo $course->course_id ?>,<?php echo $course->training_time_id ?>,'/learner/training')" class="btnBlue">Enroll Now</a>                                                        	
 					                                        <?php }else {?>
 					                                        	<?php if($course->expired == 'yes'){?>
 																	<a href="javascript:" class="btnGray">View Course</a>
@@ -276,9 +262,9 @@
 		window.location = company_url + '/demand/detail/' + course_id + '/?type=ilt&time_id='+ time_id;		
 	}
 
-	function enroll(training_id,pay_type,course_id,time_id){
+	function enroll(training_id,pay_type,course_id,time_id,url){
        if(!isLogin){
-           showLogin();
+		showAcademyLogin(url);
        }else{
            if(pay_type == 1){
                if(user_type != "Learner"){

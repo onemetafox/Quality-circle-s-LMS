@@ -22,7 +22,7 @@ class Trainingcourse_model extends CI_Model
     }
 
     function getRecent($count = null,$company_id = null){
-        $this->db->select("*");
+        $this->db->select("*, training_course_time.id time_id");
         $this->db->join("training_course", "training_course.course_id = course.id", "LEFT");
         $this->db->join("training_course_time", "training_course.id = training_course_time.training_course_id", "LEFT");
         $this->db->where("course.course_type ","0");

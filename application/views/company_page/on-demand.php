@@ -103,23 +103,7 @@
 													}?>
 												</h6>                                                
 		                                        <?php if(is_null($course->is_pay['id'])){?>
-                                                	<a href="javascript:enroll(<?php echo $course->id ?>,<?php echo $course->pay_type ?>)" class="btnBlue">Enroll Now</a>                                                	<?php
-													/*
-														$active = 'No';
-														$start_at = strtotime($course->start_at);
-														$end_at = strtotime($course->end_at);
-														
-														$currentDate = time();
-														if($currentDate >= $start_at && $currentDate <= $end_at){
-															$active = 'Yes';
-														}
-														if($active == 'Yes'){
-													?>
-												    <a href="javascript:enroll(<?php echo $course->id ?>,<?php echo $course->pay_type ?>)" class="btnBlue">Enroll Now</a>
-                                                    <?php }else{ ?>
-                                                    <?php $startdatetime = date('d, M Y h:i:sa',$start_at); ?>
-                                                    <a href="javascript:void(0)" onclick='swal({title: "Please wait until course is started! Course start date time is: <?php echo $startdatetime ;?>"});' class="btnBlue">Enroll Now</a>
-                                                    <?php } */ ?>
+                                                	<a href="javascript:enroll(<?php echo $course->id ?>,<?php echo $course->pay_type ?>,'/learner/demand')" class="btnBlue">Enroll Now</a>
 		                                        <?php }else {?>
 		                                            <a href="javascript:view_course(<?php echo $course->id ?>)" class="btnBlue">Access Course</a>
 		                                        <?php }?>
@@ -163,9 +147,9 @@
 	});
 
 
-	function enroll(id,pay_type){	
+	function enroll(id,pay_type,url){	
 		if(!isLogin){
-			showLogin();
+			showAcademyLogin(url);
 		}else{
 			if(pay_type == 0){
 				window.location = company_url + '/demand/detail/' + id;

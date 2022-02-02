@@ -116,25 +116,8 @@
 													<?php }else{?>
                                                     
                                                     	<?php if(is_null($course->is_pay['id'])){?>
-                                                        	<a href="javascript:enrollNow(<?php echo $course->id ?>,<?php echo $course->pay_type ?>,<?php echo $course->time_id ?>,<?php echo $course->course_id; ?>)" class="btnBlue">Enroll Now</a>
-                                                        <?php /*
-															$activev = 'No';
-															//$start_datev = $course->start_at;
-															//$currentDatevilt = date('Y-m-d h:i:s',time());																				
-															//$enddate = date('Y-m-d h:i:s',strtotime($course->start_at .'+'.$duration .'days'));
-															
-															$start_datev = strtotime($course->start_at);
-															$currentDatevilt = time();
-															if($currentDatevilt >= $start_datev && $currentDatevilt <= $enddate){
-																$activev = 'Yes';
-															}
-															if($activev == 'Yes'){
-														?>
-														<a href="javascript:enrollNow(<?php echo $course->id ?>,<?php echo $course->pay_type ?>,<?php echo $course->time_id ?>,<?php echo $course->course_id; ?>)" class="btnBlue">Enroll Now</a>
-														<?php } else { ?>
-                                                        	<?php $startdatetime = date('d, M Y h:i:sa',strtotime($course->start_at)); ?>
-															<a href="javascript:void(0)" onclick='swal({title: "Please wait until course is started! Course start date time is: <?php echo $startdatetime ;?>"});' class="btnBlue">Enroll Now</a>
-														<?php } */ ?>
+                                                        	<a href="javascript:enrollNow(<?php echo $course->id ?>,'<?php echo $course->pay_type ?>','<?php echo $course->time_id ?>',<?php echo $course->course_id; ?>,'/learner/live')" class="btnBlue">Enroll Now</a>
+                                                       
 															
 				                                        <?php }else {?>
 				                                        	<?php if($course->expired == 'yes'){?>
@@ -257,9 +240,9 @@
 		//}
 	}
 
-	function enrollNow(id,pay_type,time_id,course_id){
+	function enrollNow(id,pay_type,time_id,course_id,url){
 		if(!isLogin){
-			showLogin();
+			showAcademyLogin(url);
 		}else{
 			if(pay_type == 1){
 				if(user_type !== "Learner"){
