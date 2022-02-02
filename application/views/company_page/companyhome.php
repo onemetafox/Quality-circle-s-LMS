@@ -27,22 +27,21 @@
 							$ext = pathinfo($imgName, PATHINFO_EXTENSION);
 							if($imgName != '' && file_exists(getcwd().'/'.$course['img_path']) && ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' || $ext == 'PNG' || $ext == 'JPG')){
 						?>
-							<img style="cursor: pointer" src="<?php echo base_url($course['img_path']); ?>" onclick="javascript:view_course(<?php echo $course['id'] ?>)">
+							<img style="cursor: pointer" src="<?= base_url($course['img_path']); ?>" onclick="view_course(<?= $course['id'] ?>)">
 					   	<?php }else{ ?>
-							<img style="cursor: pointer" src="<?php echo base_url().'assets/uploads/on-demand-default.png'; ?>" onclick="javascript:view_course(<?php echo $course['id'] ?>)">
+							<img style="cursor: pointer" src="<?= base_url().'assets/uploads/on-demand-default.png'; ?>" onclick="view_course(<?= $course['id'] ?>)">
                			<?php } ?>
 					</div><!--courseImg-->
 					<div class="courseInfo">
-						<h5 style="cursor: pointer" onclick="javascript:view_course(<?php echo $course['id'] ?>)"><?php echo ucfirst($course['title'])?></h5>
+						<h5 style="cursor: pointer" onclick="view_course(<?= $course['id'] ?>)"><?= ucfirst($course['title'])?></h5>
 						<ul class="courseUl">
 							<li style="height:25px">
-								<a href="#"><?php echo $course['first_instructor']['email']?></a>
+								<a href="#"><?= $course['first_instructor']['email']?></a>
 							</li>
-							<li><?php echo $course['course_self_time']; ?></li>
-							<li>Type: <?= $course['pay_type'] == 0 ?'Close Enrollment Course': 'Open Enrollment Course'?></li>
-                            <?php $start_date = date("M d, Y", strtotime($course['start_at'])); ?>
-                            <li> Start Date: <?php echo $start_date; ?></li>
-             				<li> End Date: <?php echo date("M d, Y", strtotime($course['end_at']));?></li>
+							<li><?= $course['course_self_time']; ?></li>
+							<li> Type: <?= $course['pay_type'] == 0 ?'Close Enrollment Course': 'Open Enrollment Course'?></li>
+                            <li> Start Date: <?= date("M d, Y", strtotime($course['start_at'])) ?></li>
+             				<li> End Date: <?= date("M d, Y", strtotime($course['end_at']));?></li>
 							<li> Price: $<?= $course['pay_price']?></li>
 							<li> Discount: <?= $course['discount']?>%</li>
 							<li> Cost: $<?= $course['amount']?></li>
@@ -52,7 +51,7 @@
 						<div class="row">
 							<div class="col-sm-3 col-xs-3">
 								<span class="price" style="font-size: 22px;">
-								<?php echo $course['pay_type'] == 0 ? 'Onsite Training' : '$'.number_format($course['amount'],2); ?>
+									<?= $course['pay_type'] == 0 ? 'Onsite Training' : '$'.number_format($course['amount'],2); ?>
 								</span>
 							</div>
 							<div class="col-sm-9 col-xs-9">
@@ -60,7 +59,7 @@
 									<a href="<?=base_url($company['company_url'].'/demand/view/'.$course['id'])?>" style="margin-left:10px"class="btnBlue">View Detail</a>
 									<a style="margin-left:10px" href="javascript:enroll_virtual(<?= $course['id'] ?>,<?=$course['pay_type'] ?>,'<?= $course['virtual_course_time_id'] ?>','<?= $course['course_id'];?>', '/learner/demand')" class="btnBlue">Enroll Now</a>
                                 <?php }else {?>
-                                    <a href="javascript:view_course_detail(<?php echo $course['id'] ?>,0)" class="btnBlue">Access Course</a>
+                                    <a href="javascript:view_course_detail(<?= $course['id'] ?>,0)" class="btnBlue">Access Course</a>
                                 <?php }?>
 							</div>
 						</div><!--row-->
@@ -71,7 +70,7 @@
 				<div class="col-md-4 col-sm-6 col-xs-6 col-full">
                     <div class="courseBox">
                         <div class="courseImg">
-                            <img style="cursor: pointer" src="<?php echo base_url().'assets/uploads/on-demand-default.png'; ?>">
+                            <img style="cursor: pointer" src="<?= base_url().'assets/uploads/on-demand-default.png'; ?>">
                             <?php /*?><h2 style=" color:#666;margin-top: 94px;text-align: center;">No Record Found!</h2><?php */?>
                         </div> <!--courseImg-->                      
                     </div><!--courseBox-->
@@ -80,7 +79,7 @@
 		</div><!--row-->
 		<div class="row">
 			<div class="col-sm-12 text-center">
-				<a href="<?php echo base_url($company['company_url'])?>/demand" class="browseAll">Browse All</a>
+				<a href="<?= base_url($company['company_url'])?>/demand" class="browseAll">Browse All</a>
 			</div>
 		</div>	
 	</div><!--container-->
@@ -100,29 +99,28 @@
 								$ext = pathinfo($imgName, PATHINFO_EXTENSION);
                                 if($imgName != '' && file_exists(getcwd().'/'.$course['img_path']) && ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' || $ext == 'PNG' || $ext == 'JPG')){							
                             ?>
-                                <img style="cursor: pointer" src="<?php echo base_url($course['img_path']); ?>" onclick="javascript:view_ILT_course(<?php echo $course['course_time_id'] ?>)">
+                                <img style="cursor: pointer" src="<?= base_url($course['img_path']); ?>" onclick="view_ILT_course(<?= $course['time_id'] ?>)">
                             <?php }else{ ?>
-                                <img style="cursor: pointer" src="<?php echo base_url().'assets/uploads/ilt-default.png'; ?>" onclick="javascript:view_ILT_course(<?php echo $course['course_time_id'] ?>)">                                		
+                                <img style="cursor: pointer" src="<?= base_url().'assets/uploads/ilt-default.png'; ?>" onclick="view_ILT_course(<?= $course['time_id'] ?>)">                                		
                             <?php } ?>
                         </div> <!--courseImg-->
 
                         <div class="courseInfo">
-                            <h5 style="padding-bottom: 15px;"><?php echo ucfirst($course['title'])?></h5>                    
+                            <h5 style="padding-bottom: 15px;"><?= ucfirst($course['title'])?></h5>                    
                             <ul class="courseUl">
-                            	<li style="height:25px"><a href="#"><?php echo $course['first_instructor']['email']?></a></li>
+                            	<li style="height:25px"><a href="#"><?= $course['first_instructor']['email']?></a></li>
                                 <li>                            
-                                <?php echo $course['course_self_time']; ?>
+                                	<?= $course['course_self_time']; ?>
                                 </li>
                                 <?php
-									
 									$showDuration = $course['duration'] > 1 ? $course['duration']. " Days" : $course['duration']." Day";
 									$duration = $course['duration'] - 1;
 									$enddate = strtotime('+'.$duration .' days', strtotime($course['start_day']. " " . $course['end_time']));
 								?>
-								<li>Type: <?= $course['pay_type'] == 0 ?'Close Enrollment Course': 'Open Enrollment Course'?></li>
-                                <li>Duration: <?php echo $showDuration; ?> </li>
-                                <li> Start Date: <?php echo date("M d, Y h:i:sa", strtotime($course['start_day'] . " " . $course['start_time']));?></li>
-								<li> End Date: <?php echo date("M d, Y h:i:sa", $enddate);?></li>
+								<li> Type: <?= $course['pay_type'] == 0 ?'Close Enrollment Course': 'Open Enrollment Course'?></li>
+                                <li> Duration: <?= $showDuration; ?> </li>
+                                <li> Start Date: <?= date("M d, Y h:i:sa", strtotime($course['start_day'] . " " . $course['start_time']));?></li>
+								<li> End Date: <?= date("M d, Y h:i:sa", $enddate);?></li>
                                 <li> Price: $<?= $course['pay_price']?></li>
 								<li> Discount: <?= $course['discount']?>%</li>
 								<li> Cost: $<?= $course['amount']?></li>
@@ -131,7 +129,7 @@
 						<div class="row coursePrice">
 							<div class="col-sm-3 col-xs-3">
 								<span class="price" style="font-size: 22px;">
-								<?php echo $course['pay_type'] == 0 ? 'Onsite Training' : '$'.$course['amount']; ?>
+								<?= $course['pay_type'] == 0 ? 'Onsite Training' : '$'.$course['amount']; ?>
 								</span>
 							</div>
 							<?php if($course['pay_type']){
@@ -152,7 +150,7 @@
                     <div class="courseBox">
                         <div class="courseImg">
                         	<?php /*?><h2 style=" color:#666;margin-top: 94px;text-align: center;">No Record Found!</h2><?php */?>
-                            <img style="cursor: pointer" src="<?php echo base_url().'assets/uploads/ilt-default.png'; ?>"> 
+                            <img style="cursor: pointer" src="<?= base_url().'assets/uploads/ilt-default.png'; ?>"> 
                         </div> <!--courseImg-->                      
                     </div><!--courseBox-->
                 </div><!--col-4-->
@@ -161,7 +159,7 @@
 
         <div class="row">
             <div class="col-sm-12 text-center">
-                <a href="<?php echo base_url($company['company_url'])?>/training" class="browseAll">Browse All</a>
+                <a href="<?= base_url($company['company_url'])?>/training" class="browseAll">Browse All</a>
             </div>
         </div>
 
@@ -182,17 +180,17 @@
 							$ext = pathinfo($imgName, PATHINFO_EXTENSION);							
 							if($imgName != '' && file_exists(getcwd().'/'.$course['virtual_course_path']) && ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' || $ext == 'PNG' || $ext == 'JPG')){
 							?>
-                            	<img style="cursor: pointer" src="<?php echo base_url($course['virtual_course_path']); ?>" onclick="javascript:view_live(<?php echo $course['virtual_course_time_id'] ?>)">
+                            	<img style="cursor: pointer" src="<?= base_url($course['virtual_course_path']); ?>" onclick="view_live(<?= $course['time_id'] ?>)">
                             <?php }else{ ?>
-                            	<img style="cursor: pointer" src="<?php echo base_url().'assets/uploads/vilt-default.png'; ?>" onclick="javascript:view_live(<?php echo $course['virtual_course_time_id'] ?>)">
+                            	<img style="cursor: pointer" src="<?= base_url().'assets/uploads/vilt-default.png'; ?>" onclick="view_live(<?= $course['time_id'] ?>)">
                             <?php } ?>
 					</div><!--courseImg-->
 					<div class="courseInfo">
-						<h5 style="cursor: pointer" onclick="javascript:view_live(<?php echo $course['virtual_course_time_id'] ?>)"><?php echo ucfirst($course['title'])?></h5>
+						<h5 style="cursor: pointer" onclick="view_live(<?= $course['time_id'] ?>)"><?= ucfirst($course['title'])?></h5>
 						<ul class="courseUl">
-							<li style="height:25px"><a href="#"><?php echo $course['first_instructor']['email']?></a></li>
+							<li style="height:25px"><a href="#"><?= $course['first_instructor']['email']?></a></li>
 							<li>                            
-							<?php echo $course['course_self_time']; ?>
+							<?= $course['course_self_time']; ?>
                             </li>
                             <?php									
 								$showDuration = $course['duration'] > 1 ? $course['duration']. " Days" : $course['duration']." Day";
@@ -200,9 +198,9 @@
 								$enddate = strtotime('+'.$duration .' days', strtotime($course['startday']. " " . $course['end_time']));
 							?>
 							<li> Type: <?= $course['pay_type'] == 0 ?'Close Enrollment Course': 'Open Enrollment Course'?></li>
-							<li> Duration: <?php echo $showDuration; ?> </li>
-							<li> Start Date: <?php echo date("M d, Y h:i:sa", strtotime($course['startday'] . " " . $course['start_time']));?></li>
-							<li> End Date: <?php echo date("M d, Y h:i:sa", $enddate);?></li>
+							<li> Duration: <?= $showDuration; ?> </li>
+							<li> Start Date: <?= date("M d, Y h:i:sa", strtotime($course['startday'] . " " . $course['start_time']));?></li>
+							<li> End Date: <?= date("M d, Y h:i:sa", $enddate);?></li>
 							<li> Price: $<?= $course['pay_price']?></li>
 							<li> Discount: <?= $course['discount']?>%</li>
 							<li> Cost: $<?= $course['amount']?></li>
@@ -212,7 +210,7 @@
 						<div class="row">
 							<div class="col-sm-3 col-xs-3">
 								<span class="price" style="font-size: 22px;">
-								<?php echo $course['pay_type'] == 0 ? 'Onsite Training' : '$'.$course['amount']; ?>
+								<?= $course['pay_type'] == 0 ? 'Onsite Training' : '$'.$course['amount']; ?>
 								</span>
 							</div>
 							<?php if($course['pay_type']){
@@ -223,45 +221,28 @@
 							?>
 							<div class="col-sm-9 col-xs-9">
 								<a href = "<?= base_url($company['company_url'].'/classes/view/'.$course['time_id'])?>" style="margin-left:10px" class="btnBlue">View Detail</a>
-                                <a href="javascript:enroll_virtual(<?php echo $course['id'] ?>,<?php echo $pay ?>,'<?php echo $course['virtual_course_time_id'] ?>',<?php echo $course['course_id']; ?>, '/learner/live')" class="btnBlue">Enroll Now</a>
-								<?php /*
-									$activev = 'No';
-									$start_datev = strtotime($course['start_at']);
-									$currentDatevilt = time();
-									if($currentDatevilt >= $start_datev && $currentDatevilt <= $enddate){
-										$activev = 'Yes';
-									}
-									if($activev == 'Yes'){
-								?>
-								<a href="javascript:enroll_virtual(<?php echo $course['virtual_course_time_id'] ?>,<?php echo $pay; ?>,'<?php echo $course['url']?>')" class="enrollNow">Enroll Now</a>
-                                <?php } else{ ?>
-                                <?php
-									$startdatetime = date('d, M Y h:i:sa',strtotime($course['start_at']));
-								?>
-                                	<a href="javascript:void(0)" onclick='swal({title: "Please wait until course is started! Course start date time is: <?php echo $startdatetime ;?>"});' class="enrollNow">Enroll Now</a>
-                                <?php } */?>
+                                <a href="javascript:enroll_virtual(<?= $course['id'] ?>,<?= $pay ?>,'<?= $course['time_id'] ?>',<?= $course['course_id']; ?>, '/learner/live')" class="btnBlue">Enroll Now</a>
 							</div>
 						</div><!--row-->
 					</div><!--coursePrice-->
 				</div><!--courseBox-->
 			</div><!--col-4-->
 		<?php } } else {  ?>
-				<div class="col-md-4 col-sm-6 col-xs-6 col-full">
-                    <div class="courseBox">
-                        <div class="courseImg">
-                            <img style="cursor: pointer" src="<?php echo base_url().'assets/uploads/vilt-default.png'; ?>">
-                            <?php /*?><h2 style=" color:#666;margin-top: 94px;text-align: center;">No Record Found!</h2><?php */?>
-                        </div> <!--courseImg-->                      
-                    </div><!--courseBox-->
-                </div><!--col-4-->
+			<div class="col-md-4 col-sm-6 col-xs-6 col-full">
+				<div class="courseBox">
+					<div class="courseImg">
+						<img style="cursor: pointer" src="<?= base_url().'assets/uploads/vilt-default.png'; ?>">
+						<?php /*?><h2 style=" color:#666;margin-top: 94px;text-align: center;">No Record Found!</h2><?php */?>
+					</div> <!--courseImg-->                      
+				</div><!--courseBox-->
+			</div><!--col-4-->
 		<?php } ?>
 		</div><!--row-->
 		<div class="row">
 			<div class="col-sm-12 text-center">
-				<a href="<?php echo base_url($company['company_url'])?>/classes" class="browseAll">Browse All</a>
+				<a href="<?= base_url($company['company_url'])?>/classes" class="browseAll">Browse All</a>
 			</div>
 		</div>
-		
 	</div><!--container-->
 </section><!--sectionBox-->
 
@@ -282,10 +263,10 @@
 
 <script type="text/javascript"> 
 	var company_url = "<?= base_url($company['company_url'])?>";
-    var isLogin = "<?php echo $this->session->userdata ( 'isLoggedIn' )?>";
-	var email = "<?php echo $this->session->userdata ( 'email' )?>";
-    var user_type = "<?php echo $this->session->userdata('user_type')?>";
-	var userId = "<?php echo $this->session->userdata('userId')?>";
+    var isLogin = "<?= $this->session->userdata ( 'isLoggedIn' )?>";
+	var email = "<?= $this->session->userdata ( 'email' )?>";
+    var user_type = "<?= $this->session->userdata('user_type')?>";
+	var userId = "<?= $this->session->userdata('userId')?>";
 	
 	function enroll(id,pay_type){
 		var temp = 1;
@@ -327,7 +308,7 @@
 		}else{
 			if(pay_type == 1){
 				if(user_type !== "Learner"){
-					// window.location = "<?php echo VILT_URL?>"+id;
+					// window.location = "<?= VILT_URL?>"+id;
 				}else{
 					swal({
 					  title: "You have to pay $99 to take part in this course",
@@ -335,7 +316,7 @@
 					}).then((willDelete) => {
 					  if (willDelete) {
 						$.ajax({
-							url: "<?php echo base_url() ?>learner/live/pay_course",
+							url: "<?= base_url() ?>learner/live/pay_course",
 							type: 'POST',
 							data: {'course_id':id,'time_id':time_id,'vilt_course_id':course_id},
 							dataType : 'json',
@@ -361,7 +342,7 @@
 				}
 			}else if(pay_type == 0){
 				$.ajax({
-					url: "<?php echo base_url() ?>admin/inviteuser/get_Inviteuser",
+					url: "<?= base_url() ?>admin/inviteuser/get_Inviteuser",
 					type: 'POST',
 					data: {
 							'email':email,
@@ -374,7 +355,7 @@
 						var cnt = data;
 						if(cnt == 1) {
 							$.ajax({
-								url: "<?php echo base_url() ?>learner/live/pay_course",
+								url: "<?= base_url() ?>learner/live/pay_course",
 								type: 'POST',
 								data: {'course_id':id,'time_id':time_id,'vilt_course_id':course_id},
 								dataType : 'json',
@@ -397,54 +378,16 @@
 						}
 					}
 				});
-				
 			}
 		}
-   }
-
-	/*function enroll_virtual(id,pay_type,url){
-		var temp = 1;
-		if(temp == 1){
-			if(!isLogin){
-				showLogin();
-			}else{
-				if(pay_type == 0){
-					if(user_type !== "Learner"){
-						window.location = "<?php echo VILT_URL?>"+id;
-					}else{
-						if(url == null || url == undefined || url == ''){
-							swal({
-								title: "VILT Url Error!",
-								text:"VILT is not available now. Please wait or contact your instructor"
-							});
-						}else{
-							window.location = url+id;
-						}
-					}
-				}else if(pay_type == 1){
-					swal({
-					  title: "Are you sure?",
-					  buttons: true
-					})
-					.then((willDelete) => {
-					  if (willDelete) {
-					  //	window.location = company_url + '/classes/detail/' + id;	
-					  } else {
-						return;
-					  }
-					});
-				}
-			}
-		}
-	}*/
-	
+   	}
 	function view_course(id){
-		location.href = "<?php echo base_url($company['company_url'].'/demand/view/')?>"+id;
+		location.href = "<?= base_url($company['company_url'].'/demand/view/')?>"+id;
 	}
     function view_ILT_course(id){
-        location.href = "<?php echo base_url($company['company_url'].'/training/view/')?>"+id;
+        location.href = "<?= base_url($company['company_url'].'/training/view/')?>"+id;
     }
 	function view_live(id){
-		location.href = "<?php echo base_url($company['company_url'].'/classes/view/')?>"+id;
+		location.href = "<?= base_url($company['company_url'].'/classes/view/')?>"+id;
 	}
 </script>
