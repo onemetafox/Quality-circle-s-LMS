@@ -306,79 +306,80 @@
 		if(!isLogin){
 			showAcademyLogin(url);
 		}else{
-			if(pay_type == 1){
-				if(user_type !== "Learner"){
-					// window.location = "<?= VILT_URL?>"+id;
-				}else{
-					swal({
-					  title: "You have to pay $99 to take part in this course",
-					  buttons: true
-					}).then((willDelete) => {
-					  if (willDelete) {
-						$.ajax({
-							url: "<?= base_url() ?>learner/live/pay_course",
-							type: 'POST',
-							data: {'course_id':id,'time_id':time_id,'vilt_course_id':course_id},
-							dataType : 'json',
-							success: function(data){
-								if(data == 'success') {
-									swal({
-									  title: "You have successfully enroll for this course!",
-									});
-									setTimeout(function(){ window.location.reload() }, 10000);
-								}else{
-									swal({
-									  title: " Error!",
-									});
-								}
+			window.location = "<?= base_url() ?>"+url
+			// if(pay_type == 1){
+			// 	if(user_type !== "Learner"){
+			// 		// window.location = "<?= VILT_URL?>"+id;
+			// 	}else{
+			// 		swal({
+			// 		  title: "You have to pay $99 to take part in this course",
+			// 		  buttons: true
+			// 		}).then((willDelete) => {
+			// 		  if (willDelete) {
+			// 			$.ajax({
+			// 				url: "<?= base_url() ?>learner/live/pay_course",
+			// 				type: 'POST',
+			// 				data: {'course_id':id,'time_id':time_id,'vilt_course_id':course_id},
+			// 				dataType : 'json',
+			// 				success: function(data){
+			// 					if(data == 'success') {
+			// 						swal({
+			// 						  title: "You have successfully enroll for this course!",
+			// 						});
+			// 						setTimeout(function(){ window.location.reload() }, 10000);
+			// 					}else{
+			// 						swal({
+			// 						  title: " Error!",
+			// 						});
+			// 					}
 										  
-							}
-						});
-					  } else {
-						// return;
-					  }
-					});
+			// 				}
+			// 			});
+			// 		  } else {
+			// 			// return;
+			// 		  }
+			// 		});
 	   
-				}
-			}else if(pay_type == 0){
-				$.ajax({
-					url: "<?= base_url() ?>admin/inviteuser/get_Inviteuser",
-					type: 'POST',
-					data: {
-							'email':email,
-							'type':'1',
-							'course_id':id,
-							'time_id':time_id
-						},
-					dataType : 'json',
-					success: function(data){
-						var cnt = data;
-						if(cnt == 1) {
-							$.ajax({
-								url: "<?= base_url() ?>learner/live/pay_course",
-								type: 'POST',
-								data: {'course_id':id,'time_id':time_id,'vilt_course_id':course_id},
-								dataType : 'json',
-								success: function(data){
-									if(data == 'success') {
-										swal({
-										  title: "You have successfully enroll for this course!",
-										});
-										setTimeout(function(){ window.location.reload() }, 10000);
-									}else{
-										swal({
-										  title: " Error!",
-										});
-									}
-								}
-							});							
-						}else{
-							//$('.alert-modal').click();
-							swal({title: "You don’t have permission to access this user course. Please contact Administrator"});
-						}
-					}
-				});
-			}
+			// 	}
+			// }else if(pay_type == 0){
+			// 	$.ajax({
+			// 		url: "<?= base_url() ?>admin/inviteuser/get_Inviteuser",
+			// 		type: 'POST',
+			// 		data: {
+			// 				'email':email,
+			// 				'type':'1',
+			// 				'course_id':id,
+			// 				'time_id':time_id
+			// 			},
+			// 		dataType : 'json',
+			// 		success: function(data){
+			// 			var cnt = data;
+			// 			if(cnt == 1) {
+			// 				$.ajax({
+			// 					url: "<?= base_url() ?>learner/live/pay_course",
+			// 					type: 'POST',
+			// 					data: {'course_id':id,'time_id':time_id,'vilt_course_id':course_id},
+			// 					dataType : 'json',
+			// 					success: function(data){
+			// 						if(data == 'success') {
+			// 							swal({
+			// 							  title: "You have successfully enroll for this course!",
+			// 							});
+			// 							setTimeout(function(){ window.location.reload() }, 10000);
+			// 						}else{
+			// 							swal({
+			// 							  title: " Error!",
+			// 							});
+			// 						}
+			// 					}
+			// 				});							
+			// 			}else{
+			// 				//$('.alert-modal').click();
+			// 				swal({title: "You don’t have permission to access this user course. Please contact Administrator"});
+			// 			}
+			// 		}
+			// 	});
+			// }
 		}
    	}
 	function view_course(id){
