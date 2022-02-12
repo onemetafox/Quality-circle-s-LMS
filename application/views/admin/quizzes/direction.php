@@ -3,6 +3,6 @@
         <h3 class="card-title">Description</h3>
     </div>
     <div class="card-body direction-html">
-    	<textarea class="ckeditor"><?= $content[direction][html] ?></textarea>
+    	<textarea class="ckeditor"><?= $term["check"] ?></textarea>
     </div>
 </div>

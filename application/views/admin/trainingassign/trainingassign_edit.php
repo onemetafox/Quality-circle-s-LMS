@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[trainingmanagement]?></h2>
+		<h2><?=$term["trainingmanagement"]?></h2>
 	
 		<div class="right-wrapper">
 			<ol class="breadcrumbs">
@@ -9,9 +9,9 @@
 						<i class="fas fa-home"></i>
 					</a>
 				</li>
-				<li><span><?=$term[trainings]?></span></li>
+				<li><span><?=$term["trainings"]?></span></li>
 
-				<li><span><?=$term[assign]?></span></li>
+				<li><span><?=$term["assign"]?></span></li>
 			</ol>
 
 		</div>
@@ -34,23 +34,23 @@
 			<section class="card">
 				<header class="card-header">
 					<div class="card-actions">
-						<a class="btn btn-default" href="<?php echo base_url(); ?>admin/trainingassign" ><i class="fa fa-table"></i> <?=$term[topiclist]?> </a>
+						<a class="btn btn-default" href="<?php echo base_url(); ?>admin/trainingassign" ><i class="fa fa-table"></i> <?=$term["topiclist"]?> </a>
 					</div>
-					<h2 class="card-title"> <?=$term[trainingassignform]?></h2>
+					<h2 class="card-title"> <?=$term["trainingassignform"]?></h2>
 				</header>
 				<div class="card-body">	
 					<div class="form-group row">
-						<label class="col-lg-1 control-label text-sm-right pt-2"><?=$term[type]?><span class="required">*</span></label>
+						<label class="col-lg-1 control-label text-sm-right pt-2"><?=$term["type"]?><span class="required">*</span></label>
 						<div class="col-lg-3 col-sm-9">
 							<select class="form-control populate manual" required="" id="select_type_id"></select>
 						</div>
 
-						<label class="col-lg-1 control-label text-sm-right pt-2 company_list hidden"><?=$term[type]?><span class="required">*</span></label>
+						<label class="col-lg-1 control-label text-sm-right pt-2 company_list hidden"><?=$term["type"]?><span class="required">*</span></label>
 						<div class="col-lg-3 col-sm-9 company_list hidden">
 							<select data-plugin-selectTwo class="form-control populate manual" required="" id="sel_com"></select>
 						</div>
 
-						<label class="col-lg-1 control-label text-sm-right pt-2"><?=$term[user]?><span class="required">*</span></label>
+						<label class="col-lg-1 control-label text-sm-right pt-2"><?=$term["user"]?><span class="required">*</span></label>
 						<div class="col-lg-3 col-sm-9">
 							<select data-plugin-selectTwo class="form-control populate manual" required="" name="fasi_id" id="select_fasi_id"></select>
 						</div>
@@ -58,10 +58,10 @@
 					<div class="form-group row">
 						<div class="col-lg-6">
 							<fieldset>
-								<legend><?=$term[selectabletrainings]?></legend>
+								<legend><?=$term["selectabletrainings"]?></legend>
 								<div>
     								<div class="row" style="margin-bottom: 10px;">
-    									<label class="col-lg-4 control-label text-sm-right pt-2"> <?=$term[category]?> </label>
+    									<label class="col-lg-4 control-label text-sm-right pt-2"> <?=$term["category"]?> </label>
 	    								<div class="col-lg-6 input-group">
 											<input type="text" class="form-control" id="search_selectable_text" placeholder="Search..." onchange="loadSelectableList()">
 											<span class="input-group-append">
@@ -71,16 +71,16 @@
 									</div>
 
     								<div id="selectable_training" class="list-group" style="height:400px;overflow-y:auto"></div>
-									<div class="col-lg-12" style="text-align: right;"><?=$term[addselected]?> <img src="<?php echo base_url();?>assets/img/selectable.png" />
+									<div class="col-lg-12" style="text-align: right;"><?=$term["addselected"]?> <img src="<?php echo base_url();?>assets/img/selectable.png" />
 									</div>										
 								</div>
 							</fieldset>
 						</div>
 						<div class="col-lg-6">
 							<fieldset>
-								<legend><?=$term[selectedtrainings]?></legend>
+								<legend><?=$term["selectedtrainings"]?></legend>
 									<div class="row" style="margin-bottom: 10px;">
-    									<label class="col-lg-4 control-label text-sm-right pt-2"> <?=$term[category]?> </label>
+    									<label class="col-lg-4 control-label text-sm-right pt-2"> <?=$term["category"]?> </label>
 	    								<div class="col-lg-6 input-group">
 											<input type="text" class="form-control" id="search_selected_text" placeholder="Search..." onchange="loadSelectedList()">
 											<span class="input-group-append">
@@ -89,7 +89,7 @@
 										</div>	
 									</div>
     								<div id="selected_training" class="list-group" style="min-height: 400px;overflow-y:auto"></div>
-									<div class="col-lg-12" style="text-align: left;"><img src="<?php echo base_url();?>assets/img/selected.png" /> <?=$term[removeselected]?> </div>
+									<div class="col-lg-12" style="text-align: left;"><img src="<?php echo base_url();?>assets/img/selected.png" /> <?=$term["removeselected"]?> </div>
 							</fieldset>
 						</div>							
 					</div>
@@ -288,8 +288,8 @@
 
 	    <?php  if(isset($assign_row)) { ?>
 			var default_select2_data = new Object;
-			default_select2_data.text = "<?php echo $assign_row[user_type];?>";
-			default_select2_data.id = "<?php echo $assign_row[user_type];?>";
+			default_select2_data.text = "<?php echo $assign_row["user_type"];?>";
+			default_select2_data.id = "<?php echo $assign_row["user_type"];?>";
 			var option = new Option(default_select2_data.text, default_select2_data.id, true, true);
 			$("#select_type_id").append(option).trigger('change');
 
@@ -301,8 +301,8 @@
 			});
 
 			var default_select2_data = new Object;
-		    default_select2_data.text = "<?php echo $assign_row[salutation];?> <?php echo $assign_row[first_name];?> <?php echo $assign_row[last_name];?><?php echo $assign_row[company_name];?>";
-		    default_select2_data.id = <?php echo $assign_row[assigner_id];?>;
+		    default_select2_data.text = "<?php echo $assign_row["salutation"];?> <?php echo $assign_row["first_name"];?> <?php echo $assign_row["last_name"];?><?php echo $assign_row["company_name"];?>";
+		    default_select2_data.id = <?php echo $assign_row["assigner_id"];?>;
 		    var option = new Option(default_select2_data.text, default_select2_data.id, true, true);
 			$("#select_fasi_id").append(option).trigger('change');
 

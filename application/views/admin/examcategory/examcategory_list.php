@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[categorymanagement]?></h2>
+		<h2><?=$term["categorymanagement"]?></h2>
 	
 		<div class="right-wrapper">
 			<ol class="breadcrumbs">
@@ -9,9 +9,9 @@
 						<i class="fas fa-home"></i>
 					</a>
 				</li>
-				<li><span><?=$term[exam]?></span></li>
+				<li><span><?=$term["exam"]?></span></li>
 
-				<li><span><?=$term[category]?></span></li>
+				<li><span><?=$term["category"]?></span></li>
 			</ol>
 
 		</div>
@@ -26,7 +26,7 @@
 						<a href="<?php echo base_url(); ?>admin/examcategory/create" class="btn btn-default"><i class="fas fa-plus"></i> <?=$term[newcategory]?></a>
 					</div>
 
-					<h2 class="card-title"><?=$term[categorylist]?></h2>
+					<h2 class="card-title"><?=$term["categorylist"]?></h2>
 				</header>
 				<div class="card-body">
 					<table class="table table-responsive-md table-striped table-hover mb-0" id="datatable_examcategory" >
@@ -148,9 +148,9 @@
                 "targets": [3],
                 "createdCell": function (td, cellData, rowData, row, col) {
                     if(cellData == '1'){
-                        $(td).html('<a href="javascript:inactiveCategory('+rowData['id']+')"><span class="badge badge-success"><?=$term[active]?></span></a>');
+                        $(td).html('<a href="javascript:inactiveCategory('+rowData['id']+')"><span class="badge badge-success"><?=$term["active"]?></span></a>');
                     } else {
-                        $(td).html('<a href="javascript:activeCategory('+rowData['id']+')"><span class="badge badge-dark"><?=$term[inactive]?></span></a>');
+                        $(td).html('<a href="javascript:activeCategory('+rowData['id']+')"><span class="badge badge-dark"><?=$term["inactive"]?></span></a>');
                     }
                 }
             }, {
@@ -171,12 +171,12 @@
 				}
 			} ],     
             "columns": [
-				{ "title": "<?=$term[categoryname]?>", "data": "exam_category_name", "class": "text-left", "width":200, "visible": true },
+				{ "title": "<?=$term["categoryname"]?>", "data": "exam_category_name", "class": "text-left", "width":200, "visible": true },
 				{ "title": "<?=$term[categorycode]?>", "data": "exam_category_code", "class": "text-left", "width":"100", "visible": true },
-				{ "title": "<?=$term[description]?>", "data": "description", "class": "text-left", "width":"*", "visible": true },
-				{ "title": "<?=$term[status]?>", "data": "status", "class": "text-left", "width":100 },
-				{ "title": "<?=$term[regdate]?>", "data": "created_at", "class": "text-left", "width":150 },
-				{ "title": "<?=$term[action]?>", "data": "id", "class": "text-center", "width":"60" },
+				{ "title": "<?=$term["description"]?>", "data": "description", "class": "text-left", "width":"*", "visible": true },
+				{ "title": "<?=$term["status"]?>", "data": "status", "class": "text-left", "width":100 },
+				{ "title": "<?=$term["regdate"]?>", "data": "created_at", "class": "text-left", "width":150 },
+				{ "title": "<?=$term["action"]?>", "data": "id", "class": "text-center", "width":"60" },
 			],
 			"lengthMenu": [
                 [5, 10, 20, 50, 150, -1],

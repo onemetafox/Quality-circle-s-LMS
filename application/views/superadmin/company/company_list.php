@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2><?=$term[companymanagement]?></h2>
+        <h2><?=$term["companymanagement"]?></h2>
 
         <div class="right-wrapper">
 
@@ -15,7 +15,7 @@
                     <div class="card-actions">
 
                         <a class="modal-with-form add-user" href="<?= base_url()?>superadmin/company/edit_view">
-                            <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add"><i class="fa fa-plus"></i><?=$term[addcompany]?></button>
+                            <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add"><i class="fa fa-plus"></i><?=$term["addcompany"]?></button>
                         </a>
 
                         <!-- Modal Form -->
@@ -23,7 +23,7 @@
                             <form id="excel-export-form" action="" method="POST" novalidate="novalidate">
                                 <section class="card">
                                     <header class="card-header">
-                                        <h2 class="card-title"><?=$term[exportexcel]?></h2>
+                                        <h2 class="card-title"><?=$term["exportexcel"]?></h2>
                                     </header>
                                     <div class="card-body">
 
@@ -37,11 +37,11 @@
                                                             <span class="fileupload-preview"></span>
                                                         </div>
                                                         <span class="btn btn-default btn-file">
-                                                            <span class="fileupload-exists"><?=$term[change]?></span>
-                                                        <span class="fileupload-new"><?=$term[selectfile]?></span>
+                                                            <span class="fileupload-exists"><?=$term["change"]?></span>
+                                                        <span class="fileupload-new"><?=$term["selectfile"]?></span>
                                                         <input type="file" />
                                                         </span>
-                                                        <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload"><?=$term[remove]?></a>
+                                                        <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload"><?=$term["remove"]?></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -52,8 +52,8 @@
                                     <footer class="card-footer">
                                         <div class="row">
                                             <div class="col-md-12 text-right">
-                                                <button class="btn btn-primary modal-export-confirm"><?=$term[export]?></button>
-                                                <button class="btn btn-default modal-export-dismiss"><?=$term[cancel]?></button>
+                                                <button class="btn btn-primary modal-export-confirm"><?=$term["export"]?></button>
+                                                <button class="btn btn-default modal-export-dismiss"><?=$term["cancel"]?></button>
                                             </div>
                                         </div>
                                     </footer>
@@ -65,19 +65,19 @@
                             <form id="excel-import-form" action="" method="POST" novalidate="novalidate">
                                 <section class="card">
                                     <header class="card-header">
-                                        <h2 class="card-title"><?=$term[importexcel]?></h2>
+                                        <h2 class="card-title"><?=$term["importexcel"]?></h2>
                                     </header>
                                     <div class="card-body">
                                         <div class="form-group row">
                                             <div class="col-md-12 text-center">
                                                 <a  href="<?= base_url()?>all/user/down_temp/Company" >
-                                                    <?=$term[downloadtemplate]?>
+                                                    <?=$term["downloadtemplate"]?>
                                                 </a>
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[fileimport]?></label>
+                                            <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["fileimport"]?></label>
                                             <div class="col-sm-9">
                                                 <div class="fileupload fileupload-new" data-provides="fileupload">
                                                     <div class="input-append">
@@ -86,11 +86,11 @@
                                                             <span class="fileupload-preview"></span>
                                                         </div>
                                                         <span class="btn btn-default btn-file">
-                                                            <span class="fileupload-exists"><?=$term[change]?></span>
-                                                            <span class="fileupload-new"><?=$term[selectfile]?></span>
+                                                            <span class="fileupload-exists"><?=$term["change"]?></span>
+                                                            <span class="fileupload-new"><?=$term["selectfile"]?></span>
                                                             <input type="file" name="upload_excel" id="upload_excel"/>
                                                         </span>
-                                                        <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload"><?=$term[remove]?></a>
+                                                        <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload"><?=$term["remove"]?></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -101,8 +101,8 @@
                                     <footer class="card-footer">
                                         <div class="row">
                                             <div class="col-md-12 text-right">
-                                                <button class="btn btn-primary modal-import-confirm"><?=$term[import]?></button>
-                                                <button class="btn btn-default modal-import-dismiss"><?=$term[cancel]?></button>
+                                                <button class="btn btn-primary modal-import-confirm"><?=$term["import"]?></button>
+                                                <button class="btn btn-default modal-import-dismiss"><?=$term["cancel"]?></button>
                                             </div>
                                         </div>
                                     </footer>
@@ -241,9 +241,9 @@
                 "targets": [5],
                 "createdCell": function (td, cellData, rowData, row, col) {
                     if(cellData == '1'){
-                        $(td).html('<a href="javascript:inactiveUser('+rowData['id']+')"><span class="badge badge-success"><?=$term[yes]?></span></a>');
+                        $(td).html('<a href="javascript:inactiveUser('+rowData['id']+')"><span class="badge badge-success"><?=$term["yes"]?></span></a>');
                     } else {
-                        $(td).html('<a href="javascript:activeUser('+rowData['id']+')"><span class="badge badge-dark"><?=$term[no]?></span></a>');
+                        $(td).html('<a href="javascript:activeUser('+rowData['id']+')"><span class="badge badge-dark"><?=$term["no"]?></span></a>');
                     }
 
                 }
@@ -251,9 +251,9 @@
                 "targets": [6],
                 "createdCell": function (td, cellData, rowData, row, col) {
                     if(cellData == '1'){
-                        $(td).html('<span class="badge badge-success"><?=$term[yes]?></span>');
+                        $(td).html('<span class="badge badge-success"><?=$term["yes"]?></span>');
                     } else {
-                        $(td).html('<span class="badge badge-dark"><?=$term[no]?></span>');
+                        $(td).html('<span class="badge badge-dark"><?=$term["no"]?></span>');
                     }
 
                 }
@@ -265,13 +265,13 @@
             }],
             "columns": [
                 { "title": "No", "data": "no", "class": "text-left", "width":"*" },
-                { "title": "<?=$term[name]?>", "data": "name", "class": "text-left", "width":"*" },
+                { "title": "<?=$term["name"]?>", "data": "name", "class": "text-left", "width":"*" },
 				{ "title": "Url", "data": "url", "class": "text-left", "width":"*" },
-                { "title": "<?=$term[picture]?>", "data": "logo_path", "class": "text-center", "width":110 },
-                { "title": "<?=$term[discount]?>(%)", "data": "discount", "class": "text-center", "width":50 },
-                { "title": "<?=$term[status]?>", "data": "active", "class": "text-center", "width":50 },
-                { "title": "<?=$term[enrollstatus]?>", "data": "status", "class": "text-center", "width":50 },
-                { "title": "<?=$term[action]?>", "data": "id", "class": "text-center", "width":80 }
+                { "title": "<?=$term["picture"]?>", "data": "logo_path", "class": "text-center", "width":110 },
+                { "title": "<?=$term["discount"]?>(%)", "data": "discount", "class": "text-center", "width":50 },
+                { "title": "<?=$term["status"]?>", "data": "active", "class": "text-center", "width":50 },
+                { "title": "<?=$term["enrollstatus"]?>", "data": "status", "class": "text-center", "width":50 },
+                { "title": "<?=$term["action"]?>", "data": "id", "class": "text-center", "width":80 }
             ],
             "lengthMenu": [
                 [5, 10, 20, 50, 150, -1],

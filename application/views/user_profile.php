@@ -72,7 +72,7 @@ $image = $this->session->userdata('user_photo');
 
                                 <?php endif;?>
                                 <?php if($company_active == 0):?>
-                                <label style="color:red"><?php echo $term[contactsuperadmin];?></label>
+                                <label style="color:red"><?php echo $term["contactsuperadmin"];?></label>
                                 <a href="#" class="modal-with-form"><?= $company_name?></a>
                                 <?php endif;?>
                             </div>

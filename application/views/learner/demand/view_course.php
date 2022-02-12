@@ -10,7 +10,7 @@
 <script src="<?php echo base_url(); ?>assets/js_company/sweetalert.js"></script>
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[course]?></h2>
+		<h2><?=$term["course"]?></h2>
 	
 		<div class="right-wrapper">
 			<ol class="breadcrumbs">

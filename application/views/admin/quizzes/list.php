@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[quizzesmanagement]?></h2>
+		<h2><?=$term["quizzesmanagement"]?></h2>
 	</header>
 
 	<!-- start: page -->
@@ -10,7 +10,7 @@
 				<header class="card-header">
 					<span class="pull-right">	
 						<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
-							<i class="fas fa-plus"></i> <?=$term[newquiz]?>
+							<i class="fas fa-plus"></i> <?=$term["newquiz"]?>
 						</a>
 						<div class="dropdown-menu" role="menu">
 							<?php foreach($this->Quiz_model->TYPES as $t) { ?>
@@ -19,7 +19,7 @@
 						</div>
 					</span>
 
-					<h2 class="card-title"><?=$term[quizzeslist]?></h2>
+					<h2 class="card-title"><?=$term["quizzeslist"]?></h2>
 				</header>
 				<div class="card-body">
 					<table class="table table-responsive-md table-striped table-hover mb-0" id="datatable_quizlist" >
@@ -144,14 +144,14 @@
 				}
 			} ],     
             "columns": [
-            	{ "title": "<?=$term[title]?>", "data": "quiz_title", "class": "text-left" },
-            	{ "title": "<?=$term[categoryname]?>", "data": "category_name", "class": "text-left", "width":"100" },
+            	{ "title": "<?=$term["title"]?>", "data": "quiz_title", "class": "text-left" },
+            	{ "title": "<?=$term["categoryname"]?>", "data": "category_name", "class": "text-left", "width":"100" },
 				/*{ "title": "Topic Title", "data": "training_title", "class": "text-left", "width":"100" },*/
-				{ "title": "<?=$term[type]?>", "data": "quiz_type", "class": "text-left", "width":"50"},
+				{ "title": "<?=$term["type"]?>", "data": "quiz_type", "class": "text-left", "width":"50"},
 				/*{ "title": "Marks", "data": "marks", "class": "text-right", "width":"50"},*/
 			/*	{ "title": "Limited Time", "data": "limited_time", "class": "text-right", "width":"50"},	*/
-				{ "title": "<?=$term[regdate]?>", "data": "created_at", "class": "text-left", "width":150 },
-				{ "title": "<?=$term[action]?>", "data": "id", "class": "text-center", "width":"80" },
+				{ "title": "<?=$term["regdate"]?>", "data": "created_at", "class": "text-left", "width":150 },
+				{ "title": "<?=$term["action"]?>", "data": "id", "class": "text-center", "width":"80" },
 			],
 			"lengthMenu": [
                 [5, 10, 20, 50, 150, -1],

@@ -1,7 +1,7 @@
 
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2><?=$term[bookshop]?></h2>
+        <h2><?=$term["bookshop"]?></h2>
 
         <div class="right-wrapper">
         </div>
@@ -15,7 +15,7 @@
                 <header class="card-header">
                     <div class="card-actions">
                     </div>
-                    <h2 class="card-title"><?=$term[booklist]?></h2>
+                    <h2 class="card-title"><?=$term["booklist"]?></h2>
                 </header>
                 <div class="card-body">
                     <?php foreach($book_list as $book){ ?>
@@ -39,10 +39,10 @@
                                             </div>
                                             <div class="summary-footer">
 
-                                                <a class="btn btn-primary modal-with-form " href="<?=base_url()?>learner/flipbook/view_book/<?=$book['id']?>" target="blank"><?=$term[viewbook]?>
+                                                <a class="btn btn-primary modal-with-form " href="<?=base_url()?>learner/flipbook/view_book/<?=$book['id']?>" target="blank"><?=$term["viewbook"]?>
                                                 </a>
                                                 <a class="btn btn-primary modal-with-form" href="<?=base_url()?>learner/mybook/viewBookDetail/<?=$book['id']?>" >
-                                                    <?=$term[viewdetails]?>
+                                                    <?=$term["viewdetails"]?>
                                                 </a>
                                             </div>
                                         </div>

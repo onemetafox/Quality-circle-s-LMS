@@ -42,25 +42,25 @@
 		<div class="row">
 			<div class="col-sm-6">
 				<label class="control-label">When Correct:</label>
-				<input type="text" class="form-control input-sm" name="content[message][true]" value="<?= strip_tags($content[message]["true"]) ?>"/>
+				<input type="text" class="form-control input-sm" name="content[message][true]" value="<?= strip_tags($content["message"]["true"]) ?>"/>
 			</div>
 			<div class="col-sm-6">
 				<label class="control-label">When Incorrect:</label>
-				<input type="text" class="form-control input-sm" name="content[message][false]" value="<?= strip_tags($content[message]["false"]) ?>"/>
+				<input type="text" class="form-control input-sm" name="content[message][false]" value="<?= strip_tags($content["message"]["false"]) ?>"/>
 			</div>
 		</div>
 	</div>
 </div>
 <div class="list-group">
-	<?php foreach($content[answers] as $i=>$answer) : ?>
+	<?php foreach($content["answers"] as $i=>$answer) : ?>
 		<div id="answer-<?= $i ?>" class="list-group-item" onclick="active_answer(this)">
 			<table width="100%">
 				<tr>
 					<td width="25px">
-						<input type="checkbox" name="content[answers][<?= $i ?>][correct]" <?= $answer[correct]?checked:'' ?> value="true">
+						<input type="checkbox" name="content[answers][<?= $i ?>][correct]" <?= $answer["correct"]?checked:'' ?> value="true">
 					</td>
 					<td>
-						<input type="text" class="form-control input-sm" name="content[answers][<?= $i ?>][html]" value="<?= strip_tags($answer[html]) ?>"/>
+						<input type="text" class="form-control input-sm" name="content[answers][<?= $i ?>][html]" value="<?= strip_tags($answer["html"]) ?>"/>
 					</td>
 				</tr>
 			</table>

@@ -10,7 +10,7 @@
 <script src="<?php echo base_url(); ?>assets/js_company/sweetalert.js"></script>
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[course]?></h2>	
+		<h2><?=$term["course"]?></h2>	
 		<div class="right-wrapper">
 			<ol class="breadcrumbs">
 				<li>
@@ -81,7 +81,7 @@
                                     <div class="col-lg-12" data-plugin-portlet id="portlet-1">
                                         <section class="card mb-4" id="card-1">
                                             <header class="card-header" style="background-color:#cbcede">
-                                                <h2 class="card-title"><?=nl2br($term[learningobjectives]) ?></h2>
+                                                <h2 class="card-title"><?=nl2br($term["learningobjectives"]) ?></h2>
                                             </header>
                                             <div class="card-body item_details_single">
                                                 <?php 
@@ -97,7 +97,7 @@
                                     <div class="col-lg-12" data-plugin-portlet id="portlet-2">
                                         <section class="card mb-4" id="card-2">
                                             <header class="card-header" style="background-color:#cbcede">                
-                                                <h2 class="card-title"><?=$term[whoshouldattend]?></h2>
+                                                <h2 class="card-title"><?=$term["whoshouldattend"]?></h2>
                                             </header>
                                             <div class="card-body item_details_single">
                                                 <?php 
@@ -129,7 +129,7 @@
                                     <div class="col-lg-12" data-plugin-portlet id="portlet-3">
                                         <section class="card mb-4" id="card-3">
                                             <header class="card-header" style="background-color:#cbcede">                
-                                                <h2 class="card-title"><?=$term[agenda]?></h2>
+                                                <h2 class="card-title"><?=$term["agenda"]?></h2>
                                             </header>
                                             <div class="card-body item_details_single">
                                                 <?php 

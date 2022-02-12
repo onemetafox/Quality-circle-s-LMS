@@ -274,8 +274,8 @@
 
 		<?php  if(isset($assign_row)) { ?>
 			var default_select2_data = new Object;
-			default_select2_data.text = "<?php echo $assign_row[user_type];?>";
-			default_select2_data.id = "<?php echo $assign_row[user_type];?>";
+			default_select2_data.text = "<?php echo $assign_row["user_type"];?>";
+			default_select2_data.id = "<?php echo $assign_row["user_type"];?>";
 			var option = new Option(default_select2_data.text, default_select2_data.id, true, true);
 			$("#select_type_id").append(option).trigger('change');
 
@@ -287,8 +287,8 @@
 			});
 
 			var default_select2_data = new Object;
-		    default_select2_data.text = "<?php echo $assign_row[salutation];?> <?php echo $assign_row[first_name];?> <?php echo $assign_row[last_name];?><?php echo $assign_row[company_name];?>";
-		    default_select2_data.id = <?php echo $assign_row[assigner_id];?>;
+		    default_select2_data.text = "<?php echo $assign_row["salutation"];?> <?php echo $assign_row["first_name"];?> <?php echo $assign_row["last_name"];?><?php echo $assign_row["company_name"];?>";
+		    default_select2_data.id = <?php echo $assign_row["assigner_id"];?>;
 		    var option = new Option(default_select2_data.text, default_select2_data.id, true, true);
 			$("#select_company_id").append(option).trigger('change');
 

@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[assign]?></h2>
+		<h2><?=$term["assign"]?></h2>
 			
 	</header>
 
@@ -10,7 +10,7 @@
 			<div class="tabs">
 				<ul class="nav nav-tabs">
 					<li class="nav-item">
-						<a class="nav-link" href="#fasi_tab" data-toggle="tab"><i class="fas fa-star"></i> <?=$term[assignlist]?></a>
+						<a class="nav-link" href="#fasi_tab" data-toggle="tab"><i class="fas fa-star"></i> <?=$term["assignlist"]?></a>
 					</li>					
 				</ul>
 				<div class="tab-content">
@@ -18,9 +18,9 @@
 						<section class="card">
 							<header class="card-header">
 								<div class="card-actions">
-									<a class="btn btn-default" href="<?php echo base_url(); ?>admin/trainingassign/create" id="btn_fasi_add"><i class="fa fa-plus"></i> <?=$term[newassign]?> </a>
+									<a class="btn btn-default" href="<?php echo base_url(); ?>admin/trainingassign/create" id="btn_fasi_add"><i class="fa fa-plus"></i> <?=term["newassign"]?> </a>
 								</div>
-								<h2 class="card-title"><?=$term[assignlist]?></h2>
+								<h2 class="card-title"><?=$term["assignlist"]?></h2>
 							</header>
 							<div class="card-body">
 								<table class="table table-responsive-md table-hover mb-0" id="datatable_fasi_assign" >
@@ -116,15 +116,15 @@ jQuery(document).ready(function() {
 			}
 		}],     
         "columns": [
-			{ "title": "<?=$term[userrole]?>", "data": "user_type", "class": "text-center", "width":60 },
-			{ "title": "<?=$term[companyname]?>", "data": "company_name", "class": "text-center", "width":100 },
-			{ "title": "<?=$term[name]?>", "data": "name", "class": "text-center", "width":200 },
-			{ "title": "<?=$term[trainingcategory]?>", "data": "category_name", "class": "text-left", "width":"100" },
-			{ "title": "<?=$term[trainingtitle]?>", "data": "training_title", "class": "text-left", "width":"*" },
-			{ "title": "<?=$term[startdate]?>", "data": "start_date", "class": "text-left", "width":"100" },
-			{ "title": "<?=$term[repeatdays]?>", "data": "repeat_days", "class": "text-left", "width":"100" },
-			{ "title": "<?=$term[assigneremail]?>", "data": "parent_email", "class": "text-left", "width":"150" },
-			{ "title": "<?=$term[action]?>", "data": "id", "class": "text-center", "width":"80" },
+			{ "title": "<?=$term["userrole"]?>", "data": "user_type", "class": "text-center", "width":60 },
+			{ "title": "<?=$term["companyname"]?>", "data": "company_name", "class": "text-center", "width":100 },
+			{ "title": "<?=$term["name"]?>", "data": "name", "class": "text-center", "width":200 },
+			{ "title": "<?=$term["trainingcategory"]?>", "data": "category_name", "class": "text-left", "width":"100" },
+			{ "title": "<?=$term["trainingtitle"]?>", "data": "training_title", "class": "text-left", "width":"*" },
+			{ "title": "<?=$term["startdate"]?>", "data": "start_date", "class": "text-left", "width":"100" },
+			{ "title": "<?=$term["repeatdays"]?>", "data": "repeat_days", "class": "text-left", "width":"100" },
+			{ "title": "<?=$term["assigneremail"]?>", "data": "parent_email", "class": "text-left", "width":"150" },
+			{ "title": "<?=$term["action"]?>", "data": "id", "class": "text-center", "width":"80" },
 		],
 		"lengthMenu": [
             [5, 10, 20, 50, 150, -1],

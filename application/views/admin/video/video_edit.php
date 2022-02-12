@@ -53,7 +53,7 @@
 						</form>
 						<!--<div class="row">
 							<div class="col-md-2">
-								<a class="btn btn-default modal-basic" href="#modalBasic" id="btn_add"><i class="fa fa-plus"></i> <?=$term[addnew]?></a>
+								<a class="btn btn-default modal-basic" href="#modalBasic" id="btn_add"><i class="fa fa-plus"></i> <?=$term["addnew"]?></a>
 							</div>
 							<div class="col-md-8">
 								<table class="table table-responsive-md table-bordered mb-0" id="datatable_category_standard">
@@ -65,8 +65,8 @@
 					<footer class="card-footer">
 						<div class="row">
 							<div class="col-md-12 text-center">
-								<button type="submit" class="btn btn-primary" id="btn_save"><?=$term[save]?></button>
-								<button type="reset" class="btn btn-default"><?=$term[reset]?></button>
+								<button type="submit" class="btn btn-primary" id="btn_save"><?=$term["save"]?></button>
+								<button type="reset" class="btn btn-default"><?=$term["reset"]?></button>
 							</div>
 						</div>
 					</footer>
@@ -258,9 +258,9 @@
 				}
 			}],
             "columns": [
-                { "title": "<?=$term[no]?>", "data": "no", "class": "text-left", "width":"80" },
+                { "title": "<?=$term["no"]?>", "data": "no", "class": "text-left", "width":"80" },
 				{ "title": "Standard", "data": "video_title", "class": "text-left", "width":150, "visible": true },
-				{ "title": "<?=$term[action]?>", "data": "id", "class": "text-left", "width":"80" },
+				{ "title": "<?=$term["action"]?>", "data": "id", "class": "text-left", "width":"80" },
 			],
 			"lengthMenu": [
                 [5, 10, 20, 50, 150, -1],

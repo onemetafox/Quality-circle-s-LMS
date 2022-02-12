@@ -23,7 +23,7 @@
             <button type="button" class="btn btn-primary modal-with-form" onclick="export_btn()"><i class=" icon-floppy-disk position-left"></i> Save </button>
             <a href="<?php echo base_url(); ?>instructor/library" class="btn btn-primary"><i class="icon-cancel-square2 position-left"></i> Cancel</a>
             <a class="modal-with-form create-manual" href="#modalFormCreateManual" hidden>
-                <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add"> <i class="fa fa-plus"></i> <?=$term[createmanual]?></button>
+                <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add"> <i class="fa fa-plus"></i> <?=$term["createmanual"]?></button>
             </a>
 
         </div>
@@ -45,12 +45,12 @@
     <div id="modalFormCreateManual" class="modal-block modal-block-primary mfp-hide">
             <section class="card">
                 <header class="card-header">
-                    <h2 class="card-title"><?=$term[createmanual]?></h2>
+                    <h2 class="card-title"><?=$term["createmanual"]?></h2>
                 </header>
                 <div class="card-body">
 
                     <div class="form-group row">
-                        <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[manualname]?></label>
+                        <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["manualname"]?></label>
                         <div class="col-sm-9">
                             <input type="text" id="new_manual" name="new_manual" class="form-control">
                         </div>
@@ -61,7 +61,7 @@
                 <footer class="card-footer">
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            <button class="btn btn-primary" type="button" onclick="save_manual()"><?=$term[create]?></button>
+                            <button class="btn btn-primary" type="button" onclick="save_manual()"><?=$term["create"]?></button>
                             <button type="button" class="btn btn-close" data-dismiss="modal">Close</button>
                         </div>
                     </div>

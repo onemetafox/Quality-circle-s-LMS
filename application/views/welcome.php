@@ -144,29 +144,29 @@ function closeNav() {
 
 			<div id="mySidenav" class="sidenav">
 			  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-			  <a href="<?php echo site_url('login'); ?>"><?=$term[login]?></a>
+			  <a href="<?php echo site_url('login'); ?>"><?=$term["login"]?></a>
 			</div>
 
 			<div class="nav-right-block w-clearfix">
 				<a href="#" title="Contact Us! - SmarterU LMS - Online Training Software" class="nav-icon-block w-inline-block">
 					<div class="nav-icon-title icon"></div>
-					<div class="nav-icon-title w-hidden-small w-hidden-tiny"><?=$term[contactus]?></div>
+					<div class="nav-icon-title w-hidden-small w-hidden-tiny"><?=$term["contactus"]?></div>
 				</a>
 				<a href="tel:<?php echo $company_phone; ?>" title="Contact Us! - SmarterU LMS - Corporate Training" class="nav-icon-block phone-block w-inline-block">
-					<div class="nav-icon-title small-title w-hidden-tiny"><?=$term[questioncallus]?></div>
+					<div class="nav-icon-title small-title w-hidden-tiny"><?=$term["questioncallus"]?></div>
 					<div class="nav-icon-title phone-number w-hidden-tiny"><?php echo $company_phone; ?></div>
 					<div class="nav-icon-title icon w-hidden-main w-hidden-medium w-hidden-small"></div>
 				</a>
 			</div>
 			<nav role="navigation" class="nav-menu mobile w-nav-menu">
 				<a href="#" data-ix="show-nav-link-line" title="SmarterU LMS - Corporate Training" class="nav-link-block w-hidden-medium w-hidden-small w-hidden-tiny w-inline-block w--current" style="transition: color 0.2s ease 0s;">
-					<div class="nav-link-title"><?=$term[home]?></div>
+					<div class="nav-link-title"><?=$term["home"]?></div>
 					<div data-ix="hide-nav-link-line" class="nav-link-line" style="opacity: 0; width: 0px;"></div>
 				</a>
 			  
 			   
 				<a data-ix="show-nav-link-line" href="<?php echo site_url('login'); ?>" target="_blank" class="nav-link-block w-hidden-medium w-hidden-small w-hidden-tiny w-inline-block" style="transition: color 0.2s ease 0s;">
-					<div title="Training Solutions by Industy - SmarterU LMS - Blended Learning" class="nav-link-title"><?=$term[login]?></div>
+					<div title="Training Solutions by Industy - SmarterU LMS - Blended Learning" class="nav-link-title"><?=$term["login"]?></div>
 					<div data-ix="hide-nav-link-line" class="nav-link-line" style="opacity: 0; width: 0px;"></div>
 				</a>
 			 </nav>

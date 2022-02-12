@@ -11,7 +11,7 @@
 
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2><?=$term[librarymanagement]?></h2>
+        <h2><?=$term["librarymanagement"]?></h2>
 
         <div class="right-wrapper">
         </div>
@@ -23,28 +23,28 @@
         <div class="col-lg-12">
             <section class="card">
                 <header class="card-header">
-                    <h2 class="card-title"><?=$term[librarylist]?></h2>
+                    <h2 class="card-title"><?=$term["librarylist"]?></h2>
                 </header>
                 <div class="card-body">
                     <div class="">
                         <?php if($parent_id  == 0) {?>
                             <a class="modal-with-form create-directory" href="#modalFormCreateDirectory">
-                                <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add"> <i class="fa fa-plus"></i> <?=$term[createdirectory]?></button>
+                                <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add"> <i class="fa fa-plus"></i> <?=$term["createdirectory"]?></button>
                             </a>
                             <a class="modal-with-form insert-directory" href="">
-                                <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" > <i class="fa fa-plus"></i> <?=$term[insertdirectory]?></button>
+                                <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" > <i class="fa fa-plus"></i> <?=$term["insertdirectory"]?></button>
                             </a>
                             <a class="modal-with-form copy-directory" href="">
                                 <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" > <i class="fa fa-plus"></i> Copy File to Directory</button>
                             </a>
                             <a class="modal-with-form upload-file" href="#modalFormUploadFile" data-loading-overlay="" data-loading-overlay-options="{ 'startShowing': false }">
-                                <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add"> <i class="fa fa-plus"></i> <?=$term[uploadfile]?></button>
+                                <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add"> <i class="fa fa-plus"></i> <?=$term["uploadfile"]?></button>
                             </a>
                             <a class="modal-with-form create-manual" href="#modalFormCreateManual">
-                                <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add"> <i class="fa fa-plus"></i> <?=$term[createmanual]?></button>
+                                <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add"> <i class="fa fa-plus"></i> <?=$term["createmanual"]?></button>
                             </a>
                             <a class="btn btn-primary modal-with-form merge-doc mb-1 mt-0 mr-1" href="" data-loading-overlay="" data-loading-overlay-options="{ 'startShowing': false }" style="width: 115px;">
-                                <?=$term[mergedoc]?>
+                                <?=$term["mergedoc"]?>
                             </a>
                             <a class="btn btn-primary modal-with-form assign-user mb-1 mt-0 mr-1" href="" >
                                 Assign User
@@ -54,16 +54,16 @@
 
 
                             <a class="modal-with-form " href="<?= base_url()?>instructor/library">
-                                <button type="button" class="mb-1 mt-0 mr-1 btn btn-default"> <i class="fa fa-table"></i> <?=$term[library]?></button>
+                                <button type="button" class="mb-1 mt-0 mr-1 btn btn-default"> <i class="fa fa-table"></i> <?=$term["library"]?></button>
                             </a>
                             <a class="modal-with-form upload-file" href="#modalFormUploadFile">
-                                <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add"> <i class="fa fa-plus"></i> <?=$term[uploadfile]?></button>
+                                <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add"> <i class="fa fa-plus"></i> <?=$term["uploadfile"]?></button>
                             </a>
                             <a class="modal-with-form" href="<?= base_url()?>instructor/library/create_manual_dir/<?php echo $parent_id?>">
-                                <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add"> <i class="fa fa-plus"></i> <?=$term[createmanual]?></button>
+                                <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add"> <i class="fa fa-plus"></i> <?=$term["createmanual"]?></button>
                             </a>
                             <a class="btn btn-primary modal-with-form merge-doc mb-1 mt-0 mr-1" href="" data-loading-overlay="" data-loading-overlay-options="{ 'startShowing': false }">
-                                <?=$term[mergedoc]?>
+                                <?=$term["mergedoc"]?>
                             </a>
                             <a class="btn btn-primary modal-with-form assign-user mb-1 mt-0 mr-1" href="" >
                                 Assign User
@@ -84,7 +84,7 @@
                                             <a class="modal-with-form" href="<?= base_url()?>instructor/library/create_contract">
                                                 <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add"> <i class="fa fa-plus"></i>Create By Ckeditor</button>
                                             </a>
-                                        <button class="btn btn-default modal-dismiss" onclick="$('#modalFormCreateManual').magnificPopup('close');"><?=$term[cancel]?></button>
+                                        <button class="btn btn-default modal-dismiss" onclick="$('#modalFormCreateManual').magnificPopup('close');"><?=$term["cancel"]?></button>
                                         </div>
                                     </div>
                                 </footer>
@@ -95,12 +95,12 @@
                             <form id="create-directory-form" action="" method="POST" novalidate="novalidate">
                                 <section class="card">
                                     <header class="card-header">
-                                        <h2 class="card-title"><?=$term[createdirectory]?></h2>
+                                        <h2 class="card-title"><?=$term["createdirectory"]?></h2>
                                     </header>
                                     <div class="card-body">
 
                                         <div class="form-group row">
-                                            <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[directoryname]?></label>
+                                            <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["directoryname"]?></label>
                                             <div class="col-sm-9">
                                                 <input type="text" id="new_directory" name="new_directory" class="form-control">
                                             </div>
@@ -111,8 +111,8 @@
                                     <footer class="card-footer">
                                         <div class="row">
                                             <div class="col-md-12 text-right">
-                                                <button class="btn btn-primary modal-create-confirm"><?=$term[create]?></button>
-                                                <button class="btn btn-default modal-create-dismiss"><?=$term[cancel]?></button>
+                                                <button class="btn btn-primary modal-create-confirm"><?=$term["create"]?></button>
+                                                <button class="btn btn-default modal-create-dismiss"><?=$term["cancel"]?></button>
                                             </div>
                                         </div>
                                     </footer>
@@ -125,12 +125,12 @@
                                 <input type="hidden" id="parent_id" name="parent_id" value="<?= $parent_id?>">
                                 <section class="card">
                                     <header class="card-header">
-                                        <h2 class="card-title"><?=$term[uploadfile]?></h2>
+                                        <h2 class="card-title"><?=$term["uploadfile"]?></h2>
                                     </header>
                                     <div class="card-body">
 
                                         <div class="form-group row">
-                                            <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[name]?></label>
+                                            <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["name"]?></label>
                                             <div class="col-sm-9">
                                                 <div class="fileupload fileupload-new" data-provides="fileupload">
                                                     <div class="input-append">
@@ -139,11 +139,11 @@
                                                             <span class="fileupload-preview"></span>
                                                         </div>
                                                         <span class="btn btn-default btn-file">
-                                                            <span class="fileupload-exists"><?=$term[change]?></span>
-                                                        <span class="fileupload-new"><?=$term[selectfile]?></span>
+                                                            <span class="fileupload-exists"><?=$term["change"]?></span>
+                                                        <span class="fileupload-new"><?=$term["selectfile"]?></span>
                                                         <input type="file" name="upload_file" id="upload_file"/>
                                                         </span>
-                                                        <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload"><?=$term[remove]?></a>
+                                                        <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload"><?=$term["remove"]?></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -154,8 +154,8 @@
                                     <footer class="card-footer">
                                         <div class="row">
                                             <div class="col-md-12 text-right">
-                                                <button class="btn btn-primary modal-upload-confirm"><?=$term[upload]?></button>
-                                                <button class="btn btn-default modal-upload-dismiss"><?=$term[cancel]?></button>
+                                                <button class="btn btn-primary modal-upload-confirm"><?=$term["upload"]?></button>
+                                                <button class="btn btn-default modal-upload-dismiss"><?=$term["cancel"]?></button>
                                             </div>
                                         </div>
                                     </footer>
@@ -164,7 +164,7 @@
                         </div>
 
                         <a class="modal-with-form rename" href="#modalFormRename" hidden>
-                            <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add"> <i class="fa fa-plus"></i> <?=$term[rename]?></button>
+                            <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add"> <i class="fa fa-plus"></i> <?=$term["rename"]?></button>
                         </a>
 
                         <div id="modalFormRename" class="modal-block modal-block-primary mfp-hide">
@@ -172,12 +172,12 @@
                                 <input type="hidden" id="id" name="id" class="form-control">
                                 <section class="card">
                                     <header class="card-header">
-                                        <h2 class="card-title"><?=$term[rename]?></h2>
+                                        <h2 class="card-title"><?=$term["rename"]?></h2>
                                     </header>
                                     <div class="card-body">
 
                                         <div class="form-group row">
-                                            <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[name]?></label>
+                                            <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["name"]?></label>
                                             <div class="col-sm-9">
                                                 <input type="text" id="name" name="name" class="form-control">
                                             </div>
@@ -188,8 +188,8 @@
                                     <footer class="card-footer">
                                         <div class="row">
                                             <div class="col-md-12 text-right">
-                                                <button class="btn btn-primary modal-rename-confirm"><?=$term[rename]?></button>
-                                                <button class="btn btn-default modal-create-dismiss"><?=$term[cancel]?></button>
+                                                <button class="btn btn-primary modal-rename-confirm"><?=$term["rename"]?></button>
+                                                <button class="btn btn-default modal-create-dismiss"><?=$term["cancel"]?></button>
                                             </div>
                                         </div>
                                     </footer>
@@ -198,7 +198,7 @@
                         </div>
 
                         <a class="modal-with-form merge" href="#modalFormMerge" hidden>
-                            <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-merge"> <i class="fa fa-plus"></i> <?=$term[rename]?></button>
+                            <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-merge"> <i class="fa fa-plus"></i> <?=$term["rename"]?></button>
                         </a>
 
                         <div id="modalFormMerge" class="modal-block modal-block-primary mfp-hide">
@@ -298,7 +298,7 @@
         "columns": [
             { "title": "", "data": "id", "class": "text-left", "width":10 },
             { "title": "#", "data": "no", "class": "center", "width":50 },
-            { "title": "<?=$term[name]?>", "data": "fullname", "class": "text-left", "width":200 }
+            { "title": "<?=$term["name"]?>", "data": "fullname", "class": "text-left", "width":200 }
         ],
 
         "scrollY": false,
@@ -905,9 +905,9 @@
                 "createdCell": function (td, cellData, rowData, row, col) {
 
                     if(cellData == '1'){
-                        $(td).html('<a href="javascript:inactivePermission('+rowData['id']+')"><span class="badge badge-success"><?=$term[yes]?></span></a>');
+                        $(td).html('<a href="javascript:inactivePermission('+rowData['id']+')"><span class="badge badge-success"><?=$term["yes"]?></span></a>');
                     } else {
-                        $(td).html('<a href="javascript:activePermission('+rowData['id']+')"><span class="badge badge-dark"><?=$term[no]?></span></a>');
+                        $(td).html('<a href="javascript:activePermission('+rowData['id']+')"><span class="badge badge-dark"><?=$term["no"]?></span></a>');
                     }
 
 
@@ -918,10 +918,10 @@
 
                         if(rowData['file_type'] != 'DIRECTORY'){
                             if( cellData == '1'){
-                                $(td).html('<a href="javascript:unsetShopping('+rowData['id']+')"><span class="badge badge-success"><?=$term[yes]?></span></a>');
+                                $(td).html('<a href="javascript:unsetShopping('+rowData['id']+')"><span class="badge badge-success"><?=$term["yes"]?></span></a>');
 
                             } else {
-                                $(td).html('<a href="<?= base_url()?>instructor/library/setShopping/'+rowData['id']+'"><span class="badge badge-dark"><?=$term[no]?></span></a>');
+                                $(td).html('<a href="<?= base_url()?>instructor/library/setShopping/'+rowData['id']+'"><span class="badge badge-dark"><?=$term["no"]?></span></a>');
                             }
 
                         }else{
@@ -955,12 +955,12 @@
             "columns": [
                 { "title": "Select", "data": "no", "class": "text-left", "width": 20 },
                 { "title": "#", "data": "no", "class": "center", "width":20 },
-                { "title": "<?=$term[name]?>", "data": "name", "class": "text-left", "width":"*" },
-                { "title": "<?=$term[filetype]?>", "data": "file_type", "class": "text-left", "width":80},
-                { "title": "<?=$term[date]?>", "data": "reg_date", "class": "text-center", "width":110 },
+                { "title": "<?=$term["name"]?>", "data": "name", "class": "text-left", "width":"*" },
+                { "title": "<?=$term["filetype"]?>", "data": "file_type", "class": "text-left", "width":80},
+                { "title": "<?=$term["date"]?>", "data": "reg_date", "class": "text-center", "width":110 },
                 { "title": "Print Permission", "data": "print_permission", "class": "text-center", "width":50 },
-                { "title": "<?=$term[shopping]?>", "data": "is_shopping", "class": "text-center", "width":50 },
-                { "title": "<?=$term[action]?>", "data": "id", "class": "text-center", "width":80 },
+                { "title": "<?=$term["shopping"]?>", "data": "is_shopping", "class": "text-center", "width":50 },
+                { "title": "<?=$term["action"]?>", "data": "id", "class": "text-center", "width":80 },
             ],
             "lengthMenu": [
                 [5, 10, 20, 50, 150, -1],

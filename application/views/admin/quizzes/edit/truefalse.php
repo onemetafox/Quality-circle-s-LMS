@@ -41,35 +41,35 @@
 				<input type="radio" name="content[correct]" <?= $content[correct]=="true"?checked:'' ?> value="true">
 			</td>
 			<td>
-				<input type="text" class="form-control input-sm" name="content[message][0]" value="<?= $content[message][0] ?>"/>
+				<input type="text" class="form-control input-sm" name="content[message][0]" value="<?= $content["message"][0] ?>"/>
 			</td>
 			<td width="25px"></td>
 			<td width="25px">
 				<input type="radio" name="content[correct]" <?= $content[correct]=="false"?checked:'' ?> value="false">
 			</td>
 			<td>
-				<input type="text" class="form-control input-sm" name="content[message][1]" value="<?= $content[message][1] ?>"/>
+				<input type="text" class="form-control input-sm" name="content[message][1]" value="<?= $content["message"][1] ?>"/>
 			</td>
 		</tr>
 	</table>
 </div>
 <div class="list-group">
-	<?php foreach($content[answers] as $i=>$answer) : ?>
+	<?php foreach($content["answers"] as $i=>$answer) : ?>
 		<div id="answer-<?= $i ?>" class="list-group-item" onclick="active_answer(this)">
 			<table width="100%">
 				<tr>
 					<td width="25px">
-						<input type="checkbox" name="content[answers][<?= $i ?>][correct]" <?= $answer[correct]?checked:'' ?> value="true">
+						<input type="checkbox" name="content[answers][<?= $i ?>][correct]" <?= $answer["correct"]?checked:'' ?> value="true">
 					</td>
 					<td width="1px" class="image">
-						<input type="hidden" name="content[answers][<?= $i ?>][image]" value="<?= $answer[image] ?>">
-						<img class="<?= $answer[image]?"":"hidden" ?>" height="50px" src="/assets/image/<?= $answer[image] ?>">
+						<input type="hidden" name="content[answers][<?= $i ?>][image]" value="<?= $answer["image"] ?>">
+						<img class="<?= $answer["image"]?"":"hidden" ?>" height="50px" src="/assets/image/<?= $answer["image"] ?>">
 					</td>
 					<td>
-						<input type="text" class="form-control input-sm" name="content[answers][<?= $i ?>][html]" value="<?= strip_tags($answer[html]) ?>"/>
+						<input type="text" class="form-control input-sm" name="content[answers][<?= $i ?>][html]" value="<?= strip_tags($answer["html"]) ?>"/>
 					</td>
 					<td width="100px" class="partial <?= $this->partial?"":"hidden" ?>">
-						<input type="number" min="0" class="form-control input-sm" name="content[answers][<?= $i ?>][points]" value="<?= $answer[points] ?>">
+						<input type="number" min="0" class="form-control input-sm" name="content[answers][<?= $i ?>][points]" value="<?= $answer["points"] ?>">
 					</td>
 				</tr>
 			</table>

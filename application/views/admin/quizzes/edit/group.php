@@ -67,16 +67,16 @@
 	}
 </script>
 <div class="list-group answers">
-	<?php foreach($content[answers] as $i=>$answer) : ?>
+	<?php foreach($content["answers"] as $i=>$answer) : ?>
 		<div id="answer-<?= $i ?>" class="list-group-item" onclick="active_answer(this)">
 			<table width="100%">
 				<tr>
 					<td width="1px" class="image">
-						<input type="hidden" name="content[answers][<?= $i ?>][image]" value="<?= $answer[image] ?>">
-						<img class="<?= $answer[image]?"":"hidden" ?>" height="50px" src="/assets/image/<?= $answer[image] ?>">
+						<input type="hidden" name="content[answers][<?= $i ?>][image]" value="<?= $answer["image"] ?>">
+						<img class="<?= $answer["image"]?"":"hidden" ?>" height="50px" src="/assets/image/<?= $answer["image"] ?>">
 					</td>
 					<td>
-						<input type="text" class="form-control input-sm" name="content[answers][<?= $i ?>][html]" value="<?= strip_tags($answer[html]) ?>"/>
+						<input type="text" class="form-control input-sm" name="content[answers][<?= $i ?>][html]" value="<?= strip_tags($answer["html"]) ?>"/>
 					</td>
 					<td width="100px">
 						<div class="btn-group btn-group-sm pull-right">
@@ -100,9 +100,9 @@
 			<input type="text" class="form-control input-sm" name="[items][]"/>
 		</div>
 	</div>
-	<?php foreach($content[answers] as $i=>$answer) : ?>
+	<?php foreach($content["answers"] as $i=>$answer) : ?>
 		<div class="list-group">
-			<?php foreach($answer[items] as $item) : ?>
+			<?php foreach($answer["items"] as $item) : ?>
 				<div class="list-group-item" onclick="active_item(this)">
 					<input type="text" class="form-control input-sm" name="content[answers][<?= $i ?>][items][]" value="<?= $item ?>"/>
 				</div>

@@ -51,4 +51,4 @@
 		});
 	});
 </script>
-<textarea id="<?= $rand ?>" name="content[html]" class="form-control" rows="6"><?= $question[html] ?></textarea>
+<textarea id="<?= $rand ?>" name="content[html]" class="form-control" rows="6"><?= $question["html"] ?></textarea>

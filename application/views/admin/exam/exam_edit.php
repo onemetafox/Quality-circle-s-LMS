@@ -21,7 +21,7 @@
 <script src="<?php echo base_url(); ?>assets/js_company/sweetalert.js"></script>
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[exammanagement]?></h2>
+		<h2><?=$term["exammanagement"]?></h2>
 	</header>
 
 	<!-- start: page -->
@@ -30,11 +30,11 @@
 			<section class="form-wizard" id="exam_wizard">
 				<?php echo form_open('admin/exam/add_exam_auto', array("id"=>"frm_exam")); ?>
 				<header class="card-header" style="background-color: #DAD9D9;">
-					<h2 class="card-title"><?=$term[examinfo]?></h2>
+					<h2 class="card-title"><?=$term["examinfo"]?></h2>
 					<div class="card-actions">
-						<button type="submit" id="btn_save" class="btn btn-default" style="margin-right: 10px;"><?=$term[save]?></button>
+						<button type="submit" id="btn_save" class="btn btn-default" style="margin-right: 10px;"><?=$term["save"]?></button>
 						<a class="btn btn-default" href="<?php echo base_url()?>admin/exam/showPreviewQuestion/<?=$exam['id']?>" style="margin-right: 10px;"><i class="fa fa-eye"></i> Preview</a>
-						<a class="btn btn-default" href="<?php echo base_url(); ?>admin/exam"><i class="fas fa-table"></i><?=$term[examlist]?></a>
+						<a class="btn btn-default" href="<?php echo base_url(); ?>admin/exam"><i class="fas fa-table"></i><?=$term["examlist"]?></a>
 					</div>
 				</header>
 				<div class="row">
@@ -91,8 +91,8 @@
 								</header>
 								<div class="card-body">
 									<div class="row">
-										<label class="col-sm-12 control-label text-sm-left pt-2"><?=$term[limittimemin]?></label>
-										<div style="color: red; font-weight: bold;font-size:11px;" class="col-sm-12 text-sm-left"><?=$term[nolimittimehint]?></div>
+										<label class="col-sm-12 control-label text-sm-left pt-2"><?=$term["limittimemin"]?></label>
+										<div style="color: red; font-weight: bold;font-size:11px;" class="col-sm-12 text-sm-left"><?=$term["nolimittimehint"]?></div>
 									</div>
 									<div class="form-group row">
 										<div class="col-sm-12">
@@ -100,28 +100,28 @@
 										</div>
 									</div>
 									<div class="row">
-										<label class="col-sm-12 control-label text-sm-left pt-2"><?=$term[minimumpasspercent]?></label>
+										<label class="col-sm-12 control-label text-sm-left pt-2"><?=$term["minimumpasspercent"]?></label>
 									</div>
 									<div class="form-group row">
 										<div class="col-sm-12">
-											<input type="text" name="min_percent" class="form-control" placeholder="<?=$term[minimumpasspercent]?>" required="" value="<?php echo isset($exam)&&isset($exam['min_percent'])?$exam['min_percent']:''; ?>">
+											<input type="text" name="min_percent" class="form-control" placeholder="<?=$term["minimumpasspercent"]?>" required="" value="<?php echo isset($exam)&&isset($exam['min_percent'])?$exam['min_percent']:''; ?>">
 											<label>%</label>
 										</div>
 									</div>
 									<div class="row">
-										<label class="col-sm-12 control-label text-sm-left pt-2"><?=$term[certificatetemplate]?></label>
+										<label class="col-sm-12 control-label text-sm-left pt-2"><?=$term["certificatetemplate"]?></label>
 									</div>
 									<div class="form-group row">
 										<div class="col-sm-12">
 											<select class="form-control" name="certificate_id" readonly>
 												<?php
 												foreach ($certification as $key => $cert_temp) {
-													if($cert_temp[id] == $exam[certificate_id]) {
+													if($cert_temp["id"] == $exam["certificate_id"]) {
 														$str_selected = "selected";
 													} else {
 														$str_selected = "";
 													}
-													echo sprintf("<option value='%d' %s>%s</option>",$cert_temp[id], $str_selected, $cert_temp[title] );
+													echo sprintf("<option value='%d' %s>%s</option>",$cert_temp["id"], $str_selected, $cert_temp["title"] );
 												}
 												?>
 											</select>
@@ -140,7 +140,7 @@
 										<?php if ($exam['title'] != ""):?>
 												<?=$exam['title']?>
 											<?php else:?>
-												<?=$term[examtitle]?>
+												<?=$term["examtitle"]?>
 										<?php endif;?>
 									</label>
 									<img id="exam_image_div" class="col-lg-12" style="height: 10rem;width: auto;display: none;">
@@ -148,7 +148,7 @@
 										<?php if ($exam['description'] != ""):?>
 											<?=$exam['description']?>
 										<?php else:?>
-											<?=$term[typedescriptionhere]?>
+											<?=$term["typedescriptionhere"]?>
 										<?php endif;?>
 									</div>
 								</div>
@@ -253,13 +253,13 @@
 	<div class="modal-dialog" style = "width: 70%;max-width: 70%;">
 		<div class="modal-content">
 			<div class="modal-header bg-default">
-				<h3 class="modal-title"><?=$term[examinfo]?></h3>
+				<h3 class="modal-title"><?=$term["examinfo"]?></h3>
 			</div>
 			<form id="exam_title_form" class="form-horizontal">
 				<div class="modal-body">
 					<div class="col-lg-12" style="display: flex;">
-						<label class="col-lg-2 control-label text-sm-left pt-2"><?=$term[examtitle]?></label>
-						<input type="text" id="exam_title" name="title" class="form-control col-lg-10" placeholder="<?=$term[examtitle]?>" required="" value="<?php echo isset($exam)&&isset($exam['title'])?$exam['title']:''; ?>">
+						<label class="col-lg-2 control-label text-sm-left pt-2"><?=$term["examtitle"]?></label>
+						<input type="text" id="exam_title" name="title" class="form-control col-lg-10" placeholder="<?=$term["examtitle"]?>" required="" value="<?php echo isset($exam)&&isset($exam['title'])?$exam['title']:''; ?>">
 					</div>
 					<div class="col-lg-12" style="display: flex;padding-top: 30px;">
 						<div class="col-lg-4">
@@ -268,7 +268,7 @@
 							</div>
 						</div>
 						<div class="col-lg-8">
-							<label class="col-lg-2 control-label text-sm-left pt-2"><?=$term[description]?></label>
+							<label class="col-lg-2 control-label text-sm-left pt-2"><?=$term["description"]?></label>
 							<textarea class="ckeditor form-control" name="description" id="exam_description" rows="5" ><?php echo isset($exam)&&isset($exam['description'])?$exam['description']:''; ?></textarea>
 						</div>
 					</div>

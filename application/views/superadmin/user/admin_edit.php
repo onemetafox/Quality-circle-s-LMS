@@ -8,7 +8,7 @@ if($id != 0){
 ?>
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[usermanagement]?></h2>
+		<h2><?=$term["usermanagement"]?></h2>
 
         <div class="right-wrapper">
 
@@ -23,7 +23,7 @@ if($id != 0){
 
                 <header class="card-header">
                     <div class="card-actions">
-                        <a class="btn btn-default btn_user_list" href="<?= base_url()?>superadmin/user/"><i class="fas fa-table"></i> <?=$term[userlist]?></a>
+                        <a class="btn btn-default btn_user_list" href="<?= base_url()?>superadmin/user/"><i class="fas fa-table"></i> <?=$term["userlist"]?></a>
                     </div>
                     <h2 class="card-title">FORM</h2>
                 </header>
@@ -46,31 +46,31 @@ if($id != 0){
                             <input type="hidden" name="id" id="id" value="<?php print $id?>">
 
                             <div class="form-group row">
-                                <label class="col-sm-2 control-label text-sm-right pt-5"><?=$term[firstname]?><span class="required">*</span></label>
+                                <label class="col-sm-2 control-label text-sm-right pt-5"><?=$term["firstname"]?><span class="required">*</span></label>
                                 <div class="col-sm-10">
                                     <input type="text" value="<?php print $first_name ?>" id="first_name" name="first_name" class="form-control"  placeholder="Max" required>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[lastname]?><span class="required">*</span></label>
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term["lastname"]?><span class="required">*</span></label>
                                 <div class="col-sm-10">
                                     <input type="text" value="<?php print $last_name ?>" id="last_name" name="last_name" class="form-control" placeholder="Mustermann" required>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[email]?><span class="required">*</span></label>
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term["email"]?><span class="required">*</span></label>
                                 <div class="col-sm-10">
                                     <input type="text" value="<?php print $email ?>" id="email" name="email" class="form-control" placeholder="timon@ols.com" required>
                                 </div>
                             </div>
                             <div class="form-group row <?php //$id==0?print '':print 'hidden'?>">
-                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[password]?><?php $id==0?print '<span class="required">*</span>':print ''?></label>
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term["password"]?><?php $id==0?print '<span class="required">*</span>':print ''?></label>
                                 <div class="col-sm-10">
                                     <input type="text" value="<?php print $password ?>" id="password" name="password" class="form-control" <?php $id==0?print 'required':print ''?>>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[company]?><span class="required">*</span></label>
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term["company"]?><span class="required">*</span></label>
                                 <div class="col-sm-10">
                                     <select id="company_id" name="company_id" class="form-control mb3">
                                         <?php foreach($company_data as $item){ ?>
@@ -80,7 +80,7 @@ if($id != 0){
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[usertype]?></label>
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term["usertype"]?></label>
                                 <div class="col-sm-10">
                                     <select class="form-control mb3" id="user_type" name="user_type" >
                                         <option value='Admin' <?php $user_type=='Admin'?print 'selected':print ''?> ><?php echo 'Admin'; ?></option>
@@ -89,13 +89,13 @@ if($id != 0){
                             </div>
                             <div class="form-group row">
 
-                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[organization]?></label>
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term["organization"]?></label>
                                 <div class="col-sm-10">
                                     <input type="text" value="<?php print $organization ?>" id="organization" name="organization" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[manager]?></label>
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term["manager"]?></label>
                                 <div class="col-sm-10">
                                     <input type="text" value="<?php print $manager ?>" id="manager" name="manager" class="form-control">
                                 </div>
@@ -104,19 +104,19 @@ if($id != 0){
 
 
                             <div class="form-group row">
-                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[about_me]?></label>
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term["about_me"]?></label>
                                 <div class="col-sm-10">
                                     <input type="text" value="<?php print $about_me ?>" id="about_me" name="about_me" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[address1]?></label>
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term["address1"]?></label>
                                 <div class="col-sm-10">
                                     <input type="text" value="<?php print $address1 ?>" id="address1" name="address1" class="form-control"d>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[address2]?></label>
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term["address2"]?></label>
                                 <div class="col-sm-10">
                                     <input type="text" value="<?php print $address2 ?>" id="address2" name="address2" class="form-control">
                                 </div>
@@ -136,7 +136,7 @@ if($id != 0){
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[phone]?></label>
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term["phone"]?></label>
                                 <div class="col-sm-10">
                                     <input type="text" value="<?php print $phone ?>" id="phone" required name="phone" class="form-control">
                                 </div>
@@ -177,7 +177,7 @@ if($id != 0){
                             
 
                             <div class="form-group row">
-                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[active]?></label>
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term["active"]?></label>
                                 <div class="col-sm-10">
                                     <div class="switch switch-primary">
                                         <input type="checkbox" name="active" id="active" data-plugin-ios-switch <?php echo $active==1?'checked="checked"':'';?> />
@@ -187,13 +187,13 @@ if($id != 0){
                             </div>
                             
                             <div class="form-group row">
-                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[zip_code]?></label>
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term["zip_code"]?></label>
                                 <div class="col-sm-10">
                                     <input type="text" value="<?php print $zip_code ?>" id="zip_code" name="zip_code" class="form-control">
                                 </div>
                             </div>
                               <div class="form-group row">
-                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[subscription]?><span class="required">*</span></label>
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term["subscription"]?><span class="required">*</span></label>
                                 <div class="col-sm-10">
                                     <select name="plan_id" id="plan_id" class="form-control">
                                         <option value="0">--No Plan--</option>
@@ -229,8 +229,8 @@ if($id != 0){
                 <footer class="card-footer">
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            <a id="sendBtn" data-loading-overlay="" data-loading-overlay-options="{ 'startShowing': false }"  class="btn btn-primary modal-add-confirm" style="color:white;    padding-left: 20px;padding-right: 20px;"><?php $id==0?print $term[add]:print $term[update]?></a>
-                            <button type="reset" id="btn_reset" class="btn btn-default"><?=$term[reset]?></button>
+                            <a id="sendBtn" data-loading-overlay="" data-loading-overlay-options="{ 'startShowing': false }"  class="btn btn-primary modal-add-confirm" style="color:white;    padding-left: 20px;padding-right: 20px;"><?php $id==0?print $term["add"]:print $term["update"]?></a>
+                            <button type="reset" id="btn_reset" class="btn btn-default"><?=$term["reset"]?></button>
                         </div>
                     </div>
                 </footer>
@@ -339,7 +339,7 @@ if($id != 0){
         var formData = new FormData($('#add-form')[0]);
         //$("#sendBtn").trigger('loading-overlay:show');
 
-        if($('#add-form .modal-add-confirm').html().indexOf('<?=$term[add]?>') >= 0) {
+        if($('#add-form .modal-add-confirm').html().indexOf('<?=$term["add"]?>') >= 0) {
 
             $.ajax({
                 url: $('#base_url').val()+'superadmin/user/add',

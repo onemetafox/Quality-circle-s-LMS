@@ -46,7 +46,7 @@
 </style>
 <section role="main" class="content-body">
    <header class="page-header">
-      <h2><?=$term[course]?></h2>
+      <h2><?=$term["course"]?></h2>
       <div class="right-wrapper">
          <ol class="breadcrumbs">
             <li>
@@ -65,7 +65,7 @@
             <header class="card-header">
                <div class="card-actions">
                </div>
-               <h2 class="card-title"><?=$term[courseinfo]?></h2>
+               <h2 class="card-title"><?=$term["courseinfo"]?></h2>
             </header>
             <div class="card-body">
                <div class="row">
@@ -258,8 +258,8 @@
                                                 <footer class="card-footer">
                                                    <div class="row">
                                                       <div class="col-md-12 text-right">
-                                                         <button class="btn btn-primary" onclick="btnCreatePage()"><?=$term[create]?></button>
-                                                         <button class="btn btn-default modal-create-dismiss"><?=$term[cancel]?></button>
+                                                         <button class="btn btn-primary" onclick="btnCreatePage()"><?=$term["create"]?></button>
+                                                         <button class="btn btn-default modal-create-dismiss"><?=$term["cancel"]?></button>
                                                       </div>
                                                    </div>
                                                 </footer>
@@ -293,8 +293,8 @@
                                                 <footer class="card-footer">
                                                    <div class="row">
                                                       <div class="col-md-12 text-right">
-                                                         <button class="btn btn-primary modal-create-confirm"><?=$term[create]?></button>
-                                                         <button class="btn btn-default modal-create-dismiss"><?=$term[cancel]?></button>
+                                                         <button class="btn btn-primary modal-create-confirm"><?=$term["create"]?></button>
+                                                         <button class="btn btn-default modal-create-dismiss"><?=$term["cancel"]?></button>
                                                       </div>
                                                    </div>
                                                 </footer>
@@ -342,8 +342,8 @@
                                                 <footer class="card-footer">
                                                    <div class="row">
                                                       <div class="col-md-12 text-right">
-                                                         <button class="btn btn-primary modal-create-quiz"><?=$term[create]?></button>
-                                                         <button class="btn btn-default modal-create-dismiss"><?=$term[cancel]?></button>
+                                                         <button class="btn btn-primary modal-create-quiz"><?=$term["create"]?></button>
+                                                         <button class="btn btn-default modal-create-dismiss"><?=$term["cancel"]?></button>
                                                       </div>
                                                    </div>
                                                 </footer>
@@ -397,8 +397,8 @@
                                                    <footer class="card-footer">
                                                       <div class="row">
                                                          <div class="col-md-12 text-right">
-                                                            <button class="btn btn-primary" onclick="btnCreatePageWithID(1)"><?=$term[create]?></button>
-                                                            <button class="btn btn-default modal-create-dismiss"><?=$term[cancel]?></button>
+                                                            <button class="btn btn-primary" onclick="btnCreatePageWithID(1)"><?=$term["create"]?></button>
+                                                            <button class="btn btn-default modal-create-dismiss"><?=$term["cancel"]?></button>
                                                          </div>
                                                       </div>
                                                    </footer>
@@ -751,7 +751,7 @@
    <div class="modal-dialog" style = "width: 70%;max-width: 70%;">
       <div class="modal-content">
          <div class="modal-header bg-default">
-            <h3 class="modal-title"><?=$term[library]?></h3>
+            <h3 class="modal-title"><?=$term["library"]?></h3>
          </div>
          <form id="exam_title_form" class="form-horizontal">
             <div class="modal-body">
@@ -1198,7 +1198,7 @@
    "columns": [
        { "title": "", "data": "id", "class": "text-left", "width":10 },
        { "title": "#", "data": "no", "class": "center", "width":50 },
-       { "title": "<?=$term[name]?>", "data": "fullname", "class": "text-left", "width":200 }
+       { "title": "<?=$term["name"]?>", "data": "fullname", "class": "text-left", "width":200 }
    ],
    "lengthMenu": [
        [5, 10, 20, 50, 150, -1],
@@ -1248,7 +1248,7 @@
    "columns": [
        { "title": "", "data": "id", "class": "text-left", "width":10 },
        { "title": "#", "data": "no", "class": "center", "width":50 },
-       { "title": "<?=$term[name]?>", "data": "fullname", "class": "text-left", "width":200 }
+       { "title": "<?=$term["name"]?>", "data": "fullname", "class": "text-left", "width":200 }
    ],
    "lengthMenu": [
        [5, 10, 20, 50, 150, -1],
@@ -1423,7 +1423,7 @@
    
    $('.modal-create-confirm').click(function (e) {
    e.preventDefault();
-   if($('.modal-create-confirm').html().indexOf('<?=$term[create]?>') >= 0)
+   if($('.modal-create-confirm').html().indexOf('<?=$term["create"]?>') >= 0)
    {
    $.ajax({
        url: $('#base_url').val()+'admin/demand/save_exam_page',
@@ -1488,7 +1488,7 @@
    
    $('.modal-create-quiz').click(function (e) {
    e.preventDefault();
-   if($('.modal-create-quiz').html().indexOf('<?=$term[create]?>') >= 0)
+   if($('.modal-create-quiz').html().indexOf('<?=$term["create"]?>') >= 0)
    {
    $.ajax({
        url: $('#base_url').val()+'admin/demand/save_quiz_page',
@@ -2663,17 +2663,17 @@
                if(rowData.file_type == 'DIRECTORY'){
                    $(td).html('');
                } else {
-                   $(td).html('<a onclick="library_insert('+rowData.id+')" class="btn btn-default"><?=$term[add]?></a>');
+                   $(td).html('<a onclick="library_insert('+rowData.id+')" class="btn btn-default"><?=$term["add"]?></a>');
                }
            }
    
        }],
    "columns": [
        { "title": "#", "data": "no", "class": "center", "width":20 },
-       { "title": "<?=$term[name]?>", "data": "name", "class": "text-left", "width":"*" },
-       { "title": "<?=$term[filetype]?>", "data": "file_type", "class": "text-left", "width":80},
-       { "title": "<?=$term[date]?>", "data": "reg_date", "class": "text-center", "width":110 },
-       { "title": "<?=$term[action]?>", "data": "id", "class": "text-center", "width":80 }
+       { "title": "<?=$term["name"]?>", "data": "name", "class": "text-left", "width":"*" },
+       { "title": "<?=$term["filetype"]?>", "data": "file_type", "class": "text-left", "width":80},
+       { "title": "<?=$term["date"]?>", "data": "reg_date", "class": "text-center", "width":110 },
+       { "title": "<?=$term["action"]?>", "data": "id", "class": "text-center", "width":80 }
    ],
    "lengthMenu": [
        [5, 10, 20, 50, 150, -1],

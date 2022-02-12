@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[invoicingaccounting]?></h2>
+		<h2><?=$term["invoicingaccounting"]?></h2>
 	
 	</header>
 	<div class="row" style="padding-top: 0px;">
@@ -10,7 +10,7 @@
                     <div class="card-actions">
                        
                     </div>
-					<h2 class="card-title"><?=$term[paymentlist]?></h2>
+					<h2 class="card-title"><?=$term["paymentlist"]?></h2>
 				</header>
 				<div class="card-body">
 					<table class="table table-responsive-md table-hover mb-0" id="datatable_account_list" ></table>
@@ -127,13 +127,13 @@
                 }
             }],
 	        "columns": [
-                { "title": "<?=$term[title]?>", "data": "title", "class": "text-left", "width":30 },
-	        	{ "title": "<?=$term[paymentmethod]?>", "data": "payment_method", "class": "text-left", "width":150 },
-				{ "title": "<?=$term[amount]?>", "data": "amount", "class": "text-left", "width":60 },
-	        	{ "title": "<?=$term[companyname]?>", "data": "name", "class": "text-left", "width":60 },
-                { "title": "<?=$term[paymentreason]?>", "data": "object_type", "class": "text-left", "width":60 },
-				{ "title": "<?=$term[paydate]?>", "data": "pay_date", "class": "text-center", "width":60 },
-                { "title": "<?=$term[action]?>", "data": "id", "class": "text-center", "width":60 }
+                { "title": "<?=$term["title"]?>", "data": "title", "class": "text-left", "width":30 },
+	        	{ "title": "<?=$term["paymentmethod"]?>", "data": "payment_method", "class": "text-left", "width":150 },
+				{ "title": "<?=$term["amount"]?>", "data": "amount", "class": "text-left", "width":60 },
+	        	{ "title": "<?=$term["companyname"]?>", "data": "name", "class": "text-left", "width":60 },
+                { "title": "<?=$term["paymentreason"]?>", "data": "object_type", "class": "text-left", "width":60 },
+				{ "title": "<?=$term["paydate"]?>", "data": "pay_date", "class": "text-center", "width":60 },
+                { "title": "<?=$term["action"]?>", "data": "id", "class": "text-center", "width":60 }
 			],
 			"lengthMenu": [
 	            [5, 10, 20, 50, 150, -1],

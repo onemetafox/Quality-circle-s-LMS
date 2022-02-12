@@ -218,7 +218,7 @@
       <div id="details" class="clearfix">
         <div id="client">
           <div class="to">INVOICE TO:</div>
-          <h2 class="name"><?=$user[name]?></h2>
+          <h2 class="name"><?=$user["name"]?></h2>
           <div class="address"><?=$user['phone']?></div>
           <div class="email"><a href="mailto:<?=$user['email'] ?>"><?=$user['email'] ?></a></div>
         </div>

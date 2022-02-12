@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[examassignmanagement]?></h2>
+		<h2><?=$term["examassignmanagement"]?></h2>
 	</header>
 	<style type="text/css">
 		fieldset { 
@@ -20,22 +20,22 @@
 			<section class="card">
 				<header class="card-header">
 					<div class="card-actions">	
-						<a class="btn btn-default" id="btn_list" href="<?php echo base_url(); ?>admin/examassign"><i class="fas fa-table"></i> <?=$term[examlist]?></a>
+						<a class="btn btn-default" id="btn_list" href="<?php echo base_url(); ?>admin/examassign"><i class="fas fa-table"></i> <?=$term["examlist"]?></a>
 					</div>
 
-					<h2 class="card-title"><?=$term[assignlist]?> </h2>
+					<h2 class="card-title"><?=$term["assignlist"]?> </h2>
 				</header>
 				<div class="card-body">
 					<div class="form-group row">
-						<label class="col-sm-1 control-label text-sm-right pt-2"> <?=$term[type]?>: <span class="required">*</span></label>
+						<label class="col-sm-1 control-label text-sm-right pt-2"> <?=$term["type"]?>: <span class="required">*</span></label>
 						<div class="col-sm-3">
 							<select data-plugin-selectTwo class="form-control populate manual" id="user_type" required=""></select>
 						</div>
-						<label class="col-lg-1 control-label text-sm-right pt-2 company_list hidden"><?=$term[type]?><span class="required">*</span></label>
+						<label class="col-lg-1 control-label text-sm-right pt-2 company_list hidden"><?=$term["type"]?><span class="required">*</span></label>
 						<div class="col-lg-3 col-sm-9 company_list hidden">
 							<select data-plugin-selectTwo class="form-control populate manual" required="" id="sel_com"></select>
 						</div>
-						<label class="col-sm-1 control-label text-sm-right pt-2"> <?=$term[user]?> <span class="required">*</span></label>
+						<label class="col-sm-1 control-label text-sm-right pt-2"> <?=$term["user"]?> <span class="required">*</span></label>
 						<div class="col-sm-3">
 							<select data-plugin-selectTwo class="form-control populate manual" name="assigned_user_id" id="select_assigned_user_id" required=""></select>
 						</div>
@@ -43,10 +43,10 @@
 					<div class="form-group row">
 						<div class="col-lg-6">
 							<fieldset>
-								<legend><?=$term[selectableexams]?></legend>
+								<legend><?=$term["selectableexams"]?></legend>
 								<div>
     								<div class="row" style="margin-bottom: 10px;">
-    									<label class="col-lg-4 control-label text-sm-right pt-2"><?=$term[category]?></label>
+    									<label class="col-lg-4 control-label text-sm-right pt-2"><?=$term["category"]?></label>
 	    								<div class="col-lg-6 input-group">
 											<input type="text" class="form-control" id="search_selectable_text" placeholder="Search..." onchange="loadSelectableList()">
 											<span class="input-group-append">
@@ -56,7 +56,7 @@
 									</div>
 
     								<div id="selectable_exam" class="list-group" style="height:400px;overflow-y:auto"></div>
-									<div class="col-lg-12" style="text-align: right;"><?=$term[addselected]?><img src="<?php echo base_url();?>assets/img/selectable.png" />
+									<div class="col-lg-12" style="text-align: right;"><?=$term["addselected"]?><img src="<?php echo base_url();?>assets/img/selectable.png" />
 									</div>										
 								</div>
 							</fieldset>
@@ -65,7 +65,7 @@
 							<fieldset>
 								<legend><?=$term[selectedexams]?></legend>
 									<div class="row" style="margin-bottom: 10px;">
-    									<label class="col-lg-4 control-label text-sm-right pt-2"> <?=$term[category]?> </label>
+    									<label class="col-lg-4 control-label text-sm-right pt-2"> <?=$term["category"]?> </label>
 	    								<div class="col-lg-6 input-group">
 											<input type="text" class="form-control" id="search_selected_text" placeholder="Search..." onchange="loadSelectedList()">
 											<span class="input-group-append">
@@ -74,7 +74,7 @@
 										</div>	
 									</div>
     								<div id="selected_exam" class="list-group" style="min-height: 400px;overflow-y:auto"></div>
-									<div class="col-lg-12" style="text-align: left;"><img src="<?php echo base_url();?>assets/img/selected.png" /> <?=$term[removeselected]?> </div>
+									<div class="col-lg-12" style="text-align: left;"><img src="<?php echo base_url();?>assets/img/selected.png" /> <?=$term["removeselected"]?> </div>
 							</fieldset>
 						</div>							
 					</div>
@@ -287,7 +287,7 @@
 		    });
 
 			var default_select2_data = new Object;
-			default_select2_data.text = "<?php echo $assign_row['salutation'];?> <?php echo $assign_row['first_name'];?> <?php echo $assign_row['last_name'];?><?php echo $assign_row[company_name];?>";
+			default_select2_data.text = "<?php echo $assign_row['salutation'];?> <?php echo $assign_row['first_name'];?> <?php echo $assign_row['last_name'];?><?php echo $assign_row["company_name"];?>";
 			default_select2_data.id = "<?php echo $assign_row['assigner_id'];?>";
 			var option = new Option(default_select2_data.text, default_select2_data.id, true, true);
 			$("#select_assigned_user_id").append(option).trigger('change');

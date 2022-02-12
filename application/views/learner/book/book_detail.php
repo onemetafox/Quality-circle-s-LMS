@@ -1,7 +1,7 @@
 
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2><?=$term[bookshop]?></h2>
+        <h2><?=$term["bookshop"]?></h2>
 
         <div class="right-wrapper">
         </div>
@@ -52,7 +52,7 @@
                     <div class="row">
                         <div class="col-md-12 text-right">
                             <a class="btn btn-primary modal-with-form " href="#" >
-                                <i class="fa fa-plus"></i> <?=$term[purchase]?>
+                                <i class="fa fa-plus"></i> <?=$term["purchase"]?>
                             </a>
                         </div>
                     </div>

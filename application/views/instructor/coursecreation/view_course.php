@@ -7,7 +7,7 @@
 </style>
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[course]?></h2>
+		<h2><?=$term["course"]?></h2>
 	
 		<div class="right-wrapper">
 			<ol class="breadcrumbs">
@@ -26,7 +26,7 @@
 		<div class="col-lg-12">
 			<section class="card sectionBox">
 				<header class="card-header">
-					<h2 class="card-title"><?=$term[viewcourse]?></h2>
+					<h2 class="card-title"><?=$term["viewcourse"]?></h2>
 				</header>
 				<div style="margin-top: 20px;">
 					<div class="row" style="width: 80%;">
@@ -65,8 +65,8 @@
 								</ul>
 								<br>
 								<br>
-								<a href="<?=base_url()?>instructor/coursecreation/edit_course/<?=$course->id?>" class="btnBlue"><?=$term[editcourse]?></a>
-								<a href="<?=base_url()?>instructor/coursecreation/detail_course/<?=$course->id?>" class="btnBlue"><?=$term[preview]?></a>
+								<a href="<?=base_url()?>instructor/coursecreation/edit_course/<?=$course->id?>" class="btnBlue"><?=$term["editcourse"]?></a>
+								<a href="<?=base_url()?>instructor/coursecreation/detail_course/<?=$course->id?>" class="btnBlue"><?=$term["preview"]?></a>
 							</div>
 						</div><!--col-3-->
 					</div>

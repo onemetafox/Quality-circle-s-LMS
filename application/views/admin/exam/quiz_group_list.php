@@ -14,7 +14,7 @@
 						<i class="fas fa-home"></i>
 					</a>
 				</li>
-				<li><span><?=$term[exam]?></span></li>
+				<li><span><?=$term["exam"]?></span></li>
 
 				<li><span>Quiz Group List</span></li>
 			</ol>
@@ -104,7 +104,7 @@
                 { "title": "#", "data": "no", "class": "center", "width":20 },
                 { "title": "Title", "data": "title", "class": "text-left"},
                 { "title": "Quiz_num", "data": "quiz_num", "class": "text-left", "width":50 },
-                { "title": "<?=$term[action]?>", "data": "id", "class": "text-left", "width":200 },
+                { "title": "<?=$term["action"]?>", "data": "id", "class": "text-left", "width":200 },
             ],
             "lengthMenu": [
                 [5, 10, 20, 50, 150, -1],

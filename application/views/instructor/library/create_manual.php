@@ -48,7 +48,7 @@
 </style>
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2><?=$term[createmanual]?></h2>
+        <h2><?=$term["createmanual"]?></h2>
         <div class="right-wrapper"></div>
 
         <div class="card-actions" style="margin-top: 7px !important; top:initial">
@@ -56,22 +56,22 @@
             </a>
             <input type="hidden" name="parent_id" id="parent_id" value="<?php echo $parent_id?>">
             <input type="hidden" name="id" id="id" value="<?php echo $id?>">
-            <a class="btn btn-primary modal-with-form" href="<?=base_url()?>instructor/library" ><?=$term[librarylist]?>
+            <a class="btn btn-primary modal-with-form" href="<?=base_url()?>instructor/library" ><?=$term["librarylist"]?>
             </a>
 
             <a class="modal-with-form create-manual" href="#modalFormCreateManual" hidden>
-                <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add"> <i class="fa fa-plus"></i> <?=$term[createmanual]?></button>
+                <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add"> <i class="fa fa-plus"></i> <?=$term["createmanual"]?></button>
             </a>
             <div id="modalFormCreateManual" class="modal-block modal-block-primary mfp-hide">
                 <form id="create-manual-form" action="" method="POST" novalidate="novalidate">
                     <section class="card">
                         <header class="card-header">
-                            <h2 class="card-title"><?=$term[createmanual]?></h2>
+                            <h2 class="card-title"><?=$term["createmanual"]?></h2>
                         </header>
                         <div class="card-body">
 
                             <div class="form-group row">
-                                <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[manualname]?></label>
+                                <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["manualname"]?></label>
                                 <div class="col-sm-9">
                                     <input type="text" id="new_manual" name="new_manual" class="form-control" value="<?=$manual_name?>">
                                 </div>
@@ -82,7 +82,7 @@
                         <footer class="card-footer">
                             <div class="row">
                                 <div class="col-md-12 text-right">
-                                    <button class="btn btn-primary modal-create-confirm"><?=$term[create]?></button>
+                                    <button class="btn btn-primary modal-create-confirm"><?=$term["create"]?></button>
                                     <button type="button" class="btn btn-close" data-dismiss="modal">Close</button>
                                 </div>
                             </div>

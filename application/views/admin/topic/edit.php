@@ -1,12 +1,12 @@
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[topicmanagement]?></h2>
+		<h2><?=$term["topicmanagement"]?></h2>
 		<div class="right-wrapper">
 			<ol class="breadcrumbs">
 				<li><a href="<?php echo base_url(); ?>admin/home"><i class="fas fa-home"></i></a></li>
-				<li><span><?=$term[trainings]?></span></li>
-				<li><span><?=$term[topic]?></span></li>
-				<li><span><?=$term[add]?> or <?=$term[edit]?> </span></li>
+				<li><span><?=$term["trainings"]?></span></li>
+				<li><span><?=$term["topic"]?></span></li>
+				<li><span><?=$term["add"]?> or <?=$term["edit"]?> </span></li>
 			</ol>
 		</div>
 	</header>
@@ -18,10 +18,10 @@
 				<section class="card">
 					<header class="card-header">
 						<div class="card-actions">	
-							<a class="btn btn-default" href="<?php echo base_url(); ?>admin/topic"><i class="fas fa-table"></i> <?=$term[topiclist]?></a>
+							<a class="btn btn-default" href="<?php echo base_url(); ?>admin/topic"><i class="fas fa-table"></i> <?=$term["topiclist"]?></a>
 						</div>
 
-						<h2 class="card-title"><?=$term[topic]?></h2>
+						<h2 class="card-title"><?=$term["topic"]?></h2>
 					</header>
 					<div class="card-body">
 						<div class="row">
@@ -39,7 +39,7 @@
 							</div>
 							<div class="col-lg-6">
 								<div class="form-group">
-									<label class="col-form-label" for="select_category_id"><?=$term[category]?> <span class="required">*</span></label>
+									<label class="col-form-label" for="select_category_id"><?=$term["category"]?> <span class="required">*</span></label>
 									<select data-plugin-selectTwo data-ajax-url="<?php echo base_url(); ?>admin/category/getcategorylist" data-plugin-options='{ "allowClear": true, "placeholder": "Category", "minimumInputLength": 0, "data" : [{"id":<?php print $category_id; ?>, "text": "<?php print $category_name; ?>" }]  }' class="form-control populate" required="" name="category_id" id="select_category_id">
 									</select>
 								</div>
@@ -49,7 +49,7 @@
 						<div class="form-group row">
 							<div class="col-lg-6" style="display: none;">
 								<div class="form-group">
-									<label class="col-form-label" for="spinner_training_timer"><?=$term[timemin]?></label>
+									<label class="col-form-label" for="spinner_training_timer"><?=$term["timemin"]?></label>
 									<div data-plugin-spinner data-plugin-options='{ "value":<?php print $training_timer; ?>, "step": 5, "min": 0, "max": 9999 }'>
 										<div class="input-group form-control-small">
 											<input type="text" class="spinner-input form-control" name="training_timer" id="spinner_training_timer" readonly="readonly">
@@ -68,7 +68,7 @@
 
 							<div class="col-lg-6">
 								<div class="form-group">
-									<label class="col-form-label" for="input_price"><?=$term[price]?> (€) <span style="color: red;font-weight: bold;"><?=$term[trainingpricehint]?></span></label>
+									<label class="col-form-label" for="input_price"><?=$term["price"]?> (€) <span style="color: red;font-weight: bold;"><?=$term["trainingpricehint"]?></span></label>
 									<div data-plugin-spinner data-plugin-options='{ "value":<?php echo $price; ?>, "step": 5, "min": 0, "max" : 10000 }'>
 										<div class="input-group form-control-small">
 											<input type="text" class="spinner-input form-control" name="price" id="spinner_input_price">
@@ -88,7 +88,7 @@
 
                             <div class="col-lg-5">
                                 <div class="form-group">
-                                    <label class="col-form-label" for="fileupload_image"><?=$term[image]?></label>
+                                    <label class="col-form-label" for="fileupload_image"><?=$term["image"]?></label>
                                     <div class="fileupload fileupload-new" data-provides="fileupload">
                                         <div class="input-append">
                                             <div class="uneditable-input">
@@ -100,7 +100,7 @@
 												<span class="fileupload-new">Select file</span>
 												<input type="file" name="image" id="category_image"  />
 											</span>
-                                            <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload"><?=$term[remove]?></a>
+                                            <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload"><?=$term["remove"]?></a>
                                         </div>
                                     </div>
                                 </div>
@@ -116,7 +116,7 @@
 						<div class="form-group row">
 							<div class="col-lg-6">
 								<div class="form-group">
-									<label class="col-form-label" for="email_notification"><?=$term[emailnotification]?> </label>
+									<label class="col-form-label" for="email_notification"><?=$term["emailnotification"]?> </label>
 									<div class="switch switch-primary">
 										<input type="checkbox" name="email_notification" id="email_notification" data-plugin-ios-switch <?php echo $email_notification==1?'checked="checked"':'';?> />
 									</div>
@@ -124,7 +124,7 @@
 							</div>
 							<div class="col-lg-6">
 								<div class="form-group">
-									<label class="col-form-label"><?=$term[smsnotification]?></label>
+									<label class="col-form-label"><?=$term["smsnotification"]?></label>
 									<div class="switch switch-info">
 										<input type="checkbox" name="sms_notification" id="sms_notification" data-plugin-ios-switch <?php echo $sms_notification==1?'checked="checked"':'';?> />
 									</div>
@@ -161,7 +161,7 @@
 						<div class="form-group row" >
 							<div class="col-lg-6" style="display: none;">
 								<div class="form-group">
-									<label class="col-form-label" for="spinner_repeat_days"><?=$term[repeatdays]?></label>
+									<label class="col-form-label" for="spinner_repeat_days"><?=$term["repeatdays"]?></label>
 									<div data-plugin-spinner data-plugin-options='{ "value":<?php print $repeat_days; ?>, "step": 1, "min": 0, "max": 200 }'>
 										<div class="input-group form-control-small">
 											<input type="text" class="spinner-input form-control" name="repeat_days" id="spinner_repeat_days">
@@ -184,7 +184,7 @@
 						<div class="form-group row">
 							<div class="col-lg-6" style="margin-left: 15px;">
 								<div class="form-group">
-									<label class="col-form-label" for="text_summary"><?=$term[shortdescription]?></label>
+									<label class="col-form-label" for="text_summary"><?=$term["shortdescription"]?></label>
 						<!--			<textarea style="height:100px;" class="ckeditor form-control" name="summary" id="text_summary" rows="3"><?php /*print $summary; */?></textarea>
 						-->
                                     <textarea class="form-control" rows="3" name="summary" id="text_summary" data-plugin-maxlength maxlength="120"><?php print $summary; ?></textarea>
@@ -198,7 +198,7 @@
 							</div>
 							<div class="col-lg-12">
 								<div class="form-group">
-									<label class="col-form-label" for="text_description"><?=$term[description]?></label>
+									<label class="col-form-label" for="text_description"><?=$term["description"]?></label>
 									<textarea class="ckeditor form-control" name="description" id="text_description" rows="6"><?php print $description; ?></textarea>
 								</div>
 							</div>
@@ -246,8 +246,8 @@
 					<footer class="card-footer">
 						<div class="row justify-content-end">
 							<div class="col-sm-7">
-								<button type="submit" id="btn_save" class="btn btn-primary" onsubmit="javascript:checkvalue();"><?=$term[save]?></button>
-								<button type="reset" class="btn btn-default"><?=$term[reset]?></button>
+								<button type="submit" id="btn_save" class="btn btn-primary" onsubmit="javascript:checkvalue();"><?=$term["save"]?></button>
+								<button type="reset" class="btn btn-default"><?=$term["reset"]?></button>
 							</div>
 						</div>
 					</footer>
@@ -396,9 +396,9 @@
 				"visible" : false,
 			}],
 			"columns": [
-				{ "title": "<?=$term[action]?>", "data": "id", "class": "left", "width":"60" },
-				{ "title": "<?=$term[title]?>", "data": "lesson_title", "class": "left", "width":"*" },
-				{ "title": "<?=$term[type]?>", "data": "lesson_type", "class": "left", "width":"100"},
+				{ "title": "<?=$term["action"]?>", "data": "id", "class": "left", "width":"60" },
+				{ "title": "<?=$term["title"]?>", "data": "lesson_title", "class": "left", "width":"*" },
+				{ "title": "<?=$term["type"]?>", "data": "lesson_type", "class": "left", "width":"100"},
 				{ "title": "Lesson Code", "data": "lesson_code", "class": "left", "width":"0"},
 			],
 			"lengthMenu": [
@@ -442,9 +442,9 @@
 				}
 			}],
 			"columns": [
-				{ "title": "<?=$term[action]?>", "data": "id", "class": "left", "width":60 },
-				{ "title": "<?=$term[title]?>", "data": "lesson_title", "class": "left", "width":"*" },
-				{ "title": "<?=$term[type]?>", "data": "lesson_type", "class": "left", "width":100},
+				{ "title": "<?=$term["action"]?>", "data": "id", "class": "left", "width":60 },
+				{ "title": "<?=$term["title"]?>", "data": "lesson_title", "class": "left", "width":"*" },
+				{ "title": "<?=$term["type"]?>", "data": "lesson_type", "class": "left", "width":100},
 			],
 			"scrollY": 500,
 			"scrollX": true,

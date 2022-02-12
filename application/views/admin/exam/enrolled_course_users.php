@@ -14,9 +14,9 @@
 						<i class="fas fa-home"></i>
 					</a>
 				</li>
-				<li><span><?=$term[exam]?></span></li>
+				<li><span><?=$term["exam"]?></span></li>
 
-				<li><span><?=$term[examlist]?></span></li>
+				<li><span><?=$term["examlist"]?></span></li>
 			</ol>
 
 		</div>
@@ -77,7 +77,7 @@
 				{ "title": "Course Title", "data": "course_title", "class": "text-left", "width":200 }, 
 				{ "title": "Email", "data": "email", "class": "text-left", "width":200},
 				{ "title": "Created", "data": "created", "class": "text-left", "width":200 },
-				{ "title": "<?=$term[action]?>", "data": "id", "class": "text-left", "width":200 },
+				{ "title": "<?=$term["action"]?>", "data": "id", "class": "text-left", "width":200 },
 			],
 			"lengthMenu": [
                 [5, 10, 20, 50, 150, -1],

@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[topicmanagement]?></h2>
+		<h2><?=$term["topicmanagement"]?></h2>
 	
 		<div class="right-wrapper">
 			<ol class="breadcrumbs">
@@ -9,9 +9,9 @@
 						<i class="fas fa-home"></i>
 					</a>
 				</li>
-				<li><span><?=$term[trainings]?></span></li>
+				<li><span><?=$term["trainings"]?></span></li>
 
-				<li><span><?=$term[topic]?></span></li>
+				<li><span><?=$term["topic"]?></span></li>
 			</ol>
 
 		</div>
@@ -26,7 +26,7 @@
 						<a href="<?php echo base_url(); ?>admin/topic/create" class="btn btn-default"><i class="fas fa-plus"></i> <?=$term[newtopic]?> </a>
 					</div>
 
-					<h2 class="card-title"><?=$term[topiclist]?></h2>
+					<h2 class="card-title"><?=$term["topiclist"]?></h2>
 				</header>
 				<div class="card-body">
 					<table class="table table-responsive-md table-hover mb-0" id="datatable-topic" >
@@ -142,9 +142,9 @@
                 "targets": [6],
                 "createdCell": function (td, cellData, rowData, row, col) {
                     if(cellData == '1') {
-                        $(td).html('<a href="javascript:inactiveTopic('+rowData['id']+')"><span class="badge badge-success"><?=$term[active]?></span></a>');
+                        $(td).html('<a href="javascript:inactiveTopic('+rowData['id']+')"><span class="badge badge-success"><?=$term["active"]?></span></a>');
                     } else {
-                        $(td).html('<a href="javascript:activeTopic('+rowData['id']+')"><span class="badge badge-dark"><?=$term[inactive]?></span></a>');
+                        $(td).html('<a href="javascript:activeTopic('+rowData['id']+')"><span class="badge badge-dark"><?=$term["inactive"]?></span></a>');
                     }
                 }
             }, {
@@ -155,14 +155,14 @@
 				}
 			} ],     
             "columns": [
-				{ "title": "<?=$term[categoryname]?>", "data": "category_name", "class": "text-left", "width":100 },
-				{ "title": "<?=$term[topictitle]?>", "data": "training_title", "class": "text-left", "width":"*" },
-				{ "title": "<?=$term[image]?>", "data": "image", "class": "text-center", "width":50},
-				{ "title": "<?=$term[timemin]?>", "data": "training_timer", "class": "text-right", "width":100},
+				{ "title": "<?=$term["categoryname"]?>", "data": "category_name", "class": "text-left", "width":100 },
+				{ "title": "<?=$term["topictitle"]?>", "data": "training_title", "class": "text-left", "width":"*" },
+				{ "title": "<?=$term["image"]?>", "data": "image", "class": "text-center", "width":50},
+				{ "title": "<?=$term["timemin"]?>", "data": "training_timer", "class": "text-right", "width":100},
 				{ "title": "<?=$term[cost] ?>(€)", "data": "price", "class": "text-right", "width":70},
-				{ "title": "<?=$term[lessoncount]?>", "data": "lesson_count", "class": "text-right", "width":80},
-				{ "title": "<?=$term[status]?>", "data": "status", "class": "text-center", "width":80 },
-				{ "title": "<?=$term[active]?>", "data": "id", "class": "text-center", "width":80 },
+				{ "title": "<?=$term["lessoncount"]?>", "data": "lesson_count", "class": "text-right", "width":80},
+				{ "title": "<?=$term["status"]?>", "data": "status", "class": "text-center", "width":80 },
+				{ "title": "<?=$term["active"]?>", "data": "id", "class": "text-center", "width":80 },
 			],
 			"lengthMenu": [
                 [5, 10, 20, 50, 150, -1],

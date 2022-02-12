@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[certificatemanagement]?></h2>
+		<h2><?=$term["certificatemanagement"]?></h2>
 	
 		<div class="right-wrapper">
 			<ol class="breadcrumbs">
@@ -9,7 +9,7 @@
 						<i class="fas fa-home"></i>
 					</a>
 				</li>
-				<li><span><?=$term[certification]?></span></li>
+				<li><span><?=$term["certification"]?></span></li>
 				
 			</ol>
 
@@ -29,7 +29,7 @@
 						</form>
 					</div>
 
-					<h2 class="card-title"><?=$term[certificationlist]?></h2>
+					<h2 class="card-title"><?=$term["certificationlist"]?></h2>
 				</header>
 				<div class="card-body">
 					<table class="table table-responsive-md table-striped table-hover mb-0" id="datatable_certificationlist" >
@@ -46,7 +46,7 @@
 	<div id="modalAnim" style="max-width: 500px;" class="zoom-anim-dialog modal-block modal-block-primary mfp-hide">
 		<section class="card">
 			<header class="card-header">
-				<h2 class="card-title"><?=$term[emailcontent]?></h2>
+				<h2 class="card-title"><?=$term["emailcontent"]?></h2>
 			</header>
 			<div class="card-body">
 				<div class="modal-wrapper">
@@ -54,7 +54,7 @@
 						<input type="hidden" name="id">
 						<div class="col-md-12">
 							<div class="row">
-								<label class="control-label col-md-3"><?=$term[email]?></label>
+								<label class="control-label col-md-3"><?=$term["email"]?></label>
 								<div class="col-md-9">
 									<input type="text" placeholder="" class="form-control" name="email">
 								</div>
@@ -82,7 +82,7 @@
 
 						<a id="sendBtn" data-loading-overlay="" data-loading-overlay-options="{ 'startShowing': false }" href="javascript: send();" class="btn btn-primary">
 
-							<?=$term[send]?>
+							<?=$term["send"]?>
 						</a>
 
 						<!--<button class="btn btn-default" onclick="javascript:send()">Send</button>-->
@@ -299,17 +299,17 @@
             "columns": [
 				{ "title": "", "data": "id", "class": "text-left", "width":10 },
             /*	{ "title": "Certification Type", "data": "certification_type", "class": "text-center", "width":50 },*/
-                { "title": "<?=$term[cn]?>", "data": "cn_num", "class": "left", "width":"30" },
-            	{ "title": "<?=$term[companyname]?>", "data": "company_name", "class": "left", "width":"100" },
-				{ "title": "<?=$term[firstname]?>", "data": "first_name", "class": "text-left", "width":"50" },
-				{ "title": "<?=$term[lastname]?>", "data": "last_name", "class": "text-left", "width":"50" },
+                { "title": "<?=$term["cn"]?>", "data": "cn_num", "class": "left", "width":"30" },
+            	{ "title": "<?=$term["companyname"]?>", "data": "company_name", "class": "left", "width":"100" },
+				{ "title": "<?=$term["firstname"]?>", "data": "first_name", "class": "text-left", "width":"50" },
+				{ "title": "<?=$term["lastname"]?>", "data": "last_name", "class": "text-left", "width":"50" },
             	/*{ "title": "Certification Title", "data": "cert_title", "class": "text-left", "width":"100" },*/
-				{ "title": "<?=$term[exam]?>", "data": "exam_title", "class": "text-left", "width":"*" },
+				{ "title": "<?=$term["exam"]?>", "data": "exam_title", "class": "text-left", "width":"*" },
 				/*{ "title": "Pass Date", "data": "created_at", "class": "text-left", "width":150 },*/
-                { "title": "<?=$term[datepassed]?>", "data": "created_at", "class": "text-left", "width":100 },
-				{ "title": "<?=$term[dateexpires]?>", "data": "validate", "class": "text-left", "width":100 },
-				{ "title": "<?=$term[status]?>", "data": "status", "class": "text-left", "width":50 },
-				{ "title": "<?=$term[action]?>", "data": "id", "class": "text-left", "width":100 },
+                { "title": "<?=$term["datepassed"]?>", "data": "created_at", "class": "text-left", "width":100 },
+				{ "title": "<?=$term["dateexpires"]?>", "data": "validate", "class": "text-left", "width":100 },
+				{ "title": "<?=$term["status"]?>", "data": "status", "class": "text-left", "width":50 },
+				{ "title": "<?=$term["action"]?>", "data": "id", "class": "text-left", "width":100 },
 			],
 			"lengthMenu": [
                 [5, 10, 20, 50, 150, -1],

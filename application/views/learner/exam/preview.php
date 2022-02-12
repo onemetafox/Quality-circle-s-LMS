@@ -19,7 +19,7 @@
     }
 </style>
 <header class="page-header">
-    <h2><?=$term[exammanagement]?></h2>
+    <h2><?=$term["exammanagement"]?></h2>
 </header>
         <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
             <div class="content-body">
@@ -32,7 +32,7 @@
                     <div class="col-md-9">
                         <table class="table table-responsive-md table-borderless">
                             <tr>
-                                <th class="table-border-th" colspan="4"><?=$term[yourresult]?></th>
+                                <th class="table-border-th" colspan="4"><?=$term["yourresult"]?></th>
                             </tr>
                             <tr>
                                 <td class="table-border-td"style="color: green;"><?=$result?></td>

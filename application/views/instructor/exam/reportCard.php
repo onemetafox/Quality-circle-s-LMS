@@ -18,7 +18,7 @@
     }
 </style>
 <header class="page-header">
-    <h2><?=$term[exammanagement]?></h2>
+    <h2><?=$term["exammanagement"]?></h2>
     <?php if ($result == "Pass"):?>
         <h5 style="text-align: right; margin-right: 10px"><a href="javascript:pagePrint()" class="btn btn-primary ml-3"><i class="fas fa-print"></i> Print and Download</a></h5>
     <?php endif;?>
@@ -95,24 +95,24 @@
                     <div class="col-md-9">
                         <table class="table table-responsive-md table-borderless">
                             <tr>
-                                <th class="table-border-th" colspan="4"><?=$term[yourscore]?></th>
+                                <th class="table-border-th" colspan="4"><?=$term["yourscore"]?></th>
                             </tr>
                             <tr>
-                                <td class="table-border-td"><?=$term[name]?></td>
+                                <td class="table-border-td"><?=$term["name"]?></td>
                                 <td class="table-border-td"><?=$user_name?></td>
-                                <td class="table-border-td"><?=$term[score]?></td>
+                                <td class="table-border-td"><?=$term["score"]?></td>
                                 <td class="table-border-td"><?=$score?> / 100 Points (<?=$score?> %)</td>
                             </tr>
                             <tr>
-                                <td class="table-border-td"><?=$term[correctanswers]?></td>
+                                <td class="table-border-td"><?=$term["correctanswers"]?></td>
                                 <td class="table-border-td"><?=$correct_count?></td>
-                                <td class="table-border-td"><?=$term[incorrectanswers]?></td>
+                                <td class="table-border-td"><?=$term["incorrectanswers"]?></td>
                                 <td class="table-border-td"><?=$wrong_count?></td>
                             </tr>
                             <tr>
-                                <td class="table-border-td"><?=$term[passinggrade]?></td>
+                                <td class="table-border-td"><?=$term["passinggrade"]?></td>
                                 <td class="table-border-td"><?=round($pass_grade,2)?> %</td>
-                                <td class="table-border-td"><?=$term[timetaken]?></td>
+                                <td class="table-border-td"><?=$term["timetaken"]?></td>
                                 <td class="table-border-td"><?=$time_taken?></td>
                             </tr>
                         </table>
@@ -122,7 +122,7 @@
                     <div class="col-md-9">
                         <table class="table table-responsive-md table-borderless">
                             <tr>
-                                <th class="table-border-th" colspan="4"><?=$term[yourresult]?></th>
+                                <th class="table-border-th" colspan="4"><?=$term["yourresult"]?></th>
                             </tr>
                             <tr>
                                 <td class="table-border-td"style="color: green;"><?=$result?></td>

@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2><?=$term[companymanagement]?></h2>
+        <h2><?=$term["companymanagement"]?></h2>
 
         <div class="right-wrapper">
 
@@ -16,7 +16,7 @@
                         <!-- Modal Form -->
                     </div>
 
-                    <h2 class="card-title"><?=$term[subscriptionlist]?></h2>
+                    <h2 class="card-title"><?=$term["subscriptionlist"]?></h2>
                 </header>
                 <div class="card-body">
                     <table class="table table-responsive-md table-hover mb-0" id="datatable" >
@@ -56,21 +56,21 @@
             }],
             "columns": [
                 { "title": "No", "data": "id", "class": "text-center", "width":"*" },
-                { "title": "<?=$term[period]?>", "data": "term_type", "class": "text-center", "width":"*",
+                { "title": "<?=$term["period"]?>", "data": "term_type", "class": "text-center", "width":"*",
                     mRender: function (data, type, row) {
                         if(data == 0 && row.price_type == 1){
-                            return '15 <?=$term[days]?>';
+                            return '15 <?=$term["days"]?>';
                         }else if(data == 0 && row.price_type == 0){
-                            return "<?=$term[monthly]?>";
+                            return "<?=$term["monthly"]?>";
                         }else if(data == 1 && row.price_type == 0){
-                            return "<?=$term[yearly]?>";
+                            return "<?=$term["yearly"]?>";
                         }else if(data == 0 && row.price_type == 2){
                             return "---";
                         }
                     }
                  },
-                { "title": "<?=$term[subscription]?> <?=$term[name]?>", "data": "name", "class": "text-center", "width":"*" },
-                { "title": "<?=$term[price]?>", "data": "price", "class": "text-center", "width":"*",
+                { "title": "<?=$term["subscription"]?> <?=$term["name"]?>", "data": "name", "class": "text-center", "width":"*" },
+                { "title": "<?=$term["price"]?>", "data": "price", "class": "text-center", "width":"*",
                     mRender: function (data, type, row) {
                         if(row.price_type == 1){
                             return "---";
@@ -79,7 +79,7 @@
                         }
                     }
                  },
-                { "title": "<?=$term[user]?> <?=$term[limit]?>", "data": "user_limit", "class": "text-center", "width":"*", 
+                { "title": "<?=$term["user"]?> <?=$term["limit"]?>", "data": "user_limit", "class": "text-center", "width":"*", 
                     mRender: function (data, type, row) {
                         if(data == 0){
                             return "-";
@@ -88,7 +88,7 @@
                         }
                     }
                 },
-                { "title": "<?=$term[library]?> <?=$term[limit]?>", "data": "library_limit", "class": "text-center", "width":"*", 
+                { "title": "<?=$term["library"]?> <?=$term["limit"]?>", "data": "library_limit", "class": "text-center", "width":"*", 
                     mRender: function (data, type, row) {
                         if(data == 0){
                             return "-";
@@ -96,7 +96,7 @@
                             return data;
                         }
                     } },
-                { "title": "<?=$term[ondemand]?> <?=$term[limit]?>", "data": "demand_limit", "class": "text-center", "width":"*", 
+                { "title": "<?=$term["ondemand"]?> <?=$term["limit"]?>", "data": "demand_limit", "class": "text-center", "width":"*", 
                     mRender: function (data, type, row) {
                         if(data == 0){
                             return "-";
@@ -104,7 +104,7 @@
                             return data;
                         }
                     } },                  
-                { "title": "<?=$term[viltroom]?> <?=$term[user]?> <?=$term[limit]?>", "data": "vilt_user_limit", "class": "text-center", "width":"*", 
+                { "title": "<?=$term["viltroom"]?> <?=$term["user"]?> <?=$term["limit"]?>", "data": "vilt_user_limit", "class": "text-center", "width":"*", 
                     mRender: function (data, type, row) {
                         if(data == 0){
                             return "-";
@@ -112,7 +112,7 @@
                             return data;
                         }
                     } },  
-                { "title": "<?=$term[viltroom]?> <?=$term[limit]?>", "data": "vilt_room_limit", "class": "text-center", "width":"*", 
+                { "title": "<?=$term["viltroom"]?> <?=$term["limit"]?>", "data": "vilt_room_limit", "class": "text-center", "width":"*", 
                     mRender: function (data, type, row) {
                         if(data == 0){
                             return "-";
@@ -120,7 +120,7 @@
                             return data;
                         }
                     } },  
-                    { "title": "<?=$term[iltroom]?> <?=$term[user]?> <?=$term[limit]?>", "data": "ilt_user_limit", "class": "text-center", "width":"*", 
+                    { "title": "<?=$term["iltroom"]?> <?=$term["user"]?> <?=$term["limit"]?>", "data": "ilt_user_limit", "class": "text-center", "width":"*", 
                     mRender: function (data, type, row) {
                         if(data == 0){
                             return "-";
@@ -128,7 +128,7 @@
                             return data;
                         }
                     } },  
-                { "title": "<?=$term[iltroom]?> <?=$term[limit]?>", "data": "ilt_room_limit", "class": "text-center", "width":"*", 
+                { "title": "<?=$term["iltroom"]?> <?=$term["limit"]?>", "data": "ilt_room_limit", "class": "text-center", "width":"*", 
                     mRender: function (data, type, row) {
                         if(data == 0){
                             return "-";
@@ -136,7 +136,7 @@
                             return data;
                         }
                     } },                               
-                { "title": "<?=$term[action]?>", "data": "id", "class": "text-center", "width":80 }
+                { "title": "<?=$term["action"]?>", "data": "id", "class": "text-center", "width":80 }
             ],
             "lengthMenu": [
                 [5, 10, 20, 50, 150, -1],

@@ -1,7 +1,7 @@
 
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2><?=$term[bookshop]?></h2>
+        <h2><?=$term["bookshop"]?></h2>
 
         <div class="right-wrapper">
         </div>
@@ -52,7 +52,7 @@
                     <div class="row">
                         <div class="col-md-12 text-right">
                             <a class="btn btn-primary modal-with-form " href="<?=base_url()?>learner/flipbook/view_book/<?=$book['id']?>" target="blank">
-                                <i class="fa fa-plus"></i> <?=$term[viewbook]?>
+                                <i class="fa fa-plus"></i> <?=$term["viewbook"]?>
                             </a>
                         </div>
                     </div>

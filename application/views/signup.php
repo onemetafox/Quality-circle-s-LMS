@@ -423,7 +423,7 @@
 							</label>
 						</div>
                         <div class="loginRow company-row">
-                            <label class="col-sm-4 control-label" style="padding: 6px"><?=$term[company]?></label>
+                            <label class="col-sm-4 control-label" style="padding: 6px"><?=$term["company"]?></label>
                             <div class="col-sm-6">
                                 <select id="company_id" name="company_id" class="form-control mb3">
                                     <?php foreach($company_data as $item){ ?>

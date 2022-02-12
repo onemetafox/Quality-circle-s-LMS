@@ -15,7 +15,7 @@
 <script src="<?php echo base_url(); ?>assets/js_company/sweetalert.js"></script>
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[exammanagement]?></h2>
+		<h2><?=$term["exammanagement"]?></h2>
 	</header>
 
 	<!-- start: page -->
@@ -23,9 +23,9 @@
 		<div class="col-lg-12">
 			<section class="form-wizard" id="exam_wizard">
 				<header class="card-header" style="background-color: #DAD9D9;">
-					<h2 class="card-title"><?=$term[exampreview]?></h2>
+					<h2 class="card-title"><?=$term["exampreview"]?></h2>
 					<div class="card-actions">
-						<a class="btn btn-default" href="<?php echo base_url(); ?>admin/examhistory/viewexam"><i class="fas fa-table"></i><?=$term[examhistorylist]?></a>
+						<a class="btn btn-default" href="<?php echo base_url(); ?>admin/examhistory/viewexam"><i class="fas fa-table"></i><?=$term["examhistorylist"]?></a>
 					</div>
 				</header>
 				<div class="row">
@@ -42,7 +42,7 @@
 										<?php if ($exam['title'] != ""):?>
 												<?=$exam['title']?>
 											<?php else:?>
-												<?=$term[examtitle]?>
+												<?=$term["examtitle"]?>
 										<?php endif;?>
 									</label>
 									<img id="exam_image_div" class="col-lg-12" style="height: 10rem;width: auto;display: none;">
@@ -50,7 +50,7 @@
 										<?php if ($exam['description'] != ""):?>
 											<?=$exam['description']?>
 										<?php else:?>
-											<?=$term[typedescriptionhere]?>
+											<?=$term["typedescriptionhere"]?>
 										<?php endif;?>
 									</label>
 								</div>

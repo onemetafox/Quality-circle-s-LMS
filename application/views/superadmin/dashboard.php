@@ -1,7 +1,7 @@
 
 <section role="main" id="mainpage" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[dashboard]?></h2>
+		<h2><?=$term["dashboard"]?></h2>
 	</header>
 
 	<!-- start: page -->
@@ -19,13 +19,13 @@
 								</div>
 								<div class="widget-summary-col">
 									<div class="summary">
-										<h4 class="title"><?=$term[companies]?></h4>
+										<h4 class="title"><?=$term["companies"]?></h4>
 										<div class="info">
 											<strong class="amount"><?php echo $company_count; ?></strong>
 										</div>
 									</div>
 									<div class="summary-footer">
-										<a class="text-muted text-uppercase" href="<?php echo base_url('superadmin/company');?>">(<?=$term[viewall]?>)</a>
+										<a class="text-muted text-uppercase" href="<?php echo base_url('superadmin/company');?>">(<?=$term["viewall"]?>)</a>
 									</div>
 								</div>
 							</div>
@@ -43,13 +43,13 @@
 								</div>
 								<div class="widget-summary-col">
 									<div class="summary">
-										<h4 class="title"><?=$term[users]?></h4>
+										<h4 class="title"><?=$term["users"]?></h4>
 										<div class="info">
 											<strong class="amount"><?php echo $employee_count; ?></strong>
 										</div>
 									</div>
 									<div class="summary-footer">
-										<a class="text-muted text-uppercase" href="<?php echo base_url('superadmin/user');?>">(<?=$term[viewall]?>)</a>
+										<a class="text-muted text-uppercase" href="<?php echo base_url('superadmin/user');?>">(<?=$term["viewall"]?>)</a>
 									</div>
 								</div>
 							</div>
@@ -67,13 +67,13 @@
 								</div>
 								<div class="widget-summary-col">
 									<div class="summary">
-										<h4 style="font-size: 0.8rem;" class="title"><?=$term[onlineusers]?></h4>
+										<h4 style="font-size: 0.8rem;" class="title"><?=$term["onlineusers"]?></h4>
 										<div class="info">
 											<strong class="amount"><?php echo $logined_usercount; ?></strong>
 										</div>
 									</div>
 									<div class="summary-footer">
-										<a class="text-muted text-uppercase" href="<?php echo base_url('superadmin/user');?>">(<?=$term[viewall]?>)</a>
+										<a class="text-muted text-uppercase" href="<?php echo base_url('superadmin/user');?>">(<?=$term["viewall"]?>)</a>
 									</div>
 								</div>
 							</div>
@@ -98,13 +98,13 @@
 								</div>
 								<div class="widget-summary-col">
 									<div class="summary">
-										<h4 class="title"><?=$term[totalinvoice]?></h4>
+										<h4 class="title"><?=$term["totalinvoice"]?></h4>
 										<div class="info">
 											<strong class="amount">$ <?= $amount->total_amount!=null?$amount->total_amount:0;?></strong>
 										</div>
 									</div>
 									<div class="summary-footer">
-										<a class="text-muted text-uppercase" href="<?php echo base_url('superadmin/account');?>">(<?=$term[viewall]?>)</a>
+										<a class="text-muted text-uppercase" href="<?php echo base_url('superadmin/account');?>">(<?=$term["viewall"]?>)</a>
 									</div>
 								</div>
 							</div>
@@ -122,13 +122,13 @@
 								</div>
 								<div class="widget-summary-col">
 									<div class="summary">
-										<h4 class="title"><?=$term[certification]?></h4>
+										<h4 class="title"><?=$term["certification"]?></h4>
 										<div class="info">
 											<strong class="amount"><?php echo $certification_count;?></strong>
 										</div>
 									</div>
 									<div class="summary-footer">
-										<a class="text-muted text-uppercase" href="#">(<?=$term[viewall]?>)</a>
+										<a class="text-muted text-uppercase" href="#">(<?=$term["viewall"]?>)</a>
 									</div>
 								</div>
 							</div>

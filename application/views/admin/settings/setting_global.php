@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2><?=$term[globalsettings]?></h2>
+        <h2><?=$term["globalsettings"]?></h2>
 
         <div class="right-wrapper">
 
@@ -14,47 +14,47 @@
     	<div class="inner-body">
 	        <div class="col-lg-12">
 			
-	            <form id="add-form" action="<?=base_url()?>admin/settings/savegeneral" method="POST" novalidate="novalidate" enctype="multipart/form-data"">
+	            <form id="add-form" action="<?=base_url()?>admin/settings/savegeneral" method="POST" novalidate="novalidate" enctype="multipart/form-data">
 	            <section class="card">
 	                <header class="card-header">
-	                    <h2 class="card-title"><?=$term[globalsettings]?></h2>
+	                    <h2 class="card-title"><?=$term["globalsettings"]?></h2>
 	                </header>
 	                <div class="card-body">
 	
 	                    <div class="form-group row">
-	                        <label class="col-sm-3 control-label text-lg-right pt-2 bld" for="inputDefault"><?=$term[companyname]?> <em class="red">*</em></label>
+	                        <label class="col-sm-3 control-label text-lg-right pt-2 bld" for="inputDefault"><?=$term["companyname"]?> <em class="red">*</em></label>
 	                        <div class="col-sm-5">
-	                            <input type="text"  class="form-control" value="<?=$term[companyname]?>" id="company_name" name="company_name" required="required"/>
+	                            <input type="text"  class="form-control" value="<?=$term["companyname"]?>" id="company_name" name="company_name" required="required"/>
 	                        </div>                        
 	                    </div>
 
 						<div class="form-group row">
-							<label class="col-sm-3 control-label text-lg-right pt-2 bld" for="inputDefault"><?=$term[companyaddress]?> <em class="red">*</em></label>
+							<label class="col-sm-3 control-label text-lg-right pt-2 bld" for="inputDefault"><?=$term["companyaddress"]?> <em class="red">*</em></label>
 	                        <div class="col-sm-5">
 	                            <textarea rows="6" class="form-control" id="company_address" name="company_address" required="required"><?= $company_address?></textarea>
 	                        </div>
 						</div>
 
 	                    <div class="form-group row">
-	                        <label class="col-sm-3 control-label text-lg-right pt-2 bld" for="inputDefault"><?=$term[zipcode]?></label>
+	                        <label class="col-sm-3 control-label text-lg-right pt-2 bld" for="inputDefault"><?=$term["zipcode"]?></label>
 	                        <div class="col-sm-5">
 	                            <input type="text"  class="form-control" value="<?= $zip_code?>" id="zip_code" name="zip_code"/>
 	                        </div>
 	                    </div>
 	                    <div class="form-group row">
-	                        <label class="col-sm-3 control-label text-lg-right pt-2 bld" for="inputDefault"><?=$term[city]?></label>
+	                        <label class="col-sm-3 control-label text-lg-right pt-2 bld" for="inputDefault"><?=$term["city"]?></label>
 	                        <div class="col-sm-5">
 	                            <input type="text"  class="form-control" value="<?= $city?>" id="city" name="city"/>
 	                        </div>
 	                    </div>
 	                    <div class="form-group row">
-	                        <label class="col-sm-3 control-label text-lg-right pt-2 bld" for="inputDefault"><?=$term[state]?></label>
+	                        <label class="col-sm-3 control-label text-lg-right pt-2 bld" for="inputDefault"><?=$term["state"]?></label>
 	                        <div class="col-sm-5">
 	                            <input type="text"  class="form-control" value="<?= $state?>" id="state" name="state"/>
 	                        </div>                        
 	                    </div>
 						<div class="form-group row">
-							<label class="col-sm-3 control-label text-lg-right pt-2 bld" for="inputDefault"><?=$term[country]?></label>
+							<label class="col-sm-3 control-label text-lg-right pt-2 bld" for="inputDefault"><?=$term["country"]?></label>
 	                        <div class="col-sm-5">
 	                        	<select name="country" data-plugin-selectTwo class="form-control populate">
 	                        		<?php 
@@ -74,25 +74,25 @@
 	                        </div>
 						</div>
 	                    <div class="form-group row">
-	                        <label class="col-sm-3 control-label text-lg-right pt-2 bld" for="inputDefault"><?=$term[email]?></label>
+	                        <label class="col-sm-3 control-label text-lg-right pt-2 bld" for="inputDefault"><?=$term["email"]?></label>
 	                        <div class="col-sm-5">
 	                            <input type="text"  class="form-control" value="<?= $company_email_address?>" id="company_email_address" name="company_email_address"/>
 	                        </div>
 	                    </div>
 						<div class="form-group row">
-	                        <label class="col-sm-3 control-label text-lg-right pt-2 bld" for="inputDefault"><?=$term[companyphone]?> <em class="red">*</em></label>
+	                        <label class="col-sm-3 control-label text-lg-right pt-2 bld" for="inputDefault"><?=$term["companyphone"]?> <em class="red">*</em></label>
 	                        <div class="col-sm-5">
 	                            <input type="text"  class="form-control" value="<?= $company_phone?>" id="company_phone" name="company_phone"/>
 	                        </div>
 						</div>
 	                    <div class="form-group row">
-	                        <label class="col-sm-3 control-label text-lg-right pt-2 bld" for="inputDefault"><?=$term[metadescription]?></label>
+	                        <label class="col-sm-3 control-label text-lg-right pt-2 bld" for="inputDefault"><?=$term["metadescription"]?></label>
 	                        <div class="col-sm-5">
 	                        	<textarea rows="6" class="form-control" name="meta_description"><?= $meta_description?></textarea>
 	                        </div>                        
 	                    </div>
 						 <div class="form-group row" style="display: none;">
-							<label class="col-sm-3 control-label text-lg-right pt-2 bld" for="inputDefault"><?=$term[addressandphone]?></label>
+							<label class="col-sm-3 control-label text-lg-right pt-2 bld" for="inputDefault"><?=$term["addressandphone"]?></label>
 	                        <div class="col-sm-5">
 	                            <input type="text"  class="form-control" value="<?= $address_phone?>" id="address_phone" name="address_phone"/>
 	                        </div>
@@ -103,8 +103,8 @@
 	                <footer class="card-footer">
 	                    <div class="row">
 	                        <div class="col-md-12 text-center">
-	                            <button class="btn btn-primary modal-add-confirm btn-sm"><?=$term[change]?></button>
-	                            <button type="reset" id="btn_reset" class="btn btn-default btn-sm"><?=$term[reset]?></button>
+	                            <button class="btn btn-primary modal-add-confirm btn-sm"><?=$term["change"]?></button>
+	                            <button type="reset" id="btn_reset" class="btn btn-default btn-sm"><?=$term["reset"]?></button>
 	                            <input type="hidden" name="mode" value="<?= $mode; ?>" />
 	                        </div>
 	                    </div>

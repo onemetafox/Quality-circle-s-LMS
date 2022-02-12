@@ -10,10 +10,10 @@
 				<section class="card">
 					<header class="card-header">
 						<div class="card-actions">	
-							<a class="btn btn-default" href="<?php echo base_url(); ?>admin/lesson"><i class="fas fa-table"></i> <?=$term[lessonlist]?></a>
+							<a class="btn btn-default" href="<?php echo base_url(); ?>admin/lesson"><i class="fas fa-table"></i> <?=$term["lessonlist"]?></a>
 						</div>
 
-						<h2 class="card-title"><?=$term[lesson]?></h2>
+						<h2 class="card-title"><?=$term["lesson"]?></h2>
 					</header>
 					<div class="card-body">
 						<div class="row">
@@ -23,19 +23,19 @@
 				        </div>
 				        <input type="hidden" name="row_id" id="row_id" value="<?php echo $row_id; ?>">
 						<div class="form-group row">
-							<label class="col-lg-2 control-label text-lg-right pt-2" for="input_lesson_title"><?=$term[lessontitle]?> <span class="required">*</span></label>
+							<label class="col-lg-2 control-label text-lg-right pt-2" for="input_lesson_title"><?=$term["lessontitle"]?> <span class="required">*</span></label>
 							<div class="col-lg-4">
 								<input type="text" class="form-control" id="input_lesson_title" name="lesson_title" placeholder="eg.: Lesson 1" required="" maxlength=50 value="<?php print $lesson_title; ?>">
 							</div>
 						
-							<label class="col-lg-2 control-label text-lg-right pt-2" for="input_lesson_title"><?=$term[lessoncode]?><span class="required">*</span></label>
+							<label class="col-lg-2 control-label text-lg-right pt-2" for="input_lesson_title"><?=$term["lessoncode"]?><span class="required">*</span></label>
 							<div class="col-lg-4">
 								<input type="text" class="form-control" id="input_lesson_code" name="lesson_code" placeholder="eg.: Ln01" required="" maxlength=10 value="<?php print $lesson_code; ?>">
 							</div>
 						</div>
 
 						<div class="form-group row">
-							<label class="col-lg-2 control-label text-lg-right pt-2"><?=$term[category]?> <span class="required">*</span></label>
+							<label class="col-lg-2 control-label text-lg-right pt-2"><?=$term["category"]?> <span class="required">*</span></label>
 							<div class="col-lg-4">
 								<select data-plugin-selectTwo data-ajax-url="<?php echo base_url();?>admin/category/getcategorylist" data-plugin-options='{ "allowClear": true, "placeholder": "Select Category", "minimumInputLength": 0, "data" : [{"id":<?php print $category_id; ?>, "text": "<?php print $category_name; ?>" }] }' class="form-control populate" required="" name="category_id" id="select_category_id">
 								</select>
@@ -43,7 +43,7 @@
 						</div>
 
 						<div class="form-group row">
-							<label class="col-lg-2 control-label text-lg-right pt-2"><?=$term[contenttype]?></label>
+							<label class="col-lg-2 control-label text-lg-right pt-2"><?=$term["contenttype"]?></label>
 							<div class="col-lg-4">
 								<select data-plugin-selectTwo class="form-control populate" name="lesson_type" id="select_lesson_type">
 									<?php foreach ($lesson_types as $type) {
@@ -56,7 +56,7 @@
 
                         <div class="form-group row">
 
-							<label class="col-lg-2 control-label text-lg-right pt-2"><?=$term[content]?></label>
+							<label class="col-lg-2 control-label text-lg-right pt-2"><?=$term["content"]?></label>
 							<div class="col-lg-10">
 								<div id="div_lesson_content">
 								<textarea class="ckeditor form-control" name="lesson_content" id="text_lesson_content" rows="6"><?php print $lesson_content; ?></textarea>
@@ -102,8 +102,8 @@
 					<footer class="card-footer">
 						<div class="row justify-content-end">
 							<div class="col-sm-6">
-								<button id="btn_save" class="btn btn-primary"><?=$term[save]?></button>
-								<button type="reset" class="btn btn-default"><?=$term[reset]?></button>
+								<button id="btn_save" class="btn btn-primary"><?=$term["save"]?></button>
+								<button type="reset" class="btn btn-default"><?=$term["reset"]?></button>
 							</div>
 						</div>
 					</footer>

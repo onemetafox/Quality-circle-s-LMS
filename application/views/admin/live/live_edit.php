@@ -15,7 +15,7 @@ if($id != 0){
 </style>
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[course]?></h2>	
+		<h2><?=$term["course"]?></h2>	
 		<div class="right-wrapper">
 			<ol class="breadcrumbs">
 				<li>
@@ -34,10 +34,10 @@ if($id != 0){
 				<header class="card-header">
 					<div class="card-actions">
                         <a class="modal-with-form" href="<?=base_url()?>admin/live">
-                            <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-change-time"> <i class="fa fa-plus"></i> <?=$term[courselist]?></button>
+                            <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-change-time"> <i class="fa fa-plus"></i> <?=$term["courselist"]?></button>
                         </a>
 					</div>
-					<h2 class="card-title"><?=$term[courseinfo]?></h2>
+					<h2 class="card-title"><?=$term["courseinfo"]?></h2>
 				</header>
 				<div class="card-body">
                     <input type="hidden" name="id" id="id" value="<?php print $id; ?>">                  
@@ -77,7 +77,7 @@ if($id != 0){
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group row">
-                                <label class="col-sm-2 control-label text-sm-right pt-5"><?=$term[title]?><span class="required">*</span></label>
+                                <label class="col-sm-2 control-label text-sm-right pt-5"><?=$term["title"]?><span class="required">*</span></label>
                                 <div class="col-sm-6">
                                     <input type="text" value="<?php print $title ?>" id="title" name="title" class="form-control"  placeholder="Title" readonly="readonly">
                                     <label class="error" id="title-error" for="title"></label>
@@ -85,7 +85,7 @@ if($id != 0){
 
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[subtitle]?><span class="required">*</span></label>
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term["subtitle"]?><span class="required">*</span></label>
                                 <div class="col-sm-6">
                                     <input type="text" value="<?php print $subtitle ?>" id="subtitle" name="subtitle" class="form-control" placeholder="subtitle">
                                     <label class="error" id="subtitle-error" for="subtitle"></label>
@@ -215,7 +215,7 @@ if($id != 0){
                      <a href="javascript:void(0)"><div id="addmorebtn" class="col-sm-2 btn">ADD MORE</div></a>
                     </div>
                     <div class="form-group row" <?php $id==0?print '':print 'hidden'?>>
-                        <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[starttime]?></label>
+                        <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term["starttime"]?></label>
                         <div class="col-sm-3">
                             <div class="input-group">
                             <span class="input-group-prepend">
@@ -229,14 +229,14 @@ if($id != 0){
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-sm-2 control-label text-sm-right pt-2" for="textareaDefault"><?=$term[description]?></label>
+                        <label class="col-sm-2 control-label text-sm-right pt-2" for="textareaDefault"><?=$term["description"]?></label>
                         <div class="col-sm-6">
                             <textarea  class="form-control" rows="8" data-plugin-markdown-editor data-plugin-maxlength="" id="about" name="about"><?php print $about ?></textarea>
                         </div>
                     </div>
 
                     <div class="form-group row" style="display: none;">
-                        <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term[whocanattend]?></label>
+                        <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term["whocanattend"]?></label>
                         <div class="col-sm-4">
                             <div class="radio">
                                 <label>
@@ -399,8 +399,8 @@ if($id != 0){
                 <footer class="card-footer">
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            <button type="submit" id="btn_add" class="btn btn-default"><?php $id==0?print $term[add]:print $term[update]?></button>
-                            <button type="reset" id="btn_reset" class="btn btn-default"><?=$term[reset]?></button>
+                            <button type="submit" id="btn_add" class="btn btn-default"><?php $id==0?print $term["add"]:print $term["update"]?></button>
+                            <button type="reset" id="btn_reset" class="btn btn-default"><?=$term["reset"]?></button>
                         </div>
                     </div>
                 </footer>
@@ -691,7 +691,7 @@ if($id != 0){
         "columns": [
             { "title": "", "data": "id", "class": "text-left", "width":10 },
             { "title": "#", "data": "no", "class": "center", "width":50 },
-            { "title": "<?=$term[name]?>", "data": "fullname", "class": "text-left", "width":200 }
+            { "title": "<?=$term["name"]?>", "data": "fullname", "class": "text-left", "width":200 }
         ],
 
         "scrollY": false,
@@ -734,7 +734,7 @@ if($id != 0){
         "columns": [
             { "title": "", "data": "id", "class": "text-left", "width":10 },
             { "title": "#", "data": "no", "class": "center", "width":50 },
-            { "title": "<?=$term[name]?>", "data": "fullname", "class": "text-left", "width":200 }
+            { "title": "<?=$term["name"]?>", "data": "fullname", "class": "text-left", "width":200 }
         ],
 
         "scrollY": false,

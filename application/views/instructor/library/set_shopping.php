@@ -18,7 +18,7 @@ if($id != 0){
 ?>
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[setshopping]?></h2>
+		<h2><?=$term["setshopping"]?></h2>
 
 <div class="right-wrapper">
 
@@ -33,7 +33,7 @@ if($id != 0){
 
                 <header class="card-header">
                     <div class="card-actions">
-                        <a class="btn btn-default btn_user_list" href="<?= base_url()?>instructor/library/"><i class="fas fa-table"></i> <?=$term[library]?></a>
+                        <a class="btn btn-default btn_user_list" href="<?= base_url()?>instructor/library/"><i class="fas fa-table"></i> <?=$term["library"]?></a>
                     </div>
                     <h2 class="card-title">FORM</h2>
                 </header>
@@ -47,13 +47,13 @@ if($id != 0){
                         <div class="col-sm-1"></div>
                         <div class="col-sm-4">
                             <div class="form-group row">
-                                <label class="col-sm-2 control-label text-sm-right pt-5"><?=$term[title]?><span class="required">*</span></label>
+                                <label class="col-sm-2 control-label text-sm-right pt-5"><?=$term["title"]?><span class="required">*</span></label>
                                 <div class="col-sm-10">
                                     <input type="text" value="<?php print $title ?>" id="title" name="title" class="form-control"  placeholder="physic" required>
                                 </div>
                             </div>
                             <div class="form-group row" style="padding-bottom: 10px !important;">
-                                <label class="col-sm-2 control-label text-sm-right pt-5"><?=$term[price]?><span class="required">*</span></label>
+                                <label class="col-sm-2 control-label text-sm-right pt-5"><?=$term["price"]?><span class="required">*</span></label>
                                 <div class="col-sm-10">
                                     <div data-plugin-spinner="" data-plugin-options="{ &quot;value&quot;:1, &quot;min&quot;: 1, &quot;max&quot;: 90 }">
                                         <div class="input-group" style="width:150px;">
@@ -125,8 +125,8 @@ if($id != 0){
                 <footer class="card-footer">
                     <div class="row">
                         <div class="col-md-12 text-right">
-                            <a id="sendBtn" data-loading-overlay="" data-loading-overlay-options="{ 'startShowing': false }"  class="btn btn-primary modal-add-confirm" style="color:white;    padding-left: 20px;padding-right: 20px;"><?php $id==0?print $term[shopping]:print $term[update]?></a>
-                            <button type="reset" id="btn_reset" class="btn btn-default"><?=$term[reset]?></button>
+                            <a id="sendBtn" data-loading-overlay="" data-loading-overlay-options="{ 'startShowing': false }"  class="btn btn-primary modal-add-confirm" style="color:white;    padding-left: 20px;padding-right: 20px;"><?php $id==0?print $term["shopping"]:print $term["update"]?></a>
+                            <button type="reset" id="btn_reset" class="btn btn-default"><?=$term["reset"]?></button>
                         </div>
                     </div>
                 </footer>
@@ -274,7 +274,7 @@ if($id != 0){
             var formData = new FormData($('#add-form')[0]);
             $("#sendBtn").trigger('loading-overlay:show');
 
-            if($('#add-form .modal-add-confirm').html().indexOf('<?=$term[shopping]?>') >= 0) {
+            if($('#add-form .modal-add-confirm').html().indexOf('<?=$term["shopping"]?>') >= 0) {
 
                 $.ajax({
                     url: $('#base_url').val()+'instructor/library/set_price',

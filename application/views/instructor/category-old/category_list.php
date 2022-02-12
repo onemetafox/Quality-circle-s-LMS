@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[categorymanagement]?></h2>
+		<h2><?=$term["categorymanagement"]?></h2>
 	</header>
 
 	<!-- start: page -->
@@ -9,9 +9,9 @@
 			<section class="card">
 				<header class="card-header">
 					<div class="card-actions">
-						<a class="btn btn-default" href="<?php echo base_url();?>instructor/category/viewCreate" id="btn_add"><i class="fa fa-plus"></i> <?=$term[addnew]?></a>
+						<a class="btn btn-default" href="<?php echo base_url();?>instructor/category/viewCreate" id="btn_add"><i class="fa fa-plus"></i> <?=$term["addnew"]?></a>
 					</div>
-					<h2 class="card-title"><?=$term[categorylist]?></h2>
+					<h2 class="card-title"><?=$term["categorylist"]?></h2>
 				</header>
 				<div class="card-body">
 					<table class="table table-responsive-md table-hover mb-0" id="datatable_category" >
@@ -138,9 +138,9 @@
                 }
             }],
             "columns": [
-                { "title": "<?=$term[no]?>", "data": "no", "class": "text-left", "width":"80" },
-				{ "title": "<?=$term[categoryname]?>", "data": "name", "class": "text-left", "width":150, "visible": true },
-				{ "title": "<?=$term[action]?>", "data": "id", "class": "text-left", "width":"80" },
+                { "title": "<?=$term["no"]?>", "data": "no", "class": "text-left", "width":"80" },
+				{ "title": "<?=$term["categoryname"]?>", "data": "name", "class": "text-left", "width":150, "visible": true },
+				{ "title": "<?=$term["action"]?>", "data": "id", "class": "text-left", "width":"80" },
 			],
 			"lengthMenu": [
                 [5, 10, 20, 50, 150, -1],

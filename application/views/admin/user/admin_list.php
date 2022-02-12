@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2><?=$term[usermanagement]?></h2>
+        <h2><?=$term["usermanagement"]?></h2>
         <div class="right-wrapper">
         </div>
     </header>
@@ -14,7 +14,7 @@
                     <div class="card-actions">
 
                         <a class="modal-with-form add-user" href="javascript:add_user()">
-                            <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add"> <i class="fa fa-plus"></i> <?=$term[adduser]?></button>
+                            <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add"> <i class="fa fa-plus"></i> <?=$term["adduser"]?></button>
                         </a>
                         
                         <a class="modal-with-form add-user" href="<?=base_url('admin/exports/export_users')?>">
@@ -29,7 +29,7 @@
 
                     </div>
 
-                    <h2 class="card-title"><?=$term[userlist]?></h2>
+                    <h2 class="card-title"><?=$term["userlist"]?></h2>
                 </header>
                 <div class="card-body">
                     <table class="table table-responsive-md table-hover mb-0" id="datatable" >
@@ -203,9 +203,9 @@
                 "targets": [7],
                 "createdCell": function (td, cellData, rowData, row, col) {
                     if(cellData == '1'){
-                        $(td).html('<a href="javascript:inactiveUser('+rowData['id']+')"><span class="badge badge-success"><?=$term[yes]?></span></a>');
+                        $(td).html('<a href="javascript:inactiveUser('+rowData['id']+')"><span class="badge badge-success"><?=$term["yes"]?></span></a>');
                     } else {
-                        $(td).html('<a href="javascript:activeUser('+rowData['id']+')"><span class="badge badge-dark"><?=$term[no]?></span></a>');
+                        $(td).html('<a href="javascript:activeUser('+rowData['id']+')"><span class="badge badge-dark"><?=$term["no"]?></span></a>');
                     }
 
                 }
@@ -213,9 +213,9 @@
                 "targets": [8],
                 "createdCell": function (td, cellData, rowData, row, col) {
                     if(cellData == '1'){
-                        $(td).html('<span class="badge badge-success"><?=$term[yes]?></span>');
+                        $(td).html('<span class="badge badge-success"><?=$term["yes"]?></span>');
                     } else {
-                        $(td).html('<span class="badge badge-dark"><?=$term[no]?></span>');
+                        $(td).html('<span class="badge badge-dark"><?=$term["no"]?></span>');
                     }
 
                 }
@@ -227,15 +227,15 @@
             }],
             "columns": [
                 { "title": "#", "data": "no", "class": "center", "width":20 },
-                { "title": "<?=$term[avatar]?>", "data": "picture", "class": "text-left", "width":100 },
-                { "title": "<?=$term[firstname]?>", "data": "first_name", "class": "text-left", "width":100 },
-                { "title": "<?=$term[lastname]?>", "data": "last_name", "class": "text-left", "width":100},
-                { "title": "<?=$term[email]?>", "data": "email", "class": "text-left", "width":100 },
-				{ "title": "<?=$term[phone]?>", "data": "phone", "class": "text-left", "width":100 },
-                { "title": "<?=$term[role]?>", "data": "user_type", "class": "text-center", "width":110 },
-                { "title": "<?=$term[active]?>", "data": "active", "class": "text-center", "width":50 },
-                { "title": "<?=$term[paymentstatus]?>", "data": "payment_status", "class": "text-center", "width":50 },
-                { "title": "<?=$term[action]?>", "data": "id", "class": "text-center", "width":80 },
+                { "title": "<?=$term["avatar"]?>", "data": "picture", "class": "text-left", "width":100 },
+                { "title": "<?=$term["firstname"]?>", "data": "first_name", "class": "text-left", "width":100 },
+                { "title": "<?=$term["lastname"]?>", "data": "last_name", "class": "text-left", "width":100},
+                { "title": "<?=$term["email"]?>", "data": "email", "class": "text-left", "width":100 },
+				{ "title": "<?=$term["phone"]?>", "data": "phone", "class": "text-left", "width":100 },
+                { "title": "<?=$term["role"]?>", "data": "user_type", "class": "text-center", "width":110 },
+                { "title": "<?=$term["active"]?>", "data": "active", "class": "text-center", "width":50 },
+                { "title": "<?=$term["paymentstatus"]?>", "data": "payment_status", "class": "text-center", "width":50 },
+                { "title": "<?=$term["action"]?>", "data": "id", "class": "text-center", "width":80 },
             ],
             "lengthMenu": [
                 [5, 10, 20, 50, 150, -1],

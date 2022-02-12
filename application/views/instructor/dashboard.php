@@ -1,6 +1,6 @@
 <section role="main" id="mainpage" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[dashboard]?></h2>
+		<h2><?=$term["dashboard"]?></h2>
 	</header>
 
 	<!-- start: page -->
@@ -18,13 +18,13 @@
 								</div>
 								<div class="widget-summary-col">
 									<div class="summary">
-										<h4 class="title"><?=$term[instructors]?></h4>
+										<h4 class="title"><?=$term["instructors"]?></h4>
 										<div class="info">
 											<strong class="amount"><?php echo $instructor_count; ?></strong>
 										</div>
 									</div>
 									<div class="summary-footer">
-										<a class="text-muted text-uppercase" href="<?php echo base_url('admin/user/admin');?>">(<?=$term[viewall]?>)</a>
+										<a class="text-muted text-uppercase" href="<?php echo base_url('admin/user/admin');?>">(<?=$term["viewall"]?>)</a>
 									</div>
 								</div>
 							</div>
@@ -42,13 +42,13 @@
 								</div>
 								<div class="widget-summary-col">
 									<div class="summary">
-										<h4 class="title"><?=$term[learners]?></h4>
+										<h4 class="title"><?=$term["learners"]?></h4>
 										<div class="info">
 											<strong class="amount"><?php echo $learner_count; ?></strong>
 										</div>
 									</div>
 									<div class="summary-footer">
-										<a class="text-muted text-uppercase" href="<?php echo base_url('admin/user/admin');?>">(<?=$term[viewall]?>)</a>
+										<a class="text-muted text-uppercase" href="<?php echo base_url('admin/user/admin');?>">(<?=$term["viewall"]?>)</a>
 									</div>
 								</div>
 							</div>
@@ -66,13 +66,13 @@
 								</div>
 								<div class="widget-summary-col">
 									<div class="summary">
-										<h4 class="title"><?=$term[exams]?></h4>
+										<h4 class="title"><?=$term["exams"]?></h4>
 										<div class="info">
 											<strong class="amount"><?php echo $exam_count;?></strong>
 										</div>
 									</div>
 									<div class="summary-footer">
-										<a class="text-muted text-uppercase" href="<?php echo base_url('admin/exam');?>">(<?=$term[viewall]?>)</a>
+										<a class="text-muted text-uppercase" href="<?php echo base_url('admin/exam');?>">(<?=$term["viewall"]?>)</a>
 									</div>
 								</div>
 							</div>
@@ -90,13 +90,13 @@
                                 </div>
                                 <div class="widget-summary-col">
                                     <div class="summary">
-                                        <h4 style="font-size: 0.8rem;" class="title"><?=$term[onlinelearners]?></h4>
+                                        <h4 style="font-size: 0.8rem;" class="title"><?=$term["onlinelearners"]?></h4>
                                         <div class="info">
                                             <strong class="amount"><?php echo $logined_usercount; ?></strong>
                                         </div>
                                     </div>
                                     <div class="summary-footer">
-                                        <a class="text-muted text-uppercase" href="<?php echo base_url('admin/user')?>">(<?=$term[viewall]?>)</a>
+                                        <a class="text-muted text-uppercase" href="<?php echo base_url('admin/user')?>">(<?=$term["viewall"]?>)</a>
                                     </div>
                                 </div>
                             </div>
@@ -114,13 +114,13 @@
 								</div>
 								<div class="widget-summary-col">
 									<div class="summary">
-										<h4 class="title"><?=$term[certification]?></h4>
+										<h4 class="title"><?=$term["certification"]?></h4>
 										<div class="info">
 											<strong class="amount"><?php echo $certification_count;?></strong>
 										</div>
 									</div>
 									<div class="summary-footer">
-										<a class="text-muted text-uppercase" href="<?php echo base_url('admin/demand/view_certificate_history');?>">(<?=$term[viewall]?>)</a>
+										<a class="text-muted text-uppercase" href="<?php echo base_url('admin/demand/view_certificate_history');?>">(<?=$term["viewall"]?>)</a>
 									</div>
 								</div>
 							</div>
@@ -145,13 +145,13 @@
 								</div>
 								<div class="widget-summary-col">
 									<div class="summary">
-										<h4 class="title"><?=$term[totalinvoice]?></h4>
+										<h4 class="title"><?=$term["totalinvoice"]?></h4>
 										<div class="info">
 											<strong class="amount"><?php echo "€ ".$amount;?></strong>
 										</div>
 									</div>
 									<div class="summary-footer">
-										<a class="text-muted text-uppercase" href="#">(<?=$term[viewall]?>)</a>
+										<a class="text-muted text-uppercase" href="#">(<?=$term["viewall"]?>)</a>
 									</div>
 								</div>
 							</div>
@@ -210,7 +210,7 @@
 		<div class="col-lg-12">
 			<section class="card">
 				<header class="card-header">
-					<h2 class="card-title"><?=$term[certificationstatus]?></h2>
+					<h2 class="card-title"><?=$term["certificationstatus"]?></h2>
 				</header>
 				<div class="card-body">
 					<table class="table table-responsive-md table-hover mb-0" id="datatable_exam_history" >

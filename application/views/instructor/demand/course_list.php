@@ -50,7 +50,7 @@
 					<div class="card-actions">
                         <a href="<?=base_url()?>instructor/demand/view_certificate_history" class="btn btn-default">Certificate History </a>
                         <a href="<?=base_url()?>instructor/demand/view_course_history" class="btn btn-default">Course History </a>
-						<?php /*?><a href="edit_course" class="btn btn-default"><i class="fas fa-plus"></i> <?=$term[createcourse]?> </a><?php */?>
+						<?php /*?><a href="edit_course" class="btn btn-default"><i class="fas fa-plus"></i> <?=$term["createcourse"]?> </a><?php */?>
 					</div>
 					<h2 class="card-title">On Demand Course List</h2>
 				</header>
@@ -127,9 +127,9 @@
 													<h6>
 														<?php if ($item['time_type'] == 0)
 														{
-															echo $term[selfpaced];
+															echo $term["selfpaced"];
 														}else{
-															echo $term[timerestricted];
+															echo $term["timerestricted"];
 														}?>
 													</h6>
 													<h6>
@@ -144,9 +144,9 @@
 												</div>
 											</div>
 											<div style="width: 90%;text-align: right;">
-												<a class="btn btn-default" style="margin-top: 10px;" href="<?=base_url()?>instructor/coursecreation/edit_course/<?=$item['id']?>"><?=$term[editcourse] ?></a>
-												<a class="btn btn-default" style="margin-top: 10px;" href="view_course/<?=$item['id']?>"><?=$term[viewcourse] ?></a>
-												<a class="btn btn-default" style="margin-top: 10px;" onclick="delete_course('<?=$item['id']?>')"><?=$term[delete] ?></a>
+												<a class="btn btn-default" style="margin-top: 10px;" href="<?=base_url()?>instructor/coursecreation/edit_course/<?=$item['id']?>"><?=$term["editcourse"] ?></a>
+												<a class="btn btn-default" style="margin-top: 10px;" href="view_course/<?=$item['id']?>"><?=$term["viewcourse"] ?></a>
+												<a class="btn btn-default" style="margin-top: 10px;" onclick="delete_course('<?=$item['id']?>')"><?=$term["delete"] ?></a>
 											</div>
 										</div>
 									</div>

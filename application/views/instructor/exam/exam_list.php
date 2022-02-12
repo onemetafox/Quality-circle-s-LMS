@@ -5,7 +5,7 @@
 </style>
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[exammanagement]?></h2>
+		<h2><?=$term["exammanagement"]?></h2>
 	
 		<div class="right-wrapper">
 			<ol class="breadcrumbs">
@@ -14,9 +14,9 @@
 						<i class="fas fa-home"></i>
 					</a>
 				</li>
-				<li><span><?=$term[exam]?></span></li>
+				<li><span><?=$term["exam"]?></span></li>
 
-				<li><span><?=$term[examlist]?></span></li>
+				<li><span><?=$term["examlist"]?></span></li>
 			</ol>
 
 		</div>
@@ -28,10 +28,10 @@
 			<section class="card">
 				<header class="card-header">
 					<div class="card-actions">	
-						<a data-toggle="modal" data-target="#Type_Modal" class="btn btn-default"><i class="fas fa-plus"></i> <?=$term[newexam]?> </a>
+						<a data-toggle="modal" data-target="#Type_Modal" class="btn btn-default"><i class="fas fa-plus"></i> <?=$term["newexam"]?> </a>
 					</div>
 
-					<h2 class="card-title"><?=$term[examlist]?></h2>
+					<h2 class="card-title"><?=$term["examlist"]?></h2>
 				</header>
 				<div class="card-body">
 					<table class="table table-responsive-md table-striped table-hover mb-0" id="datatable_examlist" >
@@ -197,12 +197,12 @@
 			} ],     
             "columns": [
 				{ "title": "#", "data": "no", "class": "center", "width":20 },
-            	{ "title": "<?=$term[examtitle]?>", "data": "title", "class": "text-left", "width":200 },
-				{ "title": "<?=$term[examtype]?>", "data": "type", "class": "text-left", "width":50 },
-				{ "title": "<?=$term[quizcount]?>", "data": "quiz_num", "class": "text-center", "width":50},
-				{ "title": "<?=$term[limitedtime]?>", "data": "limit_time", "class": "text-right", "width":50},
-				{ "title": "<?=$term[regdate]?>", "data": "reg_date", "class": "text-left", "width":100 },
-				{ "title": "<?=$term[action]?>", "data": "id", "class": "text-left", "width":200 },
+            	{ "title": "<?=$term["examtitle"]?>", "data": "title", "class": "text-left", "width":200 },
+				{ "title": "<?=$term["examtype"]?>", "data": "type", "class": "text-left", "width":50 },
+				{ "title": "<?=$term["quizcount"]?>", "data": "quiz_num", "class": "text-center", "width":50},
+				{ "title": "<?=$term["limitedtime"]?>", "data": "limit_time", "class": "text-right", "width":50},
+				{ "title": "<?=$term["regdate"]?>", "data": "reg_date", "class": "text-left", "width":100 },
+				{ "title": "<?=$term["action"]?>", "data": "id", "class": "text-left", "width":200 },
 			],
 			"lengthMenu": [
                 [5, 10, 20, 50, 150, -1],

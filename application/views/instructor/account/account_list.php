@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[invoicingaccounting]?></h2>
+		<h2><?=$term["invoicingaccounting"]?></h2>
 	
 	</header>
     <div class="row">
@@ -15,7 +15,7 @@
                     </div>
                     <div class="widget-summary-col">
                         <div class="summary">
-                            <h4 class="title"><?=$term[totalinvoiceamount]?></h4>
+                            <h4 class="title"><?=$term["totalinvoiceamount"]?></h4>
                             <div class="info">
                                 <strong class="amount">€ <?php echo $invoice_amt; ?></strong>
                             </div>
@@ -39,7 +39,7 @@
                         </div>
                         <div class="widget-summary-col">
                             <div class="summary">
-                                <h4 class="title"><?=$term[totalopenamount]?></h4>
+                                <h4 class="title"><?=$term["totalopenamount"]?></h4>
                                 <div class="info">
                                     <strong class="amount">€ <?php echo $open_amt; ?></strong>
                                 </div>
@@ -63,7 +63,7 @@
                         </div>
                         <div class="widget-summary-col">
                             <div class="summary">
-                                <h4 class="title"><?=$term[totalpaidamount]?></h4>
+                                <h4 class="title"><?=$term["totalpaidamount"]?></h4>
                                 <div class="info">
                                     <strong class="amount">€ <?php echo (float)($invoice_amt - $open_amt); ?></strong>
                                 </div>
@@ -85,10 +85,10 @@
                     <div class="card-actions">
                         <!--  -->
                         <a class="modal-with-form export-excel" id="anchor_export" href="<?= base_url()?>instructor/account/account_export">
-                            <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-export"><i class="fa fa-download"></i><?=$term[exportexcel]?></button>
+                            <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-export"><i class="fa fa-download"></i><?=$term["exportexcel"]?></button>
                         </a>
                     </div>
-					<h2 class="card-title"><?=$term[accountlist]?></h2>
+					<h2 class="card-title"><?=$term["accountlist"]?></h2>
 				</header>
 				<div class="card-body">
                     <div class="row" style="margin-bottom: 15px;">
@@ -97,13 +97,13 @@
                         </div>
                         <div class="col-lg-2">
                             <select class="form-control" id="filter_status">
-                                <option value="" selected><?=$term[selectallstatus]?></option>
-                                <option value="0"><?=$term[open]?></option>
-                                <option value="1"><?=$term[paid]?></option>
+                                <option value="" selected><?=$term["selectallstatus"]?></option>
+                                <option value="0"><?=$term["open"]?></option>
+                                <option value="1"><?=$term["paid"]?></option>
                             </select>
                         </div>
                         <div class="col-lg-2">
-                            <button type="button" class="btn btn-primary" onclick="filterTable();" style="width: 100%;"><?=$term[filtertable]?></button>
+                            <button type="button" class="btn btn-primary" onclick="filterTable();" style="width: 100%;"><?=$term["filtertable"]?></button>
                         </div>
                     </div>
 					<table class="table table-responsive-md table-hover mb-0" id="datatable_account_list" ></table>
@@ -206,12 +206,12 @@
                 "targets": [8],
                 "createdCell": function (td, cellData, rowData, row, col) {
                     if(cellData == '1'){
-                        $(td).html('<a href="javascript:changestatus('+rowData['id']+',0);"><span class="badge badge-success">'+'<?=$term[paid]?>'+'</span></a>');
+                        $(td).html('<a href="javascript:changestatus('+rowData['id']+',0);"><span class="badge badge-success">'+'<?=$term["paid"]?>'+'</span></a>');
 
                     } else if(cellData == '2'){
-                        $(td).html('<a href="javascript: return false;"><span class="badge badge-danger">'+'<?=$term[canceled]?>'+'</span></a>');
+                        $(td).html('<a href="javascript: return false;"><span class="badge badge-danger">'+'<?=$term["canceled"]?>'+'</span></a>');
                     } else{
-                        $(td).html('<a href="javascript:changestatus('+rowData['id']+',1);"><span class="badge badge-warning">'+'<?=$term[open]?>'+'</span></a>');
+                        $(td).html('<a href="javascript:changestatus('+rowData['id']+',1);"><span class="badge badge-warning">'+'<?=$term["open"]?>'+'</span></a>');
                     }
                 }
             },
@@ -229,16 +229,16 @@
                 }],
 	        "columns": [
                 { "title": "Select", "data": "id", "class": "text-left", "width": 20 },
-                { "title": "<?=$term[type]?>", "data": "history_type", "class": "text-left", "width":30 },
-	        	{ "title": "<?=$term[companyname]?>", "data": "company_name", "class": "text-left", "width":150 },
-				{ "title": "<?=$term[firstname]?>", "data": "first_name", "class": "text-left", "width":60 },
-	        	{ "title": "<?=$term[lastname]?>", "data": "last_name", "class": "text-left", "width":60 },
-				{ "title": "<?=$term[title]?>", "data": "history_title", "class": "text-left", "width":"*" },
-				{ "title": "<?=$term[price]?>", "data": "amount", "class": "text-right", "width":60 },
+                { "title": "<?=$term["type"]?>", "data": "history_type", "class": "text-left", "width":30 },
+	        	{ "title": "<?=$term["companyname"]?>", "data": "company_name", "class": "text-left", "width":150 },
+				{ "title": "<?=$term["firstname"]?>", "data": "first_name", "class": "text-left", "width":60 },
+	        	{ "title": "<?=$term["lastname"]?>", "data": "last_name", "class": "text-left", "width":60 },
+				{ "title": "<?=$term["title"]?>", "data": "history_title", "class": "text-left", "width":"*" },
+				{ "title": "<?=$term["price"]?>", "data": "amount", "class": "text-right", "width":60 },
 				/*{ "title": "FASI", "data": "fasi_name", "class": "text-left", "width":100 },*/
-				{ "title": "<?=$term[paydate]?>", "data": "pay_date", "class": "text-center", "width":60 },
-				{ "title": "<?=$term[status]?>", "data": "pay_status", "class": "text-center", "width":60 },
-                { "title": "<?=$term[action]?>", "data": "id", "class": "text-center", "width":60 }
+				{ "title": "<?=$term["paydate"]?>", "data": "pay_date", "class": "text-center", "width":60 },
+				{ "title": "<?=$term["status"]?>", "data": "pay_status", "class": "text-center", "width":60 },
+                { "title": "<?=$term["action"]?>", "data": "id", "class": "text-center", "width":60 }
 			],
 			"lengthMenu": [
 	            [5, 10, 20, 50, 150, -1],

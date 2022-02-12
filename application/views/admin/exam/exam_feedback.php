@@ -2,7 +2,7 @@
 </style>
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[examfeedback]?></h2>
+		<h2><?=$term["examfeedback"]?></h2>
 			
 	</header>
 

@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[categorymanagement]?></h2>
+		<h2><?=$term["categorymanagement"]?></h2>
 	
 	</header>
 
@@ -12,16 +12,16 @@
 					<header class="card-header">
 						<div class="card-actions">	
 							<!--  -->
-							<a class="btn btn-default" href="<?php echo base_url();?>admin/category" id="btn_list"><i class="fa fa-table"></i> <?=$term[categorylist]?> </a>
+							<a class="btn btn-default" href="<?php echo base_url();?>admin/category" id="btn_list"><i class="fa fa-table"></i> <?=$term["categorylist"]?> </a>
 						</div>
 		
-						<h2 class="card-title"><?=$term[category]?></h2>
+						<h2 class="card-title"><?=$term["category"]?></h2>
 					</header>
 					<div class="card-body">
 						<form id="category_add_form" action="<?php echo base_url();?>admin/category/add" enctype="multipart/form-data" method="POST" novalidate="novalidate">
 						<input type="hidden" name="id" id="id" value="<?php echo $id;?>">
 						<div class="form-group row">
-							<label class="col-sm-3 control-label text-sm-right pt-2"><?=$term[categoryname]?> <span class="required">*</span></label>
+							<label class="col-sm-3 control-label text-sm-right pt-2"><?=$term["categoryname"]?> <span class="required">*</span></label>
 							<div class="col-lg-4 col-sm-8">
 								<input type="text" id="name" name="name" class="form-control" placeholder="eg.: Algebra" required="" maxlength="50" value="<?php echo isset($category['name'])?$category['name']:''; ?>">
 							</div>
@@ -29,7 +29,7 @@
 						</form>
 						<div class="row">
 							<div class="col-md-2">
-								<a class="btn btn-default modal-basic" href="#modalBasic" id="btn_add"><i class="fa fa-plus"></i> <?=$term[addnew]?></a>
+								<a class="btn btn-default modal-basic" href="#modalBasic" id="btn_add"><i class="fa fa-plus"></i> <?=$term["addnew"]?></a>
 							</div>
 							<div class="col-md-8">
 								<table class="table table-responsive-md table-bordered mb-0" id="datatable_category_standard">
@@ -41,8 +41,8 @@
 					<footer class="card-footer">
 						<div class="row">
 							<div class="col-md-12 text-center">
-								<button type="submit" class="btn btn-primary" id="btn_save"><?=$term[save]?></button>
-								<button type="reset" class="btn btn-default"><?=$term[reset]?></button>
+								<button type="submit" class="btn btn-primary" id="btn_save"><?=$term["save"]?></button>
+								<button type="reset" class="btn btn-default"><?=$term["reset"]?></button>
 							</div>
 						</div>
 					</footer>
@@ -234,9 +234,9 @@
 				}
 			}],
             "columns": [
-                { "title": "<?=$term[no]?>", "data": "no", "class": "text-left", "width":"80" },
+                { "title": "<?=$term["no"]?>", "data": "no", "class": "text-left", "width":"80" },
 				{ "title": "Standard", "data": "name", "class": "text-left", "width":150, "visible": true },
-				{ "title": "<?=$term[action]?>", "data": "id", "class": "text-left", "width":"80" },
+				{ "title": "<?=$term["action"]?>", "data": "id", "class": "text-left", "width":"80" },
 			],
 			"lengthMenu": [
                 [5, 10, 20, 50, 150, -1],

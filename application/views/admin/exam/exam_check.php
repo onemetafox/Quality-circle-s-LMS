@@ -23,7 +23,7 @@
 </style>
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[examcheck]?></h2>
+		<h2><?=$term["examcheck"]?></h2>
 			
 	</header>
 
@@ -37,34 +37,34 @@
 							<div class="card-body">
 								<table class="table table-bordered">
 									<tr>
-										<th class="green-td" colspan="<?=$quiz_number*2+8?>"><?=$term[examiso]?></th>
+										<th class="green-td" colspan="<?=$quiz_number*2+8?>"><?=$term["examiso"]?></th>
 									</tr>
 									<tr>
-										<th class="yellow-td" width="15%"><?=$term[coursevenue]?></th>
+										<th class="yellow-td" width="15%"><?=$term["coursevenue"]?></th>
 										<th width="50%" colspan="<?=$quiz_number*2+2?>">KingStone Jamaika</th>
-										<th class="yellow-td" width="16%" colspan="2"><?=$term[observer]?></th>
+										<th class="yellow-td" width="16%" colspan="2"><?=$term["observer"]?></th>
 										<th width="19%" colspan="3"></th>
 									</tr>
 									<tr>
-										<th class="yellow-td" width="15%"><?=$term[trainers]?></th>
+										<th class="yellow-td" width="15%"><?=$term["trainers"]?></th>
 										<th width="%">1</th>
 										<th width="%" colspan="<?=$quiz_number?>"></th>
 										<th width="%">2</th>
 										<th width="%" colspan="<?=$quiz_number?>"></th>
-										<th class="yellow-td" width="16%" colspan="2"><?=$term[dates]?></th>
+										<th class="yellow-td" width="16%" colspan="2"><?=$term["dates"]?></th>
 										<th width="19%" colspan="3"></th>
 									</tr>
 									<tr>
-										<th class="yellow-td" width="%" rowspan="2"><?=$term[delegatename]?></th>
-										<th class="yellow-td" width="%" colspan="<?=$quiz_number?>"><?=$term[marker]?>1<br><?=$term[examsection]?></th>
-										<th class="yellow-td" width="%" rowspan="2"><?=$term[total]?></th>
-										<th class="yellow-td" width="%" colspan="<?=$quiz_number?>"><?=$term[marker]?>2<br><?=$term[examsection]?></th>
-										<th class="yellow-td" width="%" rowspan="2"><?=$term[total]?></th>
-										<th class="yellow-td" width="%" rowspan="2">% <?=$term[mark]?></th>
-										<th class="yellow-td" width="%" rowspan="2"><?=$term[continualassessment]?></th>
-										<th class="yellow-td" width="%" rowspan="2"><?=$term[indicatepass]?></th>
-										<th class="yellow-td" width="%" rowspan="2"><?=$term[certificatenumber]?></th>
-										<th class="yellow-td" width="%" rowspan="2"><?=$term[dateissued]?></th>
+										<th class="yellow-td" width="%" rowspan="2"><?=$term["delegatename"]?></th>
+										<th class="yellow-td" width="%" colspan="<?=$quiz_number?>"><?=$term["marker"]?>1<br><?=$term["examsection"]?></th>
+										<th class="yellow-td" width="%" rowspan="2"><?=$term["total"]?></th>
+										<th class="yellow-td" width="%" colspan="<?=$quiz_number?>"><?=$term["marker"]?>2<br><?=$term["examsection"]?></th>
+										<th class="yellow-td" width="%" rowspan="2"><?=$term["total"]?></th>
+										<th class="yellow-td" width="%" rowspan="2">% <?=$term["mark"]?></th>
+										<th class="yellow-td" width="%" rowspan="2"><?=$term["continualassessment"]?></th>
+										<th class="yellow-td" width="%" rowspan="2"><?=$term["indicatepass"]?></th>
+										<th class="yellow-td" width="%" rowspan="2"><?=$term["certificatenumber"]?></th>
+										<th class="yellow-td" width="%" rowspan="2"><?=$term["dateissued"]?></th>
 									</tr>
 									<tr>
 										<?php
@@ -120,7 +120,7 @@
 											<?php array_push($total_array,$total_mark2);?>
 											<td class="thingreen-td"><?=$total_mark2?></td>
 											<td class="thingreen-td">0</td>
-											<td class="thingreen-td"><?=$term[pass]?></td>
+											<td class="thingreen-td"><?=$term["pass"]?></td>
 											<td class="thingreen-td"><?=$user->exam_status?></td>
 											<td class="thingreen-td"></td>
 											<td class="thingreen-td"></td>
@@ -130,24 +130,24 @@
 										<td class="thingreen-td"></td><td class="thingreen-td"></td><td class="thingreen-td"></td><td class="thingreen-td"></td><td class="thingreen-td"></td><td class="thingreen-td"></td><td class="thingreen-td"></td><td class="thingreen-td"></td><td class="thingreen-td"></td><td class="thingreen-td"></td><td class="thingreen-td"></td><td class="thingreen-td"></td>
 									</tr>
 									<tr>
-										<td class="yellow-td" width="%"><?=$term[markername]?></td>
+										<td class="yellow-td" width="%"><?=$term["markername"]?></td>
 										<td width="%" colspan="<?=$quiz_number+1?>"><?=$markers->marker1?></td>
 										<td width="%" colspan="<?=$quiz_number+1?>"><?=$markers->marker2?></td>
 										<td width="%"></td>
-										<td class="yellow-td" width="%"><?=$term[examused]?></td>
+										<td class="yellow-td" width="%"><?=$term["examused"]?></td>
 										<td width="%"></td>
-										<td class="yellow-td" width="%"><?=$term[version]?></td>
+										<td class="yellow-td" width="%"><?=$term["version"]?></td>
 										<td width="%"></td>
 									</tr>
 									<tr>
-										<td class="yellow-td" width="%"><?=$term[numberattended]?></td>
-										<td class="yellow-td" width="%" colspan="2"><?=$term[passedca]?></td>
-										<td class="yellow-td" width="%" colspan="<?=$quiz_number-1?>"><?=$term[tookexam]?></td>
-										<td class="yellow-td" width="%" colspan="2"><?=$term[passedexam]?></td>
-										<td class="yellow-td" width="%" colspan="<?=$quiz_number?>"><?=$term[passedcourse]?></td>
-										<td class="yellow-td" width="%"><?=$term[coursefail]?></td>
-										<td class="yellow-td" width="%"><?=$term[lowest]?> %</td>
-										<td class="yellow-td" width="%"><?=$term[highest]?> %</td>
+										<td class="yellow-td" width="%"><?=$term["numberattended"]?></td>
+										<td class="yellow-td" width="%" colspan="2"><?=$term["passedca"]?></td>
+										<td class="yellow-td" width="%" colspan="<?=$quiz_number-1?>"><?=$term["tookexam"]?></td>
+										<td class="yellow-td" width="%" colspan="2"><?=$term["passedexam"]?></td>
+										<td class="yellow-td" width="%" colspan="<?=$quiz_number?>"><?=$term["passedcourse"]?></td>
+										<td class="yellow-td" width="%"><?=$term["coursefail"]?></td>
+										<td class="yellow-td" width="%"><?=$term["lowest"]?> %</td>
+										<td class="yellow-td" width="%"><?=$term["highest"]?> %</td>
 										<td width="%"></td>
 									</tr>
 									<tr>
@@ -180,9 +180,9 @@
 										<td width="%"></td>
 									</tr>
 									<tr>
-										<td class="yellow-td" width="%"><?=$term[administrator]?></td>
+										<td class="yellow-td" width="%"><?=$term["administrator"]?></td>
 										<td  width="%" colspan="<?=$quiz_number*2+1?>"></td>
-										<td class="yellow-td" width="%" colspan="2"><?=$term[date]?></td>
+										<td class="yellow-td" width="%" colspan="2"><?=$term["date"]?></td>
 										<td  width="%" colspan="4"></td>
 									</tr>
 								</table>

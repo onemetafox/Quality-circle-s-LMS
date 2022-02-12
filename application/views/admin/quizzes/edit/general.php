@@ -34,7 +34,7 @@
 		});
 	});
 </script>
-<textarea id="<?= $rand ?>" name="content[html]" class="form-control" rows="6"><?= $question[html] ?></textarea>
+<textarea id="<?= $rand ?>" name="content[html]" class="form-control" rows="6"><?= $question["html"] ?></textarea>
 <ul class="dropdown-menu" role="menu">
 	<li><a data-type="FillInTheBlank">FillIn Add</a></li>
 	<li><a data-type="MultipleChoice">Choice Add</a></li>

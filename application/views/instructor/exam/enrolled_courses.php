@@ -10,10 +10,10 @@
       <ol class="breadcrumbs">
         <li> <a href="<?php echo base_url(); ?>home"> <i class="fas fa-home"></i> </a> </li>
         <li><span>
-          <?=$term[exam]?>
+          <?=$term["exam"]?>
           </span></li>
         <li><span>
-          <?=$term[examlist]?>
+          <?=$term["examlist"]?>
           </span></li>
       </ol>
     </div>

@@ -47,7 +47,7 @@
 
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2><?=$term[course]?></h2>
+        <h2><?=$term["course"]?></h2>
 
         <div class="right-wrapper">
             <ol class="breadcrumbs">
@@ -68,7 +68,7 @@
                 <header class="card-header">
                     <div class="card-actions">
                     </div>
-                    <h2 class="card-title"><?=$term[courseinfo]?></h2>
+                    <h2 class="card-title"><?=$term["courseinfo"]?></h2>
                 </header>
                 <div class="card-body">
                     <div class="row">
@@ -132,8 +132,8 @@
                                                                 <footer class="card-footer">
                                                                     <div class="row">
                                                                         <div class="col-md-12 text-right">
-                                                                            <button class="btn btn-primary modal-create-confirm"><?=$term[create]?></button>
-                                                                            <button class="btn btn-default modal-create-dismiss"><?=$term[cancel]?></button>
+                                                                            <button class="btn btn-primary modal-create-confirm"><?=$term["create"]?></button>
+                                                                            <button class="btn btn-default modal-create-dismiss"><?=$term["cancel"]?></button>
                                                                         </div>
                                                                     </div>
                                                                 </footer>
@@ -164,8 +164,8 @@
                                                                 <footer class="card-footer">
                                                                     <div class="row">
                                                                         <div class="col-md-12 text-right">
-                                                                            <button class="btn btn-primary modal-create-quiz"><?=$term[create]?></button>
-                                                                            <button class="btn btn-default modal-create-dismiss"><?=$term[cancel]?></button>
+                                                                            <button class="btn btn-primary modal-create-quiz"><?=$term["create"]?></button>
+                                                                            <button class="btn btn-default modal-create-dismiss"><?=$term["cancel"]?></button>
                                                                         </div>
                                                                     </div>
                                                                 </footer>
@@ -252,7 +252,7 @@
     <div class="modal-dialog" style = "width: 70%;max-width: 70%;">
         <div class="modal-content">
             <div class="modal-header bg-default">
-                <h3 class="modal-title"><?=$term[library]?></h3>
+                <h3 class="modal-title"><?=$term["library"]?></h3>
             </div>
             <form id="exam_title_form" class="form-horizontal">
                 <div class="modal-body">
@@ -497,7 +497,7 @@
             "columns": [
                 { "title": "", "data": "id", "class": "text-left", "width":10 },
                 { "title": "#", "data": "no", "class": "center", "width":50 },
-                { "title": "<?=$term[name]?>", "data": "fullname", "class": "text-left", "width":200 }
+                { "title": "<?=$term["name"]?>", "data": "fullname", "class": "text-left", "width":200 }
             ],
             "lengthMenu": [
                 [5, 10, 20, 50, 150, -1],
@@ -542,7 +542,7 @@
             "columns": [
                 { "title": "", "data": "id", "class": "text-left", "width":10 },
                 { "title": "#", "data": "no", "class": "center", "width":50 },
-                { "title": "<?=$term[name]?>", "data": "fullname", "class": "text-left", "width":200 }
+                { "title": "<?=$term["name"]?>", "data": "fullname", "class": "text-left", "width":200 }
             ],
             "lengthMenu": [
                 [5, 10, 20, 50, 150, -1],
@@ -689,7 +689,7 @@
 
     $('.modal-create-confirm').click(function (e) {
         e.preventDefault();
-        if($('.modal-create-confirm').html().indexOf('<?=$term[create]?>') >= 0){
+        if($('.modal-create-confirm').html().indexOf('<?=$term["create"]?>') >= 0){
             $.ajax({
                 url: $('#base_url').val()+'admin/training/save_exam_page',
                 type: 'POST',
@@ -749,7 +749,7 @@
 
     $('.modal-create-quiz').click(function (e) {
         e.preventDefault();
-        if($('.modal-create-quiz').html().indexOf('<?=$term[create]?>') >= 0)
+        if($('.modal-create-quiz').html().indexOf('<?=$term["create"]?>') >= 0)
         {
             $.ajax({
                 url: $('#base_url').val()+'admin/training/save_quiz_page',
@@ -1797,7 +1797,7 @@
                         return Number(info.page) * Number(info.length) + Number(pos.row) + 1;
                     }
                 },
-                { "sTitle" : "<?=$term[name]?>", "mData": "", "sWidth": 200,
+                { "sTitle" : "<?=$term["name"]?>", "mData": "", "sWidth": 200,
                     mRender: function (data, type, row) {
                         if(row.file_type == 'DIRECTORY'){
                             return '<a onclick="library_reload('+row.id+')">'+row.name+'</a>';
@@ -1806,15 +1806,15 @@
                         }
                     }
                 },
-                { "sTitle" : "<?=$term[filetype]?>", "mData": "file_type", "sWidth": 200 },
-                { "sTitle" : "<?=$term[date]?>", "mData": "reg_date", "sWidth": 200 },
+                { "sTitle" : "<?=$term["filetype"]?>", "mData": "file_type", "sWidth": 200 },
+                { "sTitle" : "<?=$term["date"]?>", "mData": "reg_date", "sWidth": 200 },
                 {
                     "sTitle" : "Actions", "mData": "", "sWidth": 300,
                     mRender: function (data, type, row) {
                         if(row.file_type == 'DIRECTORY'){
                             return '';
                         } else {
-                            return '<a onclick="library_insert('+row.id+')" class="btn btn-default"><?=$term[add]?></a>';
+                            return '<a onclick="library_insert('+row.id+')" class="btn btn-default"><?=$term["add"]?></a>';
                         }
                     }
                 }

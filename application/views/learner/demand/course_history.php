@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[coursehistory]?></h2>
+		<h2><?=$term["coursehistory"]?></h2>
 	</header>
 
 	<!-- start: page -->
@@ -9,7 +9,7 @@
 			<section class="card">
 				<header class="card-header">
 
-					<h2 class="card-title" id="item-test"><?=$term[coursehistory]?></h2>
+					<h2 class="card-title" id="item-test"><?=$term["coursehistory"]?></h2>
 				</header>
 				<div class="card-body">
 					<table class="table table-responsive-md table-hover mb-0" id="datatable_history" >

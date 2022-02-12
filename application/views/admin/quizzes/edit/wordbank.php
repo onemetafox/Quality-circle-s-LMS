@@ -46,14 +46,14 @@
 <table id="<?= $rand ?>" style="width:100%">
 	<tr>
 		<td>
-			<textarea name="content[html]" class="form-control" rows="6"><?= $question[html] ?></textarea>
+			<textarea name="content[html]" class="form-control" rows="6"><?= $question["html"] ?></textarea>
 		</td>
 		<td width="5px"></td>
 		<td width="200px" valign="top" style="position:relative">
 			<div class="editor-body" style="height:100%;width:100%;position:absolute;overflow:auto">
 				<ul class="editable">
 					<li><input style="width:100%"></li>
-					<?php if($question[words]) foreach($question[words] as $word) { ?>
+					<?php if($question["words"]) foreach($question["words"] as $word) { ?>
 						<li>
 							<?= $word ?>
 							<input type="hidden" name="content[words][]" value="<?= $word ?>">

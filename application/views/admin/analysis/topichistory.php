@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[analysisstatistics]?></h2>
+		<h2><?=$term["analysisstatistics"]?></h2>
 	
 	</header>
 
@@ -9,7 +9,7 @@
 		<div class="col-lg-12">
 			<section class="card">
 				<header class="card-header">
-					<h2 class="card-title"><?=$term[topichistory]?></h2>
+					<h2 class="card-title"><?=$term["topichistory"]?></h2>
 				</header>
 				<div class="card-body">
 					<table class="table table-responsive-md table-hover mb-0" id="datatable_training_history" >
@@ -50,15 +50,15 @@
 				}
 			],
 	        "columns": [
-	        	{ "title": "<?=$term[companyname]?>", "data": "company_name", "class": "text-left", "width":"*" },
-	        	{ "title": "<?=$term[firstname]?>", "data": "first_name", "class": "text-left", "width":60 },
-	        	{ "title": "<?=$term[lastname]?>", "data": "last_name", "class": "text-left", "width":60 },
-				{ "title": "<?=$term[category]?>", "data": "category_name", "class": "text-left", "width":100, "visible": true },
-				{ "title": "<?=$term[topictitle]?>", "data": "training_title", "class": "text-left", "width":"*" },
-                { "title": "<?=$term[duration]?>", "data": "duration", "class": "left", "width":100 },
-				{ "title": "<?=$term[startdate]?>", "data": "start_date", "class": "text-left", "width":"100"},
-				{ "title": "<?=$term[enddate]?>", "data": "end_date", "class": "text-left", "width":"100" },
-				{ "title": "<?=$term[action]?>", "data": "log_id", "class": "text-center", "width":60 },
+	        	{ "title": "<?=$term["companyname"]?>", "data": "company_name", "class": "text-left", "width":"*" },
+	        	{ "title": "<?=$term["firstname"]?>", "data": "first_name", "class": "text-left", "width":60 },
+	        	{ "title": "<?=$term["lastname"]?>", "data": "last_name", "class": "text-left", "width":60 },
+				{ "title": "<?=$term["category"]?>", "data": "category_name", "class": "text-left", "width":100, "visible": true },
+				{ "title": "<?=$term["topictitle"]?>", "data": "training_title", "class": "text-left", "width":"*" },
+                { "title": "<?=$term["duration"]?>", "data": "duration", "class": "left", "width":100 },
+				{ "title": "<?=$term["startdate"]?>", "data": "start_date", "class": "text-left", "width":"100"},
+				{ "title": "<?=$term["enddate"]?>", "data": "end_date", "class": "text-left", "width":"100" },
+				{ "title": "<?=$term["action"]?>", "data": "log_id", "class": "text-center", "width":60 },
 			],
 			"lengthMenu": [
 	            [5, 10, 20, 50, 150, -1],

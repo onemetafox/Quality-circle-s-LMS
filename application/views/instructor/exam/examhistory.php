@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[analysisstatistics]?></h2>
+		<h2><?=$term["analysisstatistics"]?></h2>
 	
 	</header>
 
@@ -9,7 +9,7 @@
 		<div class="col-lg-12">
 			<section class="card">
 				<header class="card-header">
-					<h2 class="card-title"><?=$term[examhistory]?></h2>
+					<h2 class="card-title"><?=$term["examhistory"]?></h2>
 				</header>
 				<div class="card-body">
 					<table class="table table-responsive-md table-hover table-bordered mb-0" id="datatable_exam_history" >
@@ -26,7 +26,7 @@
     <div id="modalAnim" style="max-width: 800px;" class="zoom-anim-dialog modal-block modal-block-primary mfp-hide">
         <section class="card">
             <header class="card-header">
-                <h2 class="card-title"><?=$term[examstructure]?></h2>
+                <h2 class="card-title"><?=$term["examstructure"]?></h2>
             </header>
             <div class="card-body">
                 <div class="modal-wrapper">
@@ -38,7 +38,7 @@
             <footer class="card-footer">
                 <div class="row">
                     <div class="col-md-12 text-right">
-                        <button class="btn btn-default modal-dismiss"><?=$term[close]?></button>
+                        <button class="btn btn-default modal-dismiss"><?=$term["close"]?></button>
                     </div>
                 </div>
             </footer>
@@ -114,15 +114,15 @@
                 }
             }],
 	        "columns": [
-	        	{ "title": "<?=$term[examtitle]?>", "data": "title", "class": "text-left", "width":100 },
-				{ "title": "<?=$term[examtype]?>", "data": "type", "class": "text-left", "width":60 },
-	        	{ "title": "<?=$term[examdate]?>", "data": "exam_start_at", "class": "text-left", "width":60 },
-				{ "title": "<?=$term[fullname]?>", "data": "fullname", "class": "text-left", "width":100, "visible": true },
-				{ "title": "<?=$term[email]?>", "data": "email", "class": "text-left", "width":"*" },
-				{ "title": "<?=$term[timetaken]?>", "data": "exam_start_at", "class": "text-right", "width":60 },
-				{ "title": "<?=$term[totalmarks]?>", "data": "total_marks", "class": "text-right", "width":100 },
-				{ "title": "<?=$term[status]?>", "data": "exam_status", "class": "text-center", "width":60 },
-                { "title": "<?=$term[action]?>", "data": "id", "class": "text-left", "width":60 },
+	        	{ "title": "<?=$term["examtitle"]?>", "data": "title", "class": "text-left", "width":100 },
+				{ "title": "<?=$term["examtype"]?>", "data": "type", "class": "text-left", "width":60 },
+	        	{ "title": "<?=$term["examdate"]?>", "data": "exam_start_at", "class": "text-left", "width":60 },
+				{ "title": "<?=$term["fullname"]?>", "data": "fullname", "class": "text-left", "width":100, "visible": true },
+				{ "title": "<?=$term["email"]?>", "data": "email", "class": "text-left", "width":"*" },
+				{ "title": "<?=$term["timetaken"]?>", "data": "exam_start_at", "class": "text-right", "width":60 },
+				{ "title": "<?=$term["totalmarks"]?>", "data": "total_marks", "class": "text-right", "width":100 },
+				{ "title": "<?=$term["status"]?>", "data": "exam_status", "class": "text-center", "width":60 },
+                { "title": "<?=$term["action"]?>", "data": "id", "class": "text-left", "width":60 },
 			],
 			"lengthMenu": [
 	            [5, 10, 20, 50, 150, -1],

@@ -3,7 +3,7 @@
 		var cmbMode = $("<select name='content[mode]'>")
 			.append("<option value='word'>Select Word</option>")
 			.append("<option value='para'>Select Paragraph</option>")
-			.val("<?= $question[mode] ?>");
+			.val("<?= $question["mode"] ?>");
 		$("textarea[name='content[html]']").editor({
 			toolbar: [	cmbMode,"-",
 						"bold","underline","italic","-",
@@ -61,4 +61,4 @@
 		});
 	});
 </script>
-<textarea name="content[html]" class="form-control" rows="6"><?= $question[html] ?></textarea>
+<textarea name="content[html]" class="form-control" rows="6"><?= $question["html"] ?></textarea>

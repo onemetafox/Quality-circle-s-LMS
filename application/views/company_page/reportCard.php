@@ -64,7 +64,7 @@
         </div>
         <?php if ($result == "Pass"):?>
             <header class="page-header">
-                <h2><?=$term[exammanagement]?></h2>
+                <h2><?=$term["exammanagement"]?></h2>
                 <h5 style="text-align: right; margin-right: 50px"><a href="javascript:pagePrint()" class="btn btn-primary ml-3"><i class="fas fa-print"></i> Print and Download</a></h5>
             </header>
         <?php endif;?>

@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[examassignmanagement]?></h2>
+		<h2><?=$term["examassignmanagement"]?></h2>
 	
 	</header>
 
@@ -10,7 +10,7 @@
 			<section class="card">
 				<header class="card-header">
 					<div class="card-actions">	
-						<a href="<?php echo base_url(); ?>admin/examassign/create" class="btn btn-default"><i class="fas fa-plus"></i> <?=$term[create]?> </a>
+						<a href="<?php echo base_url(); ?>admin/examassign/create" class="btn btn-default"><i class="fas fa-plus"></i> <?=$term["create"]?> </a>
 					</div>
 
 					<h2 class="card-title"><?=$term[examassignlist]?></h2>
@@ -104,14 +104,14 @@
 				}
 			} ],     
             "columns": [
-            	{ "title": "<?=$term[userrole]?>", "data": "user_type", "class": "text-center", "width":100, "visible": true },
-				{ "title": "<?=$term[companyname]?>", "data": "company_name", "class": "text-center", "width":100, "visible": true },
-				{ "title": "<?=$term[name]?>", "data": "name", "class": "text-center", "width":"100", "visible": true },
-				{ "title": "<?=$term[examcategory]?>", "data": "exam_category_name", "class": "text-left", "width":"*", "visible": true },
-				{ "title": "<?=$term[examtitle]?>", "data": "exam_title", "class": "text-left", "width":"*", "visible": true },
-				{ "title": "<?=$term[startdate]?>", "data": "start_date", "class": "text-left", "width":150 },
-				{ "title": "<?=$term[assigneremail]?>", "data": "parent_email", "class": "text-left", "width":150 },
-				{ "title": "<?=$term[action]?>", "data": "id", "class": "text-center", "width":"60" },
+            	{ "title": "<?=$term["userrole"]?>", "data": "user_type", "class": "text-center", "width":100, "visible": true },
+				{ "title": "<?=$term["companyname"]?>", "data": "company_name", "class": "text-center", "width":100, "visible": true },
+				{ "title": "<?=$term["name"]?>", "data": "name", "class": "text-center", "width":"100", "visible": true },
+				{ "title": "<?=$term["examcategory"]?>", "data": "exam_category_name", "class": "text-left", "width":"*", "visible": true },
+				{ "title": "<?=$term["examtitle"]?>", "data": "exam_title", "class": "text-left", "width":"*", "visible": true },
+				{ "title": "<?=$term["startdate"]?>", "data": "start_date", "class": "text-left", "width":150 },
+				{ "title": "<?=$term["assigneremail"]?>", "data": "parent_email", "class": "text-left", "width":150 },
+				{ "title": "<?=$term["action"]?>", "data": "id", "class": "text-center", "width":"60" },
 			],
 			"lengthMenu": [
                 [5, 10, 20, 50, 150, -1],

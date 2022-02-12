@@ -99,7 +99,7 @@
 								</div>
 		                		<div class="form-group">
 				                	<div class="col-md-12">
-					                	<button id='save_btn' class="btn btn-success"><?=$term[save]?></button>
+					                	<button id='save_btn' class="btn btn-success"><?=$term["save"]?></button>
 				                	</div>
 				            	</div>
 								<div class="form-group">

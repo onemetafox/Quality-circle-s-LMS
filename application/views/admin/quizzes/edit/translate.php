@@ -1,5 +1,5 @@
 <div class="list-group">
-	<?php if($question[answers]) foreach($question[answers] as $i=>$item) : ?>
+	<?php if($question["answers"]) foreach($question["answers"] as $i=>$item) : ?>
 		<div class="list-group-item" onclick="active_row(this)">
 			<input type="text" class="form-control input-sm" name="content[answers][<?= $i ?>][html]" value="<?= $item[html] ?>"/>
 		</div>

@@ -36,7 +36,7 @@ var first_id = "";
 </script>
 <section role="main" class="content-body">
     <header class="page-header">
-        <h2><?=$term[course]?></h2>
+        <h2><?=$term["course"]?></h2>
 
         <div class="right-wrapper">
             <ol class="breadcrumbs">
@@ -57,10 +57,10 @@ var first_id = "";
                     <div class="card-actions">
                         <?php echo form_open('instructor/demand/edit_course/'.$course_id, array("id"=>"frm_preview")); ?>
                         <input type="hidden" name="tab_active_id" value="2">
-                        <button type="submit" class="btn btn-default" ><?=$term[done]?> </button>
+                        <button type="submit" class="btn btn-default" ><?=$term["done"]?> </button>
                         </form>
                     </div>
-                    <h2 class="card-title"><?=$term[preview]?></h2>
+                    <h2 class="card-title"><?=$term["preview"]?></h2>
                 </header>
                 <div class="card-body">
                     <div class="row" style="width: 80%;padding-left: 20px;">
@@ -140,7 +140,7 @@ var first_id = "";
     <div class="modal-dialog" style = "width: 70%;max-width: 70%;">
         <div class="modal-content">
             <div class="modal-header bg-default">
-                <h3 class="modal-title"><?=$term[library]?></h3>
+                <h3 class="modal-title"><?=$term["library"]?></h3>
             </div>
             <form id="exam_title_form" class="form-horizontal">
                 <div class="modal-body">

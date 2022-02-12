@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[dashboard]?></h2>
+		<h2><?=$term["dashboard"]?></h2>
 	</header>
 
 	<!-- start: page -->
@@ -18,13 +18,13 @@
 								</div>
 								<div class="widget-summary-col">
 									<div class="summary">
-										<h4 class="title"><?=$term[exams]?></h4>
+										<h4 class="title"><?=$term["exams"]?></h4>
 										<div class="info">
 											<strong class="amount"><?php echo $exam_count;?></strong>
 										</div>
 									</div>
 									<div class="summary-footer">
-										<a class="text-muted text-uppercase" href="<?php echo site_url('learner/examhistory/viewexam');?>">(<?=$term[viewall]?>)</a>
+										<a class="text-muted text-uppercase" href="<?php echo site_url('learner/examhistory/viewexam');?>">(<?=$term["viewall"]?>)</a>
 									</div>
 								</div>
 							</div>
@@ -42,13 +42,13 @@
 								</div>
 								<div class="widget-summary-col">
 									<div class="summary">
-										<h4 class="title"><?=$term[courses]?></h4>
+										<h4 class="title"><?=$term["courses"]?></h4>
 										<div class="info">
 											<strong class="amount"><?php echo $course_count;?></strong>
 										</div>
 									</div>
 									<div class="summary-footer">
-										<a class="text-muted text-uppercase" href="<?php echo site_url('learner/demand/viewCourseHistory');?>">(<?=$term[viewall]?>)</a>
+										<a class="text-muted text-uppercase" href="<?php echo site_url('learner/demand/viewCourseHistory');?>">(<?=$term["viewall"]?>)</a>
 									</div>
 								</div>
 							</div>
@@ -66,13 +66,13 @@
 								</div>
 								<div class="widget-summary-col">
 									<div class="summary">
-										<h4 class="title"><?=$term[totalinvoice]?></h4>
+										<h4 class="title"><?=$term["totalinvoice"]?></h4>
 										<div class="info">
 											<strong class="amount">$ <?= $amount->total_amount!=null?$amount->total_amount:0;?></strong>
 										</div>
 									</div>
 									<div class="summary-footer">
-										<a class="text-muted text-uppercase" href="<?php echo base_url('learner/account/payment');?>">(<?=$term[viewall]?>)</a>
+										<a class="text-muted text-uppercase" href="<?php echo base_url('learner/account/payment');?>">(<?=$term["viewall"]?>)</a>
 									</div>
 								</div>
 							</div>
@@ -87,7 +87,7 @@
 		<div class="col-lg-6 mb-4 mb-lg-0">
 			<section class="card">
 				<header class="card-header">
-					<h2 class="card-title"><?=$term[sccstatus]?></h2>
+					<h2 class="card-title"><?=$term["sccstatus"]?></h2>
 				</header>
 				<div class="card-body">
 	

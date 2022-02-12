@@ -1,6 +1,6 @@
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[lessonlist]?></h2>
+		<h2><?=$term["lessonlist"]?></h2>
 	
 		
 	</header>
@@ -11,10 +11,10 @@
 			<section class="card">
 				<header class="card-header">
 					<div class="card-actions">	
-						<a href="<?php echo base_url(); ?>admin/lesson/create" class="btn btn-default"><i class="fas fa-plus"></i> <?=$term[newlesson] ?></a>
+						<a href="<?php echo base_url(); ?>admin/lesson/create" class="btn btn-default"><i class="fas fa-plus"></i> <?=$term["newlesson"] ?></a>
 					</div>
 
-					<h2 class="card-title"><?=$term[lessonlist]?></h2>
+					<h2 class="card-title"><?=$term["lessonlist"]?></h2>
 				</header>
 				<div class="card-body">
 					<table class="table table-responsive-md table-hover mb-0" id="datatable_lesson" >
@@ -100,11 +100,11 @@
 			} ],     
             "columns": [
 				{ "title": "#", "data": "no", "class": "center", "width":20 },
-				{ "title": "<?=$term[categoryname]?>", "data": "category_name", "class": "text-left", "width":150, "visible": true },
-				{ "title": "<?=$term[lessoncode]?>", "data": "lesson_code", "class": "text-left", "width":"70", "visible": true },
-				{ "title": "<?=$term[lessontitle]?>", "data": "lesson_title", "class": "text-left", "width":"*", "visible": true },
-				{ "title": "<?=$term[lessontype]?>", "data": "lesson_type", "class": "text-left", "width":100, "render":upperString },
-				{ "title": "<?=$term[action]?>", "data": "id", "class": "text-center", "width":"80" },
+				{ "title": "<?=$term["categoryname"]?>", "data": "category_name", "class": "text-left", "width":150, "visible": true },
+				{ "title": "<?=$term["lessoncode"]?>", "data": "lesson_code", "class": "text-left", "width":"70", "visible": true },
+				{ "title": "<?=$term["lessontitle"]?>", "data": "lesson_title", "class": "text-left", "width":"*", "visible": true },
+				{ "title": "<?=$term["lessontype"]?>", "data": "lesson_type", "class": "text-left", "width":100, "render":upperString },
+				{ "title": "<?=$term["action"]?>", "data": "id", "class": "text-center", "width":"80" },
 			],
 			"lengthMenu": [
                 [5, 10, 20, 50, 150, -1],

@@ -35,12 +35,12 @@
 	}
 </script>
 <div class="list-group">
-	<?php foreach($content[answers] as $i=>$answer) : ?>
+	<?php foreach($content["answers"] as $i=>$answer) : ?>
 		<div id="answer-<?= $i ?>" class="list-group-item" onclick="active_answer(this)">
 			<table width="100%">
 				<tr>
 					<td>
-						<input type="text" class="form-control input-sm" name="content[answers][<?= $i ?>][html]" value="<?= strip_tags($answer[html]) ?>"/>
+						<input type="text" class="form-control input-sm" name="content[answers][<?= $i ?>][html]" value="<?= strip_tags($answer["html"]) ?>"/>
 					</td>
 				</tr>
 			</table>

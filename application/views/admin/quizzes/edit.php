@@ -20,22 +20,22 @@
 </style>
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[quizinfo]?></h2>
+		<h2><?=$term["quizinfo"]?></h2>
 	</header>
 	<div>
 		<form method="post" class="question" action="<?= site_url("admin/quizzes/save") ?>" enctype="multipart/form-data" >
-			<input type="hidden" name="question[id]" value="<?= $question[id] ?>">
+			<input type="hidden" name="question[id]" value="<?= $question["id"] ?>">
 			<div id="option" class="card card-default">
 				<div class="card-header">
-					<h3 class="card-title"><?=$term[quizinfo]?></h3>
+					<h3 class="card-title"><?=$term["quizinfo"]?></h3>
 				</div>
 				<div class="card-body">
 					<div class="row">
 						<div class="form-group col-sm-4">
-							<label class="control-label"><?=$term[category]?></label>
+							<label class="control-label"><?=$term["category"]?></label>
 			                <select class="form-control input-sm" name="question[category_id]">
 			                	<?php foreach($categories as $category) : ?>
-			                        <option class="input-sm" value="<?= $category[id] ?>" <?= $category[id]==$question[category_id]?"selected":"" ?>><?= $category[text] ?></option>
+			                        <option class="input-sm" value="<?= $category["id"] ?>" <?= $category["id"]==$question["category_id"]?"selected":"" ?>><?= $category["text"] ?></option>
 			                    <?php endforeach ?>
 			                </select>
 			            </div>
@@ -45,40 +45,40 @@
 								<option class="input-sm" />
 
 			                    <?php /*foreach($topics as $t) : */?>
-			                        <option class="input-sm" value="<?/*= $t[id] */?>" <?/*= $t[id]==$question[topic_id]?"selected":"" */?>><?/*= $t[text] */?></option>
+			                        <option class="input-sm" value="<?/*= $t["id"] */?>" <?/*= $t["id"]==$question["topic_id"]?"selected":"" */?>><?/*= $t["text"] */?></option>
 			                    <?php /*endforeach */?>
 			                </select>
 						</div>-->
 						<div class="form-group col-sm-4">
-							<label class="control-label"><?=$term[type]?></label>
+							<label class="control-label"><?=$term["type"]?></label>
 							<select onchange="change_type()"
 								class="form-control input-sm" name="question[quiz_type]">
 			                    <?php if($types) foreach($types as $t) { ?>
 			                        <option value="<?= $t ?>"
-									<?= $question[quiz_type]==$t?selected:"" ?>><?= $t ?></option>
+									<?= $question["quiz_type"]==$t?selected:"" ?>><?= $t ?></option>
 			                    <?php } else { ?>
-			                        <option value="<?= $question[quiz_type] ?>"><?= $question[quiz_type] ?></option>
+			                        <option value="<?= $question["quiz_type"] ?>"><?= $question["quiz_type"] ?></option>
 			                    <?php } ?>
 			                </select>
 						</div>
 						<div class="form-group col-sm-4">
 							<label class="control-label">Quiz Code<span class="required">*</span></label>
-							<input type="text" class="form-control input-sm" name="question[quiz_code]" placeholder="eg.: Qz01" required maxlength=10 value="<?= $question[quiz_code] ?>">
+							<input type="text" class="form-control input-sm" name="question[quiz_code]" placeholder="eg.: Qz01" required maxlength=10 value="<?= $question["quiz_code"] ?>">
 						</div>
 					</div>
 					<div class="row">
 						<div class="form-group col-sm-9">
-							<label class="control-label"><?=$term[title]?></label>
+							<label class="control-label"><?=$term["title"]?></label>
 							<input type="text"
 								class="form-control input-sm" name="question[quiz_title]"
-								value="<?= $question[quiz_title] ?>" required>
+								value="<?= $question["quiz_title"] ?>" required>
 						</div>
 						<div class="form-group col-sm-3">
-							<label class="control-label"><?=$term[level]?></label>
+							<label class="control-label"><?=$term["level"]?></label>
 							<select class="form-control input-sm" name="question[quiz_level]">
-								<option value="easy" <?= $question[quiz_level]=="easy"?"selected":"" ?>>Easy</option>
-								<option value="medium" <?= $question[quiz_level]=="medium"?"selected":"" ?>>Medium</option>
-								<option value="hard" <?= $question[quiz_level]=="hard"?"selected":"" ?>>Hard</option>
+								<option value="easy" <?= $question["quiz_level"]=="easy"?"selected":"" ?>>Easy</option>
+								<option value="medium" <?= $question["quiz_level"]=="medium"?"selected":"" ?>>Medium</option>
+								<option value="hard" <?= $question["quiz_level"]=="hard"?"selected":"" ?>>Hard</option>
 							</select>
 						</div>
 						<!-- 
@@ -88,13 +88,13 @@
 			            </div>
 			            <div class="form-group col-sm-1">
 			                <label class="control-label">Limite</label>
-			                <input type="number" min="0" class="form-control input-sm" name="question[limit_time]" value="<?= $question[limit_time] ?>">
+			                <input type="number" min="0" class="form-control input-sm" name="question[limit_time]" value="<?= $question["limit_time"] ?>">
 			            </div>
 			            -->
 					</div>
 
                     <div class="form-control row" style="border: none;">
-                        <label class="control-label"><?=$term[image]?> </label>
+                        <label class="control-label"><?=$term["image"]?> </label>
                         <div class="row">
                             <div class="fileupload fileupload-new" data-provides="fileupload" style="margin-left: 15px;">
                                 <div class="input-append">
@@ -103,8 +103,8 @@
                                         <span class="fileupload-preview"><?php echo isset($question)&&isset($question['quiz_obj_path'])?$question['quiz_obj_path']:''; ?></span>
                                     </div>
                                     <span class="btn btn-default btn-file">
-											<span class="fileupload-exists"><?=$term[change]?></span>
-											<span class="fileupload-new"><?=$term[selectfile]?></span>
+											<span class="fileupload-exists"><?=$term["change"]?></span>
+											<span class="fileupload-new"><?=$term["selectfile"]?></span>
 											<input type="file" name="image" id="quiz_image" />
 										</span>
                                     <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
@@ -124,43 +124,43 @@
 			</div>
 		    <div id="direction" class="card card-default">
 			    <div class="card-header">
-			        <h3 class="card-title"><?=$term[description]?></h3>
+			        <h3 class="card-title"><?=$term["description"]?></h3>
 			    </div>
 			    <div class="card-body direction-html">
-			    	<textarea class="ckeditor" name="question[quiz_guide]"><?= $question[quiz_guide] ?></textarea>
+			    	<textarea class="ckeditor" name="question[quiz_guide]"><?= $question["quiz_guide"] ?></textarea>
 			    </div>
 			</div>
 		    <div id="result" class="card card-default">
 				<div class="card-header">
-					<h3 class="card-title"><?=$term[quizcontent]?></h3>
+					<h3 class="card-title"><?=$term["quizcontent"]?></h3>
 				</div>
 				<div class="card-body">
 				    <?php
-				        if($question[quiz_type]=='TrueFalse')
+				        if($question["quiz_type"]=='TrueFalse')
 				            $this->view("admin/quizzes/edit/truefalse", $question);
-				        else if($question[quiz_type]=='MultipleChoice')
+				        else if($question["quiz_type"]=='MultipleChoice')
 				            $this->view("admin/quizzes/edit/choice", $question);
-				        else if($question[quiz_type]=='MultipleResponse' || $question[quiz_type]=='MultipleSwitch')
+				        else if($question["quiz_type"]=='MultipleResponse' || $question["quiz_type"]=='MultipleSwitch')
 				            $this->view("admin/quizzes/edit/check", $question);
-				        else if($question[quiz_type]=='FillInTheBlank')
+				        else if($question["quiz_type"]=='FillInTheBlank')
 				            $this->view("admin/quizzes/edit/typein", $question);
-				        else if($question[quiz_type]=='Sequence')
+				        else if($question["quiz_type"]=='Sequence')
 				            $this->view("admin/quizzes/edit/sequence", $question);
-				        else if($question[quiz_type]=='Matching')
+				        else if($question["quiz_type"]=='Matching')
 				            $this->view("admin/quizzes/edit/match", $question);
-				        else if($question[quiz_type]=='FillInTheBlankEx')
+				        else if($question["quiz_type"]=='FillInTheBlankEx')
 				            $this->view("admin/quizzes/edit/fill", $question);
-				        else if($question[quiz_type]=='MultipleChoiceText' || $question[quiz_type]=='MultipleChoiceLine' || $question[quiz_type]=='Correct')
+				        else if($question["quiz_type"]=='MultipleChoiceText' || $question["quiz_type"]=='MultipleChoiceLine' || $question["quiz_type"]=='Correct')
 				            $this->view("admin/quizzes/edit/correct", $question);
-				        else if($question[quiz_type]=='WordBank')
+				        else if($question["quiz_type"]=='WordBank')
 				            $this->view("admin/quizzes/edit/wordbank", $question);
-				        else if($question[quiz_type]=='Numeric')
+				        else if($question["quiz_type"]=='Numeric')
 				            $this->view("admin/quizzes/edit/numeric", $question);
-				        else if($question[quiz_type]=='Grouping')
+				        else if($question["quiz_type"]=='Grouping')
 				            $this->view("admin/quizzes/edit/group", $question);
-				        else if($question[quiz_type]=='Translate')
+				        else if($question["quiz_type"]=='Translate')
 				            $this->view("admin/quizzes/edit/translate", $question);
-				        else if($question[quiz_type]=='RecordAudio' || $question[quiz_type]=='RecordVideo')
+				        else if($question["quiz_type"]=='RecordAudio' || $question["quiz_type"]=='RecordVideo')
 				            $this->view("admin/quizzes/edit/record", $question);
 				    ?>
 				</div>
@@ -168,17 +168,17 @@
 			<div class="form-group" style="padding-top:20px">
 				<button class="btn btn-default">
 					<i class="fa fa-save"></i>
-					<?=$term[save]?>
+					<?=$term["save"]?>
 				</button>
-				<?php if($question[id]) { ?>
+				<?php if($question["id"]) { ?>
 					<button type="button" class="btn btn-default" onclick="preview()">
 						<i class="fa fa-check"></i>
-						<?=$term[preview]?>
+						<?=$term["preview"]?>
 					</button>
 				<?php } ?>
 				<a class="btn btn-default" href="<?= site_url("admin/quizzes/index") ?>">
 					<i class="fa fa-arrow-left"></i>
-					<?=$term[back]?>
+					<?=$term["back"]?>
 				</a>
 			</div>
 		</form>
@@ -300,7 +300,7 @@
 		$("form.question").submit();
     }
 	function preview() {
-		var id = <?= intval($question[id]) ?>;
+		var id = <?= intval($question["id"]) ?>;
 		window.location = "<?= site_url("admin/quizzes/preview") ?>/"+id;
 	}
 	function append() {

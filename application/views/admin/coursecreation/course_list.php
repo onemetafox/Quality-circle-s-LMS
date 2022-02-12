@@ -34,7 +34,7 @@
 </style>
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term[course]?></h2>	
+		<h2><?=$term["course"]?></h2>	
 		<div class="right-wrapper">
 			<ol class="breadcrumbs">
 				<li>
@@ -53,10 +53,10 @@
 					<div class="card-actions">
                         <a href="<?=base_url()?>admin/coursecreation/view_certificate_history" class="btn btn-default">Certificate History </a>
                         <a href="<?=base_url()?>admin/coursecreation/view_course_history" class="btn btn-default">Course History </a>
-						<a href="javascript:check_add()" class="btn btn-success"><i class="fas fa-plus"></i> <?=$term[createcourse]?> </a>
+						<a href="javascript:check_add()" class="btn btn-success"><i class="fas fa-plus"></i> <?=$term["createcourse"]?> </a>
 						<a data-toggle="modal" data-target="#Type_Modal" class="btn btn-default"><i class="fas fa-plus"></i> Create Exam </a>
 					</div>
-					<h2 class="card-title"><?=$term[courselist]?></h2>
+					<h2 class="card-title"><?=$term["courselist"]?></h2>
 				</header>
 				<div class="card-body">
 					<div class="row">
@@ -161,11 +161,11 @@
 											</div>
 											<div style="width: 90%;text-align: right;">
                                             	<?php if($item['active'] == 1 && $item['course_type'] == 2){?>
-												<a class="btn btn-default" style="margin-top: 10px;" href="javascript:inviteuser(<?=$item['id']?>)"><?=$term[inviteuser] ?></a>
+												<a class="btn btn-default" style="margin-top: 10px;" href="javascript:inviteuser(<?=$item['id']?>)"><?=$term["inviteuser"] ?></a>
                                                 <?php } ?>
-												<a class="btn btn-default" style="margin-top: 10px;" href="edit_course/<?=$item['id']?>"><?=$term[editcourse] ?></a>
-												<a class="btn btn-default" style="margin-top: 10px;" href="view_course/<?=$item['id']?>"><?=$term[viewcourse] ?></a>
-												<a class="btn btn-default" style="margin-top: 10px;" onclick="delete_course('<?=$item['id']?>')"><?=$term[delete] ?></a>
+												<a class="btn btn-default" style="margin-top: 10px;" href="edit_course/<?=$item['id']?>"><?=$term["editcourse"] ?></a>
+												<a class="btn btn-default" style="margin-top: 10px;" href="view_course/<?=$item['id']?>"><?=$term["viewcourse"] ?></a>
+												<a class="btn btn-default" style="margin-top: 10px;" onclick="delete_course('<?=$item['id']?>')"><?=$term["delete"] ?></a>
 											</div>
 										</div>
 									</div>
@@ -202,7 +202,7 @@
 		    <input type="hidden" id="sel_id" name="sel_id" class="form-control" >
 		    <section class="card">
 		        <header class="card-header">
-		            <h2 class="card-title"><?=$term[inviteuser]?></h2>
+		            <h2 class="card-title"><?=$term["inviteuser"]?></h2>
 		        </header>
 		        <div class="card-body">
 		            <div class="form-group row">
@@ -216,8 +216,8 @@
 		        <footer class="card-footer">
 		            <div class="row">
 		                <div class="col-md-12 text-right">
-							<a href="#add_modal" class="btn btn-default add_modal" style="color:#333"><i class="fas fa-plus"></i> <?=$term[add]?> </a>
-		                    <button class="btn btn-default modal-change-dismiss"><?=$term[cancel]?></button>
+							<a href="#add_modal" class="btn btn-default add_modal" style="color:#333"><i class="fas fa-plus"></i> <?=$term["add"]?> </a>
+		                    <button class="btn btn-default modal-change-dismiss"><?=$term["cancel"]?></button>
 		                </div>
 		            </div>
 		        </footer>
@@ -231,23 +231,23 @@
 		    <input type="hidden" id="add_course_type" name="course_type" value="0" class="form-control" >
 		    <section class="card">
 		        <header class="card-header">
-		            <h2 class="card-title"><?=$term[add]?> <?=$term[inviteuser]?></h2>
+		            <h2 class="card-title"><?=$term["add"]?> <?=$term["inviteuser"]?></h2>
 		        </header>
 		        <div class="card-body">
                     <div class="form-group row">
-                        <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[firstname]?></label>
+                        <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["firstname"]?></label>
                         <div class="col-sm-6">
                             <input type="text" id="first_name" name="first_name" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[lastname]?></label>
+                        <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["lastname"]?></label>
                         <div class="col-sm-6">
                             <input type="text" id="last_name" name="last_name" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[email]?></label>
+                        <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["email"]?></label>
                         <div class="col-sm-6">
                             <input type="text" id="send_email" name="email" class="form-control" required>
                         </div>
@@ -256,9 +256,9 @@
 		        <footer class="card-footer">
 		            <div class="row">
 		                <div class="col-md-12 text-right">
-							<!--<a class="btn btn-default" style="color:#333"><?/*=$term[send]*/?> </a>-->
-							<a class="btn btn-default" href="javascript:add_invite_user()" style="color:#333"><i class="fas fa-plus"></i> <?=$term[add]?> </a>
-		                    <button class="btn btn-default modal-change-dismiss"><?=$term[cancel]?></button>
+							<!--<a class="btn btn-default" style="color:#333"><?/*=$term["send"]*/?> </a>-->
+							<a class="btn btn-default" href="javascript:add_invite_user()" style="color:#333"><i class="fas fa-plus"></i> <?=$term["add"]?> </a>
+		                    <button class="btn btn-default modal-change-dismiss"><?=$term["cancel"]?></button>
 		                </div>
 		            </div>
 		        </footer>
@@ -273,23 +273,23 @@
                     <input type="hidden" id="edit_invite_id" name="edit_invite_id" class="form-control" >
                     <section class="card">
                         <header class="card-header">
-                            <h2 class="card-title"><?=$term[edit]?> <?=$term[inviteuser]?></h2>
+                            <h2 class="card-title"><?=$term["edit"]?> <?=$term["inviteuser"]?></h2>
                         </header>
                         <div class="card-body">
                             <div class="form-group row">
-                                <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[firstname]?></label>
+                                <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["firstname"]?></label>
                                 <div class="col-sm-6">
                                     <input type="text" id="first_name_invite" name="first_name" class="form-control" required>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[lastname]?></label>
+                                <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["lastname"]?></label>
                                 <div class="col-sm-6">
                                     <input type="text" id="last_name_invite" name="last_name" class="form-control" required>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[email]?></label>
+                                <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["email"]?></label>
                                 <div class="col-sm-6">
                                     <input type="text" id="send_email_invite" name="email" class="form-control" required>
                                 </div>
@@ -298,9 +298,9 @@
                         <footer class="card-footer">
                             <div class="row">
                                 <div class="col-md-12 text-right">
-                                    <!--<a class="btn btn-default" style="color:#333"><?/*=$term[send]*/?> </a>-->
-                                    <a class="btn btn-default" href="javascript:edit_invite_user()" style="color:#333"><?=$term[update]?> </a>
-                                    <button class="btn btn-default modal-change-dismiss"><?=$term[cancel]?></button>
+                                    <!--<a class="btn btn-default" style="color:#333"><?/*=$term["send"]*/?> </a>-->
+                                    <a class="btn btn-default" href="javascript:edit_invite_user()" style="color:#333"><?=$term["update"]?> </a>
+                                    <button class="btn btn-default modal-change-dismiss"><?=$term["cancel"]?></button>
                                 </div>
                             </div>
                         </footer>
@@ -455,14 +455,14 @@
 
 	    "columns": [
 	        {"title": "#", "data": "no", "class": "center", "width": 50},
-	        {"title": "<?=$term[firstname]?>", "data": "first_name", "class": "text-left", "width": 100},
-	        {"title": "<?=$term[lastname]?>", "data": "last_name", "class": "text-left", "width": 100},
-	        {"title": "<?=$term[email]?>", "data": "email", "class": "text-left", "width": 100},
-	        {"title": "<?=$term[action]?>", "data": "", "class": "text-left", "width": 200,
+	        {"title": "<?=$term["firstname"]?>", "data": "first_name", "class": "text-left", "width": 100},
+	        {"title": "<?=$term["lastname"]?>", "data": "last_name", "class": "text-left", "width": 100},
+	        {"title": "<?=$term["email"]?>", "data": "email", "class": "text-left", "width": 100},
+	        {"title": "<?=$term["action"]?>", "data": "", "class": "text-left", "width": 200,
 	                mRender: function (data, type, row) {
-						     return '<a class="btn btn-default" href="javascript:resend_inviteuser(this,'+row.id+','+row.course_type+',\''+row.first_name +'\',\''+row.last_name +'\',\''+row.email +'\')" style="color:#333;margin-right:5px!important"><?=$term[resend]?> </a>'+
-							 '<a class="btn btn-default" href="javascript:edit_inviteuser(this,'+row.id+',\''+row.first_name +'\',\''+row.last_name +'\',\''+row.email +'\');" style="color:#333;margin-right:5px!important"><?=$term[edit]?> </a>'+
-							'<a class="btn btn-default" href="javascript:delete_inviteuser('+row.id+')" style="color:#333"><?=$term[delete]?> </a>';
+						     return '<a class="btn btn-default" href="javascript:resend_inviteuser(this,'+row.id+','+row.course_type+',\''+row.first_name +'\',\''+row.last_name +'\',\''+row.email +'\')" style="color:#333;margin-right:5px!important"><?=$term["resend"]?> </a>'+
+							 '<a class="btn btn-default" href="javascript:edit_inviteuser(this,'+row.id+',\''+row.first_name +'\',\''+row.last_name +'\',\''+row.email +'\');" style="color:#333;margin-right:5px!important"><?=$term["edit"]?> </a>'+
+							'<a class="btn btn-default" href="javascript:delete_inviteuser('+row.id+')" style="color:#333"><?=$term["delete"]?> </a>';
 	                }
 	    	}
 	    ],

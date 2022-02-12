@@ -97,12 +97,12 @@
 <div class="row">
 	<div class="col-sm-5" style="padding-right: 0">
 		<div class="list-group column1">
-			<?php foreach($content[column1] as $i=>$answer) : ?>
+			<?php foreach($content["column1"] as $i=>$answer) : ?>
 				<div class="list-group-item" onclick="active_column(this)">
 					<table width="100%">
 						<tr>
 							<td>
-								<input type="text" class="form-control input-sm" name="content[column1][<?= $i ?>][html]" value="<?= strip_tags($answer[html]) ?>"/>
+								<input type="text" class="form-control input-sm" name="content[column1][<?= $i ?>][html]" value="<?= strip_tags($answer["html"]) ?>"/>
 							</td>
 							<td width="30px" align="right">
 								<input type="radio" name="column1" onchange="match_columns()">
@@ -114,7 +114,7 @@
 		</div>
 	</div>
 	<div class="col-sm-2" style="padding:0">
-		<?php if($content[answers]) foreach($content[answers] as $i=>$match) { ?>
+		<?php if($content["answers"]) foreach($content["answers"] as $i=>$match) { ?>
 			<span class="match">
 				<input type="hidden" name="content[answers][<?= $i ?>][column1]" value="<?= $match[column1] ?>">
 				<input type="hidden" name="content[answers][<?= $i ?>][column2]" value="<?= $match[column2] ?>">
@@ -162,7 +162,7 @@
 	</div>
 	<div class="col-sm-5" style="padding-left: 0">
 		<div class="list-group column2">
-			<?php foreach($content[column2] as $i=>$answer) : ?>
+			<?php foreach($content["column2"] as $i=>$answer) : ?>
 				<div class="list-group-item" onclick="active_column(this)">
 					<table width="100%">
 						<tr>
@@ -170,7 +170,7 @@
 								<input type="radio" name="column2" onchange="match_columns()">
 							</td>
 							<td>
-								<input type="text" class="form-control input-sm" name="content[column2][<?= $i ?>][html]" value="<?= strip_tags($answer[html]) ?>"/>
+								<input type="text" class="form-control input-sm" name="content[column2][<?= $i ?>][html]" value="<?= strip_tags($answer["html"]) ?>"/>
 							</td>
 						</tr>
 					</table>

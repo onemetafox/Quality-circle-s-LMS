@@ -4,7 +4,7 @@
 		var cmbMode = $("<select name='content[mode]'>")
 			.append("<option value='word'>Word Correcting</option>")
 			.append("<option value='char'>Char Correcting</option>")
-			.val("<?= $question[mode]?$question[mode]:"word" ?>");
+			.val("<?= $question["mode"]?$question["mode"]:"word" ?>");
 		$("textarea#<?= $rand ?>").editor({
 			toolbar: [cmbMode,"-","bold","underline","italic","strikethrough","-",
 						"ordered","unordered","indent","outdent","justify","-",
@@ -36,7 +36,7 @@
 		});
 	});
 </script>
-<textarea id="<?= $rand ?>" name="content[html]" class="form-control" rows="6"><?= $question[html] ?></textarea>
+<textarea id="<?= $rand ?>" name="content[html]" class="form-control" rows="6"><?= $question["html"] ?></textarea>
 
 <script type="text/javascript">
 // 	function add_blank() {

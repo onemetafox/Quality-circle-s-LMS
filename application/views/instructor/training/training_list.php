@@ -8,7 +8,7 @@
 </style>
 <section role="main" class="content-body">
    <header class="page-header">
-      <h2><?=$term[instructorledtraining]?></h2>
+      <h2><?=$term["instructorledtraining"]?></h2>
       <div class="right-wrapper">
       </div>
    </header>
@@ -20,17 +20,17 @@
             <header class="card-header">
                <div class="card-actions">
                   <a class="modal-with-form add-column" href="#modalFormNewColumn"></a>                  
-                  <button type="button" class="mb-1 mt-0 mr-1 btn btn-default modal-add-confirm" id="btn-add"> <i class="fa fa-plus"></i> <?=$term[addnewcolumn]?></button>
+                  <button type="button" class="mb-1 mt-0 mr-1 btn btn-default modal-add-confirm" id="btn-add"> <i class="fa fa-plus"></i> <?=$term["addnewcolumn"]?></button>
                   <a href="coursecreation/edit_course"><button type="button" class="btn btn-success" id="btn-add"> <i class="fa fa-plus"></i> Add New Course</button></a>
                   <div id="modalFormNewColumn" class="modal-block modal-block-primary mfp-hide">
                      <form id="new-form" action="" method="POST" novalidate="novalidate">
                         <section class="card">
                            <header class="card-header">
-                              <h2 class="card-title"><?=$term[addnewcolumn]?></h2>
+                              <h2 class="card-title"><?=$term["addnewcolumn"]?></h2>
                            </header>
                            <div class="card-body">
                               <div class="form-group row">
-                                 <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[title]?></label>
+                                 <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["title"]?></label>
                                  <div class="col-sm-6">
                                     <select class="form-control" id="title_1" name="title_1" required>
                                        <?php foreach($category as $item){ ?>
@@ -63,8 +63,8 @@
                            <footer class="card-footer">
                               <div class="row">
                                  <div class="col-md-12 text-right">
-                                    <button class="btn btn-primary modal-add-confirm"><?=$term[add]?></button>
-                                    <button class="btn btn-default modal-add-dismiss"><?=$term[cancel]?></button>
+                                    <button class="btn btn-primary modal-add-confirm"><?=$term["add"]?></button>
+                                    <button class="btn btn-default modal-add-dismiss"><?=$term["cancel"]?></button>
                                  </div>
                               </div>
                            </footer>
@@ -72,14 +72,14 @@
                      </form>
                   </div>
                   <a class="modal-with-form add-course-column" href="#modalFormNewCourse" hidden>
-                  <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add-course"> <i class="fa fa-plus"></i> <?=$term[addnewcolumn]?></button>
+                  <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add-course"> <i class="fa fa-plus"></i> <?=$term["addnewcolumn"]?></button>
                   </a>
                   <div id="modalFormNewCourse" class="modal-block modal-block-lg mfp-hide">
                      <form id="new-course-form" action="" method="POST" novalidate="novalidate">
                         <input type="hidden" id="id" name="id" value="">
                         <section class="card">
                            <header class="card-header">
-                              <h2 class="card-title"><?=$term[addnewcolumn]?></h2>
+                              <h2 class="card-title"><?=$term["addnewcolumn"]?></h2>
                            </header>
                            <div class="card-body">
                               <div class="form-group row">
@@ -122,7 +122,7 @@
                                  </div>
                               </div>
                               <?php /*?><div class="form-group row">
-                                 <label class="col-lg-3 control-label text-lg-right pt-2"><?=$term[startday]?></label>
+                                 <label class="col-lg-3 control-label text-lg-right pt-2"><?=$term["startday"]?></label>
                                  <div class="col-lg-9">
                                     <div class="input-group">
                                        <span class="input-group-prepend">
@@ -149,7 +149,7 @@
                               </div> <?php */?>                             
                               <input type="hidden" name="course_type" id="course_type"/>
                               <div class="form-group row div-location" style="display:none;">
-                                 <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[location]?></label>
+                                 <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["location"]?></label>
                                  <div class="col-sm-9">
                                     <input type="text" class="form-control" id="location" name="location" value="Online" readonly="readonly">
                                  </div>
@@ -214,13 +214,13 @@
                                  </div>
                               </div>
                               <div class="form-group row">
-                                 <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[learningobjectives]?></label>
+                                 <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["learningobjectives"]?></label>
                                  <div class="col-sm-9">
                                     <textarea class="form-control" data-plugin-markdown-editor rows="3" id="objective" name="objective"></textarea>
                                  </div>
                               </div>                              
                               <div class="form-group row">
-                                 <label class="col-lg-3 control-label text-lg-right pt-2"><?=$term[learningobjectives]?> File Upload</label>
+                                 <label class="col-lg-3 control-label text-lg-right pt-2"><?=$term["learningobjectives"]?> File Upload</label>
                                  <div class="col-sm-3">
                                     <div class="p-4 border rounded text-center upload-file d-block" id="objective_img_preview">
                                        <i class="fa fa-picture-o fa-2x"></i>
@@ -231,13 +231,13 @@
                                  </div>
                               </div>
                               <div class="form-group row">
-                                 <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[whoshouldattend]?></label>
+                                 <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["whoshouldattend"]?></label>
                                  <div class="col-sm-9">
                                     <textarea class="form-control" data-plugin-markdown-editor rows="3" id="attend" name="attend"></textarea>
                                  </div>
                               </div>
                               <div class="form-group row">
-                                 <label class="col-lg-3 control-label text-lg-right pt-2"><?=$term[whoshouldattend]?> File Upload</label>
+                                 <label class="col-lg-3 control-label text-lg-right pt-2"><?=$term["whoshouldattend"]?> File Upload</label>
                                  <div class="col-sm-3">
                                     <div class="p-4 border rounded text-center upload-file d-block" id="attend_img_preview">
                                        <i class="fa fa-picture-o fa-2x"></i>
@@ -255,13 +255,13 @@
                               </div>
                               <div id="chapter_date_time"></div>
                               <div class="form-group row">
-                                 <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[agenda]?></label>
+                                 <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["agenda"]?></label>
                                  <div class="col-sm-9">
                                     <textarea class="form-control" data-plugin-markdown-editor rows="3" id="agenda" name="agenda"></textarea>
                                  </div>
                               </div>
                               <div class="form-group row">
-                                 <label class="col-lg-3 control-label text-lg-right pt-2"><?=$term[agend]?> File Upload</label>
+                                 <label class="col-lg-3 control-label text-lg-right pt-2"><?=$term["agend"]?> File Upload</label>
                                  <div class="col-sm-3">
                                     <div class="p-4 border rounded text-center upload-file d-block" id="agenda_img_preview">
                                        <i class="fa fa-picture-o fa-2x"></i>
@@ -288,8 +288,8 @@
                            <footer class="card-footer">
                               <div class="row">
                                  <div class="col-md-12 text-right">
-                                    <button class="btn btn-primary modal-create-confirm"><?=$term[add]?></button>
-                                    <button class="btn btn-default modal-create-dismiss"><?=$term[reset]?></button>
+                                    <button class="btn btn-primary modal-create-confirm"><?=$term["add"]?></button>
+                                    <button class="btn btn-default modal-create-dismiss"><?=$term["reset"]?></button>
                                  </div>
                               </div>
                            </footer>
@@ -297,7 +297,7 @@
                      </form>
                   </div>
                   <a class="modal-with-form change-time" href="#modalFormChangeTime" hidden>
-                  <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-change-time"> <i class="fa fa-plus"></i> <?=$term[changetime]?></button>
+                  <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-change-time"> <i class="fa fa-plus"></i> <?=$term["changetime"]?></button>
                   </a>
                   <div id="modalFormChangeTime" class="modal-block modal-block-primary mfp-hide">
                      <form id="change-time-form" action="" method="POST" novalidate="novalidate">
@@ -305,11 +305,11 @@
                         <input type="hidden" id="time_id" name="time_id" class="form-control">
                         <section class="card">
                            <header class="card-header">
-                              <h2 class="card-title"><?=$term[changetime]?></h2>
+                              <h2 class="card-title"><?=$term["changetime"]?></h2>
                            </header>
                            <div class="card-body">
                               <div class="form-group row">
-                                 <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[location]?></label>
+                                 <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["location"]?></label>
                                  <div class="col-sm-6">
                                     <input type="text" readonly="readonly" id="change_location" name="change_location" class="form-control" required>
                                  </div>
@@ -342,13 +342,13 @@
                                  </div>
                               </div>
                               <div class="form-group row">
-                                 <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[startday]?></label>
+                                 <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["startday"]?></label>
                                  <div class="col-sm-6">
                                     <input data-plugin-datepicker id="startdays" name="startdays"  class="form-control" data-date-format="yyyy-mm-dd">
                                  </div>
                               </div>
                             <div class="form-group row">
-                            	<label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[starttime]?></label>
+                            	<label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["starttime"]?></label>
                                 <div class="col-sm-6">
                                     <div class="input-group">
                                     <span class="input-group-prepend">
@@ -366,7 +366,7 @@
                               <input class="hidden" name = "year" id="change_year">
                               <?php /*?>
                               <div class="form-group row">
-                                 <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[month]?></label>
+                                 <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["month"]?></label>
                                  <div class="col-sm-6">
                                     <select class="form-control mb3" id="change_month" name="change_month" >
                                        <option value='1'>Jan</option>
@@ -414,11 +414,11 @@
                            <footer class="card-footer">
                               <div class="row">
                                  <div class="col-md-12 text-right">
-                                    <a class="btn btn-default" href="javascript:inviteuser()"><?=$term[inviteuser] ?></a>
-                                    <button class="btn btn-default modal-change-delete"><?=$term[delete]?></button>
-                                    <button class="btn btn-primary modal-change-confirm"><?php $id==0?print $term[add]:print $term[update]?></button>
+                                    <a class="btn btn-default" href="javascript:inviteuser()"><?=$term["inviteuser"] ?></a>
+                                    <button class="btn btn-default modal-change-delete"><?=$term["delete"]?></button>
+                                    <button class="btn btn-primary modal-change-confirm"><?php $id==0?print $term["add"]:print $term["update"]?></button>
                                     <a href="javascript:showPayUser()" class="btn btn-primary btn-user-list" hidden>Show User List</a>
-                                    <button class="btn btn-default modal-change-dismiss"><?=$term[cancel]?></button>
+                                    <button class="btn btn-default modal-change-dismiss"><?=$term["cancel"]?></button>
                                  </div>
                               </div>
                            </footer>
@@ -426,7 +426,7 @@
                      </form>
                   </div>
                </div>
-               <h2 class="card-title"><?=$term[traininglist]?></h2>
+               <h2 class="card-title"><?=$term["traininglist"]?></h2>
             </header>
             <div class="card-body">
                <footer class="card-footer">
@@ -457,7 +457,7 @@
                <table class="table table-responsive-md  mb-0 table-bordered">
                   <tr>
                      <th rowspan="2" colspan="2" width="20%" class="center">Name of Course</th>
-                     <th rowspan="2" width="5%" class="center"><?=$term[courseduration]?></th>
+                     <th rowspan="2" width="5%" class="center"><?=$term["courseduration"]?></th>
                      <th colspan="12" width="75%" class="center">Date of Course</th>
                   </tr>
                   <tr>
@@ -598,7 +598,7 @@
          <input type="hidden" id="sel_id" name="sel_id" class="form-control" >
          <section class="card">
             <header class="card-header">
-               <h2 class="card-title"><?=$term[inviteuser]?></h2>
+               <h2 class="card-title"><?=$term["inviteuser"]?></h2>
             </header>
 
             <div class="card-body">
@@ -613,8 +613,8 @@
             <footer class="card-footer">
                <div class="row">
                   <div class="col-md-12 text-right">
-                     <a href="#add_modal" class="btn btn-default add_modal" style="color:#333"><i class="fas fa-plus"></i> <?=$term[add]?> </a>
-                     <button class="btn btn-default modal-change-dismiss"><?=$term[cancel]?></button>
+                     <a href="#add_modal" class="btn btn-default add_modal" style="color:#333"><i class="fas fa-plus"></i> <?=$term["add"]?> </a>
+                     <button class="btn btn-default modal-change-dismiss"><?=$term["cancel"]?></button>
                   </div>
                </div>
             </footer>
@@ -628,23 +628,23 @@
          <input type="hidden" id="add_course_time_id" name="add_ilt_time_id" value="" class="form-control" >
          <section class="card">
             <header class="card-header">
-               <h2 class="card-title"><?=$term[add]?> <?=$term[inviteuser]?></h2>
+               <h2 class="card-title"><?=$term["add"]?> <?=$term["inviteuser"]?></h2>
             </header>
             <div class="card-body">
                <div class="form-group row">
-                  <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[firstname]?></label>
+                  <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["firstname"]?></label>
                   <div class="col-sm-6">
                      <input type="text" id="first_name" name="first_name" class="form-control" required>
                   </div>
                </div>
                <div class="form-group row">
-                  <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[lastname]?></label>
+                  <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["lastname"]?></label>
                   <div class="col-sm-6">
                      <input type="text" id="last_name" name="last_name" class="form-control" required>
                   </div>
                </div>
                <div class="form-group row">
-                  <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term[email]?></label>
+                  <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["email"]?></label>
                   <div class="col-sm-6">
                      <input type="text" id="send_email" name="email" class="form-control" required>
                   </div>
@@ -653,9 +653,9 @@
             <footer class="card-footer">
                <div class="row">
                   <div class="col-md-12 text-right">
-                     <!--    <a class="btn btn-default" style="color:#333"><?/*=$term[send]*/?> </a>-->
-                     <a class="btn btn-default" href="javascript:add_invite_user()" style="color:#333"><i class="fas fa-plus"></i> <?=$term[add]?> </a>
-                     <button class="btn btn-default modal-change-dismiss"><?=$term[cancel]?></button>
+                     <!--    <a class="btn btn-default" style="color:#333"><?/*=$term["send"]*/?> </a>-->
+                     <a class="btn btn-default" href="javascript:add_invite_user()" style="color:#333"><i class="fas fa-plus"></i> <?=$term["add"]?> </a>
+                     <button class="btn btn-default modal-change-dismiss"><?=$term["cancel"]?></button>
                   </div>
                </div>
             </footer>
@@ -817,7 +817,7 @@
        "columns": [
            { "title": "", "data": "id", "class": "text-left", "width":10 },
            { "title": "#", "data": "no", "class": "center", "width":50 },
-           { "title": "<?=$term[name]?>", "data": "fullname", "class": "text-left", "width":"*" }
+           { "title": "<?=$term["name"]?>", "data": "fullname", "class": "text-left", "width":"*" }
        ],
    
        "scrollY": false,
@@ -931,7 +931,7 @@
    
                    "columns": [
                        {"title": "#", "data": "no", "class": "center", "width": 50},
-                       {"title": "<?=$term[name]?>", "data": "fullname", "class": "text-left", "width": "*"}
+                       {"title": "<?=$term["name"]?>", "data": "fullname", "class": "text-left", "width": "*"}
                    ],
    
                    "scrollY": false,
@@ -1227,7 +1227,7 @@
    
 	var formData = new FormData($('#new-course-form')[0]);		
 	$.magnificPopup.close();		
-    if($('.modal-create-confirm').html().indexOf('<?=$term[add]?>') >= 0){
+    if($('.modal-create-confirm').html().indexOf('<?=$term["add"]?>') >= 0){
            //if($('#start_day').val() == '' || $('#location').val() == '') {				
 	if($('#start_day').val() == '' || $('#startday').val() == '' || $('#title').val() == '' || $('#category_id').val() == ''){
 		   new PNotify({
@@ -1313,7 +1313,7 @@
            return;
        }else{			
            $.magnificPopup.close();
-           if($('.modal-change-confirm').html().indexOf('<?=$term[add]?>') >= 0) {
+           if($('.modal-change-confirm').html().indexOf('<?=$term["add"]?>') >= 0) {
                $.ajax({
                    url: $('#base_url').val()+'instructor/training/add_time',
                    type: 'POST',
@@ -1407,13 +1407,13 @@
    
        "columns": [
            {"title": "#", "data": "no", "class": "center", "width": 50},
-           {"title": "<?=$term[firstname]?>", "data": "first_name", "class": "text-left", "width": 100},
-           {"title": "<?=$term[lastname]?>", "data": "last_name", "class": "text-left", "width": 100},
-           {"title": "<?=$term[email]?>", "data": "email", "class": "text-left", "width": 100},
-           {"title": "<?=$term[action]?>", "data": "", "class": "text-left", "width": 200,
+           {"title": "<?=$term["firstname"]?>", "data": "first_name", "class": "text-left", "width": 100},
+           {"title": "<?=$term["lastname"]?>", "data": "last_name", "class": "text-left", "width": 100},
+           {"title": "<?=$term["email"]?>", "data": "email", "class": "text-left", "width": 100},
+           {"title": "<?=$term["action"]?>", "data": "", "class": "text-left", "width": 200,
            		mRender: function (data, type, row){   
-				return '<a class="btn btn-default" href="javascript:resend_inviteuser(this,'+row.id+',\''+row.first_name +'\',\''+row.last_name +'\',\''+row.email +'\')" style="color:#333;margin-right:5px!important"><?=$term[resend]?> </a>'+
-                		'<a class="btn btn-default" href="javascript:delete_inviteuser('+row.id+')" style="color:#333"><?=$term[delete]?> </a>';
+				return '<a class="btn btn-default" href="javascript:resend_inviteuser(this,'+row.id+',\''+row.first_name +'\',\''+row.last_name +'\',\''+row.email +'\')" style="color:#333;margin-right:5px!important"><?=$term["resend"]?> </a>'+
+                		'<a class="btn btn-default" href="javascript:delete_inviteuser('+row.id+')" style="color:#333"><?=$term["delete"]?> </a>';
 				}
            }
        ],

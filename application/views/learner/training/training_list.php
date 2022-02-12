@@ -124,15 +124,15 @@
 													</ul>
 													<?php if($free_course['enroll_id'] == ''){ ?>
 													<a class="btnBlue" href="javascript:booknow(<?=$free_course['course_id']?>,<?=$free_course['course_time_id']?>)" >
-														<?=$term[enrollnow]?>
+														<?=$term["enrollnow"]?>
 													</a>
 													<?php }else { ?>
 														<a class="btnBlue" href="javascript:viewcourse(<?=$free_course['course_id']?>)" >
-															<?=$term[viewcourse]?>
+															<?=$term["viewcourse"]?>
 														</a>
 													<?php } ?>
 													<a class="btnBlue" href="<?=base_url()?>learner/training/viewDetail/<?=$free_course['training_id']?>" >
-														<?=$term[viewdetails] ?>
+														<?=$term["viewdetails"] ?>
 													</a>
 												</div><!--col-8-->
 											</div><!--row-->
@@ -197,14 +197,14 @@
 														</a>
 													<?php }else if(!$paid_course['enroll_id']){ ?>
 														<a class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
-															<?=$term[enrollnow]?>
+															<?=$term["enrollnow"]?>
 														</a>
 													<?php } else{?>
 														<a  class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
-															<?=$term[viewcourse]?>
+															<?=$term["viewcourse"]?>
 														</a>
 													<?php }?>
-													<!-- <a  class="btnBlue" href="<?=base_url()?>learner/training/viewDetail/<?=$paid_course['training_id']?>" ><?=$term[viewdetails] ?></a> -->
+													<!-- <a  class="btnBlue" href="<?=base_url()?>learner/training/viewDetail/<?=$paid_course['training_id']?>" ><?=$term["viewdetails"] ?></a> -->
 												</div><!--col-8-->
 											</div><!--row-->
 										</div><!--whitePanel-->

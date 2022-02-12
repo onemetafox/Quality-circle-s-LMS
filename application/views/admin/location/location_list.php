@@ -9,7 +9,7 @@
 			<section class="card">
 				<header class="card-header">
 					<?php /*?><div class="card-actions">
-						<a class="btn btn-default" href="<?php echo base_url();?>admin/category/create" id="btn_add"><i class="fa fa-plus"></i> <?=$term[addnew]?></a>
+						<a class="btn btn-default" href="<?php echo base_url();?>admin/category/create" id="btn_add"><i class="fa fa-plus"></i> <?=$term["addnew"]?></a>
 					</div><?php */?>
 					<h2 class="card-title">Location List</h2>
 				</header>
@@ -140,10 +140,10 @@
 				}
 			}],
             "columns": [
-                { "title": "<?=$term[no]?>", "data": "no", "class": "text-left", "width":"80" },
+                { "title": "<?=$term["no"]?>", "data": "no", "class": "text-left", "width":"80" },
 				{ "title": "Location Name", "data": "location", "class": "text-left", "width":80, "visible": true },
 				{ "title": "Status", "data": "status", "class": "text-left", "width":80, "visible": true },
-				{ "title": "<?=$term[action]?>", "data": "id", "class": "text-left", "width":"80" },
+				{ "title": "<?=$term["action"]?>", "data": "id", "class": "text-left", "width":"80" },
 			],
 			"lengthMenu": [
                 [5, 10, 20, 50, 150, -1],

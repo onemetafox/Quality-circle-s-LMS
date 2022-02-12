@@ -35,15 +35,15 @@
 	}
 </script>
 <div class="list-group">
-	<?php foreach($content[answers] as $i=>$answer) : ?>
+	<?php foreach($content["answers"] as $i=>$answer) : ?>
 		<div id="answer-<?= $i ?>" class="list-group-item" onclick="active_answer(this)">
 			<table width="100%">
 				<tr>
 					<td width="25px">
-						<input type="radio" name="correct" <?= $answer[correct]?checked:'' ?> value="<?= $i ?>">
+						<input type="radio" name="correct" <?= $answer["correct"]?checked:'' ?> value="<?= $i ?>">
 					</td>
 					<td>
-						<input type="text" class="form-control input-sm" name="content[answers][<?= $i ?>][html]" value="<?= strip_tags($answer[html]) ?>" required/>
+						<input type="text" class="form-control input-sm" name="content[answers][<?= $i ?>][html]" value="<?= strip_tags($answer["html"]) ?>" required/>
 					</td>
 				</tr>
 			</table>

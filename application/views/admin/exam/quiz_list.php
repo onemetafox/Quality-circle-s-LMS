@@ -14,7 +14,7 @@
 						<i class="fas fa-home"></i>
 					</a>
 				</li>
-				<li><span><?=$term[exam]?></span></li>
+				<li><span><?=$term["exam"]?></span></li>
 
 				<li><span>Quiz List</span></li>
 			</ol>

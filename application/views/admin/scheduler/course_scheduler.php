@@ -64,9 +64,9 @@
                 "targets": [6],
                 "createdCell": function (td, cellData, rowData, row, col) {
                     if(cellData == '1'){
-                        $(td).html('<a href="javascript:inactiveUser('+rowData['id']+')"><span class="badge badge-success"><?=$term[yes]?></span></a>');
+                        $(td).html('<a href="javascript:inactiveUser('+rowData['id']+')"><span class="badge badge-success"><?=$term["yes"]?></span></a>');
                     } else {
-                        $(td).html('<a href="javascript:activeUser('+rowData['id']+')"><span class="badge badge-dark"><?=$term[no]?></span></a>');
+                        $(td).html('<a href="javascript:activeUser('+rowData['id']+')"><span class="badge badge-dark"><?=$term["no"]?></span></a>');
                     }
 
                 }
@@ -78,13 +78,13 @@
             }],
             "columns": [
                 { "title": "#", "data": "no", "class": "center", "width":20 },
-                { "title": "<?=$term[avatar]?>", "data": "picture", "class": "text-left", "width":100 },
-                { "title": "<?=$term[firstname]?>", "data": "first_name", "class": "text-left", "width":100 },
-                { "title": "<?=$term[lastname]?>", "data": "last_name", "class": "text-left", "width":100},
-                { "title": "<?=$term[email]?>", "data": "email", "class": "text-left", "width":100 },
-                { "title": "<?=$term[role]?>", "data": "user_type", "class": "text-center", "width":110 },
-                { "title": "<?=$term[active]?>", "data": "active", "class": "text-center", "width":50 },
-                { "title": "<?=$term[action]?>", "data": "id", "class": "text-center", "width":80 },
+                { "title": "<?=$term["avatar"]?>", "data": "picture", "class": "text-left", "width":100 },
+                { "title": "<?=$term["firstname"]?>", "data": "first_name", "class": "text-left", "width":100 },
+                { "title": "<?=$term["lastname"]?>", "data": "last_name", "class": "text-left", "width":100},
+                { "title": "<?=$term["email"]?>", "data": "email", "class": "text-left", "width":100 },
+                { "title": "<?=$term["role"]?>", "data": "user_type", "class": "text-center", "width":110 },
+                { "title": "<?=$term["active"]?>", "data": "active", "class": "text-center", "width":50 },
+                { "title": "<?=$term["action"]?>", "data": "id", "class": "text-center", "width":80 },
             ],
             "lengthMenu": [
                 [5, 10, 20, 50, 150, -1],

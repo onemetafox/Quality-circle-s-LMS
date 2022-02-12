@@ -18,7 +18,7 @@
     }
 </style>
 <header class="page-header">
-    <h2><?=$term[exammanagement]?></h2>
+    <h2><?=$term["exammanagement"]?></h2>
 </header>
         <main role="main" class="content-body">
             <div class="container">

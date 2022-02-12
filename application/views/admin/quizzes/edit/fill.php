@@ -7,7 +7,7 @@
 	}
 </style>
 <script type="text/javascript">
-	var a_count = <?= $content[answers]?count($content[answers]):0 ?>;
+	var a_count = <?= $content["answers"]?count($content["answers"]):0 ?>;
     function add_blank() {
     	editor = CKEDITOR.instances["content[detail][html]"];
     	
@@ -72,7 +72,7 @@
 	}
 </script>
 <button type="button" class="btn btn-default" onclick="add_blank()">Add Blank</button>
-<textarea name="content[detail][html]" class="ckeditor"><?= $content[detail][html] ?></textarea>
+<textarea name="content[detail][html]" class="ckeditor"><?= $content["detail"]["html"] ?></textarea>
 <div id="blanks" class="hidden">
 	<div id="new" class="list-group">
 		<div class="list-group-item" onclick="active_answer(this)">
@@ -88,14 +88,14 @@
 			</table>
 		</div>
 	</div>
-	<?php foreach($content[answers] as $i=>$answer) : ?>
+	<?php foreach($content["answers"] as $i=>$answer) : ?>
 		<div id="answer-<?= $i ?>" class="list-group">
 			<?php foreach($answer as $j=>$row) : ?>
 				<div class="list-group-item" onclick="active_answer(this)">
 					<table width="100%">
 						<tr>
 							<td>
-								<input type="text" class="form-control input-sm" name="answers[<?= $i ?>][<?= $j ?>][html]" value="<?= $row[html] ?>"/>
+								<input type="text" class="form-control input-sm" name="answers[<?= $i ?>][<?= $j ?>][html]" value="<?= $row["html"] ?>"/>
 							</td>
 							<td width="100px" class="partial <?= $partial?"":"hidden" ?>">
 								<input type="number" min="0" class="form-control input-sm" name="answers[<?= $i ?>][<?= $j ?>][points]" value="<?= $row[points] ?>">

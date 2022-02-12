@@ -1,7 +1,7 @@
 <?php
     $words = array();
-    foreach($content[answers] as $answer)
-        $words = array_merge($words, $answer[items]);
+    foreach($content["answers"] as $answer)
+        $words = array_merge($words, $answer["items"]);
     srand($solution_id);
     shuffle($words);
     $picked = array();
@@ -12,9 +12,9 @@
     }
 </style>
 <form class="form-inline list-group">
-    <?php foreach($content[answers] as $i=>$answer) { ?>
+    <?php foreach($content["answers"] as $i=>$answer) { ?>
         <div class="target list-group-item" style="width: 100%">
-            <label class="control-label list-group-item-header pull-left"><?= $answer[html] ?></label>
+            <label class="control-label list-group-item-header pull-left"><?= $answer["html"] ?></label>
             <?php if($solution[$i]) foreach($solution[$i] as $w=>$word) { ?>
                 <label class="form-control input-sm" draggable><?= $word ?><input type="hidden" name="solution[<?= $i ?>][]" value="<?= $word ?>"></label>
                 <?php $picked[] = $word ?>
