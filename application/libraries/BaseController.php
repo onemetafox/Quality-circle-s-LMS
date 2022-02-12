@@ -197,12 +197,12 @@ class BaseController extends CI_Controller {
         }
         $headerInfo['company_name'] = $this->getSettingValue('company_name');
         $headerInfo['company_phone'] = $this->getSettingValue('company_phone');
-        $headerInfo[term] = $this->term;
-        $pageInfo[term] = $this->term;
-        $footerInfo[term] = $this->term;
+        $headerInfo["term"] = $this->term;
+        $pageInfo["term"] = $this->term;
+        $footerInfo["term"] = $this->term;
         $this->load->model('Company_model');
         $company = $this->Company_model->getAll() [0];
-        $pageInfo[company_ob] = $company;
+        $pageInfo["company_ob"] = $company;
         $this->load->view('_templates/header', $headerInfo);
         $this->load->view($viewName, $pageInfo);
         $this->load->view('_templates/footer', $footerInfo);
@@ -221,12 +221,12 @@ class BaseController extends CI_Controller {
         */
         $this->load->model('Company_model');
         $company = $this->Company_model->getAll() [0];
-        $headerInfo[company_ob] = $company;
+        $headerInfo["company_ob"] = $company;
         $headerInfo['company_name'] = $this->getSettingValue('company_name');
         $headerInfo['company_phone'] = $this->getSettingValue('company_phone');
-        $headerInfo[term] = $this->term;
-        $pageInfo[term] = $this->term;
-        $footerInfo[term] = $this->term;
+        $headerInfo["term"] = $this->term;
+        $pageInfo["term"] = $this->term;
+        $footerInfo["term"] = $this->term;
         $this->load->view('_templates/main_header', $headerInfo);
         $this->load->view($viewName, $pageInfo);
         $this->load->view('_templates/main_footer', $footerInfo);
