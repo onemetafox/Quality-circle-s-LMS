@@ -108,9 +108,9 @@ class Trainingassigncompany_model extends CI_Model
         $this->db->join($this->topic_table." b", 'a.topic_id = b.id', 'left');
         $this->db->join($this->category_table." c", 'b.category_id = c.id', 'left');
 
-        $this->db->where('a.`company_id`', $param[company_id]);
-        if(!empty($param[category])) {
-            $this->db->like('c.category_name', $param[category]);
+        $this->db->where('a.`company_id`', $param["company_id"]);
+        if(!empty($param["category"])) {
+            $this->db->like('c.category_name', $param["category"]);
         }
         
         $query=$this->db->get();        
@@ -123,13 +123,13 @@ class Trainingassigncompany_model extends CI_Model
         $this->db->select('a.id assign_id, a.topic_id AS id, c.category_name, b.training_title, a.start_date')->from($this->assign_fasi_table." a");
         $this->db->join($this->topic_table." b", 'a.topic_id = b.id', 'left');
         $this->db->join($this->category_table." c", 'b.category_id = c.id', 'left');
-        $this->db->join($this->assign_company_table." d", 'a.topic_id = d.topic_id and d.company_id = '.$param[company_id], 'left');
+        $this->db->join($this->assign_company_table." d", 'a.topic_id = d.topic_id and d.company_id = '.$param["company_id"], 'left');
 
-        $where = "( d.id is NULL OR d.company_id != $param[company_id] )";
+        $where = "( d.id is NULL OR d.company_id != $param["company_id"] )";
         $this->db->where($where);
-        $this->db->where("a.fasi_id", $param[fasi_id]);
-        if(!empty($param[category]))
-            $this->db->like("c.category_name", $param[category]);
+        $this->db->where("a.fasi_id", $param["fasi_id"]);
+        if(!empty($param["category"]))
+            $this->db->like("c.category_name", $param["category"]);
 
         return $this->db->get()->result_array();
 
@@ -142,14 +142,14 @@ class Trainingassigncompany_model extends CI_Model
                 FROM training_topic a
                     LEFT JOIN training_assign_fasi b ON a.id=b.topic_id
                     LEFT JOIN training_category c ON a.category_id=c.id
-                WHERE b.fasi_id=?" . (!empty($param[category])?" AND c.category_name LIKE '%{$param[category]}%'":"");
-        return $this->db->query($sql,$param[fasi_id])->result_array();
+                WHERE b.fasi_id=?" . (!empty($param["category"])?" AND c.category_name LIKE '%{$param["category"]}%'":"");
+        return $this->db->query($sql,$param["fasi_id"])->result_array();
     }*/
 
     function assign($cid,$tid,$date,$email) {
         $this->db->set("start_date","SYSDATE()",FALSE);
         $this->db->set("created_at", "SYSDATE()", FALSE);
-        $this->db->insert($this->assign_company_table, array(company_id=>$cid,topic_id=>$tid,fasi_email=>$email));
+        $this->db->insert($this->assign_company_table, array("company_id"=>$cid,"topic_id"=>$tid,"fasi_email"=>$email));
     }
 
     function release($id) {

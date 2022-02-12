@@ -105,10 +105,10 @@ class Examhistory_model extends CI_Model
         $this->db->group_by('cat_name');
         $data = $this->db->get()->result();
 
-        $result[data] = $data;
+        $result["data"] = $data;
         $total_count = 0;
         foreach($data as $item) $total_count += $item->count;
-        $result[total_count] = $total_count;
+        $result["total_count"] = $total_count;
 
         return $result;
     }
@@ -123,7 +123,7 @@ class Examhistory_model extends CI_Model
         $query = $this->db->get();
         $result = $query->result_array();
         if(count($result)>0)
-            return $result[0][amount];
+            return $result[0]["amount"];
         else 
             return 0;
     }
@@ -263,7 +263,7 @@ class Examhistory_model extends CI_Model
     }
     function updateaccountstatus($row_id)
     {
-        $data[account_status] = 'paid';      
+        $data["account_status"] = 'paid';      
         $this->db->where('id', $row_id);
         $result = $this->db->update($this->table, $data);
 

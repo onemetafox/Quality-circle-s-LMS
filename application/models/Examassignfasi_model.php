@@ -114,8 +114,8 @@ class Examassignfasi_model extends CI_Model
                     LEFT JOIN exam_assign_fasi b ON a.id=b.exam_id
                         AND b.fasi_id=?
                     LEFT JOIN exam_category c ON a.exam_category_id=c.id
-                WHERE b.id IS NULL" . (!empty($param[category])?" AND c.exam_category_name LIKE '%{$param[category]}%'":"");
-        return $this->db->query($sql,$param[fasi_id])->result_array();
+                WHERE b.id IS NULL" . (!empty($param["category"])?" AND c.exam_category_name LIKE '%{$param["category"]}%'":"");
+        return $this->db->query($sql,$param["fasi_id"])->result_array();
     }
 
     function selectedList($param)
@@ -124,14 +124,14 @@ class Examassignfasi_model extends CI_Model
                 FROM exam_exam a
                     LEFT JOIN exam_assign_fasi b ON a.id=b.exam_id
                     LEFT JOIN exam_category c ON a.exam_category_id=c.id
-                WHERE b.fasi_id=?" . (!empty($param[category])?" AND c.exam_category_name LIKE '%{$param[category]}%'":"");
-        return $this->db->query($sql,$param[fasi_id])->result_array();
+                WHERE b.fasi_id=?" . (!empty($param["category"])?" AND c.exam_category_name LIKE '%{$param["category"]}%'":"");
+        return $this->db->query($sql,$param["fasi_id"])->result_array();
     }
 
     function assign($fid,$tid,$date,$email) {
         $this->db->set("start_date","SYSDATE()",FALSE);
         $this->db->set("created_at", "SYSDATE()", FALSE);
-        $this->db->insert("exam_assign_fasi",array(fasi_id=>$fid,exam_id=>$tid,parent_email=>$email));
+        $this->db->insert("exam_assign_fasi",array("fasi_id"=>$fid,"exam_id"=>$tid,"parent_email"=>$email));
     }
 
     function release($id) {

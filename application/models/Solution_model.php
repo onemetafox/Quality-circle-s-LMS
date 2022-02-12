@@ -18,7 +18,7 @@ class Solution_model extends CI_Model {
         $result = $this->query($sql, $mid)->fetchAll();
         $categories = array();
         if($result) foreach($result as $row) {
-        	$categories[$row[code]] = $row;
+        	$categories[$row["code"]] = $row;
         }
         return $categories;
     }
@@ -36,12 +36,12 @@ class Solution_model extends CI_Model {
     	$full = 0;
     	$score = 0;
     	foreach($result as $row) {
-    		$score += $row[score];
-    		$full += $row[full];
+    		$score += $row["score"];
+    		$full += $row["full"];
     	}
     	if(floatval($full)>0)
     	foreach($result as $row) {
-    		$categories[$row[code]] = array(code=>$row[code],name=>$row[name],score=>$row[score] * 5 / $full);
+    		$categories[$row["code"]] = array("code"=>$row["code"],"name"=>$row["name"],"score"=>$row["score"] * 5 / $full);
     	}
     	return $categories;
     }
@@ -93,110 +93,110 @@ class Solution_model extends CI_Model {
         $question = $this->query($sql, $id)->fetch();
 
         srand($id);
-        $question[content] = Zend_Json::decode($question[content]);
+        $question["content"] = Zend_Json::decode($question["content"]);
         $points = $this->checkup($question, $solution, TRUE);
 
-        $data[content] = Zend_Json::encode($solution);
-        $data[solve_time] = $this->expr("SYSDATE()");
-        $data[points] = $points;
-        if($question[mode]==AUTO)
-            $data[status] = 2;
+        $data["content"] = Zend_Json::encode($solution);
+        $data["solve_time"] = $this->expr("SYSDATE()");
+        $data["points"] = $points;
+        if($question["mode"]==AUTO)
+            $data["status"] = 2;
         else
-            $data[status] = 1;
+            $data["status"] = 1;
         $this->update($data, $this->quote("id=?", $id));
     }
     function check($id, $points) {
-        $user = $this->session->userdata(user);
+        $user = $this->session->userdata("user");
         $sql = "SELECT b.type,a.content,b.points FROM solution a LEFT JOIN question b ON a.uuid=b.uuid WHERE a.id=?";
         $solution = $this->db->query($sql, $id)->row();
-        if($solution->type==Translate) {
+        if($solution->type=="Translate") {
             $content = json_decode($solution->content);
             $content->points = $points;
-            $this->db->set(content, json_encode($content));
+            $this->db->set("content", json_encode($content));
             $marks = 0;
             if(count($points)) {
                 foreach($points as $p)
                     $marks += $p;
                 $marks = $solution->points * $marks / 5 / count($points);
-                $this->db->set(points, $marks);
+                $this->db->set("points", $marks);
             }
-        } else if($solution->type==RecordVideo || $solution->type==RecordAudio) {
-            $this->db->set(content, true);
-            $this->db->set(points, $solution->points * min(max(0,$points),5)/5);
+        } else if($solution->type=="RecordVideo" || $solution->type=="RecordAudio") {
+            $this->db->set("content", true);
+            $this->db->set("points", $solution->points * min(max(0,$points),5)/5);
         }
-        $this->db->where(id, $id);
-        $this->db->set(status, 2);
-        $this->db->set(checker_id, $user->id);
-        $this->db->set(check_time, "CURRENT_TIMESTAMP()", FALSE);
+        $this->db->where("id", $id);
+        $this->db->set("status", 2);
+        $this->db->set("checker_id", $user->id);
+        $this->db->set("check_time", "CURRENT_TIMESTAMP()", FALSE);
         $this->db->update("solution");
         return $marks;
     }
 
     function checkup($question, $solution, $ignore_case = TRUE) {
         $points = 0;
-        $content = $question[content];
+        $content = $question["content"];
         if($solution!=null) {
-            if($question[quiz_type]=="MultipleChoice") {
-                if($question[partial]) {
+            if($question["quiz_type"]=="MultipleChoice") {
+                if($question["partial"]) {
                     $max_point = 0;
-                    foreach($content[answers] as $answer) {
-                        if($max_point<$answer[points])
-                            $max_point = $answer[points];
+                    foreach($content["answers"] as $answer) {
+                        if($max_point<$answer["points"])
+                            $max_point = $answer["points"];
                     }
-                    $points = $question[marks] * $content[answers][$solution][points] / $max_point;
+                    $points = $question["marks"] * $content["answers"][$solution]["points"] / $max_point;
                 } else {
-                    if($content[answers][$solution][correct])
-                        $points = $question[marks];
+                    if($content["answers"][$solution]["correct"])
+                        $points = $question["marks"];
                 }
-            } else if($question[quiz_type]=="TrueFalse") {
-                if($content[correct]!= $solution[correct]) {
+            } else if($question["quiz_type"]=="TrueFalse") {
+                if($content["correct"]!= $solution["correct"]) {
 					$points = 0;
 				} else {
-					if($question[partial]) {
+					if($question["partial"]) {
 						$max_point = 0;
-						foreach($content[answers] as $answer) {
-							if($answer[correct])
-								$max_point += $answer[points];
+						foreach($content["answers"] as $answer) {
+							if($answer["correct"])
+								$max_point += $answer["points"];
 						}
-						if($solution[reason]) foreach($solution[reason] as $chk) {
-							$points += $content[answers][$chk][points];
+						if($solution["reason"]) foreach($solution["reason"] as $chk) {
+							$points += $content["answers"][$chk]["points"];
 						}
-						$points = $question[marks] * $points / $max_point;
+						$points = $question["marks"] * $points / $max_point;
 					} else {
 						$max_point = 0;
-						foreach($content[answers] as $answer) {
-							if($answer[correct])
+						foreach($content["answers"] as $answer) {
+							if($answer["correct"])
 								$max_point ++;
 						}
 
-						if($solution[reason]) foreach($solution[reason] as $chk) {
-							if($content[answers][$chk][correct]=="true")
+						if($solution["reason"]) foreach($solution["reason"] as $chk) {
+							if($content["answers"][$chk]["correct"]=="true")
 								$points ++;
 							else 
 								$points --;
 						}
-						$points = $question[marks] * $points / $max_point;
+						$points = $question["marks"] * $points / $max_point;
 					}
 				}
-            } else if($question[quiz_type]=="MultipleResponse") {
-				if($question[partial]) {
+            } else if($question["quiz_type"]=="MultipleResponse") {
+				if($question["partial"]) {
 					$max_point = 0;
-					foreach($content[answers] as $answer) {
-						if($answer[correct])
-							$max_point += $answer[points];
+					foreach($content["answers"] as $answer) {
+						if($answer["correct"])
+							$max_point += $answer["points"];
 					}
 					foreach($solution as $chk) {
-						$points += $content[answers][$chk][points];
+						$points += $content["answers"][$chk]["points"];
 					}
-					$points = $question[marks] * $points / $max_point;
+					$points = $question["marks"] * $points / $max_point;
 				} else {
 					foreach($solution as $i=>$s) {
 						if(strval($s)==="")
 							unset($solution[$i]);
 					}
-					foreach($content[answers] as $i=>$answer) {
+					foreach($content["answers"] as $i=>$answer) {
 
-                        /*if((!$answer[correct])===(array_search($i,$solution)===FALSE)) {
+                        /*if((!$answer["correct"])===(array_search($i,$solution)===FALSE)) {
 							$points++;
 						}*/
 						$index = array_search($i,$solution);
@@ -205,86 +205,86 @@ class Solution_model extends CI_Model {
 					}
 
                     $correct_count = 0;
-                    foreach($content[answers] as $key => $value)
-                        if ($value[correct] == 'true') $correct_count++;
+                    foreach($content["answers"] as $key => $value)
+                        if ($value["correct"] == 'true') $correct_count++;
 
-					$points = $question[marks] * $points / count($content[answers]);
+					$points = $question["marks"] * $points / count($content["answers"]);
 				}
-            } else if($question[quiz_type]=="MultipleSwitch") {
-				if($question[partial]) {
+            } else if($question["quiz_type"]=="MultipleSwitch") {
+				if($question["partial"]) {
                     $max_point = 0;
-                    foreach($content[answers] as $answer) {
-                        if($answer[correct])
-                            $max_point += $answer[points];
+                    foreach($content["answers"] as $answer) {
+                        if($answer["correct"])
+                            $max_point += $answer["points"];
                     }
 					foreach($solution as $i=>$chk) {
-                        if($content[answers][$i][correct]==$chk)
-                            $points += $content[answers][$i][points];
+                        if($content["answers"][$i]["correct"]==$chk)
+                            $points += $content["answers"][$i]["points"];
                     }
-                    $points = $question[marks] * $points / $max_point;
+                    $points = $question["marks"] * $points / $max_point;
                 } else {
                     /*if (is_object($solution)) {
                         $solution = json_decode(json_encode($solution), true);
                     }*/
 
-                    foreach($content[answers] as $i=>$answer) {
-                        if(isset($solution[$i]) && $answer[correct]==($solution[$i]==1))
+                    foreach($content["answers"] as $i=>$answer) {
+                        if(isset($solution[$i]) && $answer["correct"]==($solution[$i]==1))
                             $points++;
                     }
-                    $points = $question[marks] * $points / count($content[answers]);
+                    $points = $question["marks"] * $points / count($content["answers"]);
                 }
-            } else if($question[quiz_type]=="FillInTheBlank") {
+            } else if($question["quiz_type"]=="FillInTheBlank") {
                 $response = preg_replace("/[　\\t\\n]+/"," ",trim(strip_tags($solution)));
-                if($question[partial]) {
+                if($question["partial"]) {
                     $max_point = 0;
-                    foreach($content[answers] as $answer) {
-                        if($max_point<$answer[points])
-                            $max_point = $answer[points];
+                    foreach($content["answers"] as $answer) {
+                        if($max_point<$answer["points"])
+                            $max_point = $answer["points"];
                     }
-                    foreach($content[answers] as $answer) {
-                        if(strcmp(preg_replace("/[　\\t\\n]+/"," ",trim(strip_tags($answer[html]))),$response)==0) {
-                            $points += $answer[points];
+                    foreach($content["answers"] as $answer) {
+                        if(strcmp(preg_replace("/[　\\t\\n]+/"," ",trim(strip_tags($answer["html"]))),$response)==0) {
+                            $points += $answer["points"];
                             break;
-                        } else if(strcasecmp(preg_replace("/[　\\t\\n]+/"," ",trim(strip_tags($answer[html]))),$response)==0) {
-                            $points += $answer[points] * ($ignore_case?1:0.5);
+                        } else if(strcasecmp(preg_replace("/[　\\t\\n]+/"," ",trim(strip_tags($answer["html"]))),$response)==0) {
+                            $points += $answer["points"] * ($ignore_case?1:0.5);
                             break;
                         }
                     }
-                    $points = $question[marks] * $points / $max_point;
+                    $points = $question["marks"] * $points / $max_point;
                 } else {
-                    foreach($content[answers] as $answer) {
-                        if(strcmp(preg_replace("/[　\\t\\n]+/"," ",trim(strip_tags($answer[html]))),$response)==0) {
-                            $points = $question[marks];
+                    foreach($content["answers"] as $answer) {
+                        if(strcmp(preg_replace("/[　\\t\\n]+/"," ",trim(strip_tags($answer["html"]))),$response)==0) {
+                            $points = $question["marks"];
                             break;
-                        } else if(strcasecmp(preg_replace("/[　\\t\\n]+/"," ",trim(strip_tags($answer[html]))),$response)==0) {
-                            $points = $question[marks] * ($ignore_case?1:0.5);
+                        } else if(strcasecmp(preg_replace("/[　\\t\\n]+/"," ",trim(strip_tags($answer["html"]))),$response)==0) {
+                            $points = $question["marks"] * ($ignore_case?1:0.5);
                             break;
                         }
                     }
                 }
-            } else if($question[quiz_type]=="Matching") {
+            } else if($question["quiz_type"]=="Matching") {
                 $correct = array();
                 $response = array();
-                foreach($content[answers] as $answer) {
-                    $correct[] = $answer[column1] . "-" . $answer[column2];
+                foreach($content["answers"] as $answer) {
+                    $correct[] = $answer["column1"] . "-" . $answer["column2"];
                 }
 
 
                 foreach($solution as $answer) {
-                    $response[] = $answer[column1] . "-" . $answer[column2];
+                    $response[] = $answer["column1"] . "-" . $answer["column2"];
                 }
-                $points = $question[marks] * (1-(count(array_diff($correct, $response))+count(array_diff($response,$correct)))/count($correct));
-            } else if($question[quiz_type]=="Sequence") {
-            	$order = range(0,count($content[answers])-1);
+                $points = $question["marks"] * (1-(count(array_diff($correct, $response))+count(array_diff($response,$correct)))/count($correct));
+            } else if($question["quiz_type"]=="Sequence") {
+            	$order = range(0,count($content["answers"])-1);
                 srand($question[id]);
                 shuffle($order);
-                if($question[partial]) {
+                if($question["partial"]) {
                 	$max_point = 0;
-                	foreach($content[answers] as $answer) {
-                		$max_point += $answer[points];
+                	foreach($content["answers"] as $answer) {
+                		$max_point += $answer["points"];
                 	}
                 	if($max_point==0) {
-                		$max_point = count($content[answers]);
+                		$max_point = count($content["answers"]);
                 		foreach($order as $i=>$j) {
                 			if($solution[$i]==$j)
                 				$points ++;
@@ -292,112 +292,112 @@ class Solution_model extends CI_Model {
                 	} else {
 	                	foreach($order as $i=>$j) {
 	                		if($solution[$i]==$j)
-	                			$points += $content[answers][$j][points];
+	                			$points += $content["answers"][$j]["points"];
 	                	}
                 	}
-                	$points = $question[marks] * $points/$max_point;
+                	$points = $question["marks"] * $points/$max_point;
                 } else {
                 	foreach($order as $i=>$j) {
                 		if($solution[$i]==$j)
                 			$points ++;
                 	}
-                	$points = $question[marks] * $points/count($content[answers]);
+                	$points = $question["marks"] * $points/count($content["answers"]);
                 }
-            } else if($question[quiz_type]=="Numeric") {
+            } else if($question["quiz_type"]=="Numeric") {
                 $response = $solution;
                 $correct = null;
-                foreach($content[answers] as $answer) {
-                    if($answer[type]=="between") {
-                        if($solution>=$answer[from] && $solution<=$answer[to]) {
+                foreach($content["answers"] as $answer) {
+                    if($answer["type"]=="between") {
+                        if($solution>=$answer["from"] && $solution<=$answer["to"]) {
                             $correct = $answer;
                             break;
                         }
-                    } else if($answer[type]=="greaterThan") {
-                        if($solution>$answer[value]) {
+                    } else if($answer["type"]=="greaterThan") {
+                        if($solution>$answer["value"]) {
                             $correct = $answer;
                             break;
                         }
-                    } else if($answer[type]=="greaterThanOrEqual") {
-                        if($solution>=$answer[value]) {
+                    } else if($answer["type"]=="greaterThanOrEqual") {
+                        if($solution>=$answer["value"]) {
                             $correct = $answer;
                             break;
                         }
-                    } else if($answer[type]=="lessThan") {
-                        if($solution<$answer[value]) {
+                    } else if($answer["type"]=="lessThan") {
+                        if($solution<$answer["value"]) {
                             $correct = $answer;
                             break;
                         }
-                    } else if($answer[type]=="lessThanOrEqual") {
-                        if($solution<=$answer[value]) {
+                    } else if($answer["type"]=="lessThanOrEqual") {
+                        if($solution<=$answer["value"]) {
                             $correct = $answer;
                             break;
                         }
-                    } else if($answer[type]=="equal") {
-                        if($solution==$answer[value]) {
+                    } else if($answer["type"]=="equal") {
+                        if($solution==$answer["value"]) {
                             $correct = $answer;
                             break;
                         }
                     }
                 }
                 if($correct) {
-                    if($question[partial]) {
+                    if($question["partial"]) {
                         $max_point = 0;
-                        foreach($content[answers] as $answer) {
-                            if($max_point<$answer[points])
-                                $max_point = $answer[points];
+                        foreach($content["answers"] as $answer) {
+                            if($max_point<$answer["points"])
+                                $max_point = $answer["points"];
                         }
-                        $points = $question[marks] * $correct[points] / $max_point;
+                        $points = $question["marks"] * $correct["points"] / $max_point;
                     } else {
-                        $points = $question[marks];
+                        $points = $question["marks"];
                     }
                 }
-            } else if($question[quiz_type]=="FillInTheBlankEx") {
-                if($question[partial]) {
-					foreach($content[answers] as $i => $answers) {
+            } else if($question["quiz_type"]=="FillInTheBlankEx") {
+                if($question["partial"]) {
+					foreach($content["answers"] as $i => $answers) {
                         $correct = false;
                         $response = trim(preg_replace("/[　\\t\\n]+/"," ",$solution[$i]));
                         $max_point = 0;
                         foreach($answers as $answer) {
-                            if($max_point<$answer[points])
-                                $max_point = $answer[points];
+                            if($max_point<$answer["points"])
+                                $max_point = $answer["points"];
                         }
                         foreach($answers as $answer) {
-							if(intval($answer[points])==0)
+							if(intval($answer["points"])==0)
 								continue;
-                            if(strcmp(trim(preg_replace("/[　\\t\\n]+/"," ",$answer[html])),$response)==0) {
-                                $points += $question[marks] * $answer[points] / $max_point;
+                            if(strcmp(trim(preg_replace("/[　\\t\\n]+/"," ",$answer["html"])),$response)==0) {
+                                $points += $question["marks"] * $answer["points"] / $max_point;
                                 break;
-                            } else if(strcasecmp(trim(preg_replace("/[　\\t\\n]+/"," ",$answer[html])),$response)==0) {
-                                $points += $question[marks] * $answer[points] / $max_point * ($ignore_case?1:0.5);
+                            } else if(strcasecmp(trim(preg_replace("/[　\\t\\n]+/"," ",$answer["html"])),$response)==0) {
+                                $points += $question["marks"] * $answer["points"] / $max_point * ($ignore_case?1:0.5);
                                 break;
                             }
                         }
                     }
-                    $points /= count($content[answers]);
+                    $points /= count($content["answers"]);
                 } else {
-                    foreach($content[answers] as $i => $answers) {
+                    foreach($content["answers"] as $i => $answers) {
                         $correct = false;
                         $response = trim(preg_replace("/[　\\t\\n]+/"," ",$solution[$i]));
                         foreach($answers as $answer) {
-                            if(strcmp(trim(preg_replace("/[　\\t\\n]+/"," ",$answer[html])),$response)==0) {
-                                $points += $question[marks];
+                            if(strcmp(trim(preg_replace("/[　\\t\\n]+/"," ",$answer["html"])),$response)==0) {
+                                $points += $question["marks"];
                                 break;
-                            } else if(strcasecmp(trim(preg_replace("/[　\\t\\n]+/"," ",$answer[html])),$response)==0) {
-                                $points += $question[marks] * ($ignore_case?1:0.5);
+                            } else if(strcasecmp(trim(preg_replace("/[　\\t\\n]+/"," ",$answer["html"])),$response)==0) {
+                                $points += $question["marks"] * ($ignore_case?1:0.5);
                                 break;
                             }
                         }
                     }
-                    $points /= count($content[answers]);
+                    $points /= count($content["answers"]);
                 }
-            } else if($question[quiz_type]=="Correct") {
-                $correct = trim(strip_tags($content[detail][html],"<blank>"));
+            } else if($question["quiz_type"]=="Correct") {
+                $correct = trim(strip_tags($content["detail"]["html"],"<blank>"));
                 $i = 0;
                 while(preg_match("/<blank><\\/blank>/",$correct)) {
-                    $words = $content[answers][$i];
+                    $words = $content["answers"][$i];
                     foreach($words as $j=>$word) {
-                        if($word[correct]) {
-                            $correct = preg_replace("/<blank><\\/blank>/", "<ins>" . trim($word[html]) . "</ins>", $correct, 1);
+                        if($word["correct"]) {
+                            $correct = preg_replace("/<blank><\\/blank>/", "<ins>" . trim($word["html"]) . "</ins>", $correct, 1);
                             break;
                         }
                     }
@@ -428,36 +428,36 @@ class Solution_model extends CI_Model {
                     else if(strcasecmp(strip_tags(trim($words1[$i])),trim($words2[1][$i]))!=0)
                         $wrong += ($ignore_case?1:0.5);
                 }
-                $points = $question[marks] * (1-min($wrong,count($content[answers])) / count($content[answers]));
-            } else if($question[quiz_type]=="MultipleChoiceText" || $question[quiz_type]=="MultipleChoiceLine") {
-                foreach($content[answers] as $i => $answers) {
-                    if($answers[$solution[$i]][correct])
+                $points = $question["marks"] * (1-min($wrong,count($content["answers"])) / count($content["answers"]));
+            } else if($question["quiz_type"]=="MultipleChoiceText" || $question["quiz_type"]=="MultipleChoiceLine") {
+                foreach($content["answers"] as $i => $answers) {
+                    if($answers[$solution[$i]]["correct"])
                         $points++;
                 }
-                $points = $question[marks] * $points / count($content[answers]);
-            } else if($question[quiz_type]=="WordBank") {
-                if($content[answers][correct]==$solution)
-                    $points = $question[marks];
+                $points = $question["marks"] * $points / count($content["answers"]);
+            } else if($question["quiz_type"]=="WordBank") {
+                if($content["answers"]["correct"]==$solution)
+                    $points = $question["marks"];
                 else {
-                    foreach($content[answers][correct] as $i=>$answer) {
+                    foreach($content["answers"]["correct"] as $i=>$answer) {
                         if(trim($answer)==trim($solution[$i]))
                             $points++;
                     }
-                    $points = $question[marks] * $points / count($content[answers][correct]);
+                    $points = $question["marks"] * $points / count($content["answers"]["correct"]);
                 }
-            } else if($question[quiz_type]=="Grouping") {
+            } else if($question["quiz_type"]=="Grouping") {
                 if(is_object($solution))
                     $solution = get_object_vars($solution);
                 $points = 0;
                 $count = 0;
                 
-                foreach($content[answers] as $i=>$answer) {
+                foreach($content["answers"] as $i=>$answer) {
                     if($solution[$i]) {
-                        $points += count(array_intersect($solution[$i],$answer[items]));
-	                    $count += count($answer[items]);
+                        $points += count(array_intersect($solution[$i],$answer["items"]));
+	                    $count += count($answer["items"]);
                 	}
                 }
-                $points = $question[marks] * $points / $count;
+                $points = $question["marks"] * $points / $count;
             }
         }
         return max($points,0);

@@ -161,21 +161,21 @@ class Lesson_model extends CI_Model
             $this->where($filter);
         //$this->db->order_by("created_at desc");
 
-        if($filter[limit])
-            return $this->db->get('training_lesson',$filter[limit],$filter[offset])->result();
+        if($filter["limit"])
+            return $this->db->get('training_lesson',$filter["limit"],$filter["offset"])->result();
 
         return $this->db->get('training_lesson')->result();
     }
 
     function where($filter) {
-        if ($filter[category_id])
-            $this->db->where('category_id',$filter[category_id]);
-        if($filter[lesson_id]) {
-            $this->db->where_in('training_lesson.id', $filter[lesson_id]);
-            $this->db->order_by(sprintf('FIELD(training_lesson.id, %s)', implode(",", $filter[lesson_id])));
+        if ($filter["category_id"])
+            $this->db->where('category_id',$filter["category_id"]);
+        if($filter["lesson_id"]) {
+            $this->db->where_in('training_lesson.id', $filter["lesson_id"]);
+            $this->db->order_by(sprintf('FIELD(training_lesson.id, %s)', implode(",", $filter["lesson_id"])));
         }
-        if($filter[no_lesson_id])
-            $this->db->where_not_in('training_lesson.id',$filter[no_lesson_id]);
+        if($filter["no_lesson_id"])
+            $this->db->where_not_in('training_lesson.id',$filter["no_lesson_id"]);
     }
 }
 

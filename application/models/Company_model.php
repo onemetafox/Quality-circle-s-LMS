@@ -78,9 +78,9 @@ class Company_model extends CI_Model
     function insert($data){
         $data['reg_date'] = date("Y-m-d H:i:s");
 
-        if (isset($data[logo_path]) || empty($data[logo_path])){
+        if (isset($data["logo_path"]) || empty($data["logo_path"])){
             //$data[logo_path] = sprintf('%suser/photo/%s', PATH_UPLOAD, 'default_company.png');
-            $data[logo_path] = str_replace("./", "", $data[logo_path]);
+            $data["logo_path"] = str_replace("./", "", $data["logo_path"]);
         }
 
         $rst = $this->db->insert($this->table, $data);

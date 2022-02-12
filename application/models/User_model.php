@@ -34,7 +34,7 @@ class User_model extends AbstractModel
         $id_list = array();
         $data_list = $query->result_array();
         foreach ($data_list as $key => $data) {
-            $id_list[] = $data[id];
+            $id_list[] = $data["id"];
         }
         return $id_list;
     }
@@ -64,7 +64,7 @@ class User_model extends AbstractModel
         $id_list = array();
         $data_list = $this->db->get()->result_array();
         foreach ($data_list as $key => $data) {
-            $id_list[] = $data[id];
+            $id_list[] = $data["id"];
         }
         return $id_list;
     }
@@ -218,9 +218,9 @@ class User_model extends AbstractModel
         $data['reg_date'] = date("Y-m-d H:i:s");
         $data['is_deleted'] = 0;
 
-        if (isset($data[picture]) || empty($data[picture])){
-            //$data[picture] = sprintf('%suser/photo/%s', PATH_UPLOAD, ($data[user_type] == 'Company') ? 'default_company.png' : 'default.png');
-            $data[picture] = str_replace("./", "", $data[picture]);
+        if (isset($data["picture"]) || empty($data["picture"])){
+            //$data["picture"] = sprintf('%suser/photo/%s', PATH_UPLOAD, ($data[user_type] == 'Company') ? 'default_company.png' : 'default.png');
+            $data["picture"] = str_replace("./", "", $data["picture"]);
         }
 
         $this->db->insert($this->table, $data);

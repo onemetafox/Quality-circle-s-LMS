@@ -49,13 +49,13 @@ class Notification_model extends CI_Model {
     }*/
 
     public function create($data) {
-        $data[created_at] = date("y-m-d H:i:s");
+        $data["created_at"] = date("y-m-d H:i:s");
         $this->db->insert($this->table, $data);
     }
 
     public function update_read($id='') {
-        $data[updated_at] = date("y-m-d H:i:s");
-        $data[is_read] = 1;        
+        $data["updated_at"] = date("y-m-d H:i:s");
+        $data["is_read"] = 1;        
         $this->db->where('id', $id);
         $this->db->update($this->table, $data);       
     }

@@ -129,11 +129,11 @@ class Trainingassignemployee_model extends CI_Model
         $this->db->join($this->topic_table." b", 'a.topic_id = b.id', 'left');
         $this->db->join($this->category_table." c", 'b.category_id = c.id', 'left');
 
-        $this->db->where('a.`employee_id`', $param[employee_id]);
-        if (isset($param[category_id]) && isset($param[category_id]))
-            $this->db->where('b.category_id', $param[category_id]);
-        if(!empty($param[category])) {
-            $this->db->like('c.category_name', $param[category]);
+        $this->db->where('a.`employee_id`', $param["employee_id"]);
+        if (isset($param["category_id"]) && isset($param["category_id"]))
+            $this->db->where('b.category_id', $param["category_id"]);
+        if(!empty($param["category"])) {
+            $this->db->like('c.category_name', $param["category"]);
         }
 
         $query=$this->db->get();
@@ -150,11 +150,11 @@ class Trainingassignemployee_model extends CI_Model
         $this->db->join($this->category_table." c", 'b.category_id = c.id', 'left');
         $this->db->join($this->assign_employee_table." d", 'a.topic_id = d.topic_id', 'left');
 
-        $where = "( d.id is NULL OR d.employee_id != $param[employee_id] )";
+        $where = "( d.id is NULL OR d.employee_id != $param["employee_id"] )";
         $this->db->where($where);
-        $this->db->where("a.company_id", $param[company_id]);
-        if(!empty($param[category]))
-            $this->db->like("c.category_name", $param[category]);
+        $this->db->where("a.company_id", $param["company_id"]);
+        if(!empty($param["category"]))
+            $this->db->like("c.category_name", $param["category"]);
 
         return $this->db->get()->result_array();
 
@@ -167,14 +167,14 @@ class Trainingassignemployee_model extends CI_Model
                 FROM training_topic a
                     LEFT JOIN training_assign_fasi b ON a.id=b.topic_id
                     LEFT JOIN training_category c ON a.category_id=c.id
-                WHERE b.fasi_id=?" . (!empty($param[category])?" AND c.category_name LIKE '%{$param[category]}%'":"");
+                WHERE b.fasi_id=?" . (!empty($param["category"])?" AND c.category_name LIKE '%{$param["category"]}%'":"");
         return $this->db->query($sql,$param[fasi_id])->result_array();
     }*/
 
     function assign($eid,$tid,$date,$email) {
         $this->db->set("start_date","SYSDATE()",FALSE);
         $this->db->set("created_at", "SYSDATE()", FALSE);
-        $this->db->insert($this->assign_employee_table, array(employee_id=>$eid,topic_id=>$tid,company_email=>$email));
+        $this->db->insert($this->assign_employee_table, array("employee_id"=>$eid,"topic_id"=>$tid,"company_email"=>$email));
     }
 
     function release($id) {

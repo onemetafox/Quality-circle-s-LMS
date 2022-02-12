@@ -120,7 +120,7 @@ class Translate_model extends CI_Model
     }
 
     function update($data, $table){
-        $this->db->where('id', $data[id]);
+        $this->db->where('id', $data["id"]);
         $result = $this->db->update($table, $data);
     }
 

@@ -100,7 +100,7 @@ class Trainingcourse_model extends CI_Model
     function getCompanyidListStrByFasi($fasi_id){
         $this->db->select("group_concat(id) id")->from($this->table)->where("responsible_fasi_id", $fasi_id);
         $query = $this->db->get();
-        return $query->result_array()[0][id];
+        return $query->result_array()[0]["id"];
     }
 
 
@@ -120,9 +120,9 @@ class Trainingcourse_model extends CI_Model
 
     function insert($data){
         $data['created_at'] = date("Y-m-d H:i:s");
-        if (isset($data[logo_image]) || empty($data[logo_image])){
-            $data[logo_image] = sprintf('%suser/photo/%s', PATH_UPLOAD, 'default_company.png');
-            $data[logo_image] = str_replace("./", "", $data[logo_image]);
+        if (isset($data["logo_image"]) || empty($data["logo_image"])){
+            $data["logo_image"] = sprintf('%suser/photo/%s', PATH_UPLOAD, 'default_company.png');
+            $data["logo_image"] = str_replace("./", "", $data["logo_image"]);
         }
         $rst = $this->db->insert($this->table, $data);
         return $rst;

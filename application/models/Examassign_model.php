@@ -28,7 +28,7 @@ class Examassign_model extends CI_Model
         $query = $this->db->get();        
         $result_row = $query->result_array();
 
-        $exam_list = json_decode($result_row[0][exam_list]);
+        $exam_list = json_decode($result_row[0]["exam_list"]);
         return count($exam_list);
     }
 

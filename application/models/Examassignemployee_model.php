@@ -116,12 +116,12 @@ class Examassignemployee_model extends CI_Model
         $this->db->join($this->exam_table." b", 'a.exam_id = b.id', 'left');
         $this->db->join($this->category_table." c", 'b.exam_category_id = c.id', 'left');
 
-        $this->db->where('a.`employee_id`', $param[employee_id]);
-        if(isset($param[category_id]) && $param[category_id])
-            $this->db->where('b.exam_category_id', $param[category_id]);
+        $this->db->where('a.`employee_id`', $param["employee_id"]);
+        if(isset($param["category_id"]) && $param["category_id"])
+            $this->db->where('b.exam_category_id', $param["category_id"]);
 
-        if(!empty($param[category])) {
-            $this->db->like('c.exam_category_name', $param[category]);
+        if(!empty($param["category"])) {
+            $this->db->like('c.exam_category_name', $param["category"]);
         }
 
         $query=$this->db->get();
@@ -138,11 +138,11 @@ class Examassignemployee_model extends CI_Model
         $this->db->join($this->category_table." c", 'b.exam_category_id = c.id', 'left');
         $this->db->join($this->assign_employee_table." d", 'a.exam_id = d.exam_id', 'left');
 
-        $where = "( d.id is NULL OR d.employee_id != $param[employee_id] )";
+        $where = "( d.id is NULL OR d.employee_id != $param["employee_id"] )";
         $this->db->where($where);
-        $this->db->where("a.company_id", $param[company_id]);
-        if(!empty($param[category]))
-            $this->db->like("c.exam_category_name", $param[category]);
+        $this->db->where("a.company_id", $param["company_id"]);
+        if(!empty($param["category"]))
+            $this->db->like("c.exam_category_name", $param["category"]);
 
         return $this->db->get()->result_array();
 
@@ -162,7 +162,7 @@ class Examassignemployee_model extends CI_Model
     function assign($eid,$tid,$date,$email) {
         $this->db->set("start_date", $date);
         $this->db->set("created_at", "SYSDATE()", FALSE);
-        $this->db->insert($this->assign_employee_table, array(employee_id=>$eid,exam_id=>$tid, company_email=>$email));
+        $this->db->insert($this->assign_employee_table, array("employee_id"=>$eid,"exam_id"=>$tid, "company_email"=>$email));
     }
 
     function release($id) {

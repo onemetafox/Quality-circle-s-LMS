@@ -248,9 +248,9 @@ class Traininghistory_model extends CI_Model
 
         $this->db->trans_start();
         
-        $history_data[start_at] = date("Y-m-d H:i:s");
-        $history_data[end_at] = date("Y-m-d H:i:s");
-        $history_data[created_at] = date("Y-m-d H:i:s");
+        $history_data["start_at"] = date("Y-m-d H:i:s");
+        $history_data["end_at"] = date("Y-m-d H:i:s");
+        $history_data["created_at"] = date("Y-m-d H:i:s");
 
         $this->db->insert($this->table, $history_data);
 

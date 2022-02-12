@@ -258,9 +258,9 @@ class Settings_model extends CI_Model
         $content = $this->rebuild_html($content);
         @send_phpmail_message($user->email , $email_temple->subject, $content);
 
-        $activity_data[activity_type] = "Password reset";
-        $activity_data[user_id] = $user->id;
-        $activity_data[activity_message] = $user->first_name . " " . $user->last_name . " reset password.";
+        $activity_data["activity_type"] = "Password reset";
+        $activity_data["user_id"] = $user->id;
+        $activity_data["activity_message"] = $user->first_name . " " . $user->last_name . " reset password.";
         $this->load->model('Activity_model');
         $this->Activity_model->insert($activity_data);
     }
@@ -284,18 +284,18 @@ class Settings_model extends CI_Model
 
 
     function sendEmailTemplate($param = array(), $email = ''){
-        $action = $param[action];
+        $action = $param["action"];
         $info = $this->getEmailTemplate(array('action' => $action));
 
-        $message = $info[message];
+        $message = $info["message"];
         foreach($param as $key => $value){
             $message = str_replace('{' . $key . '}', $value, $message);
         }
 
-        $result[message] = $this->rebuild_html($message);
-        $result[subject] = $info[subject];
+        $result["message"] = $this->rebuild_html($message);
+        $result["subject"] = $info["subject"];
 
-        @send_phpmail_message($email, $result[subject], $result[message]);
+        @send_phpmail_message($email, $result["subject"], $result["message"]);
 
         return $result;
     }

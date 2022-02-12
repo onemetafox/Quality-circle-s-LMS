@@ -137,8 +137,8 @@ class Trainingassignfasi_model extends CI_Model
                     LEFT JOIN training_assign_fasi b ON a.id=b.topic_id
                         AND b.fasi_id=?
                     LEFT JOIN training_category c ON a.category_id=c.id
-                WHERE b.id IS NULL" . (!empty($param[category])?" AND c.category_name LIKE '%{$param[category]}%'":"");
-        return $this->db->query($sql,$param[fasi_id])->result_array();
+                WHERE b.id IS NULL" . (!empty($param["category"])?" AND c.category_name LIKE '%{$param["category"]}%'":"");
+        return $this->db->query($sql,$param["fasi_id"])->result_array();
     }
 
     function selectedList($param)
@@ -147,14 +147,14 @@ class Trainingassignfasi_model extends CI_Model
                 FROM training_topic a
                     LEFT JOIN training_assign_fasi b ON a.id=b.topic_id
                     LEFT JOIN training_category c ON a.category_id=c.id
-                WHERE b.fasi_id=?" . (!empty($param[category])?" AND c.category_name LIKE '%{$param[category]}%'":"");
-        return $this->db->query($sql,$param[fasi_id])->result_array();
+                WHERE b.fasi_id=?" . (!empty($param["category"])?" AND c.category_name LIKE '%{$param["category"]}%'":"");
+        return $this->db->query($sql,$param["fasi_id"])->result_array();
     }
 
     function assign($fid,$tid,$date,$email) {
         $this->db->set("start_date","SYSDATE()",FALSE);
         $this->db->set("created_at", "SYSDATE()", FALSE);
-        $this->db->insert("training_assign_fasi",array(fasi_id=>$fid,topic_id=>$tid,parent_email=>$email));
+        $this->db->insert("training_assign_fasi",array("fasi_id"=>$fid,"topic_id"=>$tid,"parent_email"=>$email));
     }
 
     function release($id) {

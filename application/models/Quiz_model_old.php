@@ -25,18 +25,18 @@ class Quiz_model extends CI_Model
     );
 
     function where($filter) {
-        if($filter[topic_id])
-            $this->db->where('exam_quiz.topic_id',$filter[topic_id]);
-        if($filter[category_id])
-            $this->db->where("exam_quiz.category_id",$filter[category_id]);
-        if($filter[type])
-            $this->db->where("exam_quiz.quiz_type",$filter[type]);
-        if($filter[level])
-            $this->db->where("exam_quiz.quiz_level",$filter[level]);
-        if($filter[quiz_id])
-            $this->db->where_in('exam_quiz.id',$filter[quiz_id]);
-        if($filter[no_quiz_id])
-            $this->db->where_not_in('exam_quiz.id',$filter[no_quiz_id]);
+        if($filter["topic_id"])
+            $this->db->where('exam_quiz.topic_id',$filter["topic_id"]);
+        if($filter["category_id"])
+            $this->db->where("exam_quiz.category_id",$filter["category_id"]);
+        if($filter["type"])
+            $this->db->where("exam_quiz.quiz_type",$filter["type"]);
+        if($filter["level"])
+            $this->db->where("exam_quiz.quiz_level",$filter["level"]);
+        if($filter["quiz_id"])
+            $this->db->where_in('exam_quiz.id',$filter["quiz_id"]);
+        if($filter["no_quiz_id"])
+            $this->db->where_not_in('exam_quiz.id',$filter["no_quiz_id"]);
     }
     function count($filter = NULL) {
     	if($filter)
@@ -53,15 +53,15 @@ class Quiz_model extends CI_Model
         if($filter)
         	$this->where($filter);
         $this->db->order_by("created_at desc");
-        if($filter[limit])
-            return $this->db->get('exam_quiz',$filter[limit],$filter[offset])->result();
+        if($filter["limit"])
+            return $this->db->get('exam_quiz',$filter["limit"],$filter["offset"])->result();
         
         return $this->db->get('exam_quiz')->result();
     }    
     function select($id) {
         $this->db->where(id, $id);
-        $quiz = $this->db->get(exam_quiz)->row_array();
-        $quiz[content] = unserialize($quiz[quiz_content]);
+        $quiz = $this->db->get("exam_quiz")->row_array();
+        $quiz["content"] = unserialize($quiz["quiz_content"]);
         return $quiz;
     }
     function remove($id) {
@@ -69,76 +69,76 @@ class Quiz_model extends CI_Model
         $this->db->delete("exam_quiz");
     }
     function import($exam_quiz) {
-        $this->db->where('uuid', $exam_quiz[uuid]);
+        $this->db->where('uuid', $exam_quiz["uuid"]);
         $old = $this->db->get('exam_quiz')->row();
         if(!$old)
             $this->db->insert('exam_quiz', $exam_quiz);
-        else if($old->edit_date<=$exam_quiz[edit_date]) {
-            $this->db->where('uuid', $exam_quiz[uuid]);
+        else if($old->edit_date<=$exam_quiz["edit_date"]) {
+            $this->db->where('uuid', $exam_quiz["uuid"]);
             $this->db->update('exam_quiz', $exam_quiz);
         }
     }
     function save($params) {
-        $question = $params[question];
-		$content = $params[content];
+        $question = $params["question"];
+		$content = $params["content"];
         
-		if($question[quiz_type]=='MultipleChoice') {
-			$content[answers][intval($params[correct])][correct] = true;
-		} else if($question[quiz_type]=='Matching') {
-			foreach($content[column1] as & $answer) {
-				if(strpos($answer[image],'tmp/')!==false) {
-					$file = substr($answer[image], 4);
-					$answer[image] = 'assets/' . $question[uuid] . '/' . $file;
-					$this->copy_assert($question[uuid], $file);
+		if($question["quiz_type"]=='MultipleChoice') {
+			$content["answers"][intval($params["correct"])]["correct"] = true;
+		} else if($question["quiz_type"]=='Matching') {
+			foreach($content["column1"] as & $answer) {
+				if(strpos($answer["image"],'tmp/')!==false) {
+					$file = substr($answer["image"], 4);
+					$answer["image"] = 'assets/' . $question["uuid"] . '/' . $file;
+					$this->copy_assert($question["uuid"], $file);
 				}
 			}
-			foreach($content[column2] as & $answer) {
-				if(strpos($answer[image],'tmp/')!==false) {
-					$file = substr($answer[image], 4);
-					$answer[image] = 'assets/' . $question[uuid] . '/' . $file;
-					$this->copy_assert($question[uuid], $file);
+			foreach($content["column2"] as & $answer) {
+				if(strpos($answer["image"],'tmp/')!==false) {
+					$file = substr($answer["image"], 4);
+					$answer["image"] = 'assets/' . $question["uuid"] . '/' . $file;
+					$this->copy_assert($question["uuid"], $file);
 				}
 			}
-			$content[column1] = array_values($content[column1]);
-			$content[column2] = array_values($content[column2]);
-			$content[match] = array_values($content[match]);
-		} else if($question[quiz_type]=='FillInTheBlankEx' || $question[quiz_type]=='MultipleChoiceText' || $question[quiz_type]=='MultipleChoiceLine' || $question[quiz_type]=='Correct') {
+			$content["column1"] = array_values($content["column1"]);
+			$content["column2"] = array_values($content["column2"]);
+			$content["match"] = array_values($content["match"]);
+		} else if($question["quiz_type"]=='FillInTheBlankEx' || $question["quiz_type"]=='MultipleChoiceText' || $question["quiz_type"]=='MultipleChoiceLine' || $question["quiz_type"]=='Correct') {
 			$answers = $params["answers"];
-			$content[answers] = array();
-			preg_match_all ("/<blank[^>]*data-id=['\"]?(\\d*)['\"]?[^>]*>(<\\/blank>)?/", stripslashes($content[detail][html]), $matches);
-			$content[detail][html] = preg_replace("/<blank[^>]*>(<\\/blank>)?/"," <blank></blank> ",$content[detail][html]);
+			$content["answers"] = array();
+			preg_match_all ("/<blank[^>]*data-id=['\"]?(\\d*)['\"]?[^>]*>(<\\/blank>)?/", stripslashes($content["detail"]["html"]), $matches);
+			$content["detail"]["html"] = preg_replace("/<blank[^>]*>(<\\/blank>)?/"," <blank></blank> ",$content["detail"]["html"]);
 			if(is_array($matches[1])) foreach($matches[1] as $id) {
-				$answers[$id][intval($answers[$id][correct])][correct] = true;
-				unset($answers[$id][correct]);
-				$content[answers][] = $answers[$id];
+				$answers[$id][intval($answers[$id]["correct"])]["correct"] = true;
+				unset($answers[$id]["correct"]);
+				$content["answers"][] = $answers[$id];
 			}
-		} else if($question[quiz_type]=='WordBank') {
-			preg_match_all("/<blank>([^<]*)<\\/blank>/",$content[detail][html],$matches);
+		} else if($question["quiz_type"]=='WordBank') {
+			preg_match_all("/<blank>([^<]*)<\\/blank>/",$content["detail"]["html"],$matches);
 			if(is_array($matches[1])) foreach($matches[1] as $match) {
-				$content[answers][correct][] = $match;
+				$content["answers"]["correct"][] = $match;
 			}
-			if(is_array($content[answers][extra])) foreach($content[answers][extra] as $i => $word) {
+			if(is_array($content["answers"]["extra"])) foreach($content["answers"]["extra"] as $i => $word) {
 				if(trim($word)=="")
-					unset($content[answers][extra][$i]);
+					unset($content["answers"]["extra"][$i]);
 			}
-		} else if($question[quiz_type]=='Sequence') {
-			$content[answers] = array_values($content[answers]);
+		} else if($question["quiz_type"]=='Sequence') {
+			$content["answers"] = array_values($content["answers"]);
 		}
-		$question[quiz_content] = serialize($content);
+		$question["quiz_content"] = serialize($content);
 
 		if($params['quiz_obj_path'] != ''){
             $question['quiz_obj_path'] = $params['quiz_obj_path'];
 		}
-		if($question[id]>0) {
+		if($question["id"]>0) {
 			$this->db->set("updated_at","SYSDATE()",FALSE);
-			$this->db->where("id", $question[id]);
+			$this->db->where("id", $question["id"]);
 			$this->db->update("exam_quiz",$question);
 		} else {
 			$this->db->set("created_at","SYSDATE()",FALSE);
-			$question[id] = $this->db->insert("exam_quiz",$question);
+			$question["id"] = $this->db->insert("exam_quiz",$question);
 		}
 
-		return $question[id];
+		return $question["id"];
     }
 }
 
