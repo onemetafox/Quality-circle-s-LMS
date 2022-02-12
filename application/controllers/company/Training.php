@@ -27,7 +27,7 @@ class Training  extends BaseController
 
     public function showAll(){
         $params['menu_name'] = 'catalog';
-        $params[term] = $this->term;
+        $params["term"] = $this->term;
         $params['company'] = $this->company;
 
         /*pagenation*/
@@ -120,7 +120,7 @@ class Training  extends BaseController
         $user_type = $this->session->userdata('user_type');
 
         $params['menu_name'] = 'catalog';
-        $params[term] = $this->term;
+        $params["term"] = $this->term;
         $params['company'] = $this->company;
         $course = $this->Training_model->select($id);
         $params['upcoming_courses'] = $this->Training_model->upcoming_three_course($course->training_course_id);

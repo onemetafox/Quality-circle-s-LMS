@@ -31,7 +31,7 @@ class Live extends BaseController {
     public function viewclass($id){
         $this->load->library('Sidebar');
         $side_params = array('selected_menu_id' => '6');
-        $this->global[sidebar] = $this->sidebar->generate($side_params, $this->role);
+        $this->global["sidebar"] = $this->sidebar->generate($side_params, $this->role);
         if($this->isLearner()){
             $training_data = array();
            // $res_id_list = $this->Live_model->getListCourseById(array(id => intval($id))) [0];		   
@@ -61,7 +61,7 @@ class Live extends BaseController {
         $this->load->library('Sidebar');
 		$course = $this->input->get('course');
         $side_params = array('selected_menu_id' => '6');
-        $this->global[sidebar] = $this->sidebar->generate($side_params, $this->role);
+        $this->global["sidebar"] = $this->sidebar->generate($side_params, $this->role);
         if($this->isLearner()){
             $training = array();
 			$training['free_course_list'] = $this->Live_model->getFreeCourses($this->input->get());
@@ -78,7 +78,7 @@ class Live extends BaseController {
         $this->load->library('Sidebar');
 		$course = $this->input->get('course');
         $side_params = array('selected_menu_id' => '6');
-        $this->global[sidebar] = $this->sidebar->generate($side_params, $this->role);
+        $this->global["sidebar"] = $this->sidebar->generate($side_params, $this->role);
         if($this->isLearner()){
             $training_data = array();
 			if($course != null && $course != 'all') {
@@ -97,7 +97,7 @@ class Live extends BaseController {
                 $ids = $this->Course_model->getCourseById($courseId);
 				if(!empty($ids)){
 					$instructor = json_decode($row['instructors']) [0];				
-					$row['instructor_email'] = $this->User_model->getList(array(id => $instructor)) [0]['email'];					
+					$row['instructor_email'] = $this->User_model->getList(array("id" => $instructor)) [0]['email'];					
 					$res_course_list[$row['id']] = $row;					
 				}
 				$res_course_list[$row['id']]['is_pay'] = $this->db->where('user_id',$this->session->userdata('user_id'))

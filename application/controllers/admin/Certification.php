@@ -58,9 +58,9 @@ class Certification extends BaseController {
             $cert_id = $this->input->post('cid');
             $certification_row = $this->Certification_model->getRow($cert_id);
             $this->load->model('Settings_model');
-            $certification_temp = $this->Settings_model->getCertificate(array('id' => $certification_row[0][cert_temp_id]));
-            $page_data[certification] = $certification_row[0];
-            $page_data[certification_template] = $certification_temp[0];
+            $certification_temp = $this->Settings_model->getCertificate(array('id' => $certification_row[0]["cert_temp_id"]));
+            $page_data["certification"] = $certification_row[0];
+            $page_data["certification_template"] = $certification_temp[0];
             $this->loadViews("admin/certification/certification_view", $this->global, $page_data, NULL);
         }else{
             $this->global['sidebar'] = $this->sidebar->generate();
@@ -128,8 +128,8 @@ class Certification extends BaseController {
         if($this->isMasterAdmin()){
             $id = $this->input->post('id');
             foreach (json_decode($id) as $id){
-                $cert_data[delete_flag] = 1;
-                $cert_data[deleted_at] = date("Y-m-d H:i:s");
+                $cert_data["delete_flag"] = 1;
+                $cert_data["deleted_at"] = date("Y-m-d H:i:s");
                 $this->Certification_model->update($cert_data, $id);
             }
         }
@@ -216,9 +216,9 @@ EOD;
             $this->load->helper('mail');
             @send_phpmail_message($email, 'LMS Notification', $content);
             $sessiondata = $this->session->get_userdata();
-            $activity_data[activity_type] = "Email";
-            $activity_data[user_id] = $sessiondata[userId];
-            $activity_data[activity_message] = $sessiondata[name] . " sended Certification Email to " . $email;
+            $activity_data["activity_type"] = "Email";
+            $activity_data["user_id"] = $sessiondata["userId"];
+            $activity_data["activity_message"] = $sessiondata["name"] . " sended Certification Email to " . $email;
             $this->load->model('Activity_model');
             $this->Activity_model->insert($activity_data);
         }

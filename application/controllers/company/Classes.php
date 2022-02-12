@@ -26,7 +26,7 @@ class Classes  extends BaseController
 
     public function showAll(){
         $params['menu_name'] = 'catalog';
-        $params[term] = $this->term;
+        $params["term"] = $this->term;
         $params['company'] = $this->company;
         if($this->session->userdata ( 'isLoggedIn' ) != NULL ){
             $filter['create_id'] = $this->session->userdata('company_id');
@@ -94,7 +94,7 @@ class Classes  extends BaseController
 
     public function view($url = NULL, $id = NULL){
         $params['menu_name'] = 'catalog';
-        $params[term] = $this->term;
+        $params["term"] = $this->term;
         $params['company'] = $this->company;
         $course = $this->Virtualcourse_model->select($id);
 		$totalCourseEnrollments = $this->Enrollments_model->totalCourseEnrollments($course->course_id,$id);

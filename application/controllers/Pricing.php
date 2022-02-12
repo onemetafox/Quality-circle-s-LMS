@@ -80,7 +80,7 @@ class Pricing  extends BaseController
             }
         }
 
-        $headerInfo[term] = $this->term;
+        $headerInfo["term"] = $this->term;
         $this->loadViews_front('pricing', $headerInfo);
     }
     public function payment($id, $type){

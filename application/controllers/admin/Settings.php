@@ -420,38 +420,38 @@ class Settings extends BaseController {
     
     public function get_trans_seletable_lang_list(){
         $searchstr = $_REQUEST['term'];
-        $where[add_flag] = 0;
+        $where["add_flag"] = 0;
         $result = $this->Translate_model->getLanguageList($where, $searchstr);
-        $this->response(array("results" => $result[data]));
+        $this->response(array("results" => $result["data"]));
     }
     
     public function get_trans_selected_lang_list(){
-        $where[add_flag] = 1;
+        $where["add_flag"] = 1;
         $data_rows = $this->Translate_model->getLanguageList($where);
-        $records[data] = $data_rows[data];
-        $records[recordsTotal] = $data_rows[total];
-        $records[recordsFiltered] = $data_rows[filtertotal];
+        $records["data"] = $data_rows["data"];
+        $records["recordsTotal"] = $data_rows["total"];
+        $records["recordsFiltered"] = $data_rows["filtertotal"];
         $this->response($records);
     }
     
     public function update_trans_activate(){
-        $id = $this->input->post(id);
-        $active_flag = $this->input->post(value);
-        $data[id] = $id;
-        $data[active_flag] = $active_flag;
+        $id = $this->input->post("id");
+        $active_flag = $this->input->post("value");
+        $data["id"] = $id;
+        $data["active_flag"] = $active_flag;
         $this->Translate_model->update_lang($data);
     }
     
     public function trans_term_view($lang_id = 0){
-        $where[id] = $lang_id;
-        $lang_data = $this->Translate_model->getLanguageList($where) [data][0];
+        $where["id"] = $lang_id;
+        $lang_data = $this->Translate_model->getLanguageList($where) ["data"][0];
         $this->load->library('Sidebar');
         if($this->isSuperAdmin()){
             $side_params = array('selected_menu_id' => '9');
             $this->global['sidebar'] = $this->sidebar->generate($side_params, $this->role);
-            $data[lang_id] = $lang_data[id];
-            $data[lang_name] = $lang_data[lang_name];
-            $data[field_name] = $lang_data[field_name];
+            $data["lang_id"] = $lang_data["id"];
+            $data["lang_name"] = $lang_data["lang_name"];
+            $data["field_name"] = $lang_data["field_name"];
             $this->loadViews("admin/settings/setting_translations_term", $this->global, $data, NULL);
         }else{
             $this->global['sidebar'] = $this->sidebar->generate();
@@ -460,13 +460,13 @@ class Settings extends BaseController {
     }
     
     public function get_trans_term_list($lang_id = 0){
-        $where[id] = $lang_id;
-        $lang_data = $this->Translate_model->getLanguageList($where) [data][0];
-        $first_lang_name = $this->Translate_model->getLanguageList(array('lang_code' => DEFAULT_LIST_LANG)) [data][0];
+        $where["id"] = $lang_id;
+        $lang_data = $this->Translate_model->getLanguageList($where) ["data"][0];
+        $first_lang_name = $this->Translate_model->getLanguageList(array('lang_code' => DEFAULT_LIST_LANG)) ["data"][0];
         $data_rows = $this->Translate_model->getTermList($first_lang_name['field_name'], $lang_data['field_name']);
-        $records[data] = $data_rows[data];
-        $records[recordsTotal] = $data_rows[total];
-        $records[recordsFiltered] = $data_rows[filtertotal];
+        $records["data"] = $data_rows["data"];
+        $records["recordsTotal"] = $data_rows["total"];
+        $records["recordsFiltered"] = $data_rows["filtertotal"];
         $this->response($records);
     }
 
@@ -475,7 +475,7 @@ class Settings extends BaseController {
         $values = $this->input->post('value');
         $object = json_decode($values);
         foreach($object as $key => $value){
-            $data[id] = $value->id;
+            $data["id"] = $value->id;
             $data[$field] = $value->content;
             $this->Translate_model->update_term($data);
         }

@@ -20,14 +20,14 @@ class Welcome extends BaseController {
     public function index(){
         //$sessiondata = $this->session->get_userdata();
         //$this->load->view('dashboard', $sessiondata);
-        $page_data[term] = $this->term;
+        $page_data["term"] = $this->term;
         $this->load->view('welcome', $page_data);
     }
 
     public function home(){
         $isLoggedIn = $this->session->userdata('isLoggedIn');
         if (!isset($isLoggedIn) || $isLoggedIn != TRUE){
-            $page_data[term] = $this->term;
+            $page_data["term"] = $this->term;
             //            $this->load->view('login', $page_data);
             redirect(base_url());
         } else {
@@ -64,9 +64,9 @@ class Welcome extends BaseController {
             $page_data['instructor_count'] = $this->User_model->getEmployeeCount(array('company_id' => $this->session->get_userdata() ['company_id'], 'user_type' => 'Instructor'));
             $page_data['learner_count'] = $this->User_model->getEmployeeCount(array('company_id' => $this->session->get_userdata() ['company_id'], 'user_type' => 'Learner'));
             $this->load->model('Course_model');
-            $page_data[certification_count] = $this->Course_model->getCertificateHistoryCount($this->session->get_userdata() ['company_id']);
+            $page_data["certification_count"] = $this->Course_model->getCertificateHistoryCount($this->session->get_userdata() ['company_id']);
             $this->load->model('Exam_model');
-            $page_data[exam_count] = $this->Exam_model->count(array('create_id' => $this->session->get_userdata() ['userId']));
+            $page_data["exam_count"] = $this->Exam_model->count(array('create_id' => $this->session->get_userdata() ['userId']));
             //
             //            $this->load->model('Topic_model');
             //            $page_data[topic_count] = $this->Topic_model->count();
@@ -76,7 +76,7 @@ class Welcome extends BaseController {
             $this->load->model('Payment_model');
             $filter['company_id'] = $this->session->get_userdata() ['company_id'];
             
-            $page_data[amount] = $this->Payment_model->totalAmountForAdmin($filter)->total_amount;
+            $page_data["amount"] = $this->Payment_model->totalAmountForAdmin($filter)->total_amount;
             $list = $this->User_model->getList(array('user_type' => 'Learner', 'company_id' => $this->session->get_userdata() ['company_id']));
             $cnt = 0;
             foreach ($list as $item){
@@ -85,7 +85,7 @@ class Welcome extends BaseController {
                     $cnt++;
                 }
             }
-            $page_data[logined_usercount] = $cnt;
+            $page_data["logined_usercount"] = $cnt;
             //            $this->load->model('Certification_model');
             //            $this->load->model('Traininghistory_model');
             //            $certification_year = $this->Certification_model->getUserPerYear();
@@ -95,7 +95,7 @@ class Welcome extends BaseController {
             //                $item[training_count] = $this->Traininghistory_model->getEmployeeCountperYear($year);
             //                $certification_status[] = $item;
             //            }
-            $page_data[certification_status] = $certification_status;
+            $page_data["certification_status"] = $certification_status;
             //            $this->load->model('Activity_model');
             //			$page_data[activity_datalist] = $this->Activity_model->getList(array(), 20);
             $this->load->model('Settings_model');
@@ -108,8 +108,8 @@ class Welcome extends BaseController {
             }
             $header_data['company_name'] = $this->getSettingValue('company_name');
             $header_data['company_phone'] = $this->getSettingValue('company_phone');
-            $header_data[term] = $this->term;
-            $page_data[term] = $this->term;
+            $header_data["term"] = $this->term;
+            $page_data["term"] = $this->term;
             $this->load->view('_templates/header', $header_data);
             $this->load->view('admin/dashboard', $page_data);
             $this->load->view('_templates/footer');

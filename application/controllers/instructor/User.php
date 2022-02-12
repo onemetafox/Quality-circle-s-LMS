@@ -182,11 +182,11 @@ class User extends BaseController
         $user_id = $this->User_model->insert($insert_data);
 
         //welcome notification creaste
-        $notif_data[notification_type] = "normal";
-        $notif_data[from_user_id] = $this->vendorId;
-        $notif_data[to_user_id] = $user_id;
-        $notif_data[notification_title] = "Welcome!";
-        $notif_data[notification_message] = sprintf("Welcome to register with %s in our site.", $insert_data[email]);
+        $notif_data["notification_type"] = "normal";
+        $notif_data["from_user_id"] = $this->vendorId;
+        $notif_data["to_user_id"] = $user_id;
+        $notif_data["notification_title"] = "Welcome!";
+        $notif_data["notification_message"] = sprintf("Welcome to register with %s in our site.", $insert_data["email"]);
         $this->Notification_model->create($notif_data);
 
         return $user_id;

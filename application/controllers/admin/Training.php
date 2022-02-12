@@ -275,7 +275,7 @@ class Training extends BaseController{
     
     public function getCourseInstructor(){
         $id = $this->input->post('id');
-        $this->response($this->Training_model->getCourseInstructor($id) [0][instructors]);
+        $this->response($this->Training_model->getCourseInstructor($id) [0]["instructors"]);
     }
     
     public function update_time(){
@@ -334,7 +334,7 @@ class Training extends BaseController{
 	public function showTrainingFilter($course_id = NULL){
         $this->load->library('Sidebar');
         $side_params = array('selected_menu_id' => '6');
-        $this->global[sidebar] = $this->sidebar->generate($side_params, $this->role);
+        $this->global["sidebar"] = $this->sidebar->generate($side_params, $this->role);
         if($this->isMasterAdmin()){			
             $training_data = array();
             $result_list = $this->Training_model->getListByCompanyId($this->session->get_userdata() ['company_id']);	
@@ -392,7 +392,7 @@ class Training extends BaseController{
     public function showTraining($d = 0){
         $this->load->library('Sidebar');
         $side_params = array('selected_menu_id' => '6');
-        $this->global[sidebar] = $this->sidebar->generate($side_params, $this->role);
+        $this->global["sidebar"] = $this->sidebar->generate($side_params, $this->role);
         if($this->isMasterAdmin()){			
             $training_data = array();
             $result_list = $this->Training_model->getListByCompanyId($this->session->get_userdata() ['company_id']);			

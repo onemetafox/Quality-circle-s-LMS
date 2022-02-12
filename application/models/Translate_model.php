@@ -64,7 +64,7 @@ class Translate_model extends CI_Model
                 $done_count = $this->getCount($field_name);
                 $item['term_count'] = $term_count;
                 $item['done_count'] = $done_count;
-                $result_info[data][] = $item;
+                $result_info["data"][] = $item;
             }
 
         } else {

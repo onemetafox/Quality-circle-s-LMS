@@ -45,7 +45,7 @@ class Examassign extends BaseController
         } 
         else 
         {
-            $this->global[sidebar] = $this->sidebar->generate();
+            $this->global["sidebar"] = $this->sidebar->generate();
             $this->loadViews("access", $this->global, NULL , NULL);   
         }  
     }
@@ -56,21 +56,21 @@ class Examassign extends BaseController
         {               
             $row_id = $this->input->post('company_row_id');
             $split = explode("-", $row_id);
-            $page_data[id] = $split[1];
+            $page_data["id"] = $split[1];
 
             if ($split[0] == 'fasi')
-                $row_data = $this->Examassignfasi_model->getRow($page_data[id]);
+                $row_data = $this->Examassignfasi_model->getRow($page_data["id"]);
             else if ($split[0] == 'company')
-                $row_data = $this->Examassigncompany_model->getRow($page_data[id]);
+                $row_data = $this->Examassigncompany_model->getRow($page_data["id"]);
             else
-                $row_data = $this->Examassignemployee_model->getRow($page_data[id]);
+                $row_data = $this->Examassignemployee_model->getRow($page_data["id"]);
 
-            $page_data[assign_row] = $row_data[0];
+            $page_data["assign_row"] = $row_data[0];
             $this->loadViews("fasi/examassign/examassign_edit", $this->global, $page_data , NULL);   
         } 
         else 
         {
-            $this->global[sidebar] = $this->sidebar->generate();
+            $this->global["sidebar"] = $this->sidebar->generate();
             $this->loadViews("access", $this->global, NULL , NULL);   
         }  
     }
@@ -93,9 +93,9 @@ class Examassign extends BaseController
 
             $data_rows = $this->Examassigncompany_model->getPagingList($search_cond); 
 
-            $records[data] = $data_rows[data];        
-            $records[recordsTotal] = $data_rows[total];
-            $records[recordsFiltered] = $data_rows[filtertotal];
+            $records["data"] = $data_rows["data"];        
+            $records["recordsTotal"] = $data_rows["total"];
+            $records["recordsFiltered"] = $data_rows["filtertotal"];
 
             $this->response($records);   
         } 
@@ -131,13 +131,13 @@ class Examassign extends BaseController
         $out_data = array();
         if($this->Examassigncompany_model->release($id)) 
         {
-            $out_data[status] = "Success";
-            $out_data[message] = "";
+            $out_data['status'] = "Success";
+            $out_data["message"] = "";
         } 
         else 
         {            
-            $out_data[status] = "Fail";
-            $out_data[message] = "Could not delete the row.";
+            $out_data["status"] = "Fail";
+            $out_data["message"] = "Could not delete the row.";
         }
 
         $this->response($out_data); 
@@ -146,13 +146,13 @@ class Examassign extends BaseController
     public function selectable() {
         $params = $this->input->post();
 
-        if($params[type]=="Company"){
-            $params[company_id] = $params[assigned_id];
-            unset($params[assigned_id]);
+        if($params["type"]=="Company"){
+            $params["company_id"] = $params["assigned_id"];
+            unset($params["assigned_id"]);
             $sessiondata = $this->session->get_userdata();
-            $params[fasi_id] = $sessiondata[user_id];
+            $params["fasi_id"] = $sessiondata["user_id"];
 
-            $data[exams] = $this->Examassigncompany_model->selectableList($params);
+            $data["exams"] = $this->Examassigncompany_model->selectableList($params);
         }
         
         $this->load->view("admin/examassign/selectable",$data);
@@ -161,10 +161,10 @@ class Examassign extends BaseController
     public function selected() {
         $params = $this->input->post();
 
-        if($params[type]=="Company"){
-            $params[company_id] = $params[assigned_id];
-            unset($params[assigned_id]);
-            $data[exams] = $this->Examassigncompany_model->getAssignedList($params);
+        if($params["type"]=="Company"){
+            $params["company_id"] = $params["assigned_id"];
+            unset($params["assigned_id"]);
+            $data["exams"] = $this->Examassigncompany_model->getAssignedList($params);
         }
         
         $this->load->view("admin/examassign/selected",$data);
@@ -178,23 +178,23 @@ class Examassign extends BaseController
         $date = $this->input->post("date");
         if($user_type == "Company")
         {
-            $this->Examassigncompany_model->assign($assigned_id,$examid,$date,$sessiondata[email]);
+            $this->Examassigncompany_model->assign($assigned_id,$examid,$date,$sessiondata["email"]);
         }
         
-        $this->response(array(success=>true));
+        $this->response(array("success"=>true));
     }
 
     public function release() {
         $id = $this->input->post("id");
         $this->Examassigncompany_model->release($id);
-        $this->response(array(success=>true));
+        $this->response(array("success"=>true));
     }
 
     public function update() {
         $id = $this->input->post("id");
         $date = $this->input->post("date");
         $this->Examassigncompany_model->update($id,$date);
-        $this->response(array(success=>true));
+        $this->response(array("success"=>true));
     }
 }
 

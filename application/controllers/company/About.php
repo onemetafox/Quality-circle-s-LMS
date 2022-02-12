@@ -22,7 +22,7 @@ class About  extends BaseController
     }
     public function showAbout(){
         $headerInfo['menu_name'] = 'contactus';
-        $headerInfo[term] = $this->term;
+        $headerInfo["term"] = $this->term;
         $headerInfo['company'] = $this->company;
         $this->loadViews_front('company_page/about-us', $headerInfo);
     }

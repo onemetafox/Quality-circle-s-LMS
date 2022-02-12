@@ -50,14 +50,14 @@ class BaseController extends CI_Controller {
             $lang = $user->language;
         }
         if(!$lang) $lang = DEFAULT_LANG;
-        $where[lang_code] = $lang;
+        $where["lang_code"] = $lang;
         $this->load->model('Translate_model');
-        $lang_data = $this->Translate_model->getLanguageList($where) [data][0];
+        $lang_data = $this->Translate_model->getLanguageList($where) ["data"][0];
         $field_term = 'term';
         $field_lang_user = $lang_data['field_name'];
         $data_rows = $this->Translate_model->getTermList($field_term, $field_lang_user);
         $this->term = array();
-        foreach ($data_rows[data] as $key => $value) {
+        foreach ($data_rows["data"] as $key => $value) {
             $this->term[$value[$field_term]] = $value[$field_lang_user];
         }
     }

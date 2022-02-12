@@ -90,18 +90,18 @@ class Coursecreation extends BaseController{
             $this->load->model('Settings_model');
             if($row_id != 0){
                 $exam_row = $this->Exam_model->getRow($row_id);
-                if($exam_row[0][exam_image] != "") $exam_row[0][preview_image] = sprintf("%sassets/uploads/exam/%d_%s", base_url(), $exam_row[0][id], $exam_row[0][exam_image]);
-                else $exam_row[0][preview_image] = "";
+                if($exam_row[0]["exam_image"] != "") $exam_row[0]["preview_image"] = sprintf("%sassets/uploads/exam/%d_%s", base_url(), $exam_row[0]["id"], $exam_row[0]["exam_image"]);
+                else $exam_row[0]["preview_image"] = "";
                 $page_data['exam'] = $exam_row[0];
-                $exam_type = $exam_row[0][exam_type];
+                $exam_type = $exam_row[0]["exam_type"];
             }else{
                 $exam_row['id'] = '0';
-                $exam_row[cert_temp_id] = 0;
+                $exam_row["cert_temp_id"] = 0;
                 $exam_row['exam_category_name'] = '';
                 $exam_row['exam_category_code'] = '';
                 $exam_row['category_id'] = 0;
                 $exam_row['description'] = '';
-                $exam_row[preview_image] = '';
+                $exam_row["preview_image"] = '';
                 $exam_row['status'] = '';
                 $exam_row['created_at'] = '';
                 $exam_row['updated_at'] = '';

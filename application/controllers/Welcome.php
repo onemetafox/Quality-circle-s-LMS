@@ -58,7 +58,7 @@ class Welcome extends BaseController {
         if (sizeof($headerInfo['site_theme']) == 0) {
             $headerInfo['site_theme'] = array();
         }
-        $headerInfo[term] = $this->term;
+        $headerInfo["term"] = $this->term;
         $headerInfo['page_level'] = 0;
 
         // Featured Courses With Limit 5
@@ -112,7 +112,7 @@ class Welcome extends BaseController {
         if (sizeof($headerInfo['site_theme']) == 0) {
             $headerInfo['site_theme'] = array();
         }
-        $headerInfo[term] = $this->term;
+        $headerInfo["term"] = $this->term;
         $headerInfo['page_level'] = 0;
 
         // Featured Courses With Limit 5
@@ -161,7 +161,7 @@ class Welcome extends BaseController {
         if (sizeof($headerInfo['site_theme']) == 0) {
             $headerInfo['site_theme'] = array();
         }
-        $headerInfo[term] = $this->term;
+        $headerInfo["term"] = $this->term;
         $headerInfo['page_level'] = 0;
 
         // Featured Courses With Limit 5
@@ -210,7 +210,7 @@ class Welcome extends BaseController {
         if (sizeof($headerInfo['site_theme']) == 0) {
             $headerInfo['site_theme'] = array();
         }
-        $headerInfo[term] = $this->term;
+        $headerInfo["term"] = $this->term;
         $headerInfo['page_level'] = 0;
 
         // Featured Courses With Limit 5
@@ -244,7 +244,7 @@ class Welcome extends BaseController {
     {
         $this->load->model('Company_model');
         $company = $this->Company_model->getAll()[0];
-        $headerInfo[company_ob] = $company;
+        $headerInfo["company_ob"] = $company;
 
 
         $headerInfo['menu_name'] = 'home';
@@ -259,7 +259,7 @@ class Welcome extends BaseController {
         if (sizeof($headerInfo['site_theme']) == 0) {
             $headerInfo['site_theme'] = array();
         }
-        $headerInfo[term] = $this->term;
+        $headerInfo["term"] = $this->term;
         $headerInfo['page_level'] = 0;
         $this->loadViews_front('privacy' , $headerInfo);
     }
@@ -307,7 +307,7 @@ class Welcome extends BaseController {
 
         $this->load->model('Company_model');
         $company = $this->Company_model->getAll()[0];
-        $headerInfo[company_ob] = $company;
+        $headerInfo["company_ob"] = $company;
 
 
         $headerInfo['menu_name'] = 'home';
@@ -322,7 +322,7 @@ class Welcome extends BaseController {
         if (sizeof($headerInfo['site_theme']) == 0) {
             $headerInfo['site_theme'] = array();
         }
-        $headerInfo[term] = $this->term;
+        $headerInfo["term"] = $this->term;
         $headerInfo['page_level'] = 0;
         $this->loadViews_front('about' , $headerInfo);
     }

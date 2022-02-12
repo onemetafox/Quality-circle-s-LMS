@@ -149,8 +149,8 @@ class Examhistory extends BaseController{
             $this->global['sidebar'] = $this->sidebar->generate($side_params, $this->role);
             $user_id = $this->session->get_userdata() ['user_id'];
             $exam_row = $this->Exam_model->getExamByHistory($id);
-            if($exam_row[exam_image] != "") $exam_row[preview_image] = sprintf("%sassets/uploads/exam/%d_%s", base_url() , $exam_row[id], $exam_row[exam_image]);
-            else $exam_row[preview_image] = "";
+            if($exam_row["exam_image"] != "") $exam_row["preview_image"] = sprintf("%sassets/uploads/exam/%d_%s", base_url() , $exam_row["id"], $exam_row["exam_image"]);
+            else $exam_row["preview_image"] = "";
             $this->global['exam'] = $exam_row;
             $this->global["questions"] = $this->Exam_model->getQuizList($exam_row['id']);
             $this->global['answers'] = $this->Exam_model->getQuizHistoryByUser($exam_row['id'], $exam_row['user_id']);
@@ -172,8 +172,8 @@ class Examhistory extends BaseController{
 
         $this->global['exam_history_id'] = $id;
         $exam_row = $this->Exam_model->getExamByHistory($id);
-        if($exam_row[exam_image] != "") $exam_row[preview_image] = sprintf("%sassets/uploads/exam/%d_%s", base_url() , $exam_row[exam_id], $exam_row[exam_image]);
-        else $exam_row[preview_image] = "";
+        if($exam_row["exam_image"] != "") $exam_row["preview_image"] = sprintf("%sassets/uploads/exam/%d_%s", base_url() , $exam_row["exam_id"], $exam_row["exam_image"]);
+        else $exam_row["preview_image"] = "";
 
         $exam = $this->Exam_model->getExamInfo($exam_row['exam_id']);
         $this->global['marker1'] = $exam[0]['marker1'];

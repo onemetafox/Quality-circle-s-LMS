@@ -51,9 +51,9 @@ class Topic extends BaseController {
                 $page_data['price'] = $row_topic['price'];
                 $page_data['image'] = $row_topic['image'];
                 if($row_topic['image'] != ""){
-                    $page_data[preview_image] = sprintf("%sassets/uploads/topic/%d_%s", base_url(), $row_topic[id], $row_topic[image]);
+                    $page_data["preview_image"] = sprintf("%sassets/uploads/topic/%d_%s", base_url(), $row_topic["id"], $row_topic["image"]);
                 }else{
-                    $page_data[preview_image] = "";
+                    $page_data["preview_image"] = "";
                 }
                 $page_data['email_notification'] = $row_topic['email_notification'];
                 $page_data['sms_notification'] = $row_topic['sms_notification'];
@@ -230,14 +230,14 @@ class Topic extends BaseController {
     
     public function active(){
         $id = $this->input->post('id');
-        $data[status] = 1;
+        $data["status"] = 1;
 
         return $this->Topic_model->updateTopic($data, $id);
     }
 
     public function inactive(){
         $id = $this->input->post('id');
-        $data[status] = 0;        
+        $data["status"] = 0;        
         return $this->Topic_model->updateTopic($data, $id);
     }
     

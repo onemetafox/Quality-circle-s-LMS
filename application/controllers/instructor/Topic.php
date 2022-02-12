@@ -57,7 +57,7 @@ class Topic extends BaseController
         if($this->isFasi()) 
         {   
             $sessiondata = $this->session->get_userdata();
-            $assigned_topics = $this->Trainingassignfasi_model->getAssignedList($sessiondata[userId]);
+            $assigned_topics = $this->Trainingassignfasi_model->getAssignedList($sessiondata["userId"]);
             $arr_topics = array_column($assigned_topics, 'id');
             if(count($arr_topics) > 0)
                 $cond = array("a.id"=>$arr_topics);     

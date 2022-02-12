@@ -43,12 +43,12 @@ class Location extends BaseController{
             $side_params = array('selected_menu_id' => '15');
             $this->global['sidebar'] = $this->sidebar->generate($side_params, $this->role);
             $this->load->library('form_validation');
-            $page_data[id] = intval($this->input->post('row_id'));
-            if($page_data[id] != 0){
-                $category_data = $this->Category_model->getRow($page_data[id]);
-                $page_data[category] = $category_data[0];
+            $page_data["id"] = intval($this->input->post('row_id'));
+            if($page_data["id"] != 0){
+                $category_data = $this->Category_model->getRow($page_data["id"]);
+                $page_data["category"] = $category_data[0];
             }else{
-                $page_data[category] = '';
+                $page_data["category"] = '';
             }
             $this->loadViews("admin/category/category_edit", $this->global, $page_data, NULL);
         }else{
@@ -131,25 +131,25 @@ class Location extends BaseController{
             $category_data[$key] = $value;
         }
         $category_data['company_id'] = $this->session->get_userdata() ['company_id'];
-        if(intval($category_data[id]) == 0){
-            unset($category_data[id]);
+        if(intval($category_data["id"]) == 0){
+            unset($category_data["id"]);
             $row_id = $this->Category_model->insert($category_data);
         }else{
-            $row_id = $category_data[id];
-            $this->Category_model->update($category_data, $category_data[id]);
+            $row_id = $category_data["id"];
+            $this->Category_model->update($category_data, $category_data["id"]);
         }
         redirect('admin/category');
    }
     
     public function active(){
         $id = $this->input->post('id');
-        $data[status] = 1;
+        $data["status"] = 1;
         return $this->Category_model->update($data, $id);
    }
     
     public function inactive(){
         $id = $this->input->post('id');
-        $data[status] = 0;
+        $data["status"] = 0;
         return $this->Category_model->update($data, $id);
    }
     

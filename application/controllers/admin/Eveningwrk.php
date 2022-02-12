@@ -53,15 +53,15 @@ class Eveningwrk extends BaseController {
         $this->global['sidebar'] = $this->sidebar->generate($side_params, $this->role);
         if($this->isMasterAdmin() || $this->isInstructor()){            
             $this->load->library('form_validation');
-            $page_data[id] = intval($this->input->post('row_id'));
-            if($page_data[id] != 0){
+            $page_data["id"] = intval($this->input->post('row_id'));
+            if($page_data["id"] != 0){
                 $video_data = $this->EveningWrk_model->getRow($page_data[id]);
-                $page_data[excercise] = $video_data[0];
+                $page_data["excercise"] = $video_data[0];
             }else{
-                $page_data[excercise] = '';
+                $page_data["excercise"] = '';
             }
-			$page_data[allstudents] = $this->User_model->getAllStudents();
-			$page_data[categories] = $this->Category_model->getListByCompanyID($this->session->get_userdata() ['company_id']);
+			$page_data["allstudents"] = $this->User_model->getAllStudents();
+			$page_data["categories"] = $this->Category_model->getListByCompanyID($this->session->get_userdata() ['company_id']);
             $this->loadViews("admin/eveningwrk/excercise_edit", $this->global, $page_data, null);
         }else{
             $this->loadViews("access", $this->global, null, null);
@@ -109,8 +109,8 @@ class Eveningwrk extends BaseController {
                 $error = array('error' => $this->upload->display_errors());
             }else{
                 $fileData = array('upload_data' => $this->upload->data());
-				if(intval($video_data[id]) > 0){
-					$out_data = $this->EveningWrk_model->getRow($video_data[id]);
+				if(intval($video_data["id"]) > 0){
+					$out_data = $this->EveningWrk_model->getRow($video_data["id"]);
 					$upload_path_chk = 'assets/uploads/excercise/';
 					$file_path = FCPATH.$upload_path_chk.$out_data[0]['document'];
 					if(file_exists($file_path)){ unlink($file_path); }
@@ -136,8 +136,8 @@ class Eveningwrk extends BaseController {
                 $error = array('errors' => $this->upload->display_errors());
             }else{
                 $fileData2 = array('upload_data' => $this->upload->data());
-				if(intval($video_data[id]) > 0){
-					$out_data2 = $this->EveningWrk_model->getRow($video_data[id]);
+				if(intval($video_data["id"]) > 0){
+					$out_data2 = $this->EveningWrk_model->getRow($video_data["id"]);
 					$upload_path_chk2 = 'assets/uploads/excercise/';
 					$file_path2 = FCPATH.$upload_path_chk2.$out_data2[0]['document2'];
 					if(file_exists($file_path2)){ unlink($file_path2); }
@@ -163,8 +163,8 @@ class Eveningwrk extends BaseController {
                 $error = array('error3' => $this->upload->display_errors());
             }else{
                 $fileData3 = array('upload_data' => $this->upload->data());
-				if(intval($video_data[id]) > 0){
-					$out_data3 = $this->EveningWrk_model->getRow($video_data[id]);
+				if(intval($video_data["id"]) > 0){
+					$out_data3 = $this->EveningWrk_model->getRow($video_data["id"]);
 					$upload_path_chk3 = 'assets/uploads/excercise/';
 					$file_path3 = FCPATH.$upload_path_chk3.$out_data3[0]['document3'];
 					if(file_exists($file_path3)){ unlink($file_path3); }
@@ -172,25 +172,25 @@ class Eveningwrk extends BaseController {
 				$video_data['document3'] = $fileData3['upload_data']['file_name'];
             }
         }
-        if(intval($video_data[id]) == 0){
-            unset($video_data[id]);
+        if(intval($video_data["id"]) == 0){
+            unset($video_data["id"]);
             $row_id = $this->EveningWrk_model->insert($video_data);
         }else{
-            $row_id = $video_data[id];
-            $this->EveningWrk_model->update($video_data, $video_data[id]);
+            $row_id = $video_data["id"];
+            $this->EveningWrk_model->update($video_data, $video_data["id"]);
         }
         redirect('admin/eveningwrkexcercise');
     }
 
     public function active(){
         $id = $this->input->post('id');
-        $data[status] = 1;
+        $data["status"] = 1;
         return $this->Category_model->update($data, $id);
     }
 
     public function inactive(){
         $id = $this->input->post('id');
-        $data[status] = 0;
+        $data["status"] = 0;
         return $this->Category_model->update($data, $id);
     }
 

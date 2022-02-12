@@ -52,12 +52,12 @@ class Video extends BaseController {
             $side_params = array('selected_menu_id' => '055');
             $this->global['sidebar'] = $this->sidebar->generate($side_params, $this->role);
             $this->load->library('form_validation');
-            $page_data[id] = intval($this->input->post('row_id'));
-            if($page_data[id] != 0){
-                $video_data = $this->Video_model->getRow($page_data[id]);
-                $page_data[video] = $video_data[0];
+            $page_data["id"] = intval($this->input->post('row_id'));
+            if($page_data["id"] != 0){
+                $video_data = $this->Video_model->getRow($page_data["id"]);
+                $page_data["video"] = $video_data[0];
             }else{
-                $page_data[video] = '';
+                $page_data["video"] = '';
             }
             // echo "<pre>";
             //     print_r($page_data);
@@ -148,25 +148,25 @@ class Video extends BaseController {
         // echo "<pre>";
         //     print_r($video_data);
         // exit;
-        if(intval($video_data[id]) == 0){
-            unset($video_data[id]);
+        if(intval($video_data["id"]) == 0){
+            unset($video_data["id"]);
             $row_id = $this->Video_model->insert($video_data);
         }else{
-            $row_id = $video_data[id];
-            $this->Video_model->update($video_data, $video_data[id]);
+            $row_id = $video_data["id"];
+            $this->Video_model->update($video_data, $video_data["id"]);
         }
         redirect('admin/video');
     }
     
     public function active(){
         $id = $this->input->post('id');
-        $data[status] = 1;
+        $data["status"] = 1;
         return $this->Category_model->update($data, $id);
     }
     
     public function inactive(){
         $id = $this->input->post('id');
-        $data[status] = 0;
+        $data["status"] = 0;
         return $this->Category_model->update($data, $id);
     }
     

@@ -13,7 +13,7 @@ class Notification extends BaseController {
      */
     public function index() {
         $sessiondata = $this->session->get_userdata();
-        $data = $this->Notification_model->getByUserID($sessiondata[user_id]);
+        $data = $this->Notification_model->getByUserID($sessiondata["user_id"]);
         echo json_encode($data);
     } 
 
@@ -31,10 +31,10 @@ class Notification extends BaseController {
     public function send_mail($email_data=array()) {
         $this->load->library('email');
 
-        $this->email->from($email_data[from_email]);
-        $this->email->to($email_data[to_email]);
-        $this->email->subject($email_data[subject]);
-        $this->email->message($email_data[message]);
+        $this->email->from($email_data["from_email"]);
+        $this->email->to($email_data["to_email"]);
+        $this->email->subject($email_data["subject"]);
+        $this->email->message($email_data["message"]);
 
         $this->email->send();
 
@@ -58,22 +58,22 @@ class Notification extends BaseController {
             $cert_templ_data = $this->Settings_model->getCertificate();
             $certification_template = $cert_templ_data[0];
 
-            $cert_year = $certification[year];
-            $cert_month = $certification[month];
-            $cert_day = $certification[day];
+            $cert_year = $certification["year"];
+            $cert_month = $certification["month"];
+            $cert_day = $certification["day"];
 
-            $cert_content = $certification_template[content];
-            $quiz_count = $certification[quiz_count];
-            $correct_count = $certification[correct_count];
+            $cert_content = $certification_template["content"];
+            $quiz_count = $certification["quiz_count"];
+            $correct_count = $certification["correct_count"];
             $correct_percent = intval($correct_count * 100 / $quiz_count);
 
-            $first_name = $certification[first_name];
-            $last_name = $certification[last_name];
-            $company_name = $certification[company_name];
-            $birthday = $certification[birthday];
+            $first_name = $certification["first_name"];
+            $last_name = $certification["last_name"];
+            $company_name = $certification["company_name"];
+            $birthday = $certification["birthday"];
             $score = $correct_count . '(' . $correct_percent . '%)';
-            $exam_name = $certification[exam_title];
-            $validate = $certification[validate];
+            $exam_name = $certification["exam_title"];
+            $validate = $certification["validate"];
 
             $cn_num = $certification['cn_num'];
             $cert_content = str_replace("{first_name}", $first_name, $cert_content);
@@ -84,12 +84,12 @@ class Notification extends BaseController {
             $cert_content = str_replace("{exam_name}", $exam_name, $cert_content);
             $cert_content = str_replace("{validate}", $validate, $cert_content);
 
-            $cert_top_logo = site_url($certification_template[logo]);
-            $cert_bottom_logo = site_url($certification_template[middle_logo]);
-            $cert_left_name = $certification_template[left_des];
-            $cert_right_name = $certification_template[right_des];
-            $cert_left_sign = site_url($certification_template[left_sign]);
-            $cert_right_sign = site_url($certification_template[right_sign]);
+            $cert_top_logo = site_url($certification_template["logo"]);
+            $cert_bottom_logo = site_url($certification_template["middle_logo"]);
+            $cert_left_name = $certification_template["left_des"];
+            $cert_right_name = $certification_template["right_des"];
+            $cert_left_sign = site_url($certification_template["left_sign"]);
+            $cert_right_sign = site_url($certification_template["right_sign"]);
 
             $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
@@ -183,12 +183,12 @@ EOD;
         $step_date = array(7, 30);
         $training_data = $this->Notification_model->getTrainingNotificationList($step_date);
         foreach ($training_data as $key => $value) {
-            $start_date = $value[start_date];
-            $category = $value[category];
-            $training_title = $value[training_title];
+            $start_date = $value["start_date"];
+            $category = $value["category"];
+            $training_title = $value["training_title"];
 
-            $phone_number = $value[phone_number];
-            $email = $value[email];
+            $phone_number = $value["phone_number"];
+            $email = $value["email"];
 
             $content = sprintf('Training(%s - %s) is due on %s', $category, $training_title, $start_date);
             $isEmail = $value['email_notification'] == 1;
@@ -207,12 +207,12 @@ EOD;
 
         $exam_data = $this->Notification_model->getExamNotificationList($step_date);
         foreach ($exam_data as $key => $value) {
-            $start_date = $value[start_date];
-            $phone_number = $value[phone_number];
-            $email = $value[email];
+            $start_date = $value["start_date"];
+            $phone_number = $value["phone_number"];
+            $email = $value["email"];
 
-            $category = $value[category];
-            $exam_title = $value[exam_title];
+            $category = $value["category"];
+            $exam_title = $value["exam_title"];
 
             $content = sprintf('Exam(%s - %s) is due on %s', $category, $exam_title, $start_date);
             $isEmail = $value['email_notification'] == 1;

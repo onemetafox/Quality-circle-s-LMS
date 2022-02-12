@@ -38,16 +38,16 @@ class Welcome extends BaseController {
                 $this->load->model('User_model');
                 $page_data['learner_count'] = $this->User_model->getEmployeeCount(array('company_id' => $this->session->get_userdata() ['company_id'], 'user_type' => 'Learner'));
                 $this->load->model('Course_model');
-                $page_data[certification_count] = $this->Course_model->getCertificateHistoryCount($this->session->get_userdata() ['company_id']);
+                $page_data["certification_count"] = $this->Course_model->getCertificateHistoryCount($this->session->get_userdata() ['company_id']);
                 $this->load->model('Exam_model');
-                $page_data[exam_count] = $this->Exam_model->count(array('create_id' => $this->session->get_userdata() ['userId']));
+                $page_data["exam_count"] = $this->Exam_model->count(array('create_id' => $this->session->get_userdata() ['userId']));
                 //
                 //            $this->load->model('Topic_model');
                 //            $page_data[topic_count] = $this->Topic_model->count();
                 //
                 //            $this->load->model('Account_model');
                 //            $page_data[amount] = sprintf("%0.2f", $this->Account_model->getTotalAmount(array()));
-                $page_data[amount] = 999;
+                $page_data["amount"] = 999;
                 $list = $this->User_model->getList(array('user_type' => 'Learner', 'company_id' => $this->session->get_userdata() ['company_id']));
                 $cnt = 0;
                 foreach($list as $item) {
@@ -56,7 +56,7 @@ class Welcome extends BaseController {
                         $cnt++;
                     }
                 }
-                $page_data[logined_usercount] = $cnt;
+                $page_data["logined_usercount"] = $cnt;
                 $this->load->model('Settings_model');
                 $header_data['site_theme'] = $this->Settings_model->getTheme();
                 if(sizeof($header_data['site_theme']) >= 1) {

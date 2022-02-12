@@ -230,7 +230,7 @@ class Live extends BaseController {
 	public function showLiveFilter($course_id = NULL){
         $this->load->library('Sidebar');
         $side_params = array('selected_menu_id' => '6');
-        $this->global[sidebar] = $this->sidebar->generate($side_params, $this->role);
+        $this->global["sidebar"] = $this->sidebar->generate($side_params, $this->role);
         if($this->isInstructor()){			
             $training_data = array();
             $result_list = $this->Live_model->getListByCompanyId($this->session->get_userdata() ['company_id']);            
@@ -269,7 +269,7 @@ class Live extends BaseController {
     public function showLive(){
         $this->load->library('Sidebar');
         $side_params = array('selected_menu_id' => '6');
-        $this->global[sidebar] = $this->sidebar->generate($side_params, $this->role);
+        $this->global["sidebar"] = $this->sidebar->generate($side_params, $this->role);
         if($this->isInstructor()){
             $training_data = array();
             $result_list = $this->Live_model->getListByCompanyId($this->session->get_userdata() ['company_id']);

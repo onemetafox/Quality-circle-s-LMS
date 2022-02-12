@@ -48,12 +48,12 @@ class Article extends BaseController {
         $this->global['sidebar'] = $this->sidebar->generate($side_params, $this->role);
         if($this->isMasterAdmin() || $this->isInstructor()){            
             $this->load->library('form_validation');
-            $page_data[id] = intval($this->input->post('row_id'));
-            if($page_data[id] != 0){
-                $video_data = $this->Article_model->getRow($page_data[id]);
-                $page_data[video] = $video_data[0];
+            $page_data["id"] = intval($this->input->post('row_id'));
+            if($page_data["id"] != 0){
+                $video_data = $this->Article_model->getRow($page_data["id"]);
+                $page_data["video"] = $video_data[0];
             }else{
-                $page_data[video] = '';
+                $page_data["video"] = '';
             }
             $this->loadViews("admin/article/article_edit", $this->global, $page_data, null);
         }else{
@@ -140,25 +140,25 @@ class Article extends BaseController {
         // echo "<pre>";
         //     print_r($video_data);
         // exit;
-        if(intval($video_data[id]) == 0){
-            unset($video_data[id]);
+        if(intval($video_data["id"]) == 0){
+            unset($video_data["id"]);
             $row_id = $this->Article_model->insert($video_data);
         }else{
-            $row_id = $video_data[id];
-            $this->Article_model->update($video_data, $video_data[id]);
+            $row_id = $video_data["id"];
+            $this->Article_model->update($video_data, $video_data["id"]);
         }
         redirect('admin/article');
     }
 
     public function active(){
         $id = $this->input->post('id');
-        $data[status] = 1;
+        $data["status"] = 1;
         return $this->Category_model->update($data, $id);
     }
 
     public function inactive(){
         $id = $this->input->post('id');
-        $data[status] = 0;
+        $data["status"] = 0;
         return $this->Category_model->update($data, $id);
     }
 

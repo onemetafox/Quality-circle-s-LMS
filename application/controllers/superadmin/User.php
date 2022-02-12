@@ -213,13 +213,13 @@ class User extends BaseController {
 
     public function active() {
         $id = $this->input->post('id');
-        $data[active] = 1;
+        $data["active"] = 1;
         return $this->User_model->update($data, array('id' => $id));
     }
 
     public function inactive() {
         $id = $this->input->post('id');
-        $data[active] = 0;
+        $data["active"] = 0;
         return $this->User_model->update($data, array('id' => $id));
     }
 
@@ -305,10 +305,10 @@ class User extends BaseController {
     }
 
     function checkemailexist() {
-        $id = $this->input->post(id);
+        $id = $this->input->post("id");
         $email = $this->input->post('email');
         $exist = $this->User_model->getfrEmail($id, $email);
-        $data[success] = $exist == 0;
+        $data["success"] = $exist == 0;
         $this->response($data);
     }
 

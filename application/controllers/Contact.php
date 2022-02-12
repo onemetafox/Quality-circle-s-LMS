@@ -57,7 +57,7 @@ class Contact  extends BaseController
     }
     public function showContact(){
         $headerInfo['menu_name'] = 'contactus';
-        $headerInfo[term] = $this->term;
+        $headerInfo["term"] = $this->term;
         $this->loadViews_front('contact', $headerInfo);
     }
 

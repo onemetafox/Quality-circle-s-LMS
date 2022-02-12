@@ -79,7 +79,7 @@ class Demand  extends BaseController
             $this->showAll();
         }else{
             $params['menu_name'] = 'catalog';
-            $params[term] = $this->term;
+            $params["term"] = $this->term;
             $params['company'] = $this->company;
 
             /*pagenation*/
@@ -142,7 +142,7 @@ class Demand  extends BaseController
 
     public function showAll(){
         $params['menu_name'] = 'catalog';
-        $params[term] = $this->term;
+        $params["term"] = $this->term;
         $params['company'] = $this->company;
 
         $standard_id = $this->input->get('standard');
@@ -223,7 +223,7 @@ class Demand  extends BaseController
 
     public function view($url = NULL, $id = NULL){
         $params['menu_name'] = 'catalog';
-        $params[term] = $this->term;
+        $params["term"] = $this->term;
         $params['company'] = $this->company;
         $course = $this->Course_model->select($id);
 		$totalCourseEnrollments = $this->Enrollments_model->totalCourseEnrollments($id,0);
@@ -416,7 +416,7 @@ class Demand  extends BaseController
 
             /*-------------------------------------------------------*/
 
-            $params[term] = $this->term;
+            $params["term"] = $this->term;
             $params['company'] = $this->company;
             $params['libraries'] = $this->Course_model->getLibrary($id);
 
@@ -471,7 +471,7 @@ class Demand  extends BaseController
         else{
             $course = $this->Course_model->select($id);
 
-            $params[term] = $this->term;
+            $params["term"] = $this->term;
             $params['company'] = $this->company;
             $params['libraries'] = $this->Course_model->getLibrary($id);
 

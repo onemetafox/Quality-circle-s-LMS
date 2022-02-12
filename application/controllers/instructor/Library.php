@@ -166,13 +166,13 @@ class Library extends BaseController {
     
     public function unsetShopping(){
         $id = $this->input->post('id');
-        $data[is_shopping] = 0;
+        $data["is_shopping"] = 0;
         return $this->Library_model->update($data, array('id' => $id));
     }
     
     public function rename(){
         $id = $this->input->post('id');
-        $data[name] = $this->input->post('name');
+        $data["name"] = $this->input->post('name');
         return $this->Library_model->update($data, array('id' => $id));
     }
     
@@ -307,7 +307,7 @@ class Library extends BaseController {
         unset($insert_data['id']);
         $id = $this->Library_model->insertshop($insert_data);
         $id = $this->input->post('library_id');
-        $data[is_shopping] = 1;
+        $data["is_shopping"] = 1;
         return $this->Library_model->update($data, array('id' => $id));
     }
     
@@ -344,7 +344,7 @@ class Library extends BaseController {
         unset($insert_data['id']);
         $this->Library_model->updateshop($insert_data, array('id' => $id));
         $id = $this->input->post('library_id');
-        $data[is_shopping] = 1;
+        $data["is_shopping"] = 1;
         return $this->Library_model->update($data, array('id' => $id));
     }
     

@@ -21,7 +21,7 @@ class Welcome extends BaseController {
     public function index(){
         //$sessiondata = $this->session->get_userdata();
         //$this->load->view('dashboard', $sessiondata);
-        $page_data[term] = $this->term;
+        $page_data["term"] = $this->term;
         $this->load->view('welcome', $page_data);
     }
 
@@ -35,16 +35,16 @@ class Welcome extends BaseController {
         $side_params = array('selected_menu_id' => '1-1');
         $header_data['sidebar'] = $this->sidebar->generate($side_params, $header_data['role']);
         if(!isset($isLoggedIn) || $isLoggedIn != TRUE){
-            $page_data[term] = $this->term;
+            $page_data["term"] = $this->term;
             $this->load->view('login', $page_data);
         }else{            
             if($this->session->userdata('user_type') == 'Superadmin'){
                 $this->load->model('Company_model');
-                $page_data[company_count] = $this->Company_model->count();
+                $page_data["company_count"] = $this->Company_model->count();
                 $this->load->model('Course_model');
-                $page_data[certification_count] = $this->Course_model->getCertificateHistoryCount();
+                $page_data["certification_count"] = $this->Course_model->getCertificateHistoryCount();
                 $this->load->model('User_model');
-                $page_data[employee_count] = $this->User_model->getAdminCount();
+                $page_data["employee_count"] = $this->User_model->getAdminCount();
                 //
                 //            $this->load->model('Topic_model');
                 //            $page_data[topic_count] = $this->Topic_model->count();
@@ -61,7 +61,7 @@ class Welcome extends BaseController {
                         $cnt++;
                     }
                 }
-                $page_data[logined_usercount] = $cnt;
+                $page_data["logined_usercount"] = $cnt;
                 //            $this->load->model('Certification_model');
                 //            $this->load->model('Traininghistory_model');
                 //            $certification_year = $this->Certification_model->getUserPerYear();
@@ -71,7 +71,7 @@ class Welcome extends BaseController {
                 //                $item[training_count] = $this->Traininghistory_model->getEmployeeCountperYear($year);
                 //                $certification_status[] = $item;
                 //            }
-                $page_data[certification_status] = $certification_status;
+                $page_data["certification_status"] = $certification_status;
                 //            $this->load->model('Activity_model');
                 //			$page_data[activity_datalist] = $this->Activity_model->getList(array(), 20);
                 $this->load->model('Settings_model');
@@ -84,8 +84,8 @@ class Welcome extends BaseController {
                 }
                 $header_data['company_name'] = $this->getSettingValue('company_name');
                 $header_data['company_phone'] = $this->getSettingValue('company_phone');
-                $header_data[term] = $this->term;
-                $page_data[term] = $this->term;
+                $header_data["term"] = $this->term;
+                $page_data["term"] = $this->term;
                 $this->load->view('_templates/header', $header_data);
                 $this->load->view('superadmin/dashboard', $page_data);
                 $this->load->view('_templates/footer');

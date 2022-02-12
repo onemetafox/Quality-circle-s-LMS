@@ -57,7 +57,7 @@ class Login extends BaseController
                 $headerInfo['site_theme'] = array();
             }
             $headerInfo['menu_name'] = 'login';
-            $headerInfo[term] = $this->term;
+            $headerInfo["term"] = $this->term;
             $this->loadViews_front('login', $headerInfo);
         }
         else
@@ -96,9 +96,9 @@ class Login extends BaseController
     function logout($url) {
         
         if ($this->session->userdata('user_id')) {   
-            $activity_data[activity_type] = "Logout";
-            $activity_data[user_id] = $this->session->userdata('user_id');
-            $activity_data[activity_message] = $this->session->userdata('name')." logout.";
+            $activity_data["activity_type"] = "Logout";
+            $activity_data["user_id"] = $this->session->userdata('user_id');
+            $activity_data["activity_message"] = $this->session->userdata('name')." logout.";
 
             $this->load->model('Activity_model');
             $this->Activity_model->insert($activity_data);
@@ -166,9 +166,9 @@ class Login extends BaseController
     							'isLoggedIn' => TRUE
     					);
     					$this->session->set_userdata($sessionArray);
-    					$activity_data[activity_type] = "Login";
-    					$activity_data[user_id] = $res->id;
-    					$activity_data[activity_message] = $res->fullname." login successfully.";
+    					$activity_data["activity_type"] = "Login";
+    					$activity_data["user_id"] = $res->id;
+    					$activity_data["activity_message"] = $res->fullname." login successfully.";
     						 
     					$this->load->model('Activity_model');
     					$this->Activity_model->insert($activity_data);				

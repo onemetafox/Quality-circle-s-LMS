@@ -33,7 +33,7 @@ class Examassign extends BaseController {
         if($this->isMasterAdmin()){
             $this->loadViews("admin/examassign/examassign_list", $this->global, NULL, NULL);
         }else{
-            $this->global[sidebar] = $this->sidebar->generate();
+            $this->global["sidebar"] = $this->sidebar->generate();
             $this->loadViews("access", $this->global, NULL, NULL);
         }
     }
@@ -42,14 +42,14 @@ class Examassign extends BaseController {
         if($this->isMasterAdmin()){
             $row_id = $this->input->post('fasi_row_id');
             $split = explode("-", $row_id);
-            $page_data[id] = $split[1];
-            if($split[0] == 'fasi') $row_data = $this->Examassignfasi_model->getRow($page_data[id]);
-            else if($split[0] == 'company') $row_data = $this->Examassigncompany_model->getRow($page_data[id]);
-            else $row_data = $this->Examassignemployee_model->getRow($page_data[id]);
-            $page_data[assign_row] = $row_data[0];
+            $page_data["id"] = $split[1];
+            if($split[0] == 'fasi') $row_data = $this->Examassignfasi_model->getRow($page_data["id"]);
+            else if($split[0] == 'company') $row_data = $this->Examassigncompany_model->getRow($page_data["id"]);
+            else $row_data = $this->Examassignemployee_model->getRow($page_data["id"]);
+            $page_data["assign_row"] = $row_data[0];
             $this->loadViews("admin/examassign/examassign_edit", $this->global, $page_data, NULL);
         }else{
-            $this->global[sidebar] = $this->sidebar->generate();
+            $this->global["sidebar"] = $this->sidebar->generate();
             $this->loadViews("access", $this->global, NULL, NULL);
         }
     }
@@ -64,9 +64,9 @@ class Examassign extends BaseController {
                 $search_cond = array_merge($search_cond, array("fasi_id" => $fasi_id));
             }
             $data_rows = $this->Examassignfasi_model->getPagingList($search_cond);
-            $records[data] = $data_rows[data];
-            $records[recordsTotal] = $data_rows[total];
-            $records[recordsFiltered] = $data_rows[filtertotal];
+            $records["data"] = $data_rows["data"];
+            $records["recordsTotal"] = $data_rows["total"];
+            $records["recordsFiltered"] = $data_rows["filtertotal"];
             $this->response($records);
         }else{
             $this->response(array());
@@ -89,31 +89,31 @@ class Examassign extends BaseController {
         $id = intval($this->input->post('id'));
         $out_data = array();
         if($this->Examassignfasi_model->release($id)){
-            $out_data[status] = "Success";
-            $out_data[message] = "";
+            $out_data["status"] = "Success";
+            $out_data["message"] = "";
         }else{
-            $out_data[status] = "Fail";
-            $out_data[message] = "Could not delete the row.";
+            $out_data["status"] = "Fail";
+            $out_data["message"] = "Could not delete the row.";
         }
         $this->response($out_data);
     }
 
     public function selectable(){
         $params = $this->input->post();
-        if($params[type] == "FASI"){
-            $params[fasi_id] = $params[assigned_id];
-            unset($params[assigned_id]);
-            $data[exams] = $this->Examassignfasi_model->selectableList($params);
+        if($params["type"] == "FASI"){
+            $params["fasi_id"] = $params["assigned_id"];
+            unset($params["assigned_id"]);
+            $data["exams"] = $this->Examassignfasi_model->selectableList($params);
         }
         $this->load->view("admin/examassign/selectable", $data);
     }
 
     public function selected(){
         $params = $this->input->post();
-        if($params[type] == "FASI"){
-            $params[fasi_id] = $params[assigned_id];
-            unset($params[assigned_id]);
-            $data[exams] = $this->Examassignfasi_model->selectedList($params);
+        if($params["type"] == "FASI"){
+            $params["fasi_id"] = $params["assigned_id"];
+            unset($params["assigned_id"]);
+            $data["exams"] = $this->Examassignfasi_model->selectedList($params);
         }
         $this->load->view("admin/examassign/selected", $data);
     }
@@ -125,22 +125,22 @@ class Examassign extends BaseController {
         $examid = $this->input->post("exam_id");
         $date = $this->input->post("date");
         if($user_type == "Fasi"){
-            $this->Examassignfasi_model->assign($assigned_id, $examid, $date, $sessiondata[email]);
+            $this->Examassignfasi_model->assign($assigned_id, $examid, $date, $sessiondata["email"]);
         }
-        $this->response(array(success => true));
+        $this->response(array("success" => true));
     }
 
     public function release(){
         $id = $this->input->post("id");
         $this->Examassignfasi_model->release($id);
-        $this->response(array(success => true));
+        $this->response(array("success" => true));
     }
 
     public function update(){
         $id = $this->input->post("id");
         $date = $this->input->post("date");
         $this->Examassignfasi_model->update($id, $date);
-        $this->response(array(success => true));
+        $this->response(array("success" => true));
     }
 }
 ?>

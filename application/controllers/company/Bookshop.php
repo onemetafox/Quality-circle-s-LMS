@@ -39,7 +39,7 @@ class Bookshop  extends BaseController
 
     public function showAll(){
         $params['menu_name'] = 'catalog';
-        $params[term] = $this->term;
+        $params["term"] = $this->term;
         $params['company'] = $this->company;
 
         /*pagenation*/
@@ -111,7 +111,7 @@ class Bookshop  extends BaseController
     public function view($url = NULL, $id = NULL){
 
         $params['menu_name'] = 'catalog';
-        $params[term] = $this->term;
+        $params["term"] = $this->term;
         $params['company'] = $this->company;
         
         $user_id = $this->session->userdata('user_id');
@@ -152,7 +152,7 @@ class Bookshop  extends BaseController
     }
     public function viewbook($url = NULL, $id = NULL){
         $params['menu_name'] = 'catalog';
-        $params[term] = $this->term;
+        $params["term"] = $this->term;
         $params['company'] = $this->company;
         $book = $this->Bookshop_model->select_library($id);
         $params['book'] = $book;

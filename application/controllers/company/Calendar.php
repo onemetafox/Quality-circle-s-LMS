@@ -187,7 +187,7 @@ class Calendar extends BaseController
 
     public function getCourseInstructor(){
         $id = $this->input->post('id');
-        $this->response($this->Training_model->getCourseInstructor($id)[0][instructors]);
+        $this->response($this->Training_model->getCourseInstructor($id)[0]["instructors"]);
     }
 
     public function update_time(){

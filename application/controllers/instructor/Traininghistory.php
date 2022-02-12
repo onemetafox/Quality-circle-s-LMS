@@ -60,7 +60,7 @@ class Traininghistory extends BaseController
         
         if($this->isFasi()) 
         {
-            $page_data[log_id] = $this->input->post('log_id');
+            $page_data["log_id"] = $this->input->post('log_id');
             $this->loadViews("fasi/analysis/lessonhistory", $this->global, $page_data , NULL);   
         } 
         else 
@@ -77,14 +77,14 @@ class Traininghistory extends BaseController
             $sessiondata = $this->session->get_userdata();
             $search_cond = array();
             $limit = $this->input->post("limit");
-            $search_cond = array_merge($search_cond, array("e.responsible_fasi_id"=>$sessiondata[userId]));
+            $search_cond = array_merge($search_cond, array("e.responsible_fasi_id"=>$sessiondata["userId"]));
             
 
             $data_rows = $this->Traininghistory_model->getTopicList($search_cond, $limit); 
 
-            $records[data] = $data_rows[data];        
-            $records[recordsTotal] = $data_rows[total];
-            $records[recordsFiltered] = $data_rows[filtertotal];
+            $records["data"] = $data_rows["data"];        
+            $records["recordsTotal"] = $data_rows["total"];
+            $records["recordsFiltered"] = $data_rows["filtertotal"];
 
             $this->response($records);   
         } 
@@ -102,14 +102,14 @@ class Traininghistory extends BaseController
             $log_id = $this->input->post('log_id');
             $search_cond = array();
 
-            $search_cond = array_merge($search_cond, array("f.responsible_fasi_id"=>$sessiondata[userId], "log_id"=>$log_id));
+            $search_cond = array_merge($search_cond, array("f.responsible_fasi_id"=>$sessiondata["userId"], "log_id"=>$log_id));
             
 
             $data_rows = $this->Traininghistory_model->getLessonList($search_cond); 
 
-            $records[data] = $data_rows[data];        
-            $records[recordsTotal] = $data_rows[total];
-            $records[recordsFiltered] = $data_rows[filtertotal];
+            $records["data"] = $data_rows["data"];        
+            $records["recordsTotal"] = $data_rows["total"];
+            $records["recordsFiltered"] = $data_rows["filtertotal"];
 
             $this->response($records);   
         } 

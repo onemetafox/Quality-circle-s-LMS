@@ -28,7 +28,7 @@ class Training extends BaseController {
 		$course = $this->input->get('course');
         $this->load->library('Sidebar');
         $side_params = array('selected_menu_id' => '5');
-        $this->global[sidebar] = $this->sidebar->generate($side_params, $this->role);
+        $this->global["sidebar"] = $this->sidebar->generate($side_params, $this->role);
         // if($this->isLearner()){
         $training_data = array();
         if($location != null && $location != 'all') {
@@ -61,7 +61,7 @@ class Training extends BaseController {
 		$course = $this->input->get('course');
         $this->load->library('Sidebar');
         $side_params = array('selected_menu_id' => '5');
-        $this->global[sidebar] = $this->sidebar->generate($side_params, $this->role);
+        $this->global["sidebar"] = $this->sidebar->generate($side_params, $this->role);
         $user = $this->session->userdata();
         // if($this->isLearner()){
             $training_data = array();
@@ -116,7 +116,7 @@ class Training extends BaseController {
     public function viewDetail($id){
         $this->load->library('Sidebar');
         $side_params = array('selected_menu_id' => '5');
-        $this->global[sidebar] = $this->sidebar->generate($side_params, $this->role);
+        $this->global["sidebar"] = $this->sidebar->generate($side_params, $this->role);
         if($this->isLearner()){
 			
             $training_data = array();			

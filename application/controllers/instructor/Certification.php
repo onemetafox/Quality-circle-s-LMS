@@ -61,12 +61,12 @@ class Certification extends BaseController
             $cert_id = $this->input->post('cid');
 
             $certification_row = $this->Certification_model->getRow( $cert_id );
-            $page_data[certification] = $certification_row[0];
+            $page_data["certification"] = $certification_row[0];
 
             $this->load->model('Settings_model'); 
 
-            $certification_temp = $this->Settings_model->getCertificate(array('id'=>$certification_row[0][cert_temp_id]));
-            $page_data[certification_template] = $certification_temp[0];
+            $certification_temp = $this->Settings_model->getCertificate(array('id'=>$certification_row[0]["cert_temp_id"]));
+            $page_data["certification_template"] = $certification_temp[0];
 
             $this->loadViews("fasi/certification/certification_view", $this->global, $page_data , NULL); 
 
@@ -102,7 +102,7 @@ class Certification extends BaseController
         $out_data = array();
         $sessiondata = $this->session->get_userdata();
         $this->load->model('Company_model');        
-        $company_rows = $this->Company_model->getCompanyidListByFasi($sessiondata[userId]);
+        $company_rows = $this->Company_model->getCompanyidListByFasi($sessiondata["userId"]);
         foreach ($company_rows as $row)
         {
             $company_list[] = $row['id'];

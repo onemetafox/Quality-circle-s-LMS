@@ -109,20 +109,20 @@ class Exam extends BaseController {
             $this->load->model('Settings_model');
             if($row_id != 0){
                 $exam_row = $this->Exam_model->getRow($row_id);
-                if($exam_row[0][exam_image] != "") $exam_row[0][preview_image] = sprintf("%sassets/uploads/exam/%d_%s", base_url(), $exam_row[0][id], $exam_row[0][exam_image]);
-                else $exam_row[0][preview_image] = "";
+                if($exam_row[0]["exam_image"] != "") $exam_row[0]["preview_image"] = sprintf("%sassets/uploads/exam/%d_%s", base_url(), $exam_row[0]["id"], $exam_row[0]["exam_image"]);
+                else $exam_row[0]["preview_image"] = "";
                 $page_data['exam'] = $exam_row[0];
-                $exam_type = $exam_row[0][type];
+                $exam_type = $exam_row[0]["type"];
                 $this->global["questions"] = $this->Exam_model->getQuizList($row_id);
             }else{
                 $exam_row['id'] = '0';
-                $exam_row[cert_temp_id] = 0;
+                $exam_row["cert_temp_id"] = 0;
                 $exam_row['exam_category_name'] = '';
                 $exam_row['exam_category_code'] = '';
                 $exam_row['category_id'] = 0;
                 $exam_row['title'] = '';
                 $exam_row['description'] = '';
-                $exam_row[preview_image] = '';
+                $exam_row["preview_image"] = '';
                 $exam_row['status'] = '';
                 $exam_row['created_at'] = '';
                 $exam_row['updated_at'] = '';
@@ -156,8 +156,8 @@ class Exam extends BaseController {
     }
 
     public function getSelectableQuizList(){
-        $param[category_id] = $this->input->post('category_id');
-        $param[no_quiz_id] = $this->input->post('ids');
+        $param["category_id"] = $this->input->post('category_id');
+        $param["no_quiz_id"] = $this->input->post('ids');
         $this->load->model('Quiz_model', '', TRUE);
         $quiz_list['data'] = $this->Quiz_model->all($param);
         return $this->response($quiz_list);
@@ -167,8 +167,8 @@ class Exam extends BaseController {
         $quiz_id_list = $this->input->post('ids');
         if(isset($quiz_id_list)){
             $this->load->model('Quiz_model', '', TRUE);
-            $param[category_id] = $this->input->post('category_id');
-            $param[quiz_id] = $quiz_id_list;
+            $param["category_id"] = $this->input->post('category_id');
+            $param["quiz_id"] = $quiz_id_list;
             $quiz_list['data'] = $this->Quiz_model->all($param);
         }else{
             $quiz_list['data'] = array();

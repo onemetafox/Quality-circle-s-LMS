@@ -86,12 +86,12 @@ class Company extends BaseController {
     }
     public function active() {
         $id = $this->input->post('id');
-        $data[active] = 1;
+        $data["active"] = 1;
         return $this->Company_model->update($data, array('id' => $id));
     }
     public function inactive() {
         $id = $this->input->post('id');
-        $data[active] = 0;
+        $data["active"] = 0;
         return $this->Company_model->update($data, array('id' => $id));
     }
     public function insert() {

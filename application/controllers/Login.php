@@ -48,7 +48,7 @@ class Login extends BaseController{
                 $headerInfo['site_theme'] = array();
             }
             $headerInfo['menu_name'] = 'login';
-            $headerInfo[term] = $this->term;
+            $headerInfo["term"] = $this->term;
             $this->loadViews_front('login', $headerInfo);
         }else{    
             switch($this->session->userdata('user_type')){
@@ -83,10 +83,10 @@ class Login extends BaseController{
     }
 
     public function logout(){        
-        $activity_data[activity_type] = "Logout";
-        $activity_data[user_id] = $this->session->userdata('user_id');
-        if($activity_data[user_id] != null){
-            $activity_data[activity_message] = $this->session->userdata('name')." logout.";
+        $activity_data["activity_type"] = "Logout";
+        $activity_data["user_id"] = $this->session->userdata('user_id');
+        if($activity_data["user_id"] != null){
+            $activity_data["activity_message"] = $this->session->userdata('name')." logout.";
             $this->load->model('Activity_model');
             $this->Activity_model->insert($activity_data);
         }
@@ -254,9 +254,9 @@ class Login extends BaseController{
                                 'expired' => $res->expired,
     						);
     						$this->session->set_userdata($sessionArray);
-    						$activity_data[activity_type] = "Login";
-    						$activity_data[user_id] = $res->id;
-    						$activity_data[activity_message] = $res->fullname." login successfully.";
+    						$activity_data["activity_type"] = "Login";
+    						$activity_data["user_id"] = $res->id;
+    						$activity_data["activity_message"] = $res->fullname." login successfully.";
         						 
     						$this->load->model('Activity_model');
     						$this->Activity_model->insert($activity_data);				
@@ -365,9 +365,9 @@ class Login extends BaseController{
                         'expired' => $res->expired,
                     );
                     $this->session->set_userdata($sessionArray);
-                    $activity_data[activity_type] = "Login";
-                    $activity_data[user_id] = $res->id;
-                    $activity_data[activity_message] = $res->fullname." login successfully.";
+                    $activity_data["activity_type"] = "Login";
+                    $activity_data["user_id"] = $res->id;
+                    $activity_data["activity_message"] = $res->fullname." login successfully.";
                             
                     $this->load->model('Activity_model');
                     $this->Activity_model->insert($activity_data);				
@@ -466,7 +466,7 @@ class Login extends BaseController{
         }
 		$headerInfo['userMsg'] = $userMsg;
         $headerInfo['menu_name'] = 'otp-login';
-        $headerInfo[term] = $this->term;
+        $headerInfo["term"] = $this->term;
         $headerInfo['token'] = $token;
         $this->loadViews_front('otp-login', $headerInfo);        
     }
@@ -557,9 +557,9 @@ class Login extends BaseController{
                         'expired' => $res->expired,
                     );
                     $this->session->set_userdata($sessionArray);
-                    $activity_data[activity_type] = "Login";
-                    $activity_data[user_id] = $res->id;
-                    $activity_data[activity_message] = $res->fullname." login successfully.";
+                    $activity_data["activity_type"] = "Login";
+                    $activity_data["user_id"] = $res->id;
+                    $activity_data["activity_message"] = $res->fullname." login successfully.";
 
                     $this->load->model('Activity_model');
                     $this->Activity_model->insert($activity_data);
@@ -625,35 +625,35 @@ class Login extends BaseController{
 
         // get the user
         $user_row_data = $this->User_model->getRow(array("remember_token"=>get_cookie('remember_token'), "active"=>1));
-        $user = $user_row_data[data][0];
+        $user = $user_row_data["data"][0];
 
         
         // if the user was found, sign them in
         if (count($user) > 0){            
-            $this->User_model->update_last_login($user[id]);
-            $this->remember_user($user[id]);
-            $photo = base_url().$user[picture];
-            $sessionArray = array('userId'=>$user[id],
-                'user_type'=>$user[user_type],
+            $this->User_model->update_last_login($user["id"]);
+            $this->remember_user($user["id"]);
+            $photo = base_url().$user["picture"];
+            $sessionArray = array('userId'=>$user["id"],
+                'user_type'=>$user["user_type"],
                 'is_password_updated' => $res->isPasswordUptd,
-                'roleText'=>$user[user_type],
+                'roleText'=>$user["user_type"],
                 'user_photo'=>$photo,
-                'user_id'=>$user[id],
-                'email'=>$user[email],
-                'notification_method'=>$user[notification_method],
-                'company_id'=>$user[company_id],
-                'name'=>$user[first_name]." ".$user[last_name],   
+                'user_id'=>$user["id"],
+                'email'=>$user["email"],
+                'notification_method'=>$user["notification_method"],
+                'company_id'=>$user["company_id"],
+                'name'=>$user["first_name"]." ".$user["last_name"],   
                 'last_check'=>time(),             
                 'isLoggedIn' => TRUE,
-                'plan_id' => $user[plan_id],
-                'is_trialed' => $user[is_trialed],
-                'expired' => $user[expired]
+                'plan_id' => $user["plan_id"],
+                'is_trialed' => $user["is_trialed"],
+                'expired' => $user["expired"]
             );
 
             $this->session->set_userdata($sessionArray);
-            $activity_data[activity_type] = "Remember Login";
-            $activity_data[user_id] = $user[id];
-            $activity_data[activity_message] = $user[first_name]." ".$user[last_name]." login successfully.";
+            $activity_data["activity_type"] = "Remember Login";
+            $activity_data["user_id"] = $user["id"];
+            $activity_data["activity_message"] = $user["first_name"]." ".$user["last_name"]." login successfully.";
 
             $this->load->model('Activity_model');
             $this->Activity_model->insert($activity_data);            

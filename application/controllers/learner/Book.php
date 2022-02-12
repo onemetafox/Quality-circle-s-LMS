@@ -30,7 +30,7 @@ class Book extends BaseController{
     public function insert_doc(){
         $id1 = $this->input->post('id1');
         $id2 = $this->input->post('id2');
-        $data[parent_id] = $id1;
+        $data["parent_id"] = $id1;
         return $this->Library_model->update($data, array('id' => $id2));
     }
     

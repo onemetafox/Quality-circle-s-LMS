@@ -30,7 +30,7 @@ class Home extends BaseController
     }
     public function showCompanyByUrl($url){
         $toReturn['menu_name'] = 'home';
-        $headerInfo[term] = $this->term;
+        $headerInfo["term"] = $this->term;
         $result = $this->company;
         $toReturn['company'] = $result;
         $toReturn['demandCourses'] = $this->Course_model->getRecent(3,$result['id']);

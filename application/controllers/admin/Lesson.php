@@ -127,8 +127,8 @@
    
        /*usable to check list of lesson*/
        public function getSelectableLessonList(){
-           $param[category_id] = $this->input->post('category_id');
-           $param[no_lesson_id] = $this->input->post('ids');
+           $param["category_id"] = $this->input->post('category_id');
+           $param["no_lesson_id"] = $this->input->post('ids');
            $this->load->model('Lesson_model', '', TRUE);
    
            $lesson_list['data'] = $this->Lesson_model->all($param);
@@ -141,8 +141,8 @@
    
            if(isset($lesson_id_list)){
                $this->load->model('Lesson_model', '', TRUE);
-               $param[category_id] = $this->input->post('category_id');
-               $param[lesson_id] = $lesson_id_list;
+               $param["category_id"] = $this->input->post('category_id');
+               $param["lesson_id"] = $lesson_id_list;
                $quiz_list['data'] = $this->Lesson_model->all($param);
            }else{
                $quiz_list['data'] = array();

@@ -65,15 +65,15 @@ class Trainingassign extends BaseController
 
             $row_id = $this->input->post('company_row_id');
             $split = explode("-", $row_id);
-            $page_data[id] = $split[1];
+            $page_data["id"] = $split[1];
             if ($split[0] == 'fasi')
-                $row_data = $this->Trainingassignfasi_model->getRow($page_data[id]);
+                $row_data = $this->Trainingassignfasi_model->getRow($page_data["id"]);
             else if ($split[0] == 'company')
-                $row_data = $this->Trainingassigncompany_model->getRow($page_data[id]);
+                $row_data = $this->Trainingassigncompany_model->getRow($page_data["id"]);
             else
-                $row_data = $this->Trainingassignemployee_model->getRow($page_data[id]);
+                $row_data = $this->Trainingassignemployee_model->getRow($page_data["id"]);
 
-            $page_data[assign_row] = $row_data[0];
+            $page_data["assign_row"] = $row_data[0];
 
             $this->loadViews("fasi/trainingassign/trainingassign_edit", $this->global, $page_data , NULL);   
         } 
@@ -89,10 +89,10 @@ class Trainingassign extends BaseController
     {
         $sessiondata = $this->session->get_userdata();
         $this->load->model('Trainingassignfasi_model');
-        $topic_list = $this->Trainingassignfasi_model->getAssignedList($sessiondata[userId]); 
+        $topic_list = $this->Trainingassignfasi_model->getAssignedList($sessiondata["userId"]); 
 
         foreach ($topic_list as $key => $topic) {
-            $topic_list[$key][row_id] = null;
+            $topic_list[$key]["row_id"] = null;
         }
 
         $records["results"] = $topic_list; 
@@ -102,20 +102,20 @@ class Trainingassign extends BaseController
 
     public function saveAssignInfo()
     {
-        $assign_data[company_id] = intval($this->input->post('company_id'));
+        $assign_data["company_id"] = intval($this->input->post('company_id'));
         $assign_info = json_decode($this->input->post('training_info'));
 
         if(isset($assign_info->row_id)) {
             //update
-            $assign_data[start_date] = $assign_info->startdate;
+            $assign_data["start_date"] = $assign_info->startdate;
             $row_id = $assign_info->row_id;
             $this->Trainingassigncompany_model->updateTrainingassign($assign_data, $row_id); 
         } else {
             //insert
             $sessiondata = $this->session->get_userdata();
-            $assign_data[topic_id] = $assign_info->id;
-            $assign_data[start_date] = $assign_info->startdate;
-            $assign_data[fasi_email] = $sessiondata[email];
+            $assign_data["topic_id"] = $assign_info->id;
+            $assign_data["start_date"] = $assign_info->startdate;
+            $assign_data["fasi_email"] = $sessiondata["email"];
 
             $row_id = $this->Trainingassigncompany_model->saveTrainingassign($assign_data);
         }
@@ -125,7 +125,7 @@ class Trainingassign extends BaseController
 
     public function removeAssignInfo()
     {
-        $assign_data[company_id] = intval($this->input->post('company_id'));
+        $assign_data["company_id"] = intval($this->input->post('company_id'));
         $assign_info = json_decode($this->input->post('training_info'));
 
         if(isset($assign_info->row_id)) {
@@ -143,13 +143,13 @@ class Trainingassign extends BaseController
         $out_data = array();
         if($this->Trainingassigncompany_model->deleteTrainingassign($id)) 
         {
-            $out_data[status] = "Success";
-            $out_data[message] = "";
+            $out_data["status"] = "Success";
+            $out_data["message"] = "";
         } 
         else 
         {            
-            $out_data[status] = "Fail";
-            $out_data[message] = "Could not delete the row.";
+            $out_data["status"] = "Fail";
+            $out_data["message"] = "Could not delete the row.";
         }
 
         $this->response($out_data); 
@@ -175,9 +175,9 @@ class Trainingassign extends BaseController
 
             $data_rows = $this->Trainingassigncompany_model->getPagingList($search_cond); 
 
-            $records[data] = $data_rows[data];        
-            $records[recordsTotal] = $data_rows[total];
-            $records[recordsFiltered] = $data_rows[filtertotal];
+            $records["data"] = $data_rows["data"];        
+            $records["recordsTotal"] = $data_rows["total"];
+            $records["recordsFiltered"] = $data_rows["filtertotal"];
 
             $this->response($records);   
         } 
@@ -235,16 +235,16 @@ class Trainingassign extends BaseController
         $params = $this->input->post();
         
         $sessiondata = $this->session->get_userdata();
-        $params[fasi_id] = $sessiondata[user_id];
+        $params["fasi_id"] = $sessiondata["user_id"];
         
-        $data[trainings] = $this->Trainingassigncompany_model->selectableList($params);
+        $data["trainings"] = $this->Trainingassigncompany_model->selectableList($params);
 
         $this->load->view("admin/trainingassign/selectable",$data);
     }
 
     public function selected() {
         $params = $this->input->post();
-        $data[trainings] = $this->Trainingassigncompany_model->getAssignedList($params);
+        $data["trainings"] = $this->Trainingassigncompany_model->getAssignedList($params);
         $this->load->view("admin/trainingassign/selected",$data);
     }
 
@@ -253,21 +253,21 @@ class Trainingassign extends BaseController
         $cid = $this->input->post("company_id");
         $tid = $this->input->post("topic_id");
         $date = date("Y-m-d");
-        $this->Trainingassigncompany_model->assign($cid,$tid,$date,$sessiondata[email]);
-        $this->response(array(success=>true));
+        $this->Trainingassigncompany_model->assign($cid,$tid,$date,$sessiondata["email"]);
+        $this->response(array("success"=>true));
     }
 
     public function release() {
         $id = $this->input->post("id");
         $this->Trainingassigncompany_model->release($id);
-        $this->response(array(success=>true));
+        $this->response(array("success"=>true));
     }
 
     public function update() {
         $id = $this->input->post("id");
         $date = $this->input->post("date");
         $this->Trainingassigncompany_model->update($id,$date);
-        $this->response(array(success=>true));
+        $this->response(array("success"=>true));
     }
      
 }
