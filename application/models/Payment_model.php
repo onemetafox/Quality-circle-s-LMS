@@ -12,13 +12,13 @@ class Payment_model extends AbstractModel
 
     public function totalAmountForLearner($filter){
         $query = "SELECT SUM(amount) total_amount FROM payment_history
-        WHERE user_id = '$filter["user_id"]'";
+        WHERE user_id = '" . $filter["user_id"]. "'";
         return $this->db->query($query)->row();
     }
 
     public function totalAmountForAdmin($filter){
         $query = "SELECT SUM(amount) total_amount FROM payment_history
-        WHERE company_id = '$filter["company_id"]'";
+        WHERE company_id = '". $filter["company_id"]. "'";
         return $this->db->query($query)->row();
     }
 
@@ -86,8 +86,7 @@ class Payment_model extends AbstractModel
         $query = "SELECT a.*, b.title, c.`name` FROM `payment_history` a
         LEFT JOIN course b on a.object_id = b.id
         LEFT JOIN company c ON c.id = a.company_id
-        -- WHERE user_id = '$filter["user_id"]' AND (object_type <> 'book' OR object_type <> 'plan')
-        WHERE user_id = '$filter["user_id"]' AND (object_type <> 'plan')
+        WHERE user_id = '". $filter["user_id"]. "' AND (object_type <> 'plan')
         
         UNION
         
