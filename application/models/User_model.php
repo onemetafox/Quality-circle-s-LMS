@@ -214,45 +214,45 @@ class User_model extends AbstractModel
         return $query->result_array();
     }
 
-    function insert($data){
-        $data['reg_date'] = date("Y-m-d H:i:s");
-        $data['is_deleted'] = 0;
+    // function insert($data){
+    //     $data['reg_date'] = date("Y-m-d H:i:s");
+    //     $data['is_deleted'] = 0;
 
-        if (isset($data["picture"]) || empty($data["picture"])){
-            //$data["picture"] = sprintf('%suser/photo/%s', PATH_UPLOAD, ($data[user_type] == 'Company') ? 'default_company.png' : 'default.png');
-            $data["picture"] = str_replace("./", "", $data["picture"]);
-        }
+    //     if (isset($data["picture"]) || empty($data["picture"])){
+    //         //$data["picture"] = sprintf('%suser/photo/%s', PATH_UPLOAD, ($data[user_type] == 'Company') ? 'default_company.png' : 'default.png');
+    //         $data["picture"] = str_replace("./", "", $data["picture"]);
+    //     }
 
-        $this->db->insert($this->table, $data);
-        $role = $data['user_type'];
-        $active = $data['active'];
-        $company_id = $data['company_id'];
-        unset($data['user_type']);
-        $user_id = $this->db->insert_id();
+    //     $this->db->insert($this->table, $data);
+    //     $role = $data['user_type'];
+    //     $active = $data['active'];
+    //     $company_id = $data['company_id'];
+    //     unset($data['user_type']);
+    //     $user_id = $this->db->insert_id();
 
-        return $user_id;
-    }
+    //     return $user_id;
+    // }
 
-    function update($data, $where = null){
-        $data['updated_at'] = date("Y-m-d H:i:s");
-        $this->db->where($where);
-        $result = $this->db->update($this->table, $data);
+    // function update($data, $where = null){
+    //     $data['updated_at'] = date("Y-m-d H:i:s");
+    //     $this->db->where($where);
+    //     $result = $this->db->update($this->table, $data);
 
 
-        if (isset($data['active']) && $data['user_type'] != 'Admin'){
-            $where_user['user_id'] = $where['id'];
-            $this->db->where($where_user);
-            if (isset($data['user_type']))
-            $data_user['role'] = $data['user_type'];
-            if (isset($data['company_id']))
-            $data_user['company_id'] = $data['company_id'];
-            if (isset($data['active']))
-            $data_user['active'] = $data['active'];
-            $result = $this->db->update($this->companyuser_table, $data_user);
-        }
+    //     if (isset($data['active']) && $data['user_type'] != 'Admin'){
+    //         $where_user['user_id'] = $where['id'];
+    //         $this->db->where($where_user);
+    //         if (isset($data['user_type']))
+    //         $data_user['role'] = $data['user_type'];
+    //         if (isset($data['company_id']))
+    //         $data_user['company_id'] = $data['company_id'];
+    //         if (isset($data['active']))
+    //         $data_user['active'] = $data['active'];
+    //         $result = $this->db->update($this->companyuser_table, $data_user);
+    //     }
 
-        return $result;
-    }
+    //     return $result;
+    // }
 
     /**
      * update_last_login
