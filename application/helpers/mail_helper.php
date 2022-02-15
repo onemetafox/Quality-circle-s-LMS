@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR ('No direct script access allowed');
-if(! function_exists(send_smtp_message)) {
+if(! function_exists("send_smtp_message")) {
 	function send_smtp_message($receiver_email, $title, $content, $from) {
 
 		$ci =& get_instance();
@@ -33,7 +33,7 @@ if(! function_exists(send_smtp_message)) {
 		$ci->email->send();
 	}
 }
-if(! function_exists(send_phpmail_message)) {
+if(! function_exists("send_phpmail_message")) {
 	function send_phpmail_message($to, $subject, $message)
 	{
         $req_ip = $_SERVER['REMOTE_ADDR'];
