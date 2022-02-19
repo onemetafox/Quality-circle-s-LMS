@@ -445,7 +445,7 @@
 				<div class="join-div">
 					<ul class="join-ul">
 						<li data-aos="fade-right" data-aos-duration="3000"><p>Join Today</p></li>
-						<li class="flex-bt-join" data-aos="fade-left" data-aos-duration="3000"><a href="https://dev.gosmartacademy.com/pricing"><button class="join-n">Join Now</button></a><p><span>Virtual Learning.</span><span>It is in the minds eye. It’s not with you it is in you!!!</span></p></li>
+						<li class="flex-bt-join" data-aos="fade-left" data-aos-duration="3000"><a href="<?= base_url()?>pricing"><button class="join-n">Join Now</button></a><p><span>Virtual Learning.</span><span>It is in the minds eye. It’s not with you it is in you!!!</span></p></li>
 					</ul>
 				</div>
 			</div>
