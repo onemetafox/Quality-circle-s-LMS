@@ -86,8 +86,8 @@
 			       					</div>
 			       					<div class="col-lg-9">
 			       						<div class="glob-1">
-			       							<p class="lms-q-1">Quality circle's LMS</p>
-			       							<input type="text" class="lms-q" placeholder="https://dev.gosmartacademy.com/">
+			       							<p class="lms-q-1">Quality Circle's LMS</p>
+			       							<input type="text" class="lms-q" placeholder="https://gosmartacademy.com/">
 			       						</div>
 			       					</div>
 			       				</div>
