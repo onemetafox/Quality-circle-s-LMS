@@ -461,7 +461,7 @@
 		<div class="row cdn-cen">
 			<div class="col-lg-3" data-aos="fade-up" data-aos-duration="3000">
 				<div class="subscribe-section-btn">
-					<a href="https://dev.gosmartacademy.com/pricing"><button class="SUBSCRIBE-WITH">SUBSCRIBE WITH US</button></a>
+					<a href="<?=base_url()?>login"><button class="SUBSCRIBE-WITH">SUBSCRIBE WITH US</button></a>
 				</div>
 			</div>
 			<div class="col-lg-9">
@@ -469,37 +469,37 @@
 					<div class="col-lg-4" data-aos="fade-up" data-aos-duration="3000">
 						<div class="subscribe-section-common">
 							<img src="assets/landing/images/radius-1.png">
-							<a href="https://dev.gosmartacademy.com/company/gosmartacademy.com"><button class="SUBSCRIBE-WITH-1">Academy</button></a>
+							<a href="<?=base_url()?>company/QC"><button class="SUBSCRIBE-WITH-1">Academy</button></a>
 						</div>
 					</div>
 					<div class="col-lg-4" data-aos="fade-up" data-aos-duration="3000">
 						<div class="subscribe-section-common">
 							<img src="assets/landing/images/radius-2.png">
-							<a href="https://dev.gosmartacademy.com/login"><button class="SUBSCRIBE-WITH-1"><a href="https://dev.gosmartacademy.com/login">Signup</a><a href="#"> / Login</a></button></a>
+							<button class="SUBSCRIBE-WITH-1"><a href="<?=base_url()?>login">Signup / Login</a></button></a>
 						</div>
 					</div>
 					<div class="col-lg-4" data-aos="fade-up" data-aos-duration="3000">
 						<div class="subscribe-section-common">
 							<img src="assets/landing/images/radius-3.png">
-							<a href="https://dev.gosmartacademy.com/company/gosmartacademy.com/classes"><button class="SUBSCRIBE-WITH-1">Course Catalog / List</button></a>
+							<a href="<?=base_url()?>company/QC/demand"><button class="SUBSCRIBE-WITH-1">Course Catalog / List</button></a>
 						</div>
 					</div>
 					<div class="col-lg-4" data-aos="fade-up" data-aos-duration="3000">
 						<div class="subscribe-section-common">
 							<img src="assets/landing/images/radius-4.png">
-							<a href="https://dev.gosmartacademy.com/company/gosmartacademy.com/bookshop"><button class="SUBSCRIBE-WITH-1">Book Store</button></a>
+							<a href="<?=base_url()?>company/QC/bookshop"><button class="SUBSCRIBE-WITH-1">Book Store</button></a>
 						</div>
 					</div>
 					<div class="col-lg-4" data-aos="fade-up" data-aos-duration="3000">
 						<div class="subscribe-section-common">
 							<img src="assets/landing/images/radius-5.png">
-							<a href="https://dev.gosmartacademy.com/contact"><button class="SUBSCRIBE-WITH-1">Contact Us</button></a>
+							<a href="<?=base_url()?>contact"><button class="SUBSCRIBE-WITH-1">Contact Us</button></a>
 						</div>
 					</div>
 					<div class="col-lg-4" data-aos="fade-up" data-aos-duration="3000">
 						<div class="subscribe-section-common">
 							<img src="assets/landing/images/radius-6.png">
-							<a href="https://dev.gosmartacademy.com/company/gosmartacademy.com/calendar"><button class="SUBSCRIBE-WITH-1">Training Calendar</button></a>
+							<a><button class="SUBSCRIBE-WITH-1">Training Calendar</button></a>
 						</div>
 					</div>
 				</div>
@@ -523,40 +523,46 @@
 				
 		 <div class="col-lg-4">
 				<div class="CURRENT-COURSES-COMMON" data-aos="fade-up" data-aos-duration="3000">
-					<div class="module-1">
-						<img src="assets/landing/images/vector-1.png">
-					</div>
-					<div class="module-2">
-						<p class="Enroll-Now-p">Instructor Led Training</p>
-						<p class="Enroll-Now-p-1">Time Restricted</p>
-						
-						<img class="module-img" src="assets/landing/images/shado.png">
-					</div>
+					<a href="<?=base_url()?>company/QC/training">
+						<div class="module-1">
+							<img src="assets/landing/images/vector-1.png">
+						</div>
+						<div class="module-2">
+							<p class="Enroll-Now-p">Instructor Led Training</p>
+							<p class="Enroll-Now-p-1">Time Restricted</p>
+							
+							<img class="module-img" src="assets/landing/images/shado.png">
+						</div>
+					</a>
 				</div>
 			</div>
 			<div class="col-lg-4">
 				<div class="CURRENT-COURSES-COMMON" data-aos="fade-up" data-aos-duration="3000">
-					<div class="module-1">
-						<img src="assets/landing/images/vector-2.png">
-					</div>
-					<div class="module-2">
-						<p class="Enroll-Now-p">On Demand</p>
-						<p class="Enroll-Now-p-1">Self Paced & Time Restricted</p>
-						
-						<img class="module-img" src="assets/landing/images/shado.png">
-					</div>
+					<a href="<?=base_url()?>company/QC/demand">
+						<div class="module-1">
+							<img src="assets/landing/images/vector-2.png">
+						</div>
+						<div class="module-2">
+							<p class="Enroll-Now-p">On Demand</p>
+							<p class="Enroll-Now-p-1">Self Paced & Time Restricted</p>
+							
+							<img class="module-img" src="assets/landing/images/shado.png">
+						</div>
+					</a>
 				</div>
 			</div>
 			<div class="col-lg-4">
 				<div class="CURRENT-COURSES-COMMON" data-aos="fade-up" data-aos-duration="3000">
-					<div class="module-1">
-						<img src="assets/landing/images/vector-3.png">
-					</div>
-					<div class="module-2">
-						<p class="Enroll-Now-p">Virtual Instructor Led</p>
-						<p class="Enroll-Now-p-1">Time Restricted</p>
-												<img class="module-img" src="assets/landing/images/shado.png">
-					</div>
+					<a href="<?=base_url()?>company/QC/classes">
+						<div class="module-1">
+							<img src="assets/landing/images/vector-3.png">
+						</div>
+						<div class="module-2">
+							<p class="Enroll-Now-p">Virtual Instructor Led</p>
+							<p class="Enroll-Now-p-1">Time Restricted</p>
+							<img class="module-img" src="assets/landing/images/shado.png">
+						</div>
+					</a>
 				</div>
 			</div>
 		</div>
