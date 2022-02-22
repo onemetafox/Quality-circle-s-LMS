@@ -4,16 +4,16 @@
 		<div class="row">		
 			<div class="col-md-12">
 				<ul class="catalogTab">
-					<li class="active"><a href="<?php echo base_url('company/gosmartacademy.com/demand')?>">On Demand</a></li>
-					<li><a href="<?php echo base_url('company/gosmartacademy.com/classes')?>">VILT</a></li>
+					<li class="active"><a href="<?php echo base_url('company/QC/demand')?>">On Demand</a></li>
+					<li><a href="<?php echo base_url('company/QC/classes')?>">VILT</a></li>
 					<!-- <?php
 						$userType = $this->session->userdata('user_type');
 						$userID = $this->session->userdata('userId');
 						if ($userType == 'Instructor' || $userType == 'Learner') { ?>
-							<li><a href="https://webrtc.gosmartacademy.com/index.php?userID=<?php echo $userID ?>" target="_blank">VILT Room</a></li>
+							<li><a href="https://webrtc.QC/index.php?userID=<?php echo $userID ?>" target="_blank">VILT Room</a></li>
 					<?php } ?> -->
-					<li><a href="<?php echo base_url('company/gosmartacademy.com/training')?>">Instructor Led Training</a></li>
-					<li><a href="<?php echo base_url('company/gosmartacademy.com/bookshop')?>">Book Shop</a></li>
+					<li><a href="<?php echo base_url('company/QC/training')?>">Instructor Led Training</a></li>
+					<li><a href="<?php echo base_url('company/QC/bookshop')?>">Book Shop</a></li>
 				</ul><!--catalogTab-->
 			</div><!--col-12-->
 			
@@ -107,7 +107,7 @@
 		                                        <?php }else {?>
 		                                            <a href="javascript:view_course(<?php echo $course->id ?>)" class="btnBlue">Access Course</a>
 		                                        <?php }?>
-												<a href="<?php echo base_url('company/gosmartacademy.com/demand/view/'.$course->id)?>" class="btnBlue">View Course</a>
+												<a href="<?php echo base_url('company/QC/demand/view/'.$course->id)?>" class="btnBlue">View Course</a>
 											</div><!--col-8-->
 										</div><!--row-->
 									</div><!--whitePanel-->
@@ -124,7 +124,7 @@
 	</div><!--container-->
 </section><!--sectionBox-->
 <script type="text/javascript">
-    var company_url = "<?= base_url('company/gosmartacademy.com')?>";
+    var company_url = "<?= base_url('company/QC')?>";
     var isLogin = "<?php echo $this->session->userdata ( 'isLoggedIn' )?>";
     var email = "<?php echo $this->session->userdata ( 'email' )?>";
 	var userId = "<?php echo $this->session->userdata('userId')?>";
@@ -171,7 +171,7 @@
 							}).then((willDelete) => {
 							  if (willDelete) {
 							  	//window.location = company_url + '/classes/detail/' + id;	
-								window.location = 'https://shop.gosmartacademy.com/shop/?add-to-cart='+id+'&user_id='+userId;
+								window.location = 'https://shop.QC/shop/?add-to-cart='+id+'&user_id='+userId;
 							  } else {
 							    return;
 							  }
