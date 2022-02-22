@@ -204,71 +204,47 @@
         </div>
       
         <!-- start: notifications -->
+        <div class="row">
+          
         
-        <?php if($this->session->userdata('country_code') == '' || $this->session->userdata('phone') == ''){ ?>
-          <div class="col-md-8" style="display: inline-block;list-style: none;margin: 15px -10px 0 0;padding: 0;vertical-align: middle;text-align:center;">
-          	<span style="margin:20px auto;padding:20px;text-shadow: 0px 1px 1px #4d4d4d;color:red;">Please complete your profile details. <a href="<?=base_url()?>profile">click here!</a></span>
-          </div>
-        <?php } ?>
-        
-        <div class="header-right">
-      
-          <ul class="notifications" id="notif_container">
-            <li>
-              <a href="#" class="dropdown-toggle notification-icon" data-toggle="dropdown" >
-                <i class="fas fa-bell"></i>
-                <span class="badge" id="notif_count">0</span>
-              </a>
-      
-              <div class="dropdown-menu notification-menu large">
-                <div class="notification-title">
-                  <span class="float-right badge badge-default"></span>
-                  Notifications
-                </div>
-      
-                <div class="content">
-                  <ul id="notif_ul">
-                    
+            <?php if($this->session->userdata('country_code') == '' || $this->session->userdata('phone') == ''){ ?>
+              <div class="col-md-8 col-sm-5" style="display: inline-block;list-style: none;margin: 15px -10px 0 0;padding: 0;vertical-align: middle;text-align:center;">
+                <span style="margin:20px auto;padding:20px;text-shadow: 0px 1px 1px #4d4d4d;color:red;">Please complete your profile details. <a href="<?=base_url()?>profile">click here!</a></span>
+              </div>
+            <?php } ?>
+            
+            <div class="col-md-4 col-sm-5 header-right" style = "text-align:right">
+          
+              <span class="separator"></span> 
+          
+              <div id="userbox" class="userbox">
+                <a href="#" data-toggle="dropdown">
+                  <figure class="profile-picture">
+                    <img <?php if ($this->session->userdata('user_photo') != base_url()):?>src="<?php print $this->session->userdata('user_photo') ?>"<?php else:?> src = "<?=base_url("assets/img/default_profile.png")?>"<?php endif;?> alt="Joseph Doe" class="rounded-circle" data-lock-picture="<?php print $this->session->userdata('user_photo') ?>" />
+                  </figure>
+                  <div class="profile-info" data-lock-name="<?php print $this->session->userdata('name') ?>" data-lock-email="<?php print $this->session->userdata('email') ?>">
+                    <span style="max-width: 120px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="name"><?php print $this->session->userdata('name') ?></span>
+                    <span class="role"><?php print $this->session->userdata('user_type') ?></span>
+                  </div>
+                  <i class="fa custom-caret"></i>
+                </a>
+                <div class="dropdown-menu">
+                  <ul class="list-unstyled mb-2">
+                    <li class="divider"></li>
+                    <li>
+                      <a role="menuitem" tabindex="-1" href="<?php echo base_url()?>profile"><i class="fas fa-user"></i> <?php echo $term['myprofile']; ?></a>
+                    </li>
+                    <li>
+                      <a role="menuitem" tabindex="-1" href="<?php echo base_url();?>logout"><i class="fas fa-power-off"></i> <?php echo $term['logout']; ?></a>
+                    </li>
                   </ul>
                 </div>
               </div>
-            </li>
-
-          </ul>
-      
-          <span class="separator"></span> 
-      
-          <div id="userbox" class="userbox">
-            <a href="#" data-toggle="dropdown">
-              <figure class="profile-picture">
-                <img <?php if ($this->session->userdata('user_photo') != base_url()):?>src="<?php print $this->session->userdata('user_photo') ?>"<?php else:?> src = "<?=base_url("assets/img/default_profile.png")?>"<?php endif;?> alt="Joseph Doe" class="rounded-circle" data-lock-picture="<?php print $this->session->userdata('user_photo') ?>" />
-              </figure>
-              <div class="profile-info" data-lock-name="<?php print $this->session->userdata('name') ?>" data-lock-email="<?php print $this->session->userdata('email') ?>">
-                <span style="max-width: 120px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" class="name"><?php print $this->session->userdata('name') ?></span>
-                <span class="role"><?php print $this->session->userdata('user_type') ?></span>
-              </div>
-              <i class="fa custom-caret"></i>
-            </a>
-            <div class="dropdown-menu">
-              <ul class="list-unstyled mb-2">
-                <li class="divider"></li>
-                <li>
-                  <a role="menuitem" tabindex="-1" href="<?php echo base_url()?>profile"><i class="fas fa-user"></i> <?php echo $term['myprofile']; ?></a>
-                </li>
-<!--                <li>-->
-<!--                  <a role="menuitem" id="btnLockscreen" tabindex="-1" href="--><?//= base_url()?><!--loglock"><i class="fas fa-lock"></i> --><?php //echo $term['lockscreen']; ?><!--</a>-->
-<!--                </li>-->
-                <li>
-                  <a role="menuitem" tabindex="-1" href="<?php echo base_url();?>logout"><i class="fas fa-power-off"></i> <?php echo $term['logout']; ?></a>
-                </li>
-              </ul>
             </div>
-          </div>
-        </div>
-        <!-- end: notifications -->
-      </header>
+            <!-- end: notifications -->
+          </header>
       <!-- end: header -->
-
+      </div>
       <div class="inner-wrapper">
 
         <!-- start: sidebar -->
