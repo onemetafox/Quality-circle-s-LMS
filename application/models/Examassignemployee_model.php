@@ -138,7 +138,7 @@ class Examassignemployee_model extends CI_Model
         $this->db->join($this->category_table." c", 'b.exam_category_id = c.id', 'left');
         $this->db->join($this->assign_employee_table." d", 'a.exam_id = d.exam_id', 'left');
 
-        $where = "( d.id is NULL OR d.employee_id != $param["employee_id"] )";
+        $where = "( d.id is NULL OR d.employee_id != ". $param["employee_id"] .")";
         $this->db->where($where);
         $this->db->where("a.company_id", $param["company_id"]);
         if(!empty($param["category"]))
