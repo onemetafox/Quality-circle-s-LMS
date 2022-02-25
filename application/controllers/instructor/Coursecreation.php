@@ -23,6 +23,7 @@ class Coursecreation extends BaseController{
         $this->load->model('Location_model');
 		$this->load->model('Live_model');		
 		$this->load->model('Training_model');
+        $this->load->model('Company_model');
         $this->isLoggedIn();
         $this->load->library('Sidebar');
         $side_params = array('selected_menu_id' => '39');
@@ -1041,6 +1042,7 @@ class Coursecreation extends BaseController{
             $this->global['quiz_data'] = $this->Exam_model->getQuizGroupListByCompanyID($this->session->get_userdata() ['company_id']);
 			$this->global['category_standard_list'] = $this->Category_model->getListByCategoryID($course->category_id);
             $this->global['exam_data'] = $this->Exam_model->getExamListByCompanyID($this->session->get_userdata() ['company_id']);
+            $this->global['company'] = (array) $this->Company_model->getRow($this->session->get_userdata() ['company_id']);
             $this->loadViews($page_path, $this->global, NULL, NULL);
         }else{
             $this->loadViews("access", $this->global, NULL, NULL);

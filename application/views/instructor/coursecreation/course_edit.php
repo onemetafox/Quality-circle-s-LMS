@@ -114,17 +114,33 @@
                                     <div class="form-group row">
                                        <label class="col-sm-12 control-label text-sm-left pt-1" for="w4-username"><?=$term['selecttypeofcourse']?></label>
                                        <div class="col-sm-12">
-                                          <label class="radioBox col-sm-3"><?=$term['freecourse']?>
+                                          <label class="radioBox col-sm-2"><?=$term['closedcourse']?>
                                           <input type="radio" name = "pay_type" value="0" <?php if ($course_data['pay_type'] == 0):?>checked<?php endif;?>>
                                           <span class="checkmark"></span>
                                           </label>
-                                          <label class="radioBox col-sm-4"><?=$term['paidonetimepurchase']?>
+                                          <?php if($company['status'] == 1){ ?>
+                                          <label class="radioBox col-sm-3"><?=$term['opencourse']?>
                                           <input type="radio" name = "pay_type" value="1" <?php if ($course_data['pay_type'] == 1):?>checked<?php endif;?>>
                                           <span class="checkmark"></span>
                                           </label>
-                                          <label class="col-sm-1" style="padding-top: 5px;float: left;"><?=$term['usd']?></label>
-                                          <input type="text" class="form-control col-sm-1 input-form" style="width: 75px;" id="payy_pricee" name="pay_price" value="<?= $course_data['pay_price'] ?>">
+                                          <?php } ?>
                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-1" style="padding-top: 5px;float: left;"><?=$term['usd']?></label>
+                                        <input type="text" class="form-control col-sm-1 input-form" style="width: 75px;" id="payy_pricee" name="pay_price" value="<?= $course_data['pay_price'] ?>">
+                                        <label class="col-sm-2" style="text-align:right;padding-top: 5px;float: left;"><?=$term['discount']?>(%)</label>
+                                        <input type="number" class="form-control col-sm-1 input-form" onChange="changePrice()" style="width: 75px;" id="discount" <?=$course_data['pay_type'] == 0? 'readonly': ''?> name="discount" value="<?= $course_data['discount'] ?>">
+                                        <label class="col-sm-1" style="text-align:right; padding-top: 5px;float: left;"><?=$term['tax_type']?></label>
+                                        <select class="form-group" name="tax_type" id="tax_type" onChange="changePrice()">
+                                            <option <?=$course_data['tax_rate'] == 0 ? "selected" : ""?> value="0">Percentage Tax</option>
+                                            <option <?=$course_data['tax_rate'] == 1 ? "selected" : ""?> value="1">Fix Tax</option>
+                                        </select>
+                                        <label class="col-sm-1" style="text-align:right;padding-top: 5px;float: left;"><?=$term['tax_rate']?></label>
+                                        <input type="number" class="form-control col-sm-1 input-form" onChange="changePrice()" style="width: 75px;" id="tax_rate" name="tax_rate" value="<?= $course_data['tax_rate'] ?>">
+                                        
+                                        <label class="col-sm-1" style="padding-top: 5px;float: left;">Total <?=$term['usd']?></label>
+                                        <input type="text" class="form-control col-sm-1 input-form" style="width: 75px;" id="amount" name="amount" value="<?= $course_data['amount'] ?>" readonly>
                                     </div>
                                     <div class="form-group row" style="display: none;">
                                        <label class="col-sm-12 control-label text-sm-left pt-1" for="w4-username"><?=$term['courseswillbevisiblefor']?></label>
@@ -204,19 +220,6 @@
                                           </div>
                                        </div>
                                     </div>
-                                    
-                                    <div class="form-group row">
-                                       <div class="col-sm-6">
-                                          <div class="form-group row">
-                                             <label class="col-sm-6 control-label text-sm-left pt-1" for="w4-username">Session Access Restriction</label>
-                                             <select name="access_restrict" class="form-control" id="access_restrict" style="width:15%;">
-                                                <option <?php if ($course_data['access_restrict'] == 1):?>selected<?php endif;?> value="1">Yes</option>
-                                                <option <?php if ($course_data['access_restrict'] == 0):?>selected<?php endif;?> value="0">No</option>
-                                             </select>
-                                          </div>
-                                       </div>
-                                    </div>
-                                    
                                     <div class="form-group row">
                                        <div class="col-sm-8" style="padding-left: 0px;">
                                           <label class="col-sm-12 control-label text-sm-left pt-1" for="w4-username"><?=$term['selectinstructor']?></label>
@@ -237,7 +240,7 @@
                                  <div id="w4-content" class="tab-pane">
                                     <div class="form-group row">
                                        <div class="col-sm-11"></div>
-                                       <a class="col-sm-1 btn btn-primary modal-with-form" href="<?=base_url()?>instructor/coursecreation/preview_course/<?=$course_data['id']?>">Preview</a>
+                                       <a class="col-sm-1 btn btn-primary modal-with-form" href="<?=base_url()?>admin/coursecreation/preview_course/<?=$course_data['id']?>">Preview</a>
                                     </div>
                                     <div class="form-group row border" style="padding: 10px">
                                        <div class="col-sm-2">
@@ -377,7 +380,7 @@
                                        <div class="col-sm-5"></div>
                                        <a class="col-sm-1 btn btn-primary modal-with-form" href="javascript:void(0)" onclick="viewList()">View List</a>
                                        <div class="col-sm-1"></div>
-                                       <a class="col-sm-1 btn btn-primary modal-with-form" href="<?=base_url()?>instructor/coursecreation/preview_course/<?=$course_data['id']?>">Preview</a>
+                                       <a class="col-sm-1 btn btn-primary modal-with-form" href="<?=base_url()?>admin/coursecreation/preview_course/<?=$course_data['id']?>">Preview</a>
                                        <div class="col-sm-1"></div>
                                        <div class="col-sm-1">
                                           <div class="btn-group flex-wrap" >
@@ -477,7 +480,7 @@
                                         </div>
                                      </div>
                                      </div>
-                                    </div>
+                                    </div> 
                                     
                                     <div class="form-group row col-sm-12">
                                        <label class="col-sm-2 control-label text-sm-right pt-1" style="text-align: left !important;">Learning Objective</label>
@@ -491,8 +494,8 @@
                                            	<?php } ?>
                                        </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 control-label text-sm-right pt-2" for="textareaDefault">Learning Objectives File Upload</label>
+                                    <div class="form-group row col-sm-12">
+                                        <label class="col-sm-2 control-label text-sm-right pt-1" style="text-align: left !important;" for="textareaDefault">Learning Objectives File Upload</label>
                                         <div class="col-sm-7">
                                         <div class="p-4 border rounded text-center upload-file2 d-block" style="height: 30vh;width: 30vh;background-size: cover;" >
                                             <i class="fa fa-picture-o fa-2x"></i>
@@ -500,7 +503,7 @@
                                         </div>
                                         <input class="file-upload2" name="objective_img" id="objective_img" type="file" accept="image/*" style="display: none;"/>
                                         </div>
-                                    </div>                                    
+                                    </div>
                                     <div class="form-group row col-sm-12">
                                        <label class="col-sm-2 control-label text-sm-right pt-1" style="text-align: left !important;">Who Should Attend</label>
                                        <div class="col-sm-7">
@@ -513,8 +516,8 @@
                                            <?php } ?>
                                        </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 control-label text-sm-right pt-2" for="textareaDefault">Who Should Attend File Upload</label>
+                                    <div class="form-group row col-sm-12">
+                                        <label class="col-sm-2 control-label text-sm-right pt-1" style="text-align: left !important;" for="textareaDefault">Who Should Attend File Upload</label>
                                         <div class="col-sm-7">
                                         <div class="p-4 border rounded text-center upload-file3 d-block" style="height: 30vh;width: 30vh;background-size: cover;" >
                                             <i class="fa fa-picture-o fa-2x"></i>
@@ -535,8 +538,8 @@
                                        <?php } ?>
                                        </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 control-label text-sm-right pt-1" for="textareaDefault">Agenda File Upload</label>
+                                    <div class="form-group row col-sm-12">
+                                        <label class="col-sm-2 control-label text-sm-right pt-1" style="text-align: left !important;" for="textareaDefault">Agenda File Upload</label>
                                         <div class="col-sm-7">
                                         <div class="p-4 border rounded text-center upload-file4 d-block" style="height: 30vh;width: 30vh;background-size: cover;" >
                                             <i class="fa fa-picture-o fa-2x"></i>
@@ -545,7 +548,7 @@
                                         <input class="file-upload4" name="agenda_img" id="agenda_img" type="file" accept="image/*" style="display: none;"/>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
+                                    <div class="form-group row col-sm-12">
                                        <div class="col-sm-2"></div>
                                        <div class="col-sm-10">
                                           <label class="radioBox col-sm-3">Demand
@@ -561,7 +564,7 @@
                                           <span class="checkmark"></span>
                                           </label>
                                        </div>
-                                    </div> 
+                                    </div>
                                     <?php /* ?><div id="course_self_div" <?php if($course_data['course_type'] == 2){ ?> style="display:block" <?php } else { ?>style="display:none"<?php } ?>><?php */ ?>
                                         <div class="form-group row col-sm-12">
                                            <label class="col-sm-2 control-label text-sm-right pt-1" style="text-align: left !important;">Course Self Time</label>
@@ -572,7 +575,7 @@
                                               </select>
                                            </div>
                                         </div>
-                                   <?php /* ?></div>
+                                   	 <?php /* ?></div>
                                     <div id="course_time_div" <?php if($course_data['course_type'] == 1 || $course_data['course_type'] == 0){ ?> style="display:block" <?php } else { ?>style="display:none"<?php } ?>>
                                         <div class="form-group row col-sm-12">
                                            <label class="col-sm-2 control-label text-sm-right pt-1" style="text-align: left !important;">Course Self Time</label>
@@ -659,9 +662,10 @@
                                        <label class="col-sm-2 control-label text-sm-right pt-1" style="text-align: left !important;"><?=$term['category']?></label>
                                        <div class="col-sm-7">
                                           <select data-plugin-selectTwo class="form-control" id="category_id" onchange="getCategoryTitle()" name="category_id">
-                                             <?php foreach($category as $item){ ?>
-                                             <option value="<?php echo $item['id']; ?>" <?php $category_id==$item['id']?print 'selected':print ''; ?>> <?php echo $item['name']; ?></option>
-                                             <?php }  ?>
+                                          		<option value="">Select Category</option>
+                                             	<?php foreach($category as $item){ ?>
+                                             	<option value="<?php echo $item['id']; ?>" <?php $category_id==$item['id']?print 'selected':print ''; ?>> <?php echo $item['name']; ?></option>
+                                                <?php }  ?>
                                           </select>
                                        </div>
                                     </div>
@@ -842,7 +846,7 @@
                <h4 class="modal-title">Course Pre-Requisite</h4>
             </div>
             <div class="modal-body">
-               <textarea class="ckeditor form-control" name="prerequisite" id="prerequisite" rows="5" ><?php echo isset($course_data)&&isset($course_data['prerequisite'])?$course_data['prerequisite']:''; ?></textarea>
+               <textarea class="ckeditor form-control" name="prerequisite" rows="5" ><?php echo isset($course_data['prerequisite'])?$course_data['prerequisite']:''; ?></textarea>
             </div>
             <div class="modal-footer">
                <button type="button" class="btn btn-default addPreRequisiteContent" data-dismiss="modal" >Add</button>
@@ -861,10 +865,10 @@
                <h4 class="modal-title">About course</h4>
             </div>
             <div class="modal-body">
-               <textarea class="ckeditor form-control" name="about" id="about" rows="5" ><?php echo isset($course_data)&&isset($course_data['about'])?$course_data['about']:''; ?></textarea>
+               <textarea class="ckeditor form-control" name="about" rows="5"><?php echo isset($course_data['about'])?$course_data['about']:''; ?></textarea>
             </div>
             <div class="modal-footer">
-               <button type="button" class="btn btn-default addCourseContent" data-dismiss="modal" >Add</button>
+               <button type="button" class="btn btn-default addCourseContent" data-dismiss="modal">Add</button>
                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
          </div>
@@ -892,7 +896,7 @@
       </div>
    </div>
 </div>
-<form id="form_library_insert" action="<?=base_url()?>instructor/coursecreation/insert_library" method="post" target="blank_iframe">
+<form id="form_library_insert" action="<?=base_url()?>admin/coursecreation/insert_library" method="post" target="blank_iframe">
    <input type="hidden" id="course_id" name="course_id" value="<?php (isset($course_id)) ? print $course_id:print '0';?>">
    <input type="hidden" id="course_price" name="course_price" value="<?php (isset($course_price)) ? print $course_price:print '0';?>">
    <input type="hidden" id="select_id" name="chapter_id" value="0">
@@ -918,7 +922,7 @@
            $('#state').html('<option value="">Select State</option>');
 		   $('#city').html('<option value="">Select City</option>');
            $.ajax({
-               url: "<?=base_url()?>instructor/coursecreation/getStateById",
+               url: "<?=base_url()?>admin/coursecreation/getStateById",
                type: 'POST',
                dataType: 'JSON',
                data: {'country': CountryID},
@@ -938,7 +942,7 @@
            var appendrow2 = '';
            $('#city').html('<option value="">Select State</option>');
            $.ajax({
-               url: "<?=base_url()?>instructor/coursecreation/getCityById",
+               url: "<?=base_url()?>admin/coursecreation/getCityById",
                type: 'POST',
                dataType: 'JSON',
                data: {'state': StateID},
@@ -981,12 +985,13 @@
 			$('#course_type_demand_date').show();
 			$('#course_self_div').show();
 			$('#course_time_div').hide();
+            $('select[name=course_self_time]').val("Self Pace");
 		}else{
 			$('#course_self_div').hide();
 			$('#course_time_div').show();
 			$('#course_type_demand_date').hide();
+            $('select[name=course_self_time]').val("Time Restricted");
 		}
-
 		if(type == 1 || type == 2){
 			$('#course_type_div').hide();
 			$('#course_type_div_online').show();
@@ -996,6 +1001,17 @@
 		}
 	});
 	jQuery(document).ready(function() {
+        $('input[type=radio][name="pay_type"]').change(function() {
+            if($(this).val() == 0){
+                $('#discount').val('100');
+                $('#discount').prop('readonly', true);
+                $('#amount').val(0);
+            }else{
+                $('#discount').val('0');
+                $('#discount').prop('readonly', false);
+            }
+                
+        });
 		getCategoryTitle();
 		$('.form_datetime').change(function() {
 			var date = $(this).val();
@@ -1003,7 +1019,7 @@
 			var pageTitle = $('#text_from_title').val();
 			   $.ajax({
 				type: "POST",
-				url: "<?=base_url()?>instructor/coursecreation/saveSessionDateTime", 
+				url: "<?=base_url()?>admin/coursecreation/saveSessionDateTime", 
 				data: {"dateTime":date,"courseId":courseId,"pageTitle":pageTitle},
 				success: function (data) {
 					
@@ -1019,7 +1035,7 @@
    		var pageTitle = $('#text_from_title').val();
    		$.ajax({
    			type: "POST",
-   			url: "<?=base_url()?>instructor/coursecreation/removeSessionDateTime",  
+   			url: "<?=base_url()?>admin/coursecreation/removeSessionDateTime",  
    			data: {"courseId":courseId,"pageTitle":pageTitle},
    			success: function (data) {
    				if(data == 1){
@@ -1128,7 +1144,7 @@
    $("#quiz_chapter_id").change(function(){
    $.ajax({
    type: "POST",
-   url: "<?=base_url()?>instructor/coursecreation/getPageByChapterId",
+   url: "<?=base_url()?>admin/coursecreation/getPageByChapterId",
    data: {"chapter_id":Number($(this).val())},
    success: function (data, status, xhr) {
        var html = "<option value='0' selected>none</option>";
@@ -1172,7 +1188,7 @@
    
    if (class_name_setting.indexOf("active") > 0){   ////////////////////////////Setting////////////////////////////
        $.ajax({
-           url: $('#base_url').val()+'instructor/coursecreation/save_course_setting',
+           url: $('#base_url').val()+'admin/coursecreation/save_course_setting',
            type: 'POST',
            data: formData,
            processData:false,
@@ -1204,19 +1220,21 @@
    
    if (class_name_profile.indexOf("active") > 0){   ////////////////////////////Profile////////////////////////////
        var price = $("#payy_pricee").val();
-   alert("11");
-       $.ajax({
-           url: $('#base_url').val()+'instructor/coursecreation/save_course_profile?price='+price,
+        $.ajax({
+           url: $('#base_url').val()+'admin/coursecreation/save_course_profile?price='+price,
            type: 'POST',
            data: formData,
-           processData:false,
-           contentType: false,
+        //    processData:false,
+        //    contentType: false,
            success: function (data, status, xhr) {
-               new PNotify({
-                   title: '<?php echo $term['success']; ?>',
-                   text: '<?php echo 'Successfully Save Profile'; ?>',
-                   type: 'success'
-               });
+                if(data.success == 'false'){
+                    new PNotify({
+                        title: 'Failed',
+                        text: data.msg,
+                        type: 'error'
+                    });
+                }
+               
            },
            error: function(){
                $("#sendBtn").trigger('loading-overlay:hide');
@@ -1226,7 +1244,7 @@
                    type: 'error'
                });
            }
-       });
+        });
    }
    
    });
@@ -1244,12 +1262,43 @@
        }
    });
    
-   $w4finish.on('click', function (ev) {
-   ev.preventDefault();
-   var price = $("#payy_pricee").val();
-   $("#form_course").attr("action", "<?=base_url()?>instructor/coursecreation/save_course_profile?price="+price);
-   $("#form_course").submit();
-   });
+    $w4finish.on('click', function (ev) {
+        ev.preventDefault();
+        var formData = new FormData($('#form_course')[0]);
+        var price = $("#payy_pricee").val();
+        $.ajax({
+           url: $('#base_url').val()+'admin/coursecreation/save_course_profile?price='+price,
+           type: 'POST',
+           data: formData,
+           processData:false,
+           contentType: false,
+           success: function (data, status, xhr) {
+                if(!data.success){
+                    new PNotify({
+                        title: 'Failed',
+                        text: data.msg,
+                        type: 'error'
+                    });
+                }else{
+                    new PNotify({
+                        title: 'Success',
+                        text: data.msg,
+                        type: 'success'
+                    });
+                }
+                // window.location.href= '<?php echo base_url() ?>admin/coursecreation/getList';
+               
+           },
+           error: function(){
+               $("#sendBtn").trigger('loading-overlay:hide');
+               new PNotify({
+                   title: '<?php echo $term['error']; ?>',
+                   text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
+                   type: 'error'
+               });
+           }
+        });
+    });
    
     
    $('#w4').bootstrapWizard({
@@ -1321,7 +1370,7 @@
    "ajax": {
        "type": "POST",
        "async": true,
-       "url": "<?=base_url()?>instructor/coursecreation/getinstructor",
+       "url": "<?=base_url()?>admin/coursecreation/getinstructor",
        "data": '',
        "dataSrc": "data",
        "dataType": "json",
@@ -1366,7 +1415,7 @@
    "ajax": {
        "type": "POST",
        "async": true,
-       "url": "<?=base_url()?>instructor/coursecreation/getuser",
+       "url": "<?=base_url()?>admin/coursecreation/getuser",
        "data": '',
        "dataSrc": "data",
        "dataType": "json",
@@ -1493,8 +1542,8 @@
    });
    
    });
-   
-   <!--------------------------------------------->
+    
+	<!--------------------------------------------->
 	 $(".file-upload2").on('change', function(){
 		if (this.files && this.files[0]) {
 			var reader = new FileReader();
@@ -1577,17 +1626,15 @@
    add_new_chap = add_new_detail = '';
    
    $('.create-exam').magnificPopup({
-   type: 'inline',
-   preloader: false,
-   modal: true,
-   
-   // When elemened is focused, some mobile browsers in some cases zoom in
-   // It looks not nice, so we disable it:
-   callbacks: {
-   beforeOpen: function() {
-   
-   }
-   }
+    type: 'inline',
+    preloader: false,
+    modal: true,
+    
+    // When elemened is focused, some mobile browsers in some cases zoom in
+    // It looks not nice, so we disable it:
+    callbacks: {
+        beforeOpen: function() {}
+    }
    });
    
    $('.create-page').magnificPopup({
@@ -1637,7 +1684,7 @@
    if($('.modal-create-confirm').html().indexOf('<?=$term["create"]?>') >= 0)
    {
    $.ajax({
-       url: $('#base_url').val()+'instructor/coursecreation/save_exam_page',
+       url: $('#base_url').val()+'admin/coursecreation/save_exam_page',
        type: 'POST',
        data: {'chapter_id':$('#chapter_id').val(),
            'course_id':$('#course_id').val(),
@@ -1652,7 +1699,7 @@
                type: 'success'
            });
            $.magnificPopup.close();
-           viewList();
+        //    viewList();
        },
        error: function(){
            $("#sendBtn").trigger('loading-overlay:hide');
@@ -1667,7 +1714,7 @@
    else
    {
    $.ajax({
-       url: $('#base_url').val()+'instructor/coursecreation/update_exam_page',
+       url: $('#base_url').val()+'admin/coursecreation/update_exam_page',
        type: 'POST',
        data: {'chapter_id':$('#chapter_id').val(),
            'exam_id':$('#exam_id').val(),
@@ -1702,7 +1749,7 @@
    if($('.modal-create-quiz').html().indexOf('<?=$term["create"]?>') >= 0)
    {
    $.ajax({
-       url: $('#base_url').val()+'instructor/coursecreation/save_quiz_page',
+       url: $('#base_url').val()+'admin/coursecreation/save_quiz_page',
        type: 'POST',
        data: {'chapter_id':$('#quiz_chapter_id').val(),
            'course_id':$('#course_id').val(),
@@ -1734,7 +1781,7 @@
    {
    $('#quiz_chapter_id').prop('disabled', false);
    $.ajax({
-       url: $('#base_url').val()+'instructor/coursecreation/update_quiz_page',
+       url: $('#base_url').val()+'admin/coursecreation/update_quiz_page',
        type: 'POST',
        data: {'page_id':$('#page_id').val(),
            'quiz_id':$('#quiz_id').val(),
@@ -1812,7 +1859,7 @@
    function view_function(formData, functionName, className){
    
    if(functionName == 'view_chapter_and_page'){
-   var url = "<?php echo base_url() ?>instructor/coursecreation/"+functionName;
+   var url = "<?php echo base_url() ?>admin/coursecreation/"+functionName;
    $.ajax({
        url: url,
        type: 'POST',
@@ -1828,7 +1875,7 @@
    }
    
    if(functionName == 'view_chapter'){
-   var url = "<?php echo base_url() ?>instructor/coursecreation/"+functionName;
+   var url = "<?php echo base_url() ?>admin/coursecreation/"+functionName;
    $.ajax({
        url: url,
        type: 'POST',
@@ -1849,7 +1896,7 @@
    }
    
    if(functionName == 'view_chapter_page'){
-   var url = "<?php echo base_url() ?>instructor/coursecreation/"+functionName;
+   var url = "<?php echo base_url() ?>admin/coursecreation/"+functionName;
    $.ajax({
        url: url,
        type: 'POST',
@@ -1871,7 +1918,7 @@
    }
    
    if(functionName == 'view_exam_page'){
-   var url = "<?php echo base_url() ?>instructor/coursecreation/"+functionName;
+   var url = "<?php echo base_url() ?>admin/coursecreation/"+functionName;
    $.ajax({
        url: url,
        type: 'POST',
@@ -1892,7 +1939,7 @@
    }
    
    if(functionName == 'view_quiz_page'){
-   var url = "<?php echo base_url() ?>instructor/coursecreation/"+functionName;
+   var url = "<?php echo base_url() ?>admin/coursecreation/"+functionName;
    $.ajax({
        url: url,
        type: 'POST',
@@ -1926,7 +1973,7 @@
    }
    
    if(functionName == 'view_only_chapter_page'){
-   var url = "<?php echo base_url() ?>instructor/coursecreation/"+functionName;
+   var url = "<?php echo base_url() ?>admin/coursecreation/"+functionName;
    $.ajax({
        url: url,
        type: 'POST',
@@ -1946,7 +1993,7 @@
    }
    
    if (functionName == 'view_only_chapter_page1'){
-   var url = "<?php echo base_url() ?>instructor/coursecreation/"+functionName;
+   var url = "<?php echo base_url() ?>admin/coursecreation/"+functionName;
    $.ajax({
        url: url,
        type: 'POST',
@@ -1967,7 +2014,7 @@
    }
    
    function single_view_function(formData, functionName, className){
-   var url = "<?php echo base_url() ?>instructor/coursecreation/"+functionName;
+   var url = "<?php echo base_url() ?>admin/coursecreation/"+functionName;
    $.ajax({
    url: url,
    type: 'POST',
@@ -1990,7 +2037,7 @@
    function btnCreateChapter(){
    create_type = "chapter";
    $.ajax({
-   url: "<?php echo base_url() ?>instructor/coursecreation/create_temp_chapter",
+   url: "<?php echo base_url() ?>admin/coursecreation/create_temp_chapter",
    type: 'POST',
    data: {'course_id':$('#course_id').val()},
    dataType : 'json',
@@ -2022,7 +2069,7 @@
    function btnCreatePage(){
    create_type = "page";
    $.ajax({
-   url: '<?php echo base_url() ?>instructor/coursecreation/create_temp_page',
+   url: '<?php echo base_url() ?>admin/coursecreation/create_temp_page',
    type: 'POST',
    data: {'course_id':$('#course_id').val(), 'page_type':$('#page_type').val()},
    dataType : 'json',
@@ -2052,7 +2099,7 @@
    loaderStart();
    
    $.ajax({
-   url: '<?php echo base_url() ?>instructor/coursecreation/create_temp_page_id',
+   url: '<?php echo base_url() ?>admin/coursecreation/create_temp_page_id',
    type: 'POST',
    data: {'parent':$('#chapter_id').val(), 'course_id':$('#course_id').val(), 'page_type':$('#page_type_with').val()},
    dataType : 'json',
@@ -2133,8 +2180,7 @@
            newList = oldList = ui.item.parent().parent();
            ui.item.startPos = ui.item.index();
        },
-       stop: function(event, ui) {
-   
+       stop: function(event, ui){   
            var chap_id = ui.item.attr('data-cid');
            var start_pos = ui.item.startPos;
            var new_pos = ui.item.index();
@@ -2187,13 +2233,13 @@
    
    //onhover
    $( ".items" ).hover(
-   function() {
-   
-       $( this ).prepend( $( '<span style=" width: 20%; float:right; margin-right:-250px; border: 1px solid;margin: auto;padding: 0px 5px 8px 3px; background: #fbfbfb;border-color: #d7d7d7; float:right; margin-left:20px">'+
-	   		' <a href="javascript:void(0)" onclick="statusFun(this);" style="font-size:10px">'+$(this).closest('li').attr("data-status")+'</a>'+
-           ' <a href="javascript:void(0)" onclick="editFun(this);" style="font-size:10px"><img src="<?php echo base_url()?>assets/img/edit.png" style="width:12%"> Edit Page</a>'+
+   function(){
+	      
+       $(this).prepend( $('<span style=" width: 20%; float:right; margin-right:-250px; border: 1px solid;margin: auto;padding: 0px 5px 8px 3px; background: #fbfbfb;border-color: #d7d7d7; float:right; margin-left:20px">'+
+           ' <a href="javascript:void(0)" onclick="statusFun(this);" class="datastatusattrib" style="font-size:10px">'+$(this).closest('li').attr("data-status")+'</a>'+
+		   ' <a href="javascript:void(0)" onclick="editFun(this);" style="font-size:10px"><img src="<?php echo base_url()?>assets/img/edit.png" style="width:12%"> Edit Page</a>'+
            ' <a href="javascript:void(0)" onclick="removeFun(this);" style="font-size:10px"><img src="<?php echo base_url()?>assets/img/garbage.png" style="width:12%">Delete Page</a>'+
-           '</span>' ) );
+           '</span>') );
    }, function() {
        $( this ).find( "span:last" ).remove();
    }
@@ -2201,49 +2247,50 @@
    
    }
    
-   function statusFun(elm){
-	   loaderStart();
-	   var rowstatus = 'Deactivate';
-	   var pageid = $(elm).closest('li').attr("data-id");
-	   var chapid = $(elm).closest('li').attr("data-cid");
-	   if(pageid !='' && pageid > 0)  {
+function statusFun(elm){
+   loaderStart();
+   var rowstatus = 'Deactivate';
+   var pageid = $(elm).closest('li').attr("data-id");
+   var chapid = $(elm).closest('li').attr("data-cid");
+   var chapstatus = $(elm).closest('li').attr("data-status");
+   if(pageid !='' && pageid > 0)  {
+   
+	   $('#page_id').val(pageid);
+	   chapter_id = pageid;
 	   
-		   $('#page_id').val(pageid);
-		   chapter_id = pageid;
-		   
-		   $.ajax({
-			   url: $('#base_url').val()+'admin/demand/update_row',
-			   type: 'POST',
-			   data: {'page_id':pageid},
-			   success: function (data, status, xhr){
-					if(data == 0){
-						rowstatus = 'Activate';
-					}			  	
-					$(elm).closest('li').attr("data-status",rowstatus);
-					alert("Status change successfully"); 
-			   },
-		   });
-		   
-		}else{
-		   
-		   $('#chapter_id').val(chapid);
-		   chapter_id = chapid;
-		   
-		   $.ajax({
-			   url: $('#base_url').val()+'admin/demand/update_row',
-			   type: 'POST',
-			   data: {'page_id':chapid},
-			   success: function (data, status, xhr){
-					if(data == 0){
-						rowstatus = 'Activate';
-					}			  	
-					$(elm).closest('li').attr("data-status",rowstatus);
-					alert("Status change successfully"); 
-				   },
-		   });
-		   
-		}
-	}
+	   $.ajax({
+		   url: $('#base_url').val()+'admin/coursecreation/update_row',
+		   type: 'POST',
+		   data: {'page_id':pageid},
+		   success: function (data, status, xhr){			   	
+			   	if(data == 0){
+					rowstatus = 'Activate';
+				}			  	
+				$(elm).closest('li').attr("data-status",rowstatus);
+				alert("Status change successfully"); 
+		   },
+	   });
+	   
+	}else{
+	   
+	   $('#chapter_id').val(chapid);
+	   chapter_id = chapid;
+	   
+	   $.ajax({
+		   url: $('#base_url').val()+'admin/coursecreation/update_row',
+		   type: 'POST',
+		   data: {'page_id':chapid},
+		   success: function (data, status, xhr){
+			   	if(data == 0){
+					rowstatus = 'Activate';
+				}			  	
+				$(elm).closest('li').attr("data-status",rowstatus);
+				alert("Status change successfully"); 
+		   },
+	   });
+	   
+   	}
+}
    
    function editFun(elm){
    loaderStart();
@@ -2255,7 +2302,7 @@
    chapter_id = pageid;
    
    $.ajax({
-       url: $('#base_url').val()+'instructor/coursecreation/check_exam_page',
+       url: $('#base_url').val()+'admin/coursecreation/check_exam_page',
        type: 'POST',
        data: {'page_id':pageid},
        success: function (data, status, xhr) {
@@ -2274,7 +2321,7 @@
    chapter_id = chapid;
    
    $.ajax({
-       url: $('#base_url').val()+'instructor/coursecreation/check_exam_page',
+       url: $('#base_url').val()+'admin/coursecreation/check_exam_page',
        type: 'POST',
        data: {'page_id':chapid},
        success: function (data, status, xhr) {
@@ -2467,23 +2514,22 @@
    }
    
    function chapter_view(cid){
-   $.ajax({
-   url: '<?php echo base_url() ?>instructor/coursecreation/getSessionDateTime',
-   type: 'POST',
-   data: {'id':cid},
-   dataType : 'json',
-   success: function(data){
-       var len = data.length;
-               for(var i=0; i<len; i++){
-   				var session_dateTime = data[i].session_dateTime;
-   				if(session_dateTime){
-   					document.getElementById("form_datetimeId").value = session_dateTime;
-   				}else{
-   					document.getElementById("form_datetimeId").value = '';
-   				}
-   				
-   			}
-   } 
+	$.ajax({
+		url: '<?php echo base_url() ?>admin/coursecreation/getSessionDateTime',
+		type: 'POST',
+		data: {'id':cid},
+		dataType : 'json',
+		success: function(data){
+		var len = data.length;
+			for(var i=0; i<len; i++){
+				var session_dateTime = data[i].session_dateTime;
+				if(session_dateTime){
+					document.getElementById("form_datetimeId").value = session_dateTime;
+				}else{
+					document.getElementById("form_datetimeId").value = '';
+				}				
+			}
+		} 
    });
    create_type = "chapter";
    
@@ -2592,7 +2638,7 @@
    function save_function(formData, functionName, className){
    
    if($('#state_now').val() == 'page'){
-   var url = "<?php echo base_url() ?>instructor/coursecreation/"+functionName;
+   var url = "<?php echo base_url() ?>admin/coursecreation/"+functionName;
    $.ajax({
        url: url,
        type: 'POST',
@@ -2614,7 +2660,7 @@
    
    }
    if($('#state_now').val() == 'chapter'){
-   var url = "<?php echo base_url() ?>instructor/coursecreation/"+functionName;
+   var url = "<?php echo base_url() ?>admin/coursecreation/"+functionName;
    $.ajax({
        url: url,
        type: 'POST',
@@ -2637,7 +2683,7 @@
        $('.box_area2').removeClass('box_area1');
        $('.box_area2').html('');
    }
-   var url = "<?php echo base_url() ?>instructor/coursecreation/"+functionName;
+   var url = "<?php echo base_url() ?>admin/coursecreation/"+functionName;
    $.ajax({
        url: url,
        type: 'POST',
@@ -2658,7 +2704,7 @@
    
    function delete_self(){
    $.ajax({
-   url: '<?php echo base_url() ?>instructor/coursecreation/delete_self',
+   url: '<?php echo base_url() ?>admin/coursecreation/delete_self',
    type: 'POST',
    data: {'create_chapter':'chapter', 'course_id':$('#course_id').val()},
    dataType : 'json',
@@ -2682,7 +2728,7 @@
    
    function delete_self_page(){
    $.ajax({
-   url: '<?php echo base_url() ?>instructor/coursecreation/delete_self_page',
+   url: '<?php echo base_url() ?>admin/coursecreation/delete_self_page',
    type: 'POST',
    data: {'create_chapter':'chapter','course_id':$('#course_id').val()},
    dataType : 'json',
@@ -2726,7 +2772,7 @@
    function save_now(){
    loaderStart();
    
-   var url = "<?php echo base_url() ?>instructor/coursecreation/update_chapter_detail";
+   var url = "<?php echo base_url() ?>admin/coursecreation/update_chapter_detail";
    $.ajax({
    url: url,
    type: 'POST',
@@ -2746,7 +2792,7 @@
    function addblackchapter(){
    
    formData = "activity=page_available&course_id="+$('#course_id').val();
-   var url = "<?php echo base_url() ?>instructor/coursecreation/page_available";
+   var url = "<?php echo base_url() ?>admin/coursecreation/page_available";
    $.ajax({
    url: url,
    type: 'POST',
@@ -2767,22 +2813,22 @@
    });
    }
    
-   function viewList() {
-   window.location.href= '<?php echo base_url() ?>instructor/coursecreation/edit_course_tab/'+$('#course_id').val()+'/2';
-   }
-   
-   function btn_func(id){
-   $('.cpPage_btn').removeClass('active');
-   $('input').removeClass('active');
-   $('.cptitle_btn').attr('type', 'radio');
-   $('.cpPage_btn').attr('type', 'radio');
-   
-   $('#'+id).addClass('active');
-   }
+    function viewList() {
+        window.location.href= '<?php echo base_url() ?>admin/coursecreation/edit_course_tab/'+$('#course_id').val()+'/2';
+    }
+
+    function btn_func(id){
+        $('.cpPage_btn').removeClass('active');
+        $('input').removeClass('active');
+        $('.cptitle_btn').attr('type', 'radio');
+        $('.cpPage_btn').attr('type', 'radio');
+        
+        $('#'+id).addClass('active');
+    }
    
    function page_updated(){
    formData = "activity=update_chapterpage_detail&course_id="+$('#course_id').val();
-   var url = "<?php echo base_url() ?>instructor/coursecreation/update_page_detail";
+   var url = "<?php echo base_url() ?>admin/coursecreation/update_page_detail";
    $.ajax({
    url: url,
    type: 'POST',
@@ -2822,7 +2868,7 @@
    
    var library_form_data = new FormData($("#form_library_insert")[0]);
    $.ajax({
-       url:  '<?=base_url()?>instructor/coursecreation/insert_library',
+       url:  '<?=base_url()?>admin/coursecreation/insert_library',
        type: 'POST',
        data: library_form_data,
        processData:false,
@@ -2912,7 +2958,7 @@
    });
    
    $('#category_id').on('change',function(){
-   		get_standard_list($('#category_id').val());
+   get_standard_list($('#category_id').val());
    });
    //get_standard_list($("#category_id option:selected" ).val());
    function get_standard_list(id){
@@ -2935,5 +2981,25 @@
    
    
    }
-   
+
+    function changePrice(){
+        var tax_type = $("#tax_type").val();
+        var tax_rate = $("#tax_rate").val();
+        var discount = $("#discount").val();
+        var price = $("#payy_pricee").val();
+        var cost = 0;
+        if(price == 0){
+            alert("Input price first");
+            return;
+        }
+        cost = price * (100 - Number(discount))/100;
+        if(tax_type == 1){
+            cost = Number(cost) + Number(tax_rate);
+        }else{
+            cost = Number(cost) * (1 + Number(tax_rate)/100);
+        }
+        
+        $('#amount').val(cost);
+
+    }
 </script>

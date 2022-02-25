@@ -985,12 +985,13 @@
 			$('#course_type_demand_date').show();
 			$('#course_self_div').show();
 			$('#course_time_div').hide();
+            $('select[name=course_self_time]').val("Self Pace");
 		}else{
 			$('#course_self_div').hide();
 			$('#course_time_div').show();
 			$('#course_type_demand_date').hide();
+            $('select[name=course_self_time]').val("Time Restricted");
 		}
-		
 		if(type == 1 || type == 2){
 			$('#course_type_div').hide();
 			$('#course_type_div_online').show();
