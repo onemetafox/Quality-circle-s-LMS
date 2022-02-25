@@ -421,7 +421,7 @@ class Settings extends BaseController {
     public function get_trans_seletable_lang_list(){
         $searchstr = $_REQUEST['term'];
         $where["add_flag"] = 0;
-        $result = $"this"->Translate_model->getLanguageList($where, $searchstr);
+        $result = $this->Translate_model->getLanguageList($where, $searchstr);
         $this->response(array("results" => $result["data"]));
     }
     
