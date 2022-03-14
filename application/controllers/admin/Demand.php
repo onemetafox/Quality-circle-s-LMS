@@ -2,9 +2,9 @@
 
 require APPPATH . '/libraries/BaseController.php';
 // require APPPATH . '/third_party/PHPExcel.php';
-// require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
-// include_once (APPPATH . '/third_party/iio/index.php');
-// require APPPATH . '/libraries/FPDI/fpdi.php';
+require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
+include_once (APPPATH . '/third_party/iio/index.php');
+require APPPATH . '/libraries/FPDI/fpdi.php';
 // require APPPATH . 'third_party/woocommerce/autoload.php';
 // use Automattic\WooCommerce\Client;
 // use Automattic\WooCommerce\HttpClient\HttpClientException;
