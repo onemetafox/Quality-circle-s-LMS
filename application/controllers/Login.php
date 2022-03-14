@@ -114,7 +114,7 @@ class Login extends BaseController{
     	if($this->input->post('email') && $this->input->post('password')){
     		if(filter_var($this->input->post('email'), FILTER_VALIDATE_EMAIL)){
                 $email = $this->input->post('email');
-    			$password = md5($this->input->post('password'));
+    			$password = $this->input->post('password');
                 $visitorInfo = $this->ip_info("Visitor", "Location");
                 $this->load->library('user_agent');
                 $visitorInfo['browser'] = $this->agent->browser();
@@ -129,13 +129,13 @@ class Login extends BaseController{
                         $result['msg'] = 'Please verify your email to start login!!!';
                     }else{
 						$OTPLogin = $this->Settings_model->getSiteConfiguration('id',1);
-						if($OTPLogin['otp_login'] == 1){							
+						if($OTPLogin['otp_login'] == 1){
 							$data = $res;
 							$otp = rand(11111,99999);
 							$security_key = md5($res->email);
-							if($res->email == 'owenglave46@gmail.com' || $res->email == 'owen.glave@qualitycircleint.com' || $res->email == 'oglave_13@yahoo.com' || $res->email == 'support@qualitycircleint.com'){
+							/*if($res->email == 'owenglave46@gmail.com' || $res->email == 'owen.glave@qualitycircleint.com' || $res->email == 'oglave_13@yahoo.com' || $res->email == 'support@qualitycircleint.com'){
 								$otp = 12345;		
-							}
+							}*/
 							
 							$explodeVerification = explode(',',$OTPLogin['verify_by']);
 							$emailVerification = $phoneNumberVerification = 'No';
@@ -191,7 +191,7 @@ class Login extends BaseController{
             }
         }else {
             $result['msg'] = 'Please provide Email and Password!';
-        } 
+        }
 
         $this->output
         ->set_status_header(200)
@@ -208,7 +208,7 @@ class Login extends BaseController{
     	if($email && $password){
     		if(filter_var($email, FILTER_VALIDATE_EMAIL)){
     			$email = $email;
-    			$password = md5($password);
+    			$password = $password;
                 $visitorInfo = $this->ip_info("Visitor", "Location");
                 $this->load->library('user_agent');
                 $visitorInfo['browser'] = $this->agent->browser();
@@ -321,8 +321,8 @@ class Login extends BaseController{
             if(!empty($result[0])){             
                 $email = $result[0]->email;
                 $password = $result[0]->password;
-            } 
-            $response = $this->Login_model->loginMe($email, $password);
+            }
+            $response = $this->Login_model->loginMe($email, $password, false, true);
             if($response['result'] == true){
                 $res = $response['user'][0];
                 if($res->is_active == 0){                    
@@ -528,7 +528,7 @@ class Login extends BaseController{
         if($this->input->post('email')!='' && $this->input->post('password') != ''){
             if(filter_var($this->input->post('email'), FILTER_VALIDATE_EMAIL)){
                 $email = $this->input->post('email');
-                $password = md5($this->input->post('password'));
+                $password = $this->input->post('password');
                 $response = $this->Login_model->loginMe($email, $password);
                 if($response['result'] == true)
                 {
@@ -813,7 +813,7 @@ class Login extends BaseController{
                 $this->session->set_flashdata('invalid', $this->term['passwordnotmatch']);
                 redirect(base_url("/resetPasswordConfirmUser/".$token));
             }
-            $admin_data['password'] = md5($this->input->post('password'));
+            $admin_data['password'] = getHashedPassword($this->input->post('password'));
             $this->User_model->update($admin_data, array('id'=>$data->user_id));
             $this->Settings_model->sendRemeberPassEmail($data->user_id, $pass);
             $result["type"] = 1;
@@ -885,7 +885,7 @@ class Login extends BaseController{
 
     public function validuser(){
         $email = $this->session->get_userdata()['email'];
-        $password = md5($this->input->post('password'));
+        $password = $this->input->post('password');
         $response = $this->Login_model->loginMe($email, $password);
         echo json_encode($response);
     }
@@ -915,7 +915,7 @@ class Login extends BaseController{
 			$data["country_code"] = $this->input->post('country_code');
 			$data["phone"] = $this->input->post('phone');
             $data["email"] = $this->input->post('email');
-            $data["password"] = md5($this->input->post('password'));
+            $data["password"] = getHashedPassword($this->input->post('password'));
             $data["user_type"] = $this->input->post('user_type');
             $pool = '0123456789';
             $api_key = substr(str_shuffle(str_repeat($pool, ceil(10 / strlen($pool)))), 0, 10);
@@ -929,14 +929,6 @@ class Login extends BaseController{
                 $insert_company_data['name'] = $data["organization"];
                 $insert_company_id = $this->Company_model->insert($insert_company_data);
                 $data["company_id"] = $insert_company_id;
-                /*start send_email*/
-
-                // $this->load->library('email');
-                // $email_temp = $this->getEmailTemp('welcome_email',$data['company_id']);
-                // $from_email = $this->getSuperEmailAddress();
-                // $email_class  = new Email();
-                // $email_class->send_email($data['email'],$email_temp['subject'],$email_temp['message'],$from_email);
-                /*end send_email*/
             }else{
                 $data["company_id"] = $this->input->post('company_id');
             }   
@@ -1105,7 +1097,7 @@ class Login extends BaseController{
             $errors = validation_errors();
             echo json_encode(['error'=>$errors]);
         }else{
-            $password     = md5($this->input->post('password'));
+            $password     = getHashedPassword($this->input->post('password'));
 
             $user_type    = $this->input->post('user_type');
 
@@ -1209,7 +1201,7 @@ class Login extends BaseController{
 		try{
 			$phonenumber = $phone;
 			$sid = 'AC8aa28cf11da6af828155fe1d0aa0e543';
-			$token = 'd28cf16b6d7de6d9d40ca224977bb01a';
+			$token = '8b20e2b103093ee5d5c447a7ca20d399';
 			 
 			$client = new Client($sid, $token);		
 			// Use the client to do fun stuff like send text messages!								

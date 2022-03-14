@@ -121,11 +121,11 @@ class User extends BaseController {
             }
         }
         $same_company_count = $this->User_model->count(array('user_type' => 'Admin', 'company_id' => $insert_data['company_id']));
-        if ($same_company_count > 0) {
-            $result['msg'] = 'The same administrator of company that you select is already existed!';
-            $result['success'] = FALSE;
-            $this->response($result);
-        }
+        // if ($same_company_count > 0) {
+        //     $result['msg'] = 'The same administrator of company that you select is already existed!';
+        //     $result['success'] = FALSE;
+        //     $this->response($result);
+        // }
         $plan_id = $this->input->post('plan_id');
         if (!isset($plan_id) || $plan_id == 0) {
             unset($insert_data['plan_id']);
@@ -147,7 +147,9 @@ class User extends BaseController {
             }
         }
         unset($insert_data['id']);
-        $insert_data['password'] = md5($this->input->post('password'));
+        if (!empty(trim($this->input->post('password')))) {
+            $insert_data['password'] = getHashedPassword($this->input->post('password'));
+        }
         $pool = '0123456789';
         $api_key = substr(str_shuffle(str_repeat($pool, ceil(10 / strlen($pool)))), 0, 10);
         $insert_data['api_key'] = $api_key;
@@ -251,11 +253,11 @@ class User extends BaseController {
         }
         
         $same_company_count = $this->User_model->count(array('id !=' => $id, 'user_type' => 'Admin', 'company_id' => $update_data['company_id']));
-        if ($same_company_count > 0) {
-            $result['msg'] = 'The same administrator of company that you select is already existed!';
-            $result['success'] = FALSE;
-            $this->response($result);
-        }
+        // if ($same_company_count > 0) {
+        //     $result['msg'] = 'The same administrator of company that you select is already existed!';
+        //     $result['success'] = FALSE;
+        //     $this->response($result);
+        // }
         $plan_id = $this->input->post('plan_id');
         if (!isset($plan_id) || $plan_id == 0) {
             $update_data['plan_id'] = null;
@@ -279,7 +281,7 @@ class User extends BaseController {
         if ($this->input->post('password') == '') {
             unset($update_data['password']);
         } else {
-            $update_data['password'] = md5($this->input->post('password'));
+            $update_data['password'] = getHashedPassword($this->input->post('password'));
         }
         $this->User_model->update($update_data, array('id' => $id));
         $company = $this->Company_model->getRow($update_data['company_id']);

@@ -1,7 +1,7 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
 require APPPATH . '/libraries/BaseController.php';
-// require APPPATH . '/third_party/PHPExcel.php';
+require APPPATH . '/third_party/PHPExcel.php';
 /**
  * Created by PhpStorm.
  * User: Timon
@@ -170,9 +170,10 @@ class User extends BaseController
         $timestamp = strtotime($insert_data['birthday']);
         $date = date('Y-m-d', $timestamp);
         $insert_data['birthday'] = $date;
-
-        $insert_data['org_password'] = $this->input->post('password');
-        $insert_data['password'] = md5($this->input->post('password'));
+        if (!empty(trim($this->input->post('password')))) {
+            $insert_data['org_password'] = $this->input->post('password');
+            $insert_data['password'] = getHashedPassword($this->input->post('password'));
+        }
 
         $pool = '0123456789';
         $api_key = substr(str_shuffle(str_repeat($pool, ceil(10 / strlen($pool)))), 0, 10);
@@ -233,7 +234,7 @@ class User extends BaseController
         if($this->input->post('password') == ''){
             unset($update_data['password']);
         }else{
-            $update_data['password'] = md5($this->input->post('password'));
+            $update_data['password'] = getHashedPassword($this->input->post('password'));
         }
         $share = $this->input->post('share');
         if(isset($share)){

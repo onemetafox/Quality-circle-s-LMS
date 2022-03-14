@@ -158,7 +158,9 @@ class User extends BaseController {
         }
         if(!isset($insert_data['active'])) $insert_data['active'] = 0;
         unset($insert_data['id']);
-        $insert_data['password'] = md5($this->input->post('password'));
+        if(!empty(trim($this->input->post('password')))){
+            $insert_data['password'] = getHashedPassword($this->input->post('password'));
+        }
         $insert_data['company_id'] = $this->session->get_userdata() ['company_id'];
 		if($insert_data['user_type'] == 'Instructor'){
 			$insert_data['plan_id'] = $this->session->get_userdata() ['plan_id'];
@@ -227,10 +229,10 @@ class User extends BaseController {
 					$update_data[$key] = $value == 'on' ? 1 : 0;
 				}
 			}
-			if($this->input->post('password') == ''){
+			if(empty(trim($this->input->post('password')))){
 				unset($update_data['password']);
 			}else{
-				$update_data['password'] = md5($this->input->post('password'));
+				$update_data['password'] = getHashedPassword(trim($this->input->post('password')));
 			}			
 			$update_data['role'] = $this->input->post('role');
 			$update_data['country_code'] = $this->input->post('country_code');

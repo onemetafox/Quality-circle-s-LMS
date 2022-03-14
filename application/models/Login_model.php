@@ -104,7 +104,7 @@ class Login_model extends CI_Model
         }
     }
 	
-	function loginMe($email, $password, $remember=FALSE)
+	function loginMe($email, $password, $remember=FALSE, $viaOTP = false)
     {
         // echo $email;
         // echo $password;
@@ -130,9 +130,9 @@ class Login_model extends CI_Model
         $query = $this->db->get();
 
         $user = $query->result();
-		
+
 		if(!empty($user)){
-            if($password == $user[0]->password && $user[0]->active == "1"){
+            if(($viaOTP || verifyHashedPassword($password, $user[0]->password)) && $user[0]->active == "1"){
                 return array('result'=>true, 'user'=>$user);
             }else if($user[0]->active != "1"){
                 return array('result'=>false, 'msg'=>'Access denied!');
@@ -158,7 +158,7 @@ class Login_model extends CI_Model
         $user = $query->result();
 
         if(!empty($user)){
-            if($password == $user[0]->password && $user[0]->active == "1"){
+            if(verifyHashedPassword($password, $user[0]->password) && $user[0]->active == "1"){
                 return array('result'=>true, 'user'=>$user);
             }else if($user[0]->active != "1"){
                 return array('result'=>false, 'msg'=>'Access denied!');

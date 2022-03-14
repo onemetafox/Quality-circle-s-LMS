@@ -136,13 +136,11 @@ class Login extends BaseController
     	if($this->input->post('email') && $this->input->post('password')) {
     		if(filter_var($this->input->post('email'), FILTER_VALIDATE_EMAIL)) {
     			$email = $this->input->post('email');
-    			$password = md5($this->input->post('password'));
+    			$password = getHashedPassword($this->input->post('password'));
     			$response = $this->Login_model->loginMeCompany($email, $password, $company_name);
     			if($response['result'] == true)
     			{
-
                     $res = $response['user'][0];
-
                     if($res->is_active == 0) {
                         $result['msg'] = 'Please verify your email to start login!!!';
                     }
@@ -222,7 +220,7 @@ class Login extends BaseController
                 $data["last_name"] = $this->input->post('lastname');
                 $data["organization"] = $this->input->post('organization');
                 $data["email"] = $this->input->post('email');
-                $data["password"] = md5($this->input->post('password'));
+                $data["password"] = getHashedPassword($this->input->post('password'));
                 $data["user_type"] = 'Learner';
                 $data["company_id"] = $company_data['id'];
                 $data["is_active"] = 0;
