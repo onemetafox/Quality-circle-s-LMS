@@ -47,7 +47,7 @@
             if(grecaptcha.getResponse() != "") { 
                 $(".errormessage").text("Please Fill The Google Captcha");
                 return false;
-           } else {
+            } else {
                 var formdata 	= $('#login_frm').serialize();
                 var formAction 	= $('#login_frm').attr('action');
                 var msg 		= $('.errMsg');
