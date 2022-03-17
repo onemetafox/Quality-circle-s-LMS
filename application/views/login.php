@@ -44,10 +44,10 @@
     <script>
         $('#login_frm .signin').on('click', function(e){
             e.preventDefault();
-            if(grecaptcha.getResponse() != "") { 
-                $(".errormessage").text("Please Fill The Google Captcha");
-                return false;
-           } else {
+        //     if(grecaptcha.getResponse() != "") { 
+        //         $(".errormessage").text("Please Fill The Google Captcha");
+        //         return false;
+        //    } else {
                 var formdata 	= $('#login_frm').serialize();
                 var formAction 	= $('#login_frm').attr('action');
                 var msg 		= $('.errMsg');
@@ -81,7 +81,7 @@
                         }
                     }
                 });
-            }
+            // }
         });
     </script>
 </body>
