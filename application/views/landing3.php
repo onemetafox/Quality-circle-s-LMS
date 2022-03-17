@@ -46,8 +46,8 @@
 	        <li><a href="<?=base_url()?>contact">Contact Us</a></li>
 	        <!-- <li class="sign-up-btn"><a href="https://dev.gosmartacademy.com/login">Login</a><a href="https://dev.gosmartacademy.com/login">/Signup</a></li> -->
 	        <li class="sign-up-btn"><a href="<?=base_url()?>login">Login</a><a href="<?=base_url()?>login">/Signup</a></li>
-
-	    </ul>
+		
+		</ul>
 	  </div>
 	</nav>
   </section>
@@ -86,7 +86,7 @@
 			       					</div>
 			       					<div class="col-lg-9">
 			       						<div class="glob-1">
-			       							<p class="lms-q-1">Quality Circle's LMS</p>
+										   	<p class="lms-q-1">Quality Circle's LMS</p>
 			       							<input type="text" class="lms-q" placeholder="https://gosmartacademy.com/">
 			       						</div>
 			       					</div>
@@ -461,7 +461,7 @@
 		<div class="row cdn-cen">
 			<div class="col-lg-3" data-aos="fade-up" data-aos-duration="3000">
 				<div class="subscribe-section-btn">
-					<a href="<?=base_url()?>login"><button class="SUBSCRIBE-WITH">SUBSCRIBE WITH US</button></a>
+				<a href="<?=base_url()?>login"><button class="SUBSCRIBE-WITH">SUBSCRIBE WITH US</button></a>
 				</div>
 			</div>
 			<div class="col-lg-9">
@@ -560,7 +560,7 @@
 						<div class="module-2">
 							<p class="Enroll-Now-p">Virtual Instructor Led</p>
 							<p class="Enroll-Now-p-1">Time Restricted</p>
-							<img class="module-img" src="assets/landing/images/shado.png">
+													<img class="module-img" src="assets/landing/images/shado.png">
 						</div>
 					</a>
 				</div>
