@@ -49,15 +49,10 @@
 					</div><!--courseInfo-->
 					<div class="coursePrice">
 						<div class="row">
-							<div class="col-sm-3 col-xs-3">
-								<span class="price" style="font-size: 22px;">
-									<?= $course['pay_type'] == 0 ? 'Onsite Training' : '$'.number_format($course['amount'],2); ?>
-								</span>
-							</div>
 							<div class="col-sm-9 col-xs-9">
                                 <?php if(is_null($course['is_pay']['id'])){ ?>
 									<a href="<?=base_url($company['company_url'].'/demand/view/'.$course['id'])?>" style="margin-left:10px"class="btnBlue">View Detail</a>
-									<a style="margin-left:10px" href="javascript:enroll_virtual(<?= $course['id'] ?>,<?=$course['pay_type'] ?>,'<?= $course['virtual_course_time_id'] ?>','<?= $course['course_id'];?>', '/learner/demand')" class="btnBlue">Enroll Now</a>
+									<a style="margin-left:10px" href="javascript:enroll_virtual(<?= $course['id'] ?>,<?=$course['pay_type'] ?>,'<?= $course['virtual_course_time_id'] ?>', '/learner/demand')" class="btnBlue">Enroll Now</a>
                                 <?php }else {?>
                                     <a href="javascript:view_course_detail(<?= $course['id'] ?>,0)" class="btnBlue">Access Course</a>
                                 <?php }?>
@@ -127,11 +122,6 @@
                             </ul>
 						</div>
 						<div class="row coursePrice">
-							<div class="col-sm-3 col-xs-3">
-								<span class="price" style="font-size: 22px;">
-								<?= $course['pay_type'] == 0 ? 'Onsite Training' : '$'.$course['amount']; ?>
-								</span>
-							</div>
 							<?php if($course['pay_type']){
 									$pay = $course['pay_type'];
 								}else{
@@ -140,7 +130,7 @@
 							?>
 							<div class="col-sm-9 col-xs-9">
 								<a href="<?= base_url($company['company_url'].'/training/view/'.$course['time_id']) ?>" style="margin-left:10px" class="btnBlue">View Detail</a>
-								<a  style="margin-left:10px" href="javascript:enroll_virtual(<?= $course['id'] ?>,<?=$course['pay_type'] ?>,'<?= $course['virtual_course_time_id'] ?>',<?= $course['course_id']; ?>, '/learner/training')" class="btnBlue">Enroll Now</a>
+								<a  style="margin-left:10px" href="javascript:enroll_virtual(<?= $course['id'] ?>,<?=$course['pay_type'] ?>,'<?= $course['virtual_course_time_id'] ?>', '/learner/training')" class="btnBlue">Enroll Now</a>
 							</div>
 						</div><!--row-->
                     </div><!--courseBox-->
@@ -208,11 +198,6 @@
 					</div><!--courseInfo-->
 					<div class="coursePrice">
 						<div class="row">
-							<div class="col-sm-3 col-xs-3">
-								<span class="price" style="font-size: 22px;">
-								<?= $course['pay_type'] == 0 ? 'Onsite Training' : '$'.$course['amount']; ?>
-								</span>
-							</div>
 							<?php if($course['pay_type']){
 									$pay = $course['pay_type'];
 								}else{
@@ -221,7 +206,7 @@
 							?>
 							<div class="col-sm-9 col-xs-9">
 								<a href = "<?= base_url($company['company_url'].'/classes/view/'.$course['time_id'])?>" style="margin-left:10px" class="btnBlue">View Detail</a>
-                                <a href="javascript:enroll_virtual(<?= $course['id'] ?>,<?= $pay ?>,'<?= $course['time_id'] ?>',<?= $course['course_id']; ?>, '/learner/live')" class="btnBlue">Enroll Now</a>
+                                <a href="javascript:enroll_virtual(<?= $course['id'] ?>,<?= $pay ?>,'<?= $course['time_id'] ?>', '/learner/live')" class="btnBlue">Enroll Now</a>
 							</div>
 						</div><!--row-->
 					</div><!--coursePrice-->
@@ -302,84 +287,11 @@
         }
     }
 	
-	function enroll_virtual(id,pay_type,time_id,course_id, url){
+	function enroll_virtual(id,pay_type,time_id, url){
 		if(!isLogin){
 			showAcademyLogin(url);
 		}else{
 			window.location = "<?= base_url() ?>"+url
-			// if(pay_type == 1){
-			// 	if(user_type !== "Learner"){
-			// 		// window.location = "<?= VILT_URL?>"+id;
-			// 	}else{
-			// 		swal({
-			// 		  title: "You have to pay $99 to take part in this course",
-			// 		  buttons: true
-			// 		}).then((willDelete) => {
-			// 		  if (willDelete) {
-			// 			$.ajax({
-			// 				url: "<?= base_url() ?>learner/live/pay_course",
-			// 				type: 'POST',
-			// 				data: {'course_id':id,'time_id':time_id,'vilt_course_id':course_id},
-			// 				dataType : 'json',
-			// 				success: function(data){
-			// 					if(data == 'success') {
-			// 						swal({
-			// 						  title: "You have successfully enroll for this course!",
-			// 						});
-			// 						setTimeout(function(){ window.location.reload() }, 10000);
-			// 					}else{
-			// 						swal({
-			// 						  title: " Error!",
-			// 						});
-			// 					}
-										  
-			// 				}
-			// 			});
-			// 		  } else {
-			// 			// return;
-			// 		  }
-			// 		});
-	   
-			// 	}
-			// }else if(pay_type == 0){
-			// 	$.ajax({
-			// 		url: "<?= base_url() ?>admin/inviteuser/get_Inviteuser",
-			// 		type: 'POST',
-			// 		data: {
-			// 				'email':email,
-			// 				'type':'1',
-			// 				'course_id':id,
-			// 				'time_id':time_id
-			// 			},
-			// 		dataType : 'json',
-			// 		success: function(data){
-			// 			var cnt = data;
-			// 			if(cnt == 1) {
-			// 				$.ajax({
-			// 					url: "<?= base_url() ?>learner/live/pay_course",
-			// 					type: 'POST',
-			// 					data: {'course_id':id,'time_id':time_id,'vilt_course_id':course_id},
-			// 					dataType : 'json',
-			// 					success: function(data){
-			// 						if(data == 'success') {
-			// 							swal({
-			// 							  title: "You have successfully enroll for this course!",
-			// 							});
-			// 							setTimeout(function(){ window.location.reload() }, 10000);
-			// 						}else{
-			// 							swal({
-			// 							  title: " Error!",
-			// 							});
-			// 						}
-			// 					}
-			// 				});							
-			// 			}else{
-			// 				//$('.alert-modal').click();
-			// 				swal({title: "You don’t have permission to access this user course. Please contact Administrator"});
-			// 			}
-			// 		}
-			// 	});
-			// }
 		}
    	}
 	function view_course(id){

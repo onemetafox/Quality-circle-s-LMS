@@ -595,4 +595,15 @@ class User_model extends AbstractModel
         }
         return $this->db->count_all_results($this->table);
     }
+
+    function getUsersForBlast($id){
+        $this->db->select('id,CONCAT(first_name, " ", last_name) AS fullname, email');
+        $this->db->from($this->table);
+        $this->db->where('company_id', $id);
+        $this->db->where("user_type <> 'Superadmin'");
+        $this->db->where('active', 1);
+        $this->db->where('is_deleted', 0);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 }

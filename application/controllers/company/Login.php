@@ -129,14 +129,13 @@ class Login extends BaseController
 
     public function loginUser($company_name)
     {
-
     	$result 			= array();
     	$result['type'] 	= 0;
     	$result['redirect'] = 0;
     	if($this->input->post('email') && $this->input->post('password')) {
     		if(filter_var($this->input->post('email'), FILTER_VALIDATE_EMAIL)) {
     			$email = $this->input->post('email');
-    			$password = getHashedPassword($this->input->post('password'));
+    			$password = $this->input->post('password');
     			$response = $this->Login_model->loginMeCompany($email, $password, $company_name);
     			if($response['result'] == true)
     			{

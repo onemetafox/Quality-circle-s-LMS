@@ -316,7 +316,7 @@
                   <div class="form-group row">
                      <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["price"]?></label>
                      <div class="col-sm-6">
-                        <input id="republish-price" readonly class="form-control">
+                        <input id="republish-price" class="form-control">
                      </div>
                   </div>
                   <div class="form-group row">
@@ -459,12 +459,13 @@
                 type : 2
             },
             success: function (data, status, xhr){
-                console.log(data);
                 $("#republish-title").val(data.title);
-                $("#republish-price").val(data.pay_price);
-                $("#republish-id").val(data.id);
-                $("#republish-type").val(data.course_type);
-                $("#republishForm").modal('show');
+				$("#republish-price").val(data.pay_price);
+				$("#republish-discount").val(data.discount);
+				$("#republish-amount").val(data.amount);
+				$("#republish-id").val(data.id);
+				$("#republish-type").val(data.course_type);
+				$("#republishForm").modal('show');
             },
             error: function(){
                 new PNotify({

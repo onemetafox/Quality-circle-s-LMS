@@ -106,9 +106,6 @@ class Login_model extends CI_Model
 	
 	function loginMe($email, $password, $remember=FALSE, $viaOTP = false)
     {
-        // echo $email;
-        // echo $password;
-        // exit;
         $this->db->select('BaseTbl.user_type as type');
         $this->db->from('user as BaseTbl');
         $this->db->where('BaseTbl.email', $email);
@@ -142,6 +139,7 @@ class Login_model extends CI_Model
         } else {
             return array('result'=>false, 'msg'=>'Your account doesn\'t exist. Please try again!');
         }
+        return array('result'=>true, 'user'=>$user);
     }
 
     function loginMeCompany($email, $password, $company)
@@ -156,7 +154,6 @@ class Login_model extends CI_Model
         $query = $this->db->get();
 
         $user = $query->result();
-
         if(!empty($user)){
             if(verifyHashedPassword($password, $user[0]->password) && $user[0]->active == "1"){
                 return array('result'=>true, 'user'=>$user);

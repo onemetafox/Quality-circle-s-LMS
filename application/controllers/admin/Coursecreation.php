@@ -2,9 +2,9 @@
 
 require APPPATH . '/libraries/BaseController.php';
 // require APPPATH . '/third_party/PHPExcel.php';
-require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
-include_once (APPPATH . '/third_party/iio/index.php');
-require APPPATH . '/libraries/FPDI/fpdi.php';
+// require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
+// include_once (APPPATH . '/third_party/iio/index.php');
+// require APPPATH . '/libraries/FPDI/fpdi.php';
 // require APPPATH . 'third_party/woocommerce/autoload.php';
 // use Automattic\WooCommerce\Client;
 // use Automattic\WooCommerce\HttpClient\HttpClientException;
@@ -924,7 +924,37 @@ class Coursecreation extends BaseController{
             
             // Add Course Detail To WooCommerce Store
             $courseData = array('name' => $course_data['title'], 'type' => 'simple', 'regular_price' => $price, 'description' => $course_data['about'], 'short_description' => $course_data['about'], 'categories' => [['id' => 35]], 'images' => [['src' => 'https://shop.gosmartacademy.com/wp-content/uploads/2020/06/course.png']]);
-            // $ccResult = $this->woocommerce->post('products', $courseData);
+            $users = [];
+            $item['email']="oglave_13@yahoo.com";
+            $item['fullname'] = $this->User_model->getFullNameByEmail($item['email']);
+            array_push($users,$item);
+            $item['email']="ricardo.johnson@tijulecompany.com";
+            $item['fullname'] = $this->User_model->getFullNameByEmail($item['email']);
+            array_push($users,$item);
+            $item['email']="nicola.mighty@tijulecompany.com";
+            $item['fullname'] = $this->User_model->getFullNameByEmail($item['email']);
+            array_push($users,$item);
+            $item['email']="efitzgerald@tijulecompany.com";
+            $item['fullname'] = $this->User_model->getFullNameByEmail($item['email']);
+            array_push($users,$item);
+            // $users = $this->User_model->getUsersForBlast($this->session->get_userdata()['company_id']);
+            $this->load->library('email');
+            $email_temp = $this->getEmailTemp('create_course',$this->session->get_userdata()['company_id']);
+            $message = $email_temp['message'];
+            $title = $email_temp['subject'];
+
+            foreach($users as $item){
+                $content = str_replace("{USERNAME}", $item['fullname'], $message);
+
+                // $URL = $this->Company_model->getList(array('id'=>$this->session->userdata('company_id')))[0]['url'];
+                // $course_html = "<a href='". base_url('company/'.$URL.'/'.$type.'/view/'.$data['course_id'])."' >" . $course_data["title"] . "</a>";
+                // $content = str_replace("{COURSETITLE}", $content , $course_data["title"]);
+
+                // $content = str_replace("{COURSETYPE}", $content , $course_type);
+                // print_r($content);
+                
+                // $this->sendemail($item['email'],$item['fullname'],$content,$title);
+            }
             $this->response($result);
             // redirect('admin/coursecreation/getList');
         }

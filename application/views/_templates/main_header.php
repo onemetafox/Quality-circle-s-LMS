@@ -308,7 +308,7 @@
                                     <a href="<?php echo base_url(); ?>forgotPassword" style="color: #03a9f4;">Forgot password?</a>
                                 </div>
                                 <div class="loginRow">
-                                    <button type="submit" class="signin" style="outline:none!important">Sign In</button>
+                                    <button type="button" class="signin" style="outline:none!important">Sign In</button>
                                 </div>
                             </div>
                         </div>
@@ -351,7 +351,7 @@
                                     <div id="errormessage1" style="color: red; margin: 5px 0 0 0px"></div> 
                                 </div>
                                 <div class="loginRow">
-                                    <button type="submit" class="signin" style="outline:none!important">
+                                    <button type="button" class="signin" style="outline:none!important">
                                         <i id="loadingSpan1" style="display:none;" class="fa fa-spinner fa-spin"></i>
                                         Sign Up</button>
                                 </div>
@@ -393,11 +393,11 @@
 <script>
     $('#company_login_frm .signin').on('click', function(e){
         var flag =  $("#flag").val();
-        e.preventDefault();
-        if(grecaptcha.getResponse(recaptcha1) != "") { 
-            $("#errormessage").text("Please Fill The Google Captcha");
-            return false;
-        } else {
+        // e.preventDefault();
+        // if(grecaptcha.getResponse(recaptcha1) != "") { 
+        //     $("#errormessage").text("Please Fill The Google Captcha");
+        //     return false;
+        // } else {
             var formdata    = $('#company_login_frm').serialize();
             var formAction  = $('#company_login_frm').attr('action');
             var msg         = $('.login_errMsg');
@@ -420,17 +420,17 @@
                         msg.html('<div class="alert alert-danger"><p class="m-0">'+res.msg+'</p></div>');
                 }
             });
-        }
+        // }
 
     });
 
     $('#company_signup_frm .signin').on('click', function(e) {
-        e.preventDefault();
-        console.log('#company_signup_frm .signin');
-        if(grecaptcha.getResponse(recaptcha2) == "") { 
-            $("#errormessage1").text("Please Fill The Google Captcha");
-            return false;
-        } else {
+        // e.preventDefault();
+        // console.log('#company_signup_frm .signin');
+        // if(grecaptcha.getResponse(recaptcha2) == "") { 
+        //     $("#errormessage1").text("Please Fill The Google Captcha");
+        //     return false;
+        // } else {
             var formdata    = $('#company_signup_frm').serialize();
             var formAction  = $('#company_signup_frm').attr('action');
             var msg         = $('.signup_errMsg');
@@ -476,7 +476,7 @@
                 }
 
             });
-        }
+        // }
     });
 
     function showLogin(){
