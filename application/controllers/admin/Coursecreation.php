@@ -914,16 +914,27 @@ class Coursecreation extends BaseController{
             }
 
             $course_data['startday'] = $this->input->post('start_at');
-
+            if($course_data['course_type'] == 2){
+                $course_type = "Demand";
+            }
             if($course_data['course_type'] == 1){
-                $this->addLive($course_data);
+                $course_type = "VILT";
+                $detail = $this->addLive($course_data);
+                if(!$detail){
+                    $detail = $this->Live_model->getListByCourseId($course_data['id']);		
+                }
             }
             if($course_data['course_type'] == 0){
-                $this->addIltCourse($course_data);
+                $course_type = "ILT";
+                $detail = $this->addIltCourse($course_data);
+                if(!$detail){
+                    $detail = $this->Training_model->getListByCourseId($course_data['id']);	
+                }
             }
             
+            print_r($detail);
             // Add Course Detail To WooCommerce Store
-            $courseData = array('name' => $course_data['title'], 'type' => 'simple', 'regular_price' => $price, 'description' => $course_data['about'], 'short_description' => $course_data['about'], 'categories' => [['id' => 35]], 'images' => [['src' => 'https://shop.gosmartacademy.com/wp-content/uploads/2020/06/course.png']]);
+            // $courseData = array('name' => $course_data['title'], 'type' => 'simple', 'regular_price' => $price, 'description' => $course_data['about'], 'short_description' => $course_data['about'], 'categories' => [['id' => 35]], 'images' => [['src' => 'https://shop.gosmartacademy.com/wp-content/uploads/2020/06/course.png']]);
             $users = [];
             $item['email']="oglave_13@yahoo.com";
             $item['fullname'] = $this->User_model->getFullNameByEmail($item['email']);
@@ -942,20 +953,28 @@ class Coursecreation extends BaseController{
             $email_temp = $this->getEmailTemp('create_course',$this->session->get_userdata()['company_id']);
             $message = $email_temp['message'];
             $title = $email_temp['subject'];
-
+            $img_url = base_url() . $detail[0]["img_path"];
+            
             foreach($users as $item){
                 $content = str_replace("{USERNAME}", $item['fullname'], $message);
-
-                // $URL = $this->Company_model->getList(array('id'=>$this->session->userdata('company_id')))[0]['url'];
-                // $course_html = "<a href='". base_url('company/'.$URL.'/'.$type.'/view/'.$data['course_id'])."' >" . $course_data["title"] . "</a>";
-                // $content = str_replace("{COURSETITLE}", $content , $course_data["title"]);
-
-                // $content = str_replace("{COURSETYPE}", $content , $course_type);
-                // print_r($content);
+                $content = str_replace("{COURSETITLE}", $course_data['title'], $content);
+                $content = str_replace("{COURSETYPE}", $course_type, $content);
+                $content = str_replace("{PAYTYPE}", $courseData->pay_type == 0? "Closed Enrollment Course": "Open Enrollment Course", $content);
+                $content = str_replace("{DURATION}", $course_data['duration'], $content);
+                $content = str_replace("{PRICE}", $courseData->pay_price, $content);
+                $content = str_replace("{DISCOUNT}", $courseData->discount, $content);
+                $content = str_replace("{AMOUNT}", $courseData->amount, $content);
+                $content = str_replace("{IMAGEURL}", $img_url, $content);
+                $content = str_replace("{COMPANYURL}", base_url($company['company_url']), $content);
+                
+                $content = str_replace("{VIEWCOURSE}", base_url($company['company_url'].'/classes/view/'.$course['time_id']), $content);
+                $content = str_replace("{ENROLLCOURSE}", base_url() . "company/QC", $content);
+                $content = str_replace("{VIEWLINK}", base_url() . "company/QC", $content);
+                print_r($content);
                 
                 // $this->sendemail($item['email'],$item['fullname'],$content,$title);
             }
-            $this->response($result);
+            // $this->response($result);
             // redirect('admin/coursecreation/getList');
         }
 		
@@ -1034,6 +1053,7 @@ class Coursecreation extends BaseController{
 			$course_time['location'] = $course_data['location'];
 		
             $this->Training_model->insert_time($course_time);
+            return $course_data;
 		}else{
             
         }
@@ -1110,6 +1130,7 @@ class Coursecreation extends BaseController{
             $course_time['start_at'] = $liveCourse['startday'];
 			$course_time['reg_date'] = $start_at;
 			$this->Live_model->insert_time($course_time);
+            return $course_data;
 		}else{
             // print_r($liveDetail);
             // print_r($liveCourse);
