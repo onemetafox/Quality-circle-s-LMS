@@ -29,7 +29,7 @@
   <body>
   <section class="new-template">
    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-     <a class="navbar-brand" href="https://gosmartacademy.com"><img src="assets/landing/images/logo-new-template.png" data-aos="fade-left" data-aos-duration="3000"></a>
+     <a class="navbar-brand" href="<?=base_url()?>"><img src="assets/landing/images/logo-new-template.png" data-aos="fade-left" data-aos-duration="3000"></a>
      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
        <span class="navbar-toggler-icon"></span>
      </button>
@@ -42,12 +42,12 @@
             <i class="fa fa-search" aria-hidden="true"></i>
          </div>
            </li>
-           <li class="active"><a href="https://gosmartacademy.com">Home</a></li>
-           <li><a href="https://gosmartacademy.com/about-us">About Us</a></li>
-           <li><a href="https://gosmartacademy.com/company/gosmartacademy.com">Academy</a></li>
-           <li><a href="https://gosmartacademy.com/pricing">Pricing</a></li>
-           <li><a href="https://gosmartacademy.com/contact">Contact Us</a></li>
-           <li class="sign-up-btn"><a href="https://gosmartacademy.com/login">Login</a><a href="https://gosmartacademy.com/login">/Signup</a></li>
+           <li class="active"><a href="<?=base_url()?>">Home</a></li>
+           <li><a href="<?=base_url()?>about">About Us</a></li>
+           <li><a href="<?=base_url()?>company/QC">Academy</a></li>
+           <li><a href="<?=base_url()?>pricing">Pricing</a></li>
+           <li><a href="<?=base_url()?>contact">Contact Us</a></li>
+           <li class="sign-up-btn"><a href="<?=base_url()?>/login">Login</a><a href="<?=base_url()?>/login">/Signup</a></li>
        </ul>
      </div>
    </nav>

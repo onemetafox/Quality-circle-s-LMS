@@ -255,14 +255,14 @@
                     <ul class="nav navbar-nav  navbar-right">
                         <?php if(isset($company['url'])) :?>
                             <li class="<?php echo $menu_name == 'home' ? '': '' ?>"><a href="<?php echo base_url(); ?>">Home</a></li>
-                            <li class="<?php echo $menu_name == 'home' ? '': '' ?>"><a href="/about-us">About Us</a></li>
+                            <li class="<?php echo $menu_name == 'about' ? '': '' ?>"><a href="/about">About Us</a></li>
                             <li class="<?php echo $menu_name == 'pricing' ? 'active': '' ?>"><a href="<?php echo base_url('pricing'); ?>">Pricing</a></li>
                             <li class="<?php echo $menu_name == 'catalog' ? 'active': '' ?>"><a href="<?php echo base_url($company['company_url']); ?>/demand">Catalog</a></li>
                             <li class="<?php echo $menu_name == 'contactus' ? 'active': '' ?>"><a href="<?php echo base_url($company['company_url']); ?>/about">Contact Us</a></li>
                         <?php endif;?>
                         <?php if(!isset($company['url'])) :?>
 							<li class="<?php echo $menu_name == 'home' ? '': '' ?>"><a href="<?php echo base_url(); ?>">Home</a></li>
-							<li class="<?php echo $menu_name == 'home' ? '': '' ?>"><a href="/about-us">About Us</a></li>
+							<li class="<?php echo $menu_name == 'about' ? '': '' ?>"><a href="/about">About Us</a></li>
                             <li class="<?php echo $menu_name == 'home' ? '': '' ?>"><a href="<?php echo base_url('company/'.$company_ob['url']); ?>">Academy</a></li>
                             <li class="<?php echo $menu_name == 'pricing' ? 'active': '' ?>"><a href="<?php echo base_url('pricing'); ?>">Pricing</a></li>
                             <li class="<?php echo $menu_name == 'contactus' ? 'active': '' ?>"><a href="<?php echo base_url('contact') ?>">Contact Us</a></li>

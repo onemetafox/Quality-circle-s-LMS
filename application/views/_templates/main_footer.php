@@ -70,7 +70,7 @@
 
                                 <li>
 
-                                    <i class="fa-li fa fa-phone"></i> <img src="<?php echo base_url(); ?>assets/images/flag-us.png" alt="flag"> 1-903-781-8111
+                                    <i class="fa-li fa fa-phone"></i> <img src="<?php echo base_url(); ?>assets/images/flag-us.png" alt="flag"> 1-(430)272-2107
 
                                 </li>
 
@@ -113,7 +113,7 @@
                                 </li>
 
                                 <li>
-                                    <i class="fa-li fa fa-phone"></i>  <img src="<?php echo base_url(); ?>assets/images/flag-j.png" alt="flag">  1-876-960-1111
+                                    <i class="fa-li fa fa-phone"></i>  <img src="<?php echo base_url(); ?>assets/images/flag-j.png" alt="flag">  1-(876)926-2003
 
                                 </li>
                             </ul>

@@ -304,7 +304,6 @@ class Welcome extends BaseController {
 
     public function about()
     {
-
         $this->load->model('Company_model');
         $company = $this->Company_model->getAll()[0];
         $headerInfo["company_ob"] = $company;
