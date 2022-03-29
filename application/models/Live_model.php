@@ -133,7 +133,16 @@ class Live_model extends AbstractModel
 
         return $res;
     }
+    function get_course_time_id($course_id)
+    {   
+        $query = "Select * from virtual_course_time WHERE virtual_course_id = ".$course_id." ORDER BY reg_date DESC";
+        
+        $result = $this->db->query($query);
+        $res=$result->first_row();
 
+        return $res;
+
+    }
     function delete_time($id)
     {
         $res = $this->db->delete($this->course_time_table, array('id'=>$id));

@@ -768,6 +768,8 @@ class Coursecreation extends BaseController{
         if(!$plan->id){
             $plan = $this->Plan_model->select('1');
         }
+        $company = (array) $this->Company_model->getRow($this->session->get_userdata() ['company_id']);
+
         $filter['company_id'] = $this->session->get_userdata()['company_id'];
         $filter['course_type'] = $course_data['course_type'];
         $limit = $this->Course_model->getLimitation($filter);
@@ -917,6 +919,7 @@ class Coursecreation extends BaseController{
             $course_data['startday'] = $this->input->post('start_at');
             if($course_data['course_type'] == 2){
                 $course_type = "On Demand";
+                $course_url = base_url('company/'.$company['url'].'/demand/view/'.$course_data['id']);
             }
             if($course_data['course_type'] == 1){
                 $course_type = "VILT platform";
@@ -924,13 +927,17 @@ class Coursecreation extends BaseController{
                 if(!$detail){
                     $detail = $this->Live_model->getListByCourseId($course_data['id']);		
                 }
+                $course_url = base_url('company/'.$company['url'].'/classes/view/'.$this->Live_model->get_course_time_id($detail[0]['id'])->id);
             }
             if($course_data['course_type'] == 0){
                 $course_type = $course_data["location"] . " ILT";
+                
                 $detail = $this->addIltCourse($course_data);
                 if(!$detail){
                     $detail = $this->Training_model->getListByCourseId($course_data['id']);	
                 }
+                $course_url = base_url('company/'.$company['url']). "/training/view/" . $this->Training_model->get_course_time_id($detail[0]['id'])->id;
+
             }
 
             if($course_data['category_id'] != ""){
@@ -981,7 +988,7 @@ class Coursecreation extends BaseController{
                 $content = str_replace("{COMPANYLOGO}", base_url()."assets/logos/logo1.png", $content);
                 $content = str_replace("{EXAMPLERLOGO}", base_url()."assets/logos/logo2.png", $content);
                 
-                $content = str_replace("{VIEWCOURSE}", base_url($company['company_url'].'/classes/view/'.$course['time_id']), $content);
+                $content = str_replace("{VIEWCOURSE}", $course_url, $content);
                 $content = str_replace("{ENROLLCOURSE}", base_url() . "company/QC", $content);
                 $content = str_replace("{VIEWLINK}", base_url() . "company/QC", $content);
                 print_r($content);
