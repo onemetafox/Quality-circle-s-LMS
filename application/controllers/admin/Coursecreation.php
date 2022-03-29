@@ -25,6 +25,7 @@ class Coursecreation extends BaseController{
 		$this->load->model('Training_model');
         $this->load->model('Company_model');
         $this->load->helper('common_helper');
+        $this->load->model('Standard_model', "Standard");
         $this->isLoggedIn();
         $this->load->library('Sidebar');
         $side_params = array('selected_menu_id' => '13');
@@ -918,7 +919,7 @@ class Coursecreation extends BaseController{
                 $course_type = "Demand";
             }
             if($course_data['course_type'] == 1){
-                $course_type = "VILT";
+                // $course_type = "VILT platform ";
                 $detail = $this->addLive($course_data);
                 if(!$detail){
                     $detail = $this->Live_model->getListByCourseId($course_data['id']);		
@@ -931,8 +932,14 @@ class Coursecreation extends BaseController{
                     $detail = $this->Training_model->getListByCourseId($course_data['id']);	
                 }
             }
-            
-            print_r($detail);
+
+            if($course_data['category_id'] != ""){
+                $category = $this->Category_model->getRow($course_data['category_id'])[0]["name"];
+            }
+            if( $this->input->post('standard_id') ){
+                $category = $category . $this->Standard->getStrStandard($this->input->post('standard_id'));
+            }
+            // print_r($category);
             // Add Course Detail To WooCommerce Store
             // $courseData = array('name' => $course_data['title'], 'type' => 'simple', 'regular_price' => $price, 'description' => $course_data['about'], 'short_description' => $course_data['about'], 'categories' => [['id' => 35]], 'images' => [['src' => 'https://shop.gosmartacademy.com/wp-content/uploads/2020/06/course.png']]);
             $users = [];
@@ -948,6 +955,9 @@ class Coursecreation extends BaseController{
             $item['email']="efitzgerald@tijulecompany.com";
             $item['fullname'] = $this->User_model->getFullNameByEmail($item['email']);
             array_push($users,$item);
+            $item['email']="seniordev1994128@gmail.com";
+            $item['fullname'] = 'James Coulter';
+            array_push($users,$item);
             // $users = $this->User_model->getUsersForBlast($this->session->get_userdata()['company_id']);
             $this->load->library('email');
             $email_temp = $this->getEmailTemp('create_course',$this->session->get_userdata()['company_id']);
@@ -958,6 +968,7 @@ class Coursecreation extends BaseController{
             foreach($users as $item){
                 $content = str_replace("{USERNAME}", $item['fullname'], $message);
                 $content = str_replace("{COURSETITLE}", $course_data['title'], $content);
+                $content = str_replace("{CATEGORY}", $category, $content);
                 $content = str_replace("{COURSETYPE}", $course_type, $content);
                 $content = str_replace("{PAYTYPE}", $courseData->pay_type == 0? "Closed Enrollment Course": "Open Enrollment Course", $content);
                 $content = str_replace("{DURATION}", $course_data['duration'], $content);
