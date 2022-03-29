@@ -977,6 +977,9 @@ class Coursecreation extends BaseController{
                 $content = str_replace("{AMOUNT}", $courseData->amount, $content);
                 $content = str_replace("{IMAGEURL}", $img_url, $content);
                 $content = str_replace("{COMPANYURL}", base_url($company['company_url']), $content);
+
+                $content = str_replace("{COMPANYLOGO}", base_url()."assets/logos/logo1.png", $content);
+                $content = str_replace("{EXAMPLERLOGO}", base_url()."assets/logos/logo2.png", $content);
                 
                 $content = str_replace("{VIEWCOURSE}", base_url($company['company_url'].'/classes/view/'.$course['time_id']), $content);
                 $content = str_replace("{ENROLLCOURSE}", base_url() . "company/QC", $content);
