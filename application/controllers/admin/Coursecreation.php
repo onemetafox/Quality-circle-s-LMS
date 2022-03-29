@@ -916,17 +916,17 @@ class Coursecreation extends BaseController{
 
             $course_data['startday'] = $this->input->post('start_at');
             if($course_data['course_type'] == 2){
-                $course_type = "Demand";
+                $course_type = "On Demand";
             }
             if($course_data['course_type'] == 1){
-                // $course_type = "VILT platform ";
+                $course_type = "VILT platform";
                 $detail = $this->addLive($course_data);
                 if(!$detail){
                     $detail = $this->Live_model->getListByCourseId($course_data['id']);		
                 }
             }
             if($course_data['course_type'] == 0){
-                $course_type = "ILT";
+                $course_type = $course_data["location"] . " ILT";
                 $detail = $this->addIltCourse($course_data);
                 if(!$detail){
                     $detail = $this->Training_model->getListByCourseId($course_data['id']);	
