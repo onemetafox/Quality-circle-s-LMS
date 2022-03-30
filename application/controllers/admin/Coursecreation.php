@@ -918,7 +918,7 @@ class Coursecreation extends BaseController{
 
             $course_data['startday'] = $this->input->post('start_at');
             if($course_data['course_type'] == 2){
-                $course_type = "On Demand at you own pace";
+                $course_type = "On Demand platform at your own pace";
                 $course_url = base_url('company/'.$company['url'].'/demand/view/'.$course_data['id']);
             }
             if($course_data['course_type'] == 1){
@@ -930,7 +930,7 @@ class Coursecreation extends BaseController{
                 $course_url = base_url('company/'.$company['url'].'/classes/view/'.$this->Live_model->get_course_time_id($detail[0]['id'])->id);
             }
             if($course_data['course_type'] == 0){
-                $course_type = $course_data["location"] . " ILT";
+                $course_type = "face to face ILT at" . substr($course_data["location"],1);
                 
                 $detail = $this->addIltCourse($course_data);
                 if(!$detail){
@@ -944,7 +944,7 @@ class Coursecreation extends BaseController{
                 $category = $this->Category_model->getRow($course_data['category_id'])[0]["name"];
             }
             if( $this->input->post('standard_id') ){
-                $category = $category . " and standard " . $this->Standard->getStrStandard($this->input->post('standard_id'));
+                $category = $category . " and standard " . substr($this->Standard->getStrStandard($this->input->post('standard_id')), 1);
             }
             // print_r($category);
             // Add Course Detail To WooCommerce Store
