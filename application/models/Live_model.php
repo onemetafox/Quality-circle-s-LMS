@@ -159,7 +159,7 @@ class Live_model extends AbstractModel
     }
 	
 	function getListByCourseId($courseid = 0){
-        $query = 'Select * from virtual_course where course_id='.$courseid;
+        $query = 'Select virtual_course.*, start_time, end_time from virtual_course LEFT JOIN virtual_course_time on virtual_course_time.virtual_course_id = virtual_course.id where course_id='.$courseid;
         $result = $this->db->query($query);
         $res=$result->result_array();
 

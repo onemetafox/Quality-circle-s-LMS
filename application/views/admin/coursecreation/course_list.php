@@ -151,7 +151,7 @@
 														}else if ($item['course_type'] == 1){
 															echo "VILT";
 														}else{
-															echo "Demand";
+															echo "On Demand";
 														}?>
 													</h6>
                                                     <h6>

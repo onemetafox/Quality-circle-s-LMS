@@ -587,19 +587,25 @@
                                            </div>
                                         </div>
                                     </div><?php */ ?>
-                                    <div id="course_type_demand_date" <?php if($course_data['course_type'] == 2){ ?> style="display:block" <?php } else { ?>style="display:none"<?php } ?>>
-                                    <div class="form-group row col-sm-12">
-                                       <label class="col-sm-2 control-label text-sm-right pt-1" style="text-align: left !important;">Start Date</label>
-                                       <div class="col-sm-7">
-                                          <input type="text" data-plugin-datepicker=""  data-date-format="yyyy-mm-dd" class="form-control" name="start_at" value="<?=$course_data['start_at']?>">
-                                       </div>
-                                    </div>
-                                    <div class="form-group row col-sm-12">
-                                       <label class="col-sm-2 control-label text-sm-right pt-1" style="text-align: left !important;">End Date</label>
-                                       <div class="col-sm-7">
-                                          <input type="text" data-plugin-datepicker=""  data-date-format="yyyy-mm-dd" class="form-control" name="end_at" value="<?=$course_data['end_at']?>">
-                                       </div>
-                                    </div>
+                                    <div id="course_type_demand_date" <?php if($course_data['course_type'] != 2){ ?> style="display:block" <?php } else { ?>style="display:none"<?php } ?>>
+                                        <div class="form-group row col-sm-12">
+                                            <label class="col-sm-2 control-label text-sm-right pt-1" style="text-align: left !important;">Start Date</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" data-plugin-datepicker=""  data-date-format="yyyy-mm-dd" class="form-control" name="start_at" value="<?=$course_data['start_at']?>">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row col-sm-12">
+                                            <label class="col-sm-2 control-label text-sm-right pt-1" style="text-align: left !important;">Start Time</label>
+                                            <div class="col-sm-7">
+                                                <!-- <input type="text" data-plugin-datepicker=""  data-date-format="yyyy-mm-dd" class="form-control" name="end_at" value="<?=$course_data['end_at']?>"> -->
+                                                <select class="form-control" id="starttime" name="starttime" >
+                                                    <option value="7:00 AM">7:00 AM</option>
+                                                    <option value="8:00 AM">8:00 AM</option>
+                                                    <option value="9:00 AM">9:00 AM</option>
+                                                    <option value="10:00 AM">10:00 AM</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                     
                                     <div id="course_type_div_online" <?php if($course_data['course_type'] == 2 || $course_data['course_type'] == 1){ ?> style="display:block" <?php } else { ?>style="display:none"<?php } ?>>
@@ -718,27 +724,6 @@
                                    	</div>
                                     <hr />
                                     <?php } ?>
-                                    <?php /* ?>
-                                    <div class="form-group row col-sm-12">
-                                       <label class="col-sm-6">Course Pre-Requisite Highlights : (Min. 3 highlights required)</label>
-                                       <a class="btn btn-default" onclick="add_prerequisite_highlight()"><i class="el el-plus-sign"></i>&nbsp;<?=$term["addhighlight"]?></a>
-                                    </div>
-                                    <div class="form-group row col-sm-12">
-                                       <div class="col-sm-1"></div>
-                                       <div id="prerequisite_highlight_div" class="col-sm-5">
-                                          <input type="text" class="form-control highlight-input" name="prerequisitehighlight[]" required value="<?=$prerequisitehighlight[0]['content']?>">
-                                          <input type="text" class="form-control highlight-input" name="prerequisitehighlight[]" required value="<?=$prerequisitehighlight[1]['content']?>">
-                                          <input type="text" class="form-control highlight-input" name="prerequisitehighlight[]" required value="<?=$prerequisitehighlight[2]['content']?>">
-                                          <?php
-                                             if (count($prerequisitehighlight) > 3){
-                                                 for ($i=3;$i<count($prerequisitehighlight);$i++){
-                                                     echo '<input type="text" class="form-control highlight-input" name="prerequisitehighlight[]" required value="'.$prerequisitehighlight[$i]['content'].'">';
-                                                 }
-                                             }
-                                             ?>
-                                       </div>
-                                    </div>
-									<?php */ ?>
                                     <div class="form-group row col-sm-12">
                                        <label class="col-sm-6">Course Pre-Requisite</label>
                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalPre">Add</button>
@@ -982,14 +967,14 @@
 	$(document).on('click','.course_type_radio',function(){
 		var type = this.value;
 		if(type == 2){			
-			$('#course_type_demand_date').show();
+			$('#course_type_demand_date').hide();
 			$('#course_self_div').show();
 			$('#course_time_div').hide();
             $('select[name=course_self_time]').val("Self Pace");
 		}else{
 			$('#course_self_div').hide();
 			$('#course_time_div').show();
-			$('#course_type_demand_date').hide();
+			$('#course_type_demand_date').show();
             $('select[name=course_self_time]').val("Time Restricted");
 		}
 		if(type == 1 || type == 2){

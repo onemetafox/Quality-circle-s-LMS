@@ -857,7 +857,7 @@ class Coursecreation extends BaseController{
                 $course_data['state'] = 0;
                 $course_data['city'] = 0;
             }
-            if($course_data['course_type'] == 2){
+            if($course_data['course_type'] != 2){
                 $course_data['start_at'] = $this->input->post('start_at');
                 $course_data['end_at'] = $this->input->post('end_at');	
             }else{
@@ -917,36 +917,38 @@ class Coursecreation extends BaseController{
             }
 
             $course_data['startday'] = $this->input->post('start_at');
-            if($course_data['course_type'] == 2){
-                $course_type = "On Demand platform at your own pace";
-                $course_url = base_url('company/'.$company['url'].'/demand/view/'.$course_data['id']);
-            }
-            if($course_data['course_type'] == 1){
-                $course_type = "VILT platform";
-                $detail = $this->addLive($course_data);
-                if(!$detail){
-                    $detail = $this->Live_model->getListByCourseId($course_data['id']);		
-                }
-                $course_url = base_url('company/'.$company['url'].'/classes/view/'.$this->Live_model->get_course_time_id($detail[0]['id'])->id);
-            }
-            if($course_data['course_type'] == 0){
-                $course_type = "face to face ILT at" . substr($course_data["location"],1);
-                
-                $detail = $this->addIltCourse($course_data);
-                if(!$detail){
-                    $detail = $this->Training_model->getListByCourseId($course_data['id']);	
-                }
-                $course_url = base_url('company/'.$company['url']). "/training/view/" . $this->Training_model->get_course_time_id($detail[0]['id'])->id;
-
-            }
-
+            $course_data['starttime'] = $this->input->post('starttime');
             if($course_data['category_id'] != ""){
                 $category = $this->Category_model->getRow($course_data['category_id'])[0]["name"];
             }
             if( $this->input->post('standard_id') ){
                 $category = $category . " and standard " . substr($this->Standard->getStrStandard($this->input->post('standard_id')), 1);
             }
-            // print_r($category);
+            if($course_data['course_type'] == 2){
+                $course_type = "On Demand platform at your own pace";
+                $course_url = base_url('company/'.$company['url'].'/demand/view/'.$course_data['id']);
+                $start_date = "";
+                $end_date = "";
+                // $category = "On Demand";
+            }
+            if($course_data['course_type'] == 1){
+                $course_type = "VILT platform";
+                $this->addLive($course_data);
+                $detail = $this->Live_model->getListByCourseId($course_data['id']);		
+                $course_url = base_url('company/'.$company['url'].'/classes/view/'.$this->Live_model->get_course_time_id($detail[0]['id'])->id);
+                $start_date = "<li> Start Date: " . date("M d, Y h:i:sa", strtotime($detail[0]["start_day"] . " " . $detail[0]["start_time"])) . "</li>";
+                $end_date = "<li> End Date: " . date("M d, Y h:i:sa",strtotime('+'.$detail[0]["duration"]-1 .' days', strtotime($detail[0]['startday']. " " . $detail[0]['end_time']))) . "</li>";
+            }
+            if($course_data['course_type'] == 0){
+                $course_type = "face to face ILT Platform at" . substr($course_data["location"],1);
+                
+                $this->addIltCourse($course_data);
+                $detail = $this->Training_model->getListByCourseId($course_data["id"]);	
+                $course_url = base_url('company/'.$company['url']). "/training/view/" . $this->Training_model->get_course_time_id($detail[0]['id'])->id;
+                $start_date = "<li> Start Date: " . date("M d, Y h:i:sa", strtotime($detail[0]["start_day"] . " " . $detail[0]["start_time"])) . "</li>";
+                $end_date = "<li> End Date: " . date("M d, Y h:i:sa",strtotime('+'.$detail[0]["duration"]-1 .' days', strtotime($detail[0]['startday']. " " . $detail[0]['end_time']))) . "</li>";
+            }
+            
             // Add Course Detail To WooCommerce Store
             // $courseData = array('name' => $course_data['title'], 'type' => 'simple', 'regular_price' => $price, 'description' => $course_data['about'], 'short_description' => $course_data['about'], 'categories' => [['id' => 35]], 'images' => [['src' => 'https://shop.gosmartacademy.com/wp-content/uploads/2020/06/course.png']]);
             $users = [];
@@ -971,14 +973,14 @@ class Coursecreation extends BaseController{
             $message = $email_temp['message'];
             $title = $email_temp['subject'];
             $img_url = base_url() . $detail[0]["img_path"];
-            
+
             foreach($users as $item){
                 $content = str_replace("{USERNAME}", $item['fullname'], $message);
                 $content = str_replace("{COURSETITLE}", $course_data['title'], $content);
                 $content = str_replace("{CATEGORY}", $category, $content);
                 $content = str_replace("{COURSETYPE}", $course_type, $content);
                 $content = str_replace("{PAYTYPE}", $courseData->pay_type == 0? "Closed Enrollment Course": "Open Enrollment Course", $content);
-                $content = str_replace("{DURATION}", $course_data['duration'], $content);
+                $content = str_replace("{DURATION}", $detail[0]['duration'], $content);
                 $content = str_replace("{PRICE}", $courseData->pay_price, $content);
                 $content = str_replace("{DISCOUNT}", $courseData->discount, $content);
                 $content = str_replace("{AMOUNT}", $courseData->amount, $content);
@@ -988,6 +990,8 @@ class Coursecreation extends BaseController{
                 $content = str_replace("{COMPANYLOGO}", base_url()."assets/logos/logo1.png", $content);
                 $content = str_replace("{EXAMPLERLOGO}", base_url()."assets/logos/logo2.png", $content);
                 
+                $content = str_replace("{STARTDATE}", $start_date, $content);
+                $content = str_replace("{ENDDATE}", $end_date, $content);
                 $content = str_replace("{VIEWCOURSE}", $course_url, $content);
                 $content = str_replace("{ENROLLCOURSE}", base_url() . "company/QC", $content);
                 $content = str_replace("{VIEWLINK}", base_url() . "company/QC", $content);
@@ -1002,7 +1006,6 @@ class Coursecreation extends BaseController{
     }
 	
 	public function addIltCourse($iltCourse){
-        
 		$trainingDetail = $this->Training_model->getListByCourseId($iltCourse['id']);		
 		if(empty($trainingDetail)){
 			$startday = NULL; 
@@ -1066,7 +1069,8 @@ class Coursecreation extends BaseController{
 			$course_time['city_id'] = $iltCourse['city'];
 			// $course_time['start_day'] = date('Y-m-d',$timestamp);
             $course_time['start_day'] = $iltCourse['startday'];
-			// $course_time['start_time'] = date('H:m A',$timestamp);
+			$course_time['start_time'] = $iltCourse['starttime'];
+            $course_time['end_time'] = getEndTime($iltCourse['starttime']);
 			// $course_time['date_str'] = strtotime($course_time['start_day'].' '.$course_time['start_time']);
 			$course_time['year'] = date('Y',$timestamp);
 			$course_time['month'] = date('m',$timestamp);
@@ -1074,7 +1078,6 @@ class Coursecreation extends BaseController{
 			$course_time['location'] = $course_data['location'];
 		
             $this->Training_model->insert_time($course_time);
-            return $course_data;
 		}else{
             
         }
@@ -1147,11 +1150,11 @@ class Coursecreation extends BaseController{
             
 			$row_id = $this->Live_model->insert_course($course_data);
 			$course_time['virtual_course_id'] = $row_id;
-			// $course_time['start_at'] = $start_at;
+			$course_time['start_time'] = $liveCourse['starttime'];
+            $course_time['end_time'] = getEndTime($liveCourse['starttime']);
             $course_time['start_at'] = $liveCourse['startday'];
 			$course_time['reg_date'] = $start_at;
 			$this->Live_model->insert_time($course_time);
-            return $course_data;
 		}else{
             // print_r($liveDetail);
             // print_r($liveCourse);
