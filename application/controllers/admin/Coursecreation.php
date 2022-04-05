@@ -1001,7 +1001,7 @@ class Coursecreation extends BaseController{
                 }
             }
             
-            // $this->response($result);
+            $this->response($result);
             // redirect('admin/coursecreation/getList');
         }
 		
