@@ -973,32 +973,34 @@ class Coursecreation extends BaseController{
             $message = $email_temp['message'];
             $title = $email_temp['subject'];
             $img_url = base_url() . $detail[0]["img_path"];
-
-            foreach($users as $item){
-                $content = str_replace("{USERNAME}", $item['fullname'], $message);
-                $content = str_replace("{COURSETITLE}", $course_data['title'], $content);
-                $content = str_replace("{CATEGORY}", $category, $content);
-                $content = str_replace("{COURSETYPE}", $course_type, $content);
-                $content = str_replace("{PAYTYPE}", $courseData->pay_type == 0? "Closed Enrollment Course": "Open Enrollment Course", $content);
-                $content = str_replace("{DURATION}", $detail[0]['duration'], $content);
-                $content = str_replace("{PRICE}", $courseData->pay_price, $content);
-                $content = str_replace("{DISCOUNT}", $courseData->discount, $content);
-                $content = str_replace("{AMOUNT}", $courseData->amount, $content);
-                $content = str_replace("{IMAGEURL}", $img_url, $content);
-                $content = str_replace("{COMPANYURL}", base_url($company['company_url']), $content);
-
-                $content = str_replace("{COMPANYLOGO}", base_url()."assets/logos/logo1.png", $content);
-                $content = str_replace("{EXAMPLERLOGO}", base_url()."assets/logos/logo2.png", $content);
-                
-                $content = str_replace("{STARTDATE}", $start_date, $content);
-                $content = str_replace("{ENDDATE}", $end_date, $content);
-                $content = str_replace("{VIEWCOURSE}", $course_url, $content);
-                $content = str_replace("{ENROLLCOURSE}", base_url() . "company/QC", $content);
-                $content = str_replace("{VIEWLINK}", base_url() . "company/QC", $content);
-                print_r($content);
-                
-                // $this->sendemail($item['email'],$item['fullname'],$content,$title);
+            if($courseData->pay_type == 1){
+                foreach($users as $item){
+                    $content = str_replace("{USERNAME}", $item['fullname'], $message);
+                    $content = str_replace("{COURSETITLE}", $course_data['title'], $content);
+                    $content = str_replace("{CATEGORY}", $category, $content);
+                    $content = str_replace("{COURSETYPE}", $course_type, $content);
+                    $content = str_replace("{PAYTYPE}", $courseData->pay_type == 0? "Closed Enrollment Course": "Open Enrollment Course", $content);
+                    $content = str_replace("{DURATION}", $detail[0]['duration'], $content);
+                    $content = str_replace("{PRICE}", $courseData->pay_price, $content);
+                    $content = str_replace("{DISCOUNT}", $courseData->discount, $content);
+                    $content = str_replace("{AMOUNT}", $courseData->amount, $content);
+                    $content = str_replace("{IMAGEURL}", $img_url, $content);
+                    $content = str_replace("{COMPANYURL}", base_url($company['company_url']), $content);
+    
+                    $content = str_replace("{COMPANYLOGO}", base_url()."assets/logos/logo1.png", $content);
+                    $content = str_replace("{EXAMPLERLOGO}", base_url()."assets/logos/logo2.png", $content);
+                    
+                    $content = str_replace("{STARTDATE}", $start_date, $content);
+                    $content = str_replace("{ENDDATE}", $end_date, $content);
+                    $content = str_replace("{VIEWCOURSE}", $course_url, $content);
+                    $content = str_replace("{ENROLLCOURSE}", base_url() . "company/QC", $content);
+                    $content = str_replace("{VIEWLINK}", base_url() . "company/QC", $content);
+                    print_r($content);
+                    
+                    // $this->sendemail($item['email'],$item['fullname'],$content,$title);
+                }
             }
+            
             // $this->response($result);
             // redirect('admin/coursecreation/getList');
         }
