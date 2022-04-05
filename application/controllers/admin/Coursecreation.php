@@ -937,7 +937,7 @@ class Coursecreation extends BaseController{
                 $detail = $this->Live_model->getListByCourseId($course_data['id']);		
                 $course_url = base_url('company/'.$company['url'].'/classes/view/'.$this->Live_model->get_course_time_id($detail[0]['id'])->id);
                 $start_date = "<li> Start Date: " . date("M d, Y h:i:sa", strtotime($detail[0]["start_day"] . " " . $detail[0]["start_time"])) . "</li>";
-                $end_date = "<li> End Date: " . date("M d, Y h:i:sa",strtotime('+'.$detail[0]["duration"]-1 .' days', strtotime($detail[0]['startday']. " " . $detail[0]['end_time']))) . "</li>";
+                $end_date = "<li> End Date: " + date("M d, Y h:i:sa",strtotime("+"+$detail[0]["duration"]-1 +" days", strtotime($detail[0]['startday']+ " " + $detail[0]['end_time']))) + "</li>";
             }
             if($course_data['course_type'] == 0){
                 $course_type = "face to face ILT Platform at" . substr($course_data["location"],1);
@@ -946,7 +946,7 @@ class Coursecreation extends BaseController{
                 $detail = $this->Training_model->getListByCourseId($course_data["id"]);	
                 $course_url = base_url('company/'.$company['url']). "/training/view/" . $this->Training_model->get_course_time_id($detail[0]['id'])->id;
                 $start_date = "<li> Start Date: " . date("M d, Y h:i:sa", strtotime($detail[0]["start_day"] . " " . $detail[0]["start_time"])) . "</li>";
-                $end_date = "<li> End Date: " . date("M d, Y h:i:sa",strtotime('+'.$detail[0]["duration"]-1 .' days', strtotime($detail[0]['startday']. " " . $detail[0]['end_time']))) . "</li>";
+                $end_date = "<li> End Date: " + date("M d, Y h:i:sa",strtotime("+"+$detail[0]["duration"]-1 +" days", strtotime($detail[0]['startday']+ " " + $detail[0]['end_time']))) + "</li>";
             }
             
             // Add Course Detail To WooCommerce Store
