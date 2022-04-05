@@ -49,7 +49,7 @@ class Standard_model extends CI_Model{
     }
     function getStrStandard($filter){
         $standardStr = "";
-        foreach($filter as $index=>$id){
+        foreach(explode(",", $filter) as $index=>$id){
             $standardStr = $standardStr . ", " . $this->db->select()->from($this->table)->where('id',$id)->get()->row_array()["name"];
         }
         return $standardStr;

@@ -676,6 +676,7 @@ class Coursecreation extends BaseController{
         $this->response($mainCourse);
     }
     public function republishCourse(){
+        $company = (array) $this->Company_model->getRow($this->session->get_userdata() ['company_id']);
         $data = $this->input->post();
         $mainCourse = (array)$this->Course_model->select($data['republish-id']);
         $mainCourse['discount'] = $data['republish-discount'];
@@ -708,8 +709,12 @@ class Coursecreation extends BaseController{
             unset($course_time['id']);
             $this->Training_model->insert_time($course_time);
 
-            $this->response(array("success"=>true, "msg"=>"Course Republished"));
-
+            $course_type = "face to face ILT Platform at" . substr($mainCourse["location"],1);
+            $detail = $this->Training_model->getListByCourseId($data['republish-id']);	
+            $course_url = base_url('company/'.$company['url']). "/training/view/" . $this->Training_model->get_course_time_id($detail[0]['id'])->id;
+            $start_date = "<li> Start Date: " . date("M d, Y h:i:sa", strtotime($course_time['start_day'] . " " . $course_time['start_time'])) . "</li>";
+            $end_date = "<li> End Date: " . date("M d, Y h:i:sa", strtotime("+".($detail[0]["duration"]-1) . " days", strtotime($course_time['start_day']. " " . $course_time['end_time']))) . "</li>";
+            
         }else if($data['republish-type'] == "1"){
 
             $subCourse = (array)$this->Live_model->one(array("course_id"=>$mainCourse['id']));
@@ -733,15 +738,82 @@ class Coursecreation extends BaseController{
 
 			$this->Live_model->insert_time($course_time);
 
-            $this->response(array("success"=>true, "msg"=>"Course Republished"));
+            $course_type = "VILT platform";
+            $detail = $this->Live_model->getListByCourseId($data['republish-id']);		
+            $course_url = base_url('company/'.$company['url'].'/classes/view/'.$this->Live_model->get_course_time_id($detail[0]['id'])->id);
+            $start_date = "<li> Start Date: " . date("M d, Y h:i:sa", strtotime($course_time['start_at'] . " " . $course_time['start_time'])) . "</li>";
+            $end_date = "<li> End Date: " . date("M d, Y h:i:sa", strtotime("+" . ($detail[0]["duration"]-1) ." days", strtotime($course_time['start_at']. " " . $course_time['end_time']))) . "</li>";
+
         }else{
             $mainCourse['start_at'] = $this->input->post("startdays");
             $mainCourse['end_at'] = $this->input->post("enddays");
             unset($mainCourse['id']);
             $this->Course_model->insert($mainCourse);
 
-            $this->response(array("success"=>true, "msg"=>"Course Republished"));
+            $course_type = "On Demand platform at your own pace";
+            $course_url = base_url('company/'.$company['url'].'/demand/view/'.$data['republish-id']);
+            $start_date = "";
+            $end_date = "";
+
         }
+        if($mainCourse["pay_type"] == 1){
+            if($mainCourse['category_id'] != ""){
+                $category = $this->Category_model->getRow($mainCourse['category_id'])[0]["name"];
+            }
+            if( $mainCourse['standard_id'] ){
+                $category = $category . " and standard " . substr($this->Standard->getStrStandard($mainCourse['standard_id']), 1);
+            }
+            print_r($this->Standard->getStrStandard($mainCourse['standard_id']));
+            $users = [];
+            $item['email']="oglave_13@yahoo.com";
+            $item['fullname'] = $this->User_model->getFullNameByEmail($item['email']);
+            array_push($users,$item);
+            $item['email']="ricardo.johnson@tijulecompany.com";
+            $item['fullname'] = $this->User_model->getFullNameByEmail($item['email']);
+            array_push($users,$item);
+            $item['email']="nicola.mighty@tijulecompany.com";
+            $item['fullname'] = $this->User_model->getFullNameByEmail($item['email']);
+            array_push($users,$item);
+            $item['email']="efitzgerald@tijulecompany.com";
+            $item['fullname'] = $this->User_model->getFullNameByEmail($item['email']);
+            array_push($users,$item);
+            $item['email']="seniordev1994128@gmail.com";
+            $item['fullname'] = 'James Coulter';
+            array_push($users,$item);
+            // $users = $this->User_model->getUsersForBlast($this->session->get_userdata()['company_id']);
+            $this->load->library('email');
+            $email_temp = $this->getEmailTemp('create_course',$this->session->get_userdata()['company_id']);
+            $message = $email_temp['message'];
+            $title = $email_temp['subject'];
+            $img_url = base_url() . $detail[0]["img_path"];
+            foreach($users as $item){
+                $content = str_replace("{USERNAME}", $item['fullname'], $message);
+                $content = str_replace("{COURSETITLE}", $mainCourse['title'], $content);
+                $content = str_replace("{CATEGORY}", $category, $content);
+                $content = str_replace("{COURSETYPE}", $course_type, $content);
+                $content = str_replace("{PAYTYPE}", $mainCourse['pay_type'] == 0? "Closed Enrollment Course": "Open Enrollment Course", $content);
+                $content = str_replace("{DURATION}", $detail[0]['duration'], $content);
+                $content = str_replace("{PRICE}", $mainCourse['pay_price'], $content);
+                $content = str_replace("{DISCOUNT}", $mainCourse['discount'], $content);
+                $content = str_replace("{AMOUNT}", $mainCourse['amount'], $content);
+                $content = str_replace("{IMAGEURL}", $img_url, $content);
+                $content = str_replace("{COMPANYURL}", base_url($company['company_url']), $content);
+
+                $content = str_replace("{COMPANYLOGO}", base_url()."assets/logos/logo1.png", $content);
+                $content = str_replace("{EXAMPLERLOGO}", base_url()."assets/logos/logo2.png", $content);
+                
+                $content = str_replace("{STARTDATE}", $start_date, $content);
+                $content = str_replace("{ENDDATE}", $end_date, $content);
+                $content = str_replace("{VIEWCOURSE}", $course_url, $content);
+                $content = str_replace("{ENROLLCOURSE}", base_url() . "company/QC", $content);
+                $content = str_replace("{VIEWLINK}", base_url() . "company/QC", $content);
+                print_r($content);
+                    
+                    // $this->sendemail($item['email'],$item['fullname'],$content,$title);
+            }
+        }
+        // $this->response(array("success"=>true, "msg"=>"Course Republished"));
+
 
     }
     public function save_course_profile(){
@@ -922,7 +994,7 @@ class Coursecreation extends BaseController{
                 $category = $this->Category_model->getRow($course_data['category_id'])[0]["name"];
             }
             if( $this->input->post('standard_id') ){
-                $category = $category . " and standard " . substr($this->Standard->getStrStandard($this->input->post('standard_id')), 1);
+                $category = $category . " and standard " . substr($this->Standard->getStrStandard($course_data['standard_id']), 1);
             }
             if($course_data['course_type'] == 2){
                 $course_type = "On Demand platform at your own pace";
@@ -937,7 +1009,7 @@ class Coursecreation extends BaseController{
                 $detail = $this->Live_model->getListByCourseId($course_data['id']);		
                 $course_url = base_url('company/'.$company['url'].'/classes/view/'.$this->Live_model->get_course_time_id($detail[0]['id'])->id);
                 $start_date = "<li> Start Date: " . date("M d, Y h:i:sa", strtotime($detail[0]["start_day"] . " " . $detail[0]["start_time"])) . "</li>";
-                $end_date = "<li> End Date: " + date("M d, Y h:i:sa",strtotime("+"+$detail[0]["duration"]-1 +" days", strtotime($detail[0]['startday']+ " " + $detail[0]['end_time']))) + "</li>";
+                $end_date = "<li> End Date: " . date("M d, Y h:i:sa",strtotime("+" . ($detail[0]["duration"]-1) . " days", strtotime($detail[0]['startday']. " " . $detail[0]['end_time']))) . "</li>";
             }
             if($course_data['course_type'] == 0){
                 $course_type = "face to face ILT Platform at" . substr($course_data["location"],1);
@@ -946,7 +1018,7 @@ class Coursecreation extends BaseController{
                 $detail = $this->Training_model->getListByCourseId($course_data["id"]);	
                 $course_url = base_url('company/'.$company['url']). "/training/view/" . $this->Training_model->get_course_time_id($detail[0]['id'])->id;
                 $start_date = "<li> Start Date: " . date("M d, Y h:i:sa", strtotime($detail[0]["start_day"] . " " . $detail[0]["start_time"])) . "</li>";
-                $end_date = "<li> End Date: " + date("M d, Y h:i:sa",strtotime("+"+$detail[0]["duration"]-1 +" days", strtotime($detail[0]['startday']+ " " + $detail[0]['end_time']))) + "</li>";
+                $end_date = "<li> End Date: " . date("M d, Y h:i:sa", strtotime("+" . ($detail[0]["duration"]-1) . " days", strtotime($detail[0]['startday']. " " . $detail[0]['end_time']))) . "</li>";
             }
             
             // Add Course Detail To WooCommerce Store
