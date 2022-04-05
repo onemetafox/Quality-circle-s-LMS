@@ -159,7 +159,7 @@
                       Disclaimer of Warranties</B></FONT></FONT></P>
       <P ALIGN=JUSTIFY STYLE="margin-top: 0.19in; margin-bottom: 0.19in"><FONT FACE="-apple-system-font, serif"><FONT SIZE=4 STYLE="font-size: 15pt">YOU UNDERSTAND AND AGREE THAT THE Quality Circle International Limited SERVICE IS PROVIDED ON AN “AS IS” AND “AS AVAILABLE” BASIS AND THAT Quality Circle International Limited DOES NOT ASSUME ANY RESPONSIBILITY FOR PROMPT OR PROPER DELIVERY, OR RETENTION OF ANY USER INFORMATION OR COMMUNICATIONS BETWEEN USERS. Quality Circle International Limited ASSUMES NO RESPONSIBILITY FOR THE ACCURACY OR EXISTENCE OF ANY COMMUNICATIONS BETWEEN USERS. Quality Circle International Limited EXPRESSLY DISCLAIMS ALL WARRANTIES OF ANY KIND, WHETHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT.
 Quality Circle International Limited MAKES NO WARRANTY THAT</FONT></FONT></P>
-      <OL TYPE=i>
+      <OL TYPE=i style="margin-left:35px;">
           <LI><P ALIGN=JUSTIFY STYLE="margin-top: 0.19in; margin-bottom: 0.19in">
                   <FONT FACE="-apple-system-font, serif"><FONT SIZE=4 STYLE="font-size: 15pt">(i)THE Quality Circle International Limited SERVICE WILL MEET YOUR REQUIREMENTS, </FONT></FONT>
               </P>
