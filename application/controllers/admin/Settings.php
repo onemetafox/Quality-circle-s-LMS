@@ -120,6 +120,7 @@ class Settings extends BaseController {
             if($this->input->get('email')){
                 $where = array('action' => $this->input->get('email'), 'company_id' => $company_id);
                 $data = $this->Settings_model->getEmailTemplate($where);
+                
                 if($data){
                     $etmp['subject'] = $data['subject'];
                     $e_message = str_replace("'", "\'", $data['message']);
@@ -127,6 +128,8 @@ class Settings extends BaseController {
                     $etmp['editid'] = $data['id'];
                 }
             }
+            $where = array('company_id' => $company_id);
+            $etmp['templates'] = $this->Settings_model->getEmailTemplates($where);
             $this->db->select('*');
             $blocks_category = $this->db->get('block_category')->result_array();
             $actual_link = site_url();

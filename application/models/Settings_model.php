@@ -208,6 +208,11 @@ class Settings_model extends CI_Model
     	$res=$result->row_array();
         return $res;
     }
+    function getEmailTemplates($where){
+    	$result = $this->db->get_where($this->email_template, $where);
+    	$res=$result->result_array();
+        return $res;
+    }
     
     function insertNotification($params){
     	$this->db->insert($this->notification_table, $params);

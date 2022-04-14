@@ -60,37 +60,13 @@
 		                		<div class="form-group ">
 		                			<div class="col-md-4">
 					                	<select class="form-control mt-3" id="tmp_chng">
-					                		<!--<option value="">Choose Template</option>
-					                		<option value="welcome_email" <?php echo ($this->input->get('email') == 'welcome_email') ? 'selected' : '';?>>Welcome email when account created</option>
-					                		<option value="forgotten_password" <?php echo ($this->input->get('email') == 'forgotten_password') ? 'selected' : '';?>>Forgotten Password</option>
-					                		<option value="password_reset" <?php echo ($this->input->get('email') == 'password_reset') ? 'selected' : '';?>>Password Reset</option>
-					                		<option value="feedback_received" <?php echo ($this->input->get('email') == 'feedback_received') ? 'selected' : '';?>>Feedback received</option>
-					                		<option value="exam_passed" <?php echo ($this->input->get('email') == 'exam_passed') ? 'selected' : '';?>>Exam passed successfully the certificate should be attached</option>
-					                		<option value="exam_not_passed" <?php echo ($this->input->get('email') == 'exam_not_passed') ? 'selected' : '';?>>Exam not passed</option>
-											<option value="assign_training" <?php echo ($this->input->get('email') == 'assign_training') ? 'selected' : '';?>>Assign Training</option>
-											<option value="assign_exam" <?php echo ($this->input->get('email') == 'assign_exam') ? 'selected' : '';?>>Assign Exam</option>-->
                                             <option value="">Choose Template</option>
-                                            <option value="welcome_email" <?php echo ($this->input->get('email') == 'welcome_email') ? 'selected' : '';?>>When users sign up for a course.</option>
-
-                                            <option value="assign_course" <?php echo ($this->input->get('email') == 'assign_course') ? 'selected' : '';?>>Users are assigned a course by admin</option>
-                                            <option value="complete_course" <?php echo ($this->input->get('email') == 'complete_course') ? 'selected' : '';?>>Users complete a course</option>
-                                            <option value="success_certificate" <?php echo ($this->input->get('email') == 'success_certificate') ? 'selected' : '';?>>Users receive certificate successfully</option>
-                                            <option value="fail_certificate" <?php echo ($this->input->get('email') == 'fail_certificate') ? 'selected' : '';?>>Users didn't receive certificate or failed exam</option>
-                                            <option value="notice_date" <?php echo ($this->input->get('email') == 'notice_date') ? 'selected' : '';?>>Notices about course dates</option>
-                                            <option value="IA_complete_course" <?php echo ($this->input->get('email') == 'IA_complete_course') ? 'selected' : '';?>>Instructor & Admin gets email when a course is completed</option>
-                                            <option value="IA_complete_exam" <?php echo ($this->input->get('email') == 'IA_complete_exam') ? 'selected' : '';?>>Instructor & Admin gets notification of completion of exams</option>
-                                            <option value="IA_enroll" <?php echo ($this->input->get('email') == 'IA_enroll') ? 'selected' : '';?>>Instructor & Admin gets notification when there is enrollment</option>
-                                            <option value="signup_company" <?php echo ($this->input->get('email') == 'signup_company') ? 'selected' : '';?>>When company sign up for a course.</option>
-                                            <option value="course_participation_filled" <?php echo ($this->input->get('email') == 'course_participation_filled') ? 'selected' : '';?>>Instructor & Admin gets email when a course participation gets filled</option>
-                                            <option value="new_course_scheduled" <?php echo ($this->input->get('email') == 'new_course_scheduled') ? 'selected' : '';?>>Participants gets email when new course scheduled</option>
-											<option value="new_course_arrival" <?php echo ($this->input->get('email') == 'new_course_arrival') ? 'selected' : '';?>>New Course Arrival Cron Job Mail</option>
-											<option value="user_otp_login" <?php echo ($this->input->get('email') == 'user_otp_login') ? 'selected' : '';?>>User OTP Login</option>
-
+											<?php foreach($templates as $item){ ?> 
+												<option value="<?= $item['action']?>" <?= ($this->input->get('email') == $item['action']) ? 'selected' : '';?>><?= $item['subject']?></option>	
+											<?php }?>
 										</select>
 					                </div>
-
 		                		</div>
-
 								<div class="form-group form-group-invisible">
 									<label class="col-sm-4 control-label bld" for="inputDefault">Subject</label>
 									<div class="col-md-12 mailbox-compose-field">
@@ -150,7 +126,8 @@
  		                        		|| $this->input->get('email') == 'assign_course'
  		                        		|| $this->input->get('email') == 'success_certificate'
  		                        		|| $this->input->get('email') == 'fail_certificate'
- 		                        		|| $this->input->get('email') == 'fail_certificate'){?>
+ 		                        		|| $this->input->get('email') == 'fail_certificate'
+										|| $this->input->get('email') == 'create_course'){?>
                                     <div class="col-md-12">
                                         <strong>Template Tags</strong>
                                         <ul>
