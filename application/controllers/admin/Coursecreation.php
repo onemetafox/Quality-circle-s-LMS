@@ -812,7 +812,7 @@ class Coursecreation extends BaseController{
                     // $this->sendemail($item['email'],$item['fullname'],$content,$title);
             }
         }
-        // $this->response(array("success"=>true, "msg"=>"Course Republished"));
+        $this->response(array("success"=>true, "msg"=>"Course Republished"));
 
 
     }

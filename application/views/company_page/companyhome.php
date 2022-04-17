@@ -85,7 +85,7 @@
         <h2 class="titleH2 text-center">Instructor Led Training</h2>
         <div class="row">
 		<?php if(!empty($trainCourses)){ ?>
-            <?php foreach ($trainCourses as $course){ if($course['date_str'] != '' || $course['date_str'] != 0){ ?>
+            <?php foreach ($trainCourses as $course){ ?>
                 <div class="col-md-4 col-sm-6 col-xs-6 col-full">
                     <div class="courseBox">
                         <div class="courseImg">
@@ -135,7 +135,7 @@
 						</div><!--row-->
                     </div><!--courseBox-->
                 </div><!--col-4-->
-		<?php } } } else{ ?>
+		<?php } } else{ ?>
 				<div class="col-md-4 col-sm-6 col-xs-6 col-full">
                     <div class="courseBox">
                         <div class="courseImg">

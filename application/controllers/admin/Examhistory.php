@@ -284,24 +284,24 @@ class Examhistory extends BaseController{
         );		
         $this->global['sidebar'] = $this->sidebar->generate($side_params, $this->role);
 		
-		 	$myData = array();
-			$table_data = $this->Course_model->getAllCourse();
-			$records["data"] = $table_data;
-			if(!empty($records["data"])){			
-				foreach($records["data"] as $key => $val){
-					$title = $val['title'];	
-					if($val['title'] == ''){ $title = 'Not Available'; }
-					$total_entollments = $this->Enrollments_model->totalCourseEnrollmentsCount($val['id']);
-					$myData["data"][$key]['no'] = $key+1;
-					$myData["data"][$key]['id'] = $val['id'];
-					$myData["data"][$key]['type'] = $val['course_type'];
-					$myData["data"][$key]['title'] = ucfirst($title);				
-					$myData["data"][$key]['count'] = $total_entollments;
-				}	
-			} 
-            $user = $this->session->get_userdata();
-            $this->global['user'] = $user;
-			$this->global['mydata'] = $myData;
+        $myData = array();
+        $table_data = $this->Course_model->getAllCourse();
+        $records["data"] = $table_data;
+        if(!empty($records["data"])){			
+            foreach($records["data"] as $key => $val){
+                $title = $val['title'];	
+                if($val['title'] == ''){ $title = 'Not Available'; }
+                $total_entollments = $this->Enrollments_model->totalCourseEnrollmentsCount($val['id']);
+                $myData["data"][$key]['no'] = $key+1;
+                $myData["data"][$key]['id'] = $val['id'];
+                $myData["data"][$key]['type'] = $val['course_type'];
+                $myData["data"][$key]['title'] = ucfirst($title);				
+                $myData["data"][$key]['count'] = $total_entollments;
+            }	
+        } 
+        $user = $this->session->get_userdata();
+        $this->global['user'] = $user;
+        $this->global['mydata'] = $myData;
             
         $this->loadViews("admin/exam/enrolled_courses", $this->global, NULL, NULL);	
 	}

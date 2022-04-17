@@ -282,6 +282,36 @@ class Pricing  extends BaseController
                 $data['tax_rate'] = $course->tax_rate;
                 $data['tax_type'] = $course->tax_type;
                 $data['amount'] = $course->amount;
+                $this->load->library('email');
+                $email_temp = $this->getEmailTemp('paid_email_admin',$this->session->get_userdata()['company_id']);
+                $message = $email_temp['message'];
+                $title = $email_temp['subject'];
+
+                $admin = $this->User_model->getAdmin($data['company_id']);
+                $fullname = $this->User_model->getFullNameById($data['user_id']);
+                $instructor = $this->User_model->getInstructorByCompany($data['company_id']);
+                foreach($admin as $item){
+                    $content = str_replace("{USERNAME}", $fullname, $message);
+                    $content = str_replace("{COURSE_TITLE}", $data['title'], $content);
+                    $content = str_replace("{COURSE_TYPE}",$data['object_type'], $content);
+                    $content = str_replace("{COURSE_PRICE}", $data['price'], $content);
+                    $content = str_replace("{PAYMENT_DATE}", $data['pay_date'], $content);
+                    $content = str_replace("{PAYMENT_TYPE}", "Paypal", $content);
+                    
+                    // print_r($content);
+                    // $this->sendemail($item['email'],$item['fullname'],$content,$title);
+                }
+                foreach($instructor as $item){
+                    $content1 = str_replace("{USERNAME}", $fullname, $message);
+                    $content1 = str_replace("{COURSE_TITLE}", $data['title'], $content1);
+                    $content1 = str_replace("{COURSE_TYPE}",$data['object_type'], $content1);
+                    $content1 = str_replace("{COURSE_PRICE}", $data['price'], $content1);
+                    $content1 = str_replace("{PAYMENT_DATE}", $data['pay_date'], $content1);
+                    $content1 = str_replace("{PAYMENT_TYPE}", "Paypal", $content1);
+                    
+                    // print_r($content);
+                    // $this->sendemail($item['email'],$item['fullname'],$content,$title);
+                }
             }else{
                 
             }
@@ -392,12 +422,43 @@ class Pricing  extends BaseController
             $data['tax_rate'] = $course->tax_rate;
             $data['tax_type'] = $course->tax_type;
             $data['amount'] = $course->amount;
+            $this->load->library('email');
+            $email_temp = $this->getEmailTemp('paid_email_admin',$this->session->get_userdata()['company_id']);
+            $message = $email_temp['message'];
+            $title = $email_temp['subject'];
+
+            $admin = $this->User_model->getAdmin($data['company_id']);
+            $fullname = $this->User_model->getFullNameById($data['user_id']);
+            $instructor = $this->User_model->getInstructorByCompany($data['company_id']);
+            foreach($admin as $item){
+                $content = str_replace("{USERNAME}", $fullname, $message);
+                $content = str_replace("{COURSE_TITLE}", $data['title'], $content);
+                $content = str_replace("{COURSE_TYPE}",$data['object_type'], $content);
+                $content = str_replace("{COURSE_PRICE}", $data['price'], $content);
+                $content = str_replace("{PAYMENT_DATE}", $data['pay_date'], $content);
+                $content = str_replace("{PAYMENT_TYPE}", "Paypal", $content);
+                
+                // print_r($content);
+                // $this->sendemail($item['email'],$item['fullname'],$content,$title);
+            }
+            foreach($instructor as $item){
+                $content1 = str_replace("{USERNAME}", $fullname, $message);
+                $content1 = str_replace("{COURSE_TITLE}", $data['title'], $content1);
+                $content1 = str_replace("{COURSE_TYPE}",$data['object_type'], $content1);
+                $content1 = str_replace("{COURSE_PRICE}", $data['price'], $content1);
+                $content1 = str_replace("{PAYMENT_DATE}", $data['pay_date'], $content1);
+                $content1 = str_replace("{PAYMENT_TYPE}", "Paypal", $content1);
+                
+                // print_r($content);
+                // $this->sendemail($item['email'],$item['fullname'],$content,$title);
+            }
         }else{
             
         }
         if ( !empty( $_GET['paymentId'] ) && !empty( $_GET['PayerID'] ) ) {
             // $this->paypal->execute_payment( $_GET['paymentId'], $_GET['PayerID'] );
-            $insert = $this->Payment_model->save($data);
+            // $insert = $this->Payment_model->save($data);
+            
             $this->loadViews_front('payment_success', $data);
         }
     }
