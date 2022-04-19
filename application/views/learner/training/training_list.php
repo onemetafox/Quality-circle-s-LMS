@@ -123,7 +123,7 @@
 														<li><?=nl2br(substr($free_course['description'],0,300)); ?>...</li>
 													</ul>
 													<?php if($free_course['enroll_id'] == ''){ ?>
-													<a class="btnBlue" href="javascript:booknow(<?=$free_course['course_id']?>,<?=$free_course['course_time_id']?>)" >
+													<a class="btnBlue" href="javascript:enroll(<?=$free_course['course_id']?>,<?=$free_course['course_time_id']?>)" >
 														<?=$term["enrollnow"]?>
 													</a>
 													<?php }else { ?>
@@ -196,9 +196,10 @@
 															Pay Now
 														</a>
 													<?php }else if(!$paid_course['enroll_id']){ ?>
-														<a class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
+														<a class="btnBlue" href="javascript:enroll(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
 															<?=$term["enrollnow"]?>
 														</a>
+														
 													<?php } else{?>
 														<a  class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
 															<?=$term["viewcourse"]?>
@@ -229,15 +230,61 @@
 </div>
 </div>
 </section>
+<div class="modal lg" id="policyModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+	<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title">Modal title</h5>
+		</div>
+		<div class="modal-body">
+			<input type="hidden" id="course_id" name="course_id">
+			<input type="hidden" name="id" id="id">
+			<p>Your Peace of Mind Protection Under our Agreement for Cancellation, Transfer, Substitution, and "No-Show".</p>
 
-</script>
+			<p>If your plans changed and you are unable to attend the training course you have the following options available to you;</p>
+
+			<p>	1.	More than 30 days to the start date of the course, you may: </p>
+					<p>-Submit no hassle request to cancel your enrollment for a full refund less payment collection and administrative fees of 8% of the cost of the course.</p>
+					<p>-Submit  no hassle request for transfer to another similar training course if availability exists.</p>
+					<p>-Submit  no hassle request to substitute a colleague at no additional cost.  </p>
+		 	<p>2.	Less than 30 days but more that 15 days to the start date of the course you may;</p>
+			<p>-Submit no hassle request to cancel your enrollment for a 50% refund of the cost of the course. </p>
+			<p>-Submit  no hassle request for transfer to another similar training course if  availability exists.</p>
+			<p>-Submit  no hassle request to substitute a colleague additional cost. </p>
+
+
+			<p>3.Less than 15 days to the start date of the course you may;</p>
+			<p>-Submit no hassle request to cancel your enrollment for no refund. </p>
+			<p>-Submit  no hassle request for transfer to another similar training course if   availability exists.</p>
+			<p>-Submit  no hassle request to substitute a colleague for no additional cost. </p>
+
+			<p>4. No show at the start of the training enrollment cancelled and no refund, replacement or substitution possible</p>
+			<p>5. Although unlikely, unforeseen circumstances can necessitate cancellation of a course by Quality Circle in which case a full refund will be returned.</p>
+			<p>6. Since the GoSmart is 100% automated any request for substitution would require the prospective participant to sign up on the academy { https://gosmartacademy.com } and notify support@gosmartacademy.com or support@qualitycircleint.com. After which an invitation for the course would be sent and the participant who would have to sign-up for the training to gain access.</p>
+				<br>
+				<!-- <input type="checkbox" name="term" id="term"> I agree with the terms and conditions  -->
+
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-primary" onClick="booknow()"><?=$term["enrollnow"]?></button>
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		</div>
+	</div>
+	</div>
+</div>
 <script>
 	var company_url = "<?= base_url('company/'.$company['url'])?>";
 	function viewcourse(course_id){
 		window.location = company_url + '/traing/view/' + course_id;	
 	}
-  	
-    function booknow(course_id,id) {
+  	function enroll(course_id, id){
+		$('#course_id').val(course_id);
+		$('#id').val(id);
+		$('#policyModal').modal('show');
+	}
+    function booknow() {
+		var course_id = $("#course_id").val();
+		var id = $("#id").val();
         $.ajax({
             url: $('#base_url').val()+'learner/training/booknow',
             type: 'POST',
