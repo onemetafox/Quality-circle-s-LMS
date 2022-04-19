@@ -198,7 +198,7 @@
 															Pay Now
 														</a>
 													<?php }else if(!$paid_course['enroll_id']){ ?>
-														<a class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
+														<a class="btnBlue" href="javascript:enroll(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
 															<?=$term["enrollnow"]?>
 														</a>
 													<?php } else{?>

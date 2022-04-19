@@ -457,7 +457,7 @@ class Pricing  extends BaseController
         }
         if ( !empty( $_GET['paymentId'] ) && !empty( $_GET['PayerID'] ) ) {
             // $this->paypal->execute_payment( $_GET['paymentId'], $_GET['PayerID'] );
-            // $insert = $this->Payment_model->save($data);
+            $insert = $this->Payment_model->save($data);
             
             $this->loadViews_front('payment_success', $data);
         }
