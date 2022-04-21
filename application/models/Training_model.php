@@ -208,7 +208,7 @@ class Training_model extends AbstractModel
                 FROM training_course a
                 LEFT JOIN course b ON a.course_id = b.id
                 LEFT JOIN training_course_time c ON a.id = c.training_course_id 
-                LEFT JOIN payment_history d ON d.object_id = a.id AND d.object_type = 'training' AND d.user_id = '".$user['user_id']."' AND d.company_id = '".$user['company_id']."'
+                LEFT JOIN payment_history d ON d.object_id = b.id AND d.object_type = 'training' AND d.user_id = '".$user['user_id']."' AND d.company_id = '".$user['company_id']."'
                 LEFT JOIN enrollments f ON f.course_id = b.id AND f.course_time_id = c.id
                 LEFT JOIN ( SELECT SUM( course_time ) session_time, user_id, course_id FROM course_session WHERE user_id = '".$user['user_id']."' GROUP BY course_id ) g ON g.course_id = b.id 
             WHERE b.pay_type = 1  AND a.create_id = '".$user['company_id']."'";

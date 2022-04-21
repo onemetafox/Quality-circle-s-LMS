@@ -237,7 +237,7 @@
 			<h5 class="modal-title">Modal title</h5>
 		</div>
 		<div class="modal-body">
-			<input type="hidden" id="course_id" name="course_id">
+			<input type="hidden" id="course_id" name="book_course_id">
 			<input type="hidden" name="id" id="id">
 			<p>Your Peace of Mind Protection Under our Agreement for Cancellation, Transfer, Substitution, and "No-Show".</p>
 
@@ -278,12 +278,12 @@
 		window.location = company_url + '/traing/view/' + course_id;	
 	}
   	function enroll(course_id, id){
-		$('#course_id').val(course_id);
+		$('#book_course_id').val(course_id);
 		$('#id').val(id);
 		$('#policyModal').modal('show');
 	}
     function booknow() {
-		var course_id = $("#course_id").val();
+		var course_id = $("#book_course_id").val();
 		var id = $("#id").val();
         $.ajax({
             url: $('#base_url').val()+'learner/training/booknow',

@@ -363,7 +363,7 @@ class User_model extends AbstractModel
         return count($this->db->query($sql)->result_array());
     }
     function getInstructorByCompany($id){
-        $this->db->select('a.id, CONCAT(a.first_name, " ", a.last_name) AS fullname')->from($this->table." a");
+        $this->db->select('a.id, a.email, CONCAT(a.first_name, " ", a.last_name) AS fullname')->from($this->table." a");
 
         $this->db->where('a.company_id', $id);
         $this->db->where('a.user_type', "Instructor");
