@@ -207,7 +207,7 @@
 			<h5 class="modal-title">Modal title</h5>
 		</div>
 		<div class="modal-body">
-			<input type="hidden" id="course_id" name="course_id">
+			<input type="hidden" id="book_course_id" name="book_course_id">
 			<input type="hidden" name="id" id="id">
 			<p>Your Peace of Mind Protection Under our Agreement for Cancellation, Transfer, Substitution, and "No-Show".</p>
 
