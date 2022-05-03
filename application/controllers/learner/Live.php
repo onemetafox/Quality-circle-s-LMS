@@ -146,7 +146,7 @@ class Live extends BaseController {
 			$content = $email_temp['message'];
 			$title = $email_temp['subject'];
 	
-			$content = str_replace("{USERNAME}", $data["first_name"].' '.$data["last_name"], $content);
+			$content = str_replace("{USERNAME}", $user_data['first_name'].' '.$user_data['last_name'], $content);
 			$URL = $this->Company_model->getList(array('id'=>$this->session->userdata('company_id')))[0]['url'];
 			$course_html = "<a href='". base_url('company/'.$URL.'/live/view/'.$course_id)."' >" . $course["title"] . "</a>";
 			$content = str_replace("{COURSE_NAME}", $course_html , $content);
@@ -164,7 +164,7 @@ class Live extends BaseController {
 				$content = str_replace("{LOCATION}", '', $content);
 			}
             // print_r($content);
-			$this->sendemail($data['email'],$data['first_name'].' '.$data['last_name'],$content,$title);
+			$this->sendemail($user_data['email'],$data['first_name'].' '.$data['last_name'],$content,$title);
 		}
 		if($this->Live_model->isBooking($course_time_id, $this->session->get_userdata()['user_id']) > 0){
             return false;

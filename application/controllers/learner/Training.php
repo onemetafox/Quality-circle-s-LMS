@@ -90,7 +90,6 @@ class Training extends BaseController {
         $data['user_id'] = $this->session->get_userdata() ['user_id'];
         
 		$course = (array)$this->Course_model->select($course_id);
-        print_r($course);
 		$enrolledUsersCount = $this->Enrollments_model->getEnrolledList($this->session->get_userdata()['user_id'],$course_id,$course_time_id);		
 		if($enrolledUsersCount == 0){
 			$enrolled_data = array(
@@ -106,16 +105,12 @@ class Training extends BaseController {
 
             $user_data = $this->User_model->getList(array('id' => $this->session->get_userdata()['user_id'])) [0];
 
-			$data['first_name'] = $user_data['first_name'];
-			$data['last_name'] = $user_data['last_name'];
-			$data['email'] = $user_data['email'];
-
             $this->load->library('email');
 			$email_temp = $this->getEmailTemp('assign_course',$this->session->userdata('company_id'));
 			$content = $email_temp['message'];
 			$title = $email_temp['subject'];
 	
-			$content = str_replace("{USERNAME}", $data["first_name"].' '.$data["last_name"], $content);
+			$content = str_replace("{USERNAME}", $user_data['first_name'].' '.$user_data['last_name'], $content);
 			$URL = $this->Company_model->getList(array('id'=>$this->session->userdata('company_id')))[0]['url'];
 			$course_html = "<a href='". base_url('company/'.$URL.'/training/view/'.$course_id)."' >" . $course["title"] . "</a>";
 			$content = str_replace("{COURSE_NAME}", $course_html , $content);
@@ -133,7 +128,7 @@ class Training extends BaseController {
 				$content = str_replace("{LOCATION}", '', $content);
 			}
             // print_r($content);
-			$this->sendemail($data['email'],$data['first_name'].' '.$data['last_name'],$content,$title);
+			$this->sendemail($user_data['email'], $user_data['first_name'].' '.$user_data['last_name'],$content,$title);
 		}
 		if($this->Training_model->isBooking($course_time_id, $this->session->get_userdata()['user_id']) > 0){
             return false;
