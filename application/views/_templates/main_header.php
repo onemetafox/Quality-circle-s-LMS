@@ -176,7 +176,7 @@
                     <?php endif?>
                     <?php if(isset($company['url'])) :?>
                         <a class="navbar-brand" href="<?php echo base_url($company['company_url']); ?>">
-                            <img src="<?php echo base_url($company['logo_path']);?>" style="height: 3rem;">
+                            <img src="<?php echo base_url($company['logo_path']);?>">
                         </a>
                     <?php endif?>
                 </div>

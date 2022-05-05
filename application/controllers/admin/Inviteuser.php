@@ -93,7 +93,7 @@ class Inviteuser extends BaseController{
         $URL = $this->Company_model->getList(array('id'=>$this->session->userdata('company_id')))[0]['url'];
         $course_html = "<a href='". base_url('company/'.$URL.'/'.$type.'/view/'.$data['course_id'])."' >" . $course_data["title"] . "</a>";
         $content = str_replace("{COURSE_NAME}", $course_html , $content);
-        $content = str_replace("{LOGO}", "<img src='".base_url('assets/img/logo.png')."'/>", $content);
+        $content = str_replace("{LOGO}", "<img src='" . base_url('assets/logos/logo1.png') . "'/>"."<img src='" . base_url('assets/logos/logo2.png') . "'/>", $content);
         $content = str_replace("{CATEGORY}", $course_data["category_name"], $content);
         if($course_data["standard_name"]) {
             $content = str_replace("{STANDARD}", $course_data["standard_name"], $content);
@@ -231,7 +231,7 @@ class Inviteuser extends BaseController{
 			$URL = $this->Company_model->getList(array('id'=>$this->session->userdata('company_id')))[0]['url'];
 			$course_html = "<a href='". base_url('company/'.$URL.'/'.$type.'/view/'.$data['course_id'])."' >" . $course_data["title"] . "</a>";
 			$content = str_replace("{COURSE_NAME}", $course_html , $content);
-			$content = str_replace("{LOGO}", "<img src='".base_url('assets/img/logo.png')."'/>", $content);
+			$content = str_replace("{LOGO}", "<img src='" . base_url('assets/logos/logo1.png') . "'/>"."<img src='" . base_url('assets/logos/logo2.png') . "'/>", $content);
 			$content = str_replace("{CATEGORY}", $course_data["category_name"], $content);
 			if(isset($course_data["standard_name"]) && !empty($course_data["standard_name"])) {
 				$content = str_replace("{STANDARD}", $course_data["standard_name"], $content);
@@ -362,7 +362,7 @@ class Inviteuser extends BaseController{
 			$URL = $this->Company_model->getList(array('id'=>$this->session->userdata('company_id')))[0]['url'];
 			$course_html = "<a href='". base_url('company/'.$URL.'/'.$type.'/view/'.$data['course_id'])."' >" . $course_data["title"] . "</a>";
 			$content = str_replace("{COURSE_NAME}", $course_html , $content);
-			$content = str_replace("{LOGO}", "<img src='".base_url('assets/img/logo.png')."'/>", $content);
+			$content = str_replace("{LOGO}", "<img src='" . base_url('assets/logos/logo1.png') . "'/>"."<img src='" . base_url('assets/logos/logo2.png') . "'/>", $content);
 			$content = str_replace("{CATEGORY}", $course_data["category_name"], $content);
 			if(isset($course_data["standard_name"]) && !empty($course_data["standard_name"])) {
 			    $content = str_replace("{STANDARD}", $course_data["standard_name"], $content);

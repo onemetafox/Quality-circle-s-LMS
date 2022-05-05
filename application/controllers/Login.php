@@ -982,7 +982,7 @@ class Login extends BaseController{
                     $content = $emailTmp['message'];
                     $title = $emailTmp['subject'];
                     $content = str_replace("{USERNAME}", $data["first_name"] . ' ' . $data["last_name"], $content);
-                    $content = str_replace("{LOGO}", "<img src='" . base_url('assets/img/logo.png') . "'/>", $content);
+                    $content = str_replace("{LOGO}", "<img src='" . base_url('assets/logos/logo1.png') . "'/>"."<img src='" . base_url('assets/logos/logo2.png') . "'/>", $content);
                     $this->sendemail($data['email'], $data['first_name'] . $data['last_name'], $content, $title);
              //   }
                 //-------------------Send email to registered user for Email verificaiton  ----------------------

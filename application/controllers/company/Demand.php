@@ -1131,7 +1131,7 @@ class Demand  extends BaseController
             $content = str_replace("{ADMIN_USERNAME}", $admin_name, $content);
             $content = str_replace("{LEANER_NAME}", $this->session->get_userdata()['user_name'], $content);
             $content = str_replace("{COURSE_NAME}", $course_data["title"] , $content);
-            $content = str_replace("{LOGO}", "<img src='".base_url('assets/img/logo.png')."'/>", $content);
+            $content = str_replace("{LOGO}", "<img src='" . base_url('assets/logos/logo1.png') . "'/>"."<img src='" . base_url('assets/logos/logo2.png') . "'/>", $content);
             $content = str_replace("{CATEGORY}", $course_data["category_name"], $content);
             $content = str_replace("{STANDARD}", $course_data["standard_name"], $content);
         $email_class->send_email($from_email,$email_temp['subject'],$content,$this->session->get_userdata()['email']);
@@ -1146,7 +1146,7 @@ class Demand  extends BaseController
                 $content = str_replace("{ADMIN_USERNAME}", $Instructor_name, $content);
                 $content = str_replace("{LEANER_NAME}", $this->session->get_userdata()['user_name'], $content);
                 $content = str_replace("{COURSE_NAME}", $course_data["title"] , $content);
-                $content = str_replace("{LOGO}", "<img src='".base_url('assets/img/logo.png')."'/>", $content);
+                $content = str_replace("{LOGO}", "<img src='" . base_url('assets/logos/logo1.png') . "'/>"."<img src='" . base_url('assets/logos/logo2.png') . "'/>", $content);
                 $content = str_replace("{CATEGORY}", $course_data["category_name"], $content);
                 $content = str_replace("{STANDARD}", $course_data["standard_name"], $content);
                 $email_class->send_email($this->getEmailAddress($val),$email_temp['subject'],$content,$this->session->get_userdata()['email']);
@@ -1721,7 +1721,7 @@ class Demand  extends BaseController
                 $content = $email_temp['message'];
                 $content = str_replace("{USERNAME}", $params['user_name'], $content);
                 $content = str_replace("{COURSE_NAME}", $course_html , $content);
-                $content = str_replace("{LOGO}", "<img src='".base_url('assets/img/logo.png')."'/>", $content);
+                $content = str_replace("{LOGO}", "<img src='" . base_url('assets/logos/logo1.png') . "'/>"."<img src='" . base_url('assets/logos/logo2.png') . "'/>", $content);
                 $content = str_replace("{CATEGORY}", $course_data["category_name"], $content);
                 $content = str_replace("{STANDARD}", $course_data["standard_name"], $content);
 
@@ -1739,7 +1739,7 @@ class Demand  extends BaseController
                 $content = $email_temp['message'];
                 $content = str_replace("{USERNAME}", $params['user_name'], $content);
                 $content = str_replace("{COURSE_NAME}", $course_html , $content);
-                $content = str_replace("{LOGO}", "<img src='".base_url('assets/img/logo.png')."'/>", $content);
+                $content = str_replace("{LOGO}", "<img src='" . base_url('assets/logos/logo1.png') . "'/>"."<img src='" . base_url('assets/logos/logo2.png') . "'/>", $content);
                 $content = str_replace("{CATEGORY}", $course_data["category_name"], $content);
                 $content = str_replace("{STANDARD}", $course_data["standard_name"], $content);
             $email_class->send_email($this->session->get_userdata()['email'],$email_temp['subject'],$content,$from_email);
@@ -1759,7 +1759,7 @@ class Demand  extends BaseController
             $content = str_replace("{ADMIN_USERNAME}", $admin_name, $content);
             $content = str_replace("{LEANER_NAME}", $this->session->get_userdata()['user_name'], $content);
             $content = str_replace("{COURSE_NAME}", $course_data["title"] , $content);
-            $content = str_replace("{LOGO}", "<img src='".base_url('assets/img/logo.png')."'/>", $content);
+            $content = str_replace("{LOGO}", "<img src='" . base_url('assets/logos/logo1.png') . "'/>"."<img src='" . base_url('assets/logos/logo2.png') . "'/>", $content);
             $content = str_replace("{CATEGORY}", $course_data["category_name"], $content);
             $content = str_replace("{STANDARD}", $course_data["standard_name"], $content);
         $email_class->send_email($from_email,$email_temp['subject'],$content,$this->session->get_userdata()['email']);
@@ -1773,7 +1773,7 @@ class Demand  extends BaseController
                 $content = str_replace("{ADMIN_USERNAME}", $Instructor_name, $content);
                 $content = str_replace("{LEANER_NAME}", $this->session->get_userdata()['user_name'], $content);
                 $content = str_replace("{COURSE_NAME}", $course_data["title"] , $content);
-                $content = str_replace("{LOGO}", "<img src='".base_url('assets/img/logo.png')."'/>", $content);
+                $content = str_replace("{LOGO}", "<img src='" . base_url('assets/logos/logo1.png') . "'/>"."<img src='" . base_url('assets/logos/logo2.png') . "'/>", $content);
                 $content = str_replace("{CATEGORY}", $course_data["category_name"], $content);
                 $content = str_replace("{STANDARD}", $course_data["standard_name"], $content);
                 $email_class->send_email($this->getEmailAddress($val),$email_temp['subject'],$content,$this->session->get_userdata()['email']);

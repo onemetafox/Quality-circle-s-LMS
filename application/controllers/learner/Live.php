@@ -150,7 +150,7 @@ class Live extends BaseController {
 			$URL = $this->Company_model->getList(array('id'=>$this->session->userdata('company_id')))[0]['url'];
 			$course_html = "<a href='". base_url('company/'.$URL.'/live/view/'.$course_id)."' >" . $course["title"] . "</a>";
 			$content = str_replace("{COURSE_NAME}", $course_html , $content);
-			$content = str_replace("{LOGO}", "<img src='".base_url('assets/img/logo.png')."'/>", $content);
+			$content = str_replace("{LOGO}", "<img src='" . base_url('assets/logos/logo1.png') . "'/>"."<img src='" . base_url('assets/logos/logo2.png') . "'/>", $content);
 			$content = str_replace("{CATEGORY}", $course["category_name"], $content);
 			if(isset($course["standard_name"]) && !empty($course["standard_name"])) {
 				$content = str_replace("{STANDARD}", $course["standard_name"], $content);

@@ -20,7 +20,7 @@ class Cron extends CI_Controller
            
 			$emailTmp = $this->Settings_model->getEmailTemplate("action='new_course_arrival'");
 			$content = $emailTmp['message'];
-			$content = str_replace("{LOGO}", "<img src='".base_url('assets/img/logo.png')."'/>", $content);
+			$content = str_replace("{LOGO}", "<img src='".base_url('assets/logos/logo1.png')."'/>", $content);
 			$title = $emailTmp['subject'];
            
 			$fromName="Go Smart Academy";

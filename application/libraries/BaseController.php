@@ -411,7 +411,8 @@ class BaseController extends CI_Controller {
         $mail->AltBody = "Email Test\r\nThis email was sent through the 
             Amazon SES SMTP interface using the PHPMailer class.";
         if($type == 1) {
-            $mail->AddEmbeddedImage('assets/images/images/logo_f.png', 'logo');
+            // $mail->AddEmbeddedImage('assets/images/images/logo_f.png', 'logo');
+            $mail->AddEmbeddedImage('assets/img/logo.png', 'logo');
             $mail->AddEmbeddedImage('assets/images/images/01-bg-3.jpg', 'bg');
             $mail->AddEmbeddedImage('assets/images/images/work-1.jpg', 'work-1');
             $mail->AddEmbeddedImage('assets/images/images/work-5.jpg', 'work-5');

@@ -225,7 +225,7 @@ class Demand extends BaseController {
         $content = str_replace("{ADMIN_USERNAME}", $admin_name, $content);
         $content = str_replace("{LEANER_NAME}", $this->session->get_userdata() ['user_name'], $content);
         $content = str_replace("{COURSE_NAME}", $course_data["title"], $content);
-        $content = str_replace("{LOGO}", "<img src='" . base_url('assets/img/logo.png') . "'/>", $content);
+        $content = str_replace("{LOGO}", "<img src='" . base_url('assets/logos/logo1.png') . "'/>"."<img src='" . base_url('assets/logos/logo2.png') . "'/>", $content);
         $content = str_replace("{CATEGORY}", $course_data["category_name"], $content);
         $content = str_replace("{STANDARD}", $course_data["standard_name"], $content);
         $email_class = new Email();
