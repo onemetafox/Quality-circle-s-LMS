@@ -133,7 +133,8 @@ class Library extends BaseController {
     
     public function getData(){
         $parent_id = $this->input->post('parent_id');
-        $table_data['data'] = $this->Library_model->getList(array('user_id' => $this->session->get_userdata() ['userId'], 'parent_id' => $parent_id));
+        // $table_data['data'] = $this->Library_model->getList(array('user_id' => $this->session->get_userdata() ['userId'], 'parent_id' => $parent_id));
+        $table_data['data'] = $this->Library_model->getList(array('parent_id' => $parent_id));
         $table_data['recordsTotal'] = 0;
         $table_data['recordsFiltered'] = 0;
         foreach ($table_data['data'] as $key => $row){
