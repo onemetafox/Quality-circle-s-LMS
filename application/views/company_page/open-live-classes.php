@@ -94,15 +94,11 @@
                                             <?php
 												$showDuration = $course->duration > 1 ? $course->duration. " Days" : $course->duration." Day";												
 												$duration = $course->duration - 1;
-												$enddate = strtotime($course->start_at .'+'.$duration .'days');
+												$enddate = strtotime('+'.$duration .' days', strtotime($course->start_at. " " . $course->end_time));
 											?>
 											<li>Duration: <?php echo $showDuration; ?> </li>
-											<li>Start Date: <?php echo date("M d, Y h:i:sa", strtotime($course->start_at));?></li>
-                                            <?php if($course->duration > 0){ ?>
-                                                <li>End Date: <?php echo date("M d, Y h:i:sa", $enddate);?></li>	
-                                            <?php }else{ ?>
-                                            	<li>End Date: <?php echo date("M d, Y", $enddate).' 11:59:59pm';?></li>
-                                            <?php } ?>
+											<li>Start Date: <?= date("M d, Y h:i:sa", strtotime($course->start_at . " " . $course->start_time));?></li>                                       
+											<li>End Date: <?= date("M d, Y h:i:sa", $enddate);?></li>
 										</ul>
 										<div class="coursePrice _plr-0">
 											<div class="row">

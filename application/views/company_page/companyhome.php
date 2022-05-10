@@ -185,11 +185,11 @@
                             <?php									
 								$showDuration = $course['duration'] > 1 ? $course['duration']. " Days" : $course['duration']." Day";
 								$duration = $course['duration'] - 1;
-								$enddate = strtotime('+'.$duration .' days', strtotime($course['startday']. " " . $course['end_time']));
+								$enddate = strtotime('+'.$duration .' days', strtotime($course['start_at']. " " . $course['end_time']));
 							?>
 							<li> Type: <?= $course['pay_type'] == 0 ?'Close Enrollment Course': 'Open Enrollment Course'?></li>
 							<li> Duration: <?= $showDuration; ?> </li>
-							<li> Start Date: <?= date("M d, Y h:i:sa", strtotime($course['startday'] . " " . $course['start_time']));?></li>
+							<li> Start Date: <?= date("M d, Y h:i:sa", strtotime($course['start_at'] . " " . $course['start_time']));?></li>
 							<li> End Date: <?= date("M d, Y h:i:sa", $enddate);?></li>
 							<li> Price: $<?= $course['pay_price']?></li>
 							<li> Discount: <?= $course['discount']?>%</li>

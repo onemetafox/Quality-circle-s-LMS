@@ -47,24 +47,16 @@
                         </div>
                         <!--col-4-->
                         <div class="col-md-7 col-sm-7 courseInfo">
-                        
-                        	<?php
-								$showDuration = $course->duration > 1 ? $course->duration. " Days" : $course->duration." Day";								
-								$duration = $course->duration - 1;
-								$enddate = strtotime('+'.$duration .' days', $course->date_str);
-								
-							?>
-							<p><i class="fa fa-user"></i> Enrollments: <?php echo $course->count_enroll_users; ?> </p>
-                            <p><i class="fa fa-calendar-alt"></i> Duration: <?php echo $showDuration; ?> </p>
-							<p><i class="fa fa-calendar-alt"></i> Start Date: <?php echo date("M d, Y h:i:sa", $course->date_str);?></p>
-                            <?php if($duration > 0){ ?>
-                                <p> <i class="fa fa-calendar-alt"></i> End Date: <?php echo date("M d, Y h:i:sa", $enddate);?></p>
-                            <?php }else{ ?>
-                                <p> <i class="fa fa-calendar-alt"></i> End Date: <?php echo date("M d, Y", $enddate).' 11:59:59pm';?></p>
-                            <?php } ?>
-                            
-							
-                           	<p><i class="fa fa-map-marker"></i> Location: <?php echo $course->location?></p>
+							      <p><i class="fa fa-user"></i> Enrollments: <?php echo $course->count_enroll_users; ?> </p>
+                           <?php
+                              $showDuration = $course->duration > 1 ? $course->duration. " Days" : $course->duration." Day";												
+                              $duration = $course->duration - 1;
+                              $enddate = strtotime('+'.$duration .' days', strtotime($course->start_at. " " . $course->end_time));
+                           ?>
+                           <li>Duration: <?php echo $showDuration; ?> </li>
+                           <li>Start Date: <?= date("M d, Y h:i:sa", strtotime($course->start_at . " " . $course->start_time));?></li>                                       
+                           <li>End Date: <?= date("M d, Y h:i:sa", $enddate);?></li>
+                           <p><i class="fa fa-map-marker"></i> Location: <?php echo $course->location?></p>
                         </div>
                         <!--col-8-->
                      </div>
@@ -274,7 +266,7 @@
                   <li>
                      <i class="fa fa-envelope"></i><a href="mailto:admin@qualitycircleint.com"><span class="RequestQuote">Request a quote for...</span></a>
                      <p class="DeliverySuboption">
-                        <label class="radioBox">On-Site Training 
+                        <label class="radioBox"><?= $course->pay_type==0?"On-Site Training ":"Open Enrollment Course"?>
                         <input type="radio" checked="checked" name="radio">
                         <span class="checkmark"></span>
                         </label>

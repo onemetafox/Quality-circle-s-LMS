@@ -113,19 +113,15 @@
 											<div class="col-md-10 col-sm-9 col-xs-12 courseInfo">
 												<h5><?php echo $course->title?></h5>
 												<ul class="courseUl">
-												  <li><?php echo substr($course->description,0,300);?>...</li> 
-												  <?php
-                                                        $showDuration = $course->duration > 1 ? $course->duration. " Days" : $course->duration." Day";       
-                                                        $duration = $course->duration - 1;
-														$enddate = strtotime('+'.$duration .' days', $course->date_str);
-                                                    ?>
-                                                    <li><i class="fa fa-calendar-alt"></i> Duration: <?php echo $showDuration; ?> </li>
-                                                    <li><i class="fa fa-calendar-alt"></i> Start Date: <?php echo date("M d, Y h:i:sa", $course->date_str);?></li>
-                                                    <?php if($duration > 0){ ?>
-                                                        <li> <i class="fa fa-calendar-alt"></i> End Date: <?php echo date("M d, Y h:i:sa", $enddate);?></li>
-                                                    <?php }else{ ?>
-                                                        <li> <i class="fa fa-calendar-alt"></i> End Date: <?php echo date("M d, Y", $enddate).' 11:59:59pm';?></li>
-                                                    <?php } ?>
+												  	<li><?php echo substr($course->description,0,300);?>...</li> 
+												  	<?php
+														$showDuration = $course->duration > 1 ? $course->duration. " Days" : $course->duration." Day";												
+														$duration = $course->duration - 1;
+														$enddate = strtotime('+'.$duration .' days', strtotime($course->start_day. " " . $course->end_time));
+													?>
+													<li>Duration: <?php echo $showDuration; ?> </li>
+													<li>Start Date: <?= date("M d, Y h:i:sa", strtotime($course->start_day . " " . $course->start_time));?></li>                                       
+													<li>End Date: <?= date("M d, Y h:i:sa", $enddate);?></li>
 												</ul>
 												<?php  if($check_value != 'past') { ?>
 													<div class="row">

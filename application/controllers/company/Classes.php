@@ -53,7 +53,6 @@ class Classes  extends BaseController
         
         $filter['is_deleted'] = 0;
         $params['courses'] = $this->Virtualcourse_model->all($filter);
-
         unset($filter['start']);
         unset($filter['limit']);
         // unset($filter['sort']);

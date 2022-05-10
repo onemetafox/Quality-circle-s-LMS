@@ -38,7 +38,7 @@ class Virtualcourse_model extends AbstractModel
         //     $this->db->group_end();
         // }
 
-        $this->db->select("a.start_at, a.id as time_id,b.*,DATE_FORMAT(b.reg_date,'%b %d,%Y')")->from("virtual_course_time a");
+        $this->db->select("a.start_at, a.id as time_id,b.*,DATE_FORMAT(b.reg_date,'%b %d,%Y'), a.start_time, a.end_time")->from("virtual_course_time a");
         $this->db->join('virtual_course b', 'a.virtual_course_id = b.id', 'left');
         if($filter['sort'] == 'upcoming'){
             $this->db->where('a.start_at >=', date('y-m-d'));
@@ -153,7 +153,7 @@ class Virtualcourse_model extends AbstractModel
 
 
     function select($id = null){
-        $this->db->select("a.start_at, b.*,DATE_FORMAT(b.reg_date,'%b %d,%Y') as freg_date")->from("virtual_course_time a");
+        $this->db->select("a.start_at, a.start_time, a.end_time, b.*,DATE_FORMAT(b.reg_date,'%b %d,%Y') as freg_date")->from("virtual_course_time a");
         $this->db->join('virtual_course b', 'a.virtual_course_id = b.id', 'left');
         $this->db->where('a.id', $id);
         $query = $this->db->get();
