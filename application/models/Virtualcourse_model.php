@@ -199,7 +199,7 @@ class Virtualcourse_model extends AbstractModel
         return $result;
     }
     function getRecent($count = null,$company_id = null){
-        $this->db->select("course.*, virtual_course_time.id time_id");
+        $this->db->select("course.*, virtual_course_time.id time_id, virtual_course_time.start_at, virtual_course_time.start_time, virtual_course_time.end_time");
         $this->db->join("virtual_course", "virtual_course.course_id = course.id", "LEFT");
         $this->db->join("virtual_course_time", "virtual_course.id = virtual_course_time.virtual_course_id", "LEFT");
         $this->db->where("course.course_type ","1");
