@@ -436,7 +436,7 @@
                                           <div class="form-group page_v" >
                                              <input class="form-control incl ctitle ptitle" type="text" value="" id="text_from_title" name="text_from_title" placeholder="Page Title" data-id="0" onblur="save_chapter(this.id)" required>
                                              <button type="button" id="library_btn" class="mb-1 mt-1 mr-1 btn btn-primary" onclick="library_modal()"><i class="fa fa-plus-square"></i> Insert Library File</button>
-                                             <button type="button" style="text-align: right" id="show_library_btn" class="mb-1 mt-1 mr-1 btn btn-primary" onclick="show_library_btn_func()">X</button>                                             
+                                             <button type="button" style="text-align: right" id="show_library_btn" class="mb-1 mt-1 mr-1 btn btn-primary" onclick="show_library_btn_func()"><i class="fa fa-minus-square"></i>Remove Library File</button>                                             
                                              <input size="16" type="text" value="" readonly id="form_datetimeId" class="form_datetime" name="session_dateTime"> <a href="javascript:void(0)" onclick="remove_sessionDateTime()">x</a>
                                              <div class="col-sm-12" id="div_container"></div>
                                           </div>
