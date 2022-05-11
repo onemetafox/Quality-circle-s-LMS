@@ -221,7 +221,7 @@
                                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                                 <span id="successMsg"></span>
                             </div>
-                            <form id = "stripePayment" class="needs-validation" method="post" novalidate="novalidate" data-stripe-publishable-key="<?=$stripe_client_id?>">
+                            <form id = "stripePayment" class="needs-validation" method="post" novalidate="novalidate" data-stripe-publishable-key="<?=$stripe_client_id?>" style="display:none">
 								<div class="form-group text-center">
 									<ul class="list-inline" style="text-align:center">
 										<li class="list-inline-item"><i class="text-muted fa fa-cc-visa fa-2x"></i></li>
