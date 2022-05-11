@@ -105,19 +105,15 @@
 												<div class="col-lg-8 col-md-7 col-sm-6 courseInfo">
 													<h5>
 														<?php
-															$showDuration = $free_course['duration'] > 1 ? $free_course['duration']. " Days" : $free_course['duration']." Day";
+															$showDuration = $free_course['duration'] > 1 ? $free_course['duration']. " Days" : $free_course['duration']." Day";												
 															$duration = $free_course['duration'] - 1;
-															//$enddate = strtotime(date('Y-m-d',$free_course['date_str']) .'+'.$duration .'days');
-															$enddate = strtotime('+'.$duration .' days', $free_course['date_str']);
+															$enddate = strtotime('+'.$duration .' days', strtotime($free_course['start_day']. " " . $free_course['end_time']));
 														?>
 														
 														<?php echo ucfirst($free_course['title']);?>, <?php echo $showDuration; ?> <br />
-														<p> Start Date: <?php echo date("M d, Y h:i:sa", $free_course['date_str']);?></p>
-														<?php if($duration > 0){ ?>
-															<p>End Date: <?php echo date("M d, Y h:i:sa", $enddate);?></p>
-														<?php }else{ ?>
-															<p>End Date: <?php echo date("M d, Y", $enddate).' 11:59:59pm';?></p>
-														<?php } ?>
+														<p>Duration: <?php echo $showDuration; ?> </p>
+														<p>Start Date: <?= date("M d, Y h:i:sa", strtotime($free_course['start_day'] . " " . $free_course['start_time']));?></p>                                       
+														<p>End Date: <?= date("M d, Y h:i:sa", $enddate);?></p>
 													</h5>
 													<ul class="courseUl">
 														<li><?=nl2br(substr($free_course['description'],0,300)); ?>...</li>
@@ -173,19 +169,15 @@
 												<div class="col-lg-8 col-md-7 col-sm-6 courseInfo">
 													<h5>
 														<?php
-															$showDuration = $paid_course['duration'] > 1 ? $paid_course['duration']. " Days" : $paid_course['duration']." Day";
+															$showDuration = $paid_course['duration'] > 1 ? $paid_course['duration']. " Days" : $paid_course['duration']." Day";												
 															$duration = $paid_course['duration'] - 1;
-															//$enddate = strtotime(date('Y-m-d',$paid_course['date_str']) .'+'.$duration .'days');
-															$enddate = strtotime('+'.$duration .' days', $paid_course['date_str']);
+															$enddate = strtotime('+'.$duration .' days', strtotime($paid_course['start_day']. " " . $paid_course['end_time']));
 														?>
 														
 														<?php echo ucfirst($paid_course['title']);?>, <?php echo $showDuration; ?> <br />
-														<p> Start Date: <?php echo date("M d, Y h:i:sa", $paid_course['date_str']);?></p>
-														<?php if($duration > 0){ ?>
-															<p>End Date: <?php echo date("M d, Y h:i:sa", $enddate);?></p>
-														<?php }else{ ?>
-															<p>End Date: <?php echo date("M d, Y", $enddate).' 11:59:59pm';?></p>
-														<?php } ?>
+														<p>Duration: <?php echo $showDuration; ?> </p>
+														<p>Start Date: <?= date("M d, Y h:i:sa", strtotime($paid_course['start_day'] . " " . $paid_course['start_time']));?></p>                                       
+														<p>End Date: <?= date("M d, Y h:i:sa", $enddate);?></p>
 														<p>USD: $ <?= $paid_course['pay_price']?></p>
 													</h5>
 													<ul class="courseUl">

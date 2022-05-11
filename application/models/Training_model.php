@@ -179,7 +179,7 @@ class Training_model extends AbstractModel
     }
     function getFreeCourses($filter){
         $user = $this->session->userdata();
-        $query = "SELECT c.id course_id, b.description, e.id course_time_id, b.id training_id, f.id enroll_id, b.title, e.date_str, c.duration, c.course_self_time, g.session_time
+        $query = "SELECT c.id course_id, b.description, e.id course_time_id, b.id training_id, f.id enroll_id, b.title, e.start_day, e.start_time, e.end_time, e.date_str, c.duration, c.course_self_time, g.session_time
             FROM invite_user a
             LEFT JOIN `user` d ON d.email = a.email
             LEFT JOIN training_course b ON b.id = a.course_id
@@ -204,7 +204,7 @@ class Training_model extends AbstractModel
     function getPaidCourses($filter){
         $user = $this->session->userdata();
         $query = "SELECT b.id course_id, c.id course_time_id, a.id training_id, a.title, a.description, 
-                        a.duration, c.date_str, d.id pay_id, f.id enroll_id, b.pay_price, b.course_self_time, g.session_time
+                        a.duration, c.date_str, c.start_day, c.start_time, c.end_time, d.id pay_id, f.id enroll_id, b.pay_price, b.course_self_time, g.session_time
                 FROM training_course a
                 LEFT JOIN course b ON a.course_id = b.id
                 LEFT JOIN training_course_time c ON a.id = c.training_course_id 
