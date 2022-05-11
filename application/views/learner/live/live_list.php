@@ -127,7 +127,7 @@
 														<?=$term["enrollnow"]?>
 													</a>
 													<?php }else { ?>
-														<a class="btnBlue" href="javascript:viewcourse(<?=$free_course['course_id']?>)" >
+														<a class="btnBlue" href="<?= base_url('company/'.$company['url'].'/classes/view/'.$paid_course['course_id'])?>" >
 															<?=$term["viewcourse"]?>
 														</a>
 													<?php } ?>
@@ -196,7 +196,7 @@
 															<?=$term["enrollnow"]?>
 														</a>
 													<?php } else{?>
-														<a class="btnBlue" href="javascript:booknow(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
+														<a class="btnBlue" href="<?= base_url('company/'.$company['url'].'/classes/view/'.$paid_course['course_id'])?>" >
 															<?=$term["viewcourse"]?>
 														</a>
 													<?php }?>
