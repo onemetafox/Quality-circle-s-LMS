@@ -94,7 +94,7 @@ class Training_model extends AbstractModel
 				
         $this->db->join("training_course", 'a.training_course_id = training_course.id', 'left');
         $this->db->join("course", 'training_course.course_id = course.id', 'left');
-		//$this->db->join("training_course_time", 'training_course_time.training_course_id = course.id', 'left');
+		// $this->db->join("training_course_time", 'training_course_time.training_course_id = course.id', 'left');
 
         if((!empty($filter['location'])) && isset($filter['location'])){
             $this->db->where('a.location', $filter['location']);
@@ -105,18 +105,11 @@ class Training_model extends AbstractModel
         if((!empty($filter['standard_id'])) && isset($filter['standard_id'])){
             $this->db->where('FIND_IN_SET(\''. $filter['standard_id'] .'\',course.standard_id)!=',0);
         }
-		$currentDate = strtotime(date('Y-n-d'));
 		if($filter['sort'] == 'upcoming'){ 
-            $this->db->where('date_str >=',$currentDate);
-            /*$this->db->or_group_start();
-            $this->db->where('date_str >=',time());
-            $this->db->group_end();*/
+            $this->db->where("UNIX_TIMESTAMP(CONCAT(a.start_day,' ',a.start_time))  >", time());
             $direction = 'asc';
         }else if($filter['sort'] == 'past'){
-            $this->db->where('date_str <',$currentDate);
-            /*$this->db->or_group_start();
-            $this->db->where('date_str <',time());
-            $this->db->group_end();*/
+            $this->db->where("UNIX_TIMESTAMP(CONCAT(a.start_day,' ',a.start_time))  <", time());
             $direction = 'desc';
         }
         $this->db->order_by('a.`year`, a.`month`,a.`sday`', $direction);

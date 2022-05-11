@@ -98,9 +98,9 @@
 												</div><!--col-4-->
 												
 												<?php
-													$showDuration = $free_course['duration'] > 1 ? $free_course['duration']. " Days" : $free_course['duration']." Day";												
-													$duration = $free_course['duration'] - 1;
-													$enddate = strtotime($free_course['start_at'] .'+'.$duration .'days');
+													$showDuration = $paid_course['duration'] > 1 ? $paid_course['duration']. " Days" : $paid_course['duration']." Day";												
+													$duration = $paid_course['duration'] - 1;
+													$enddate = strtotime('+'.$duration .' days', strtotime($paid_course['start_at']. " " . $paid_course['end_time']));
 												?>
 												<div class="col-lg-8 col-md-7 col-sm-6 courseInfo">
 													<h5><?php echo ucfirst($free_course['title']);?>, <?php echo $showDuration; ?></h5>
@@ -108,15 +108,8 @@
 														<li>
 															<a href="#"><?=$free_course['instructor_email']?>(instructor email address)</a>
 														</li>
-														<li style="color:#090;">
-														Start Date: <?php echo date("M d, Y h:i:sa", strtotime($free_course['start_at']));?>
-														</li>
-														<li style="color:#090;">
-														<?php if($duration > 0){ ?>
-															End Date: <?php echo date("M d, Y h:i:sa", $enddate);?>
-														<?php }else{ ?>
-															End Date: <?php echo date("M d, Y", $enddate).' 11:59:59pm';?>
-														<?php } ?>
+														<li>Start Date: <?= date("M d, Y h:i:sa", strtotime($paid_course['start_at'] . " " . $paid_course['start_time']));?></li>                                       
+														<li>End Date: <?= date("M d, Y h:i:sa", $enddate);?></li>
 														</li>                                                    
 														<li>
 														<?=nl2br(substr($free_course['about'],0,300));?>...
