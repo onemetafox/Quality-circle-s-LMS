@@ -190,7 +190,7 @@ class Training_model extends AbstractModel
        
         $result = $this->db->query($query);
         $res=$result->result_array();
-
+   
         return $res;
     }
 
@@ -213,7 +213,7 @@ class Training_model extends AbstractModel
         }
         $result = $this->db->query($query);
         $res=$result->result_array();
-
+        
         return $res;
     }
 
