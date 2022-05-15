@@ -125,23 +125,9 @@
 												</ul>
 												<?php  if($check_value != 'past') { ?>
 													<div class="row">
-													<div class="col-sm-12 coursePrice">
-														<?php if($this->session->userdata('user_type') == 'Instructor' || $this->session->userdata('user_type') == 'Admin'){ ?>
-															<a href="javascript:viewcourse(<?php echo $course->course_id ?>,<?php echo $course->pay_type ?>,<?php echo $course->training_time_id ?>)" class="btnBlue">View Course</a>															
-														<?php }else{?>
-															<?php if(is_null($course->is_pay['id'])){?>
-                                                            	<a href="javascript:enroll(<?php echo $course->training_course_id ?>,<?php echo $course->pay_type ?>,<?php echo $course->course_id ?>,<?php echo $course->training_time_id ?>,'/learner/training')" class="btnBlue">Enroll Now</a>                                                        	
-					                                        <?php }else {?>
-					                                        	<?php if($course->expired == 'yes'){?>
-																	<a href="javascript:" class="btnGray">View Course</a>
-																<?php }else if($course->expired == 'no') {?>
-																	<a href="javascript:viewcourse(<?php echo $course->course_id ?>,<?php echo $course->pay_type ?>,<?php echo $course->training_time_id ?>)" class="btnBlue">View Course</a>
-																<?php }?>
-					                                        <?php }?>
-					                                    <?php }?>
-					                                    <a href="<?php echo base_url($company['company_url'].'/training/view/'.$course->training_time_id) ?>" class="btnBlue">View Details</a>
-
-													</div>
+														<div class="col-sm-12 coursePrice">
+															<a href="<?php echo base_url($company['company_url'].'/training/view/'.$course->training_time_id) ?>" class="btnBlue">View Details</a>
+														</div>
 													</div>
 												<?php } ?>
 

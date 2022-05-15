@@ -51,10 +51,10 @@
                            <?php
                               $showDuration = $course->duration > 1 ? $course->duration. " Days" : $course->duration." Day";												
                               $duration = $course->duration - 1;
-                              $enddate = strtotime('+'.$duration .' days', strtotime($course->start_at. " " . $course->end_time));
+                              $enddate = strtotime('+'.$duration .' days', strtotime($course->start_day. " " . $course->end_time));
                            ?>
                            <li>Duration: <?php echo $showDuration; ?> </li>
-                           <li>Start Date: <?= date("M d, Y h:i:sa", strtotime($course->start_at . " " . $course->start_time));?></li>                                       
+                           <li>Start Date: <?= date("M d, Y h:i:sa", strtotime($course->start_day . " " . $course->start_time));?></li>                                       
                            <li>End Date: <?= date("M d, Y h:i:sa", $enddate);?></li>
                            <p><i class="fa fa-map-marker"></i> Location: <?php echo $course->location?></p>
                         </div>
@@ -266,7 +266,7 @@
                   <li>
                      <i class="fa fa-envelope"></i><a href="mailto:admin@qualitycircleint.com"><span class="RequestQuote">Request a quote for...</span></a>
                      <p class="DeliverySuboption">
-                        <label class="radioBox"><?= $course->pay_type==0?"On-Site Training ":"Open Enrollment Course"?>
+                        <label class="radioBox">On-Site Training
                         <input type="radio" checked="checked" name="radio">
                         <span class="checkmark"></span>
                         </label>
@@ -275,34 +275,27 @@
                </ul>
                <br>
                <br>
-               <?php if($this->session->userdata('user_type') == 'Instructor' || $this->session->userdata('user_type') == 'Admin'){?>
-               <a href="javascript:viewcourse(<?php echo $course->course_id ?>)" class="btnBlue">View Course</a>
-               <?php }else{?>
-               <?php if(is_null($course->is_pay['id'])){?>
-               <a href="javascript:enroll(<?php echo $course->training_course_id ?>,<?php echo $course->pay_type ?>,<?php echo $course->course_id ?>,<?php echo $course->id ?>)" class="btnBlue">Enroll Now</a>
-               <?php /*
-			   		$startdatetime = date('d, M Y h:i:sa',$course->date_str);
-					$active = 'No';
-					$start_date = $course->date_str;
-					$currentDate = time();
-					if($currentDate >= $start_date && $currentDate <= $enddate){
-						$active = 'Yes';
-					}
-					if($active == 'Yes'){
-				?>               
-               <a href="javascript:enroll(<?php echo $course->training_course_id ?>,<?php echo $course->pay_type ?>,<?php echo $course->course_id ?>,<?php echo $course->id ?>)" class="btnBlue">Enroll Now</a>
-               <?php }else{ ?>               	
-               	<a href="javascript:void(0)" onclick='swal({title: "Please wait until course is started! Course start date time is: <?php echo $startdatetime ;?>"});' class="btnBlue">Enroll Now</a>
-               <?php } */ ?>
-               <?php }else {?>
-               <?php
-			   if($course->expired == 'yes'){?>
-               <a href="javascript:" class="btnGray">View Course</a>
-               <?php }else if($course->expired == 'no'){?>
-               <a href="javascript:viewcourse(<?php echo $course->course_id ?>,<?php echo $course->pay_type ?>,<?php echo $course->id ?>)" class="btnBlue">View Course</a>
-               <?php }?>
-               <?php }?>
-               <?php }?>
+               <?php if(!$this->session->userdata ('isLoggedIn')) {?>
+                  <a href="javascript:showLogin()" class="btnBlue">Register Now</a>
+               <?php }else if($this->session->userdata('user_type') == 'Instructor' || $this->session->userdata('user_type') == 'Admin'){ ?>
+                  <a href="javascript:viewcourse(<?php echo $course->course_id ?>)" class="btnBlue">View Course</a>
+               <?php }else{ switch ($status) {
+                  case 'Enrolled':
+                     echo ' <a href="javascript:viewcourse('.$course->course_id.')" class="btnBlue">View Course</a>';
+                     break;
+                  case 'Paid':
+                     echo ' <a href="javascript:enroll('.$course->course_id .','. $course->ids.')" class="btnBlue">Enroll Now</a>';
+                     break;
+                  case 'UnPaid':
+                     echo ' <a href="'.base_url("pricing/payment/"). $course->course_id .'/course" class="btnBlue">Pay Now</a>';
+                     break;
+                  case 'Invited':
+                     echo ' <a href="javascript:enroll('.$course->course_id .','. $course->ids.')" class="btnBlue">Enroll Now</a>';
+                     break;
+                  case 'Uninvited':
+                     echo ' <a href="mailto:admin@qualitycircleint.com" class="btnBlue">Contact Admin</a>';
+                     break;
+               } } ?>
             </div>
             <div class="catalogBox" style="background: #f6f6f6">
                <b> UPCOMING EVENTS</b>
@@ -365,137 +358,40 @@
            beforeOpen: function() {
            }
        }
-   	});
+   });
    
-   	$('.modal-dismiss').on('click',function(){
-        $.magnificPopup.close();
-   	})
-   	var company_url = "<?= base_url($company['company_url'])?>";
-   	var isLogin = "<?php echo $this->session->userdata ( 'isLoggedIn' )?>";
-   	var email = "<?php echo $this->session->userdata ( 'email' )?>";
-   	var user_type = "<?php echo $this->session->userdata('user_type')?>";
+   $('.modal-dismiss').on('click',function(){
+      $.magnificPopup.close();
+   })
+   var company_url = "<?= base_url($company['company_url'])?>";
+   var isLogin = "<?php echo $this->session->userdata ( 'isLoggedIn' )?>";
+   var email = "<?php echo $this->session->userdata ( 'email' )?>";
+   var user_type = "<?php echo $this->session->userdata('user_type')?>";
    
-   	function viewcourse(course_id,pay_type,time_id){
+   function viewcourse(course_id,pay_type,time_id){
 		window.location = company_url + '/demand/detail/' + course_id + '/?type=ilt&time_id='+ time_id;		
 	}	
    
-   function enroll(training_id,pay_type,course_id,time_id){
-       if(!isLogin){
-           showLogin();
-       }else{
-           if(pay_type == 1){
-               if(user_type != "Learner"){
-                   // window.location = "<?php echo VILT_URL?>"+id;
-               }else{
-                   swal({
-                     title: "You have to pay $99 to take part in this course",
-                     buttons: true
-                   }).then((willDelete) => {
-                     if (willDelete) {
-                       $.ajax({
-                           url: "<?php echo base_url() ?>learner/training/pay_training",
-                           type: 'POST',
-						   data: {'course_id':training_id,'time_id':time_id,'ilt_course_id':course_id},
-                           dataType : 'json',
-                           success: function(data){
-                               if(data == 'success') {
-                                   swal({
-                                     title: "You have successfully enroll this course. Please wait until course is started!",
-                                   });
-                                   setTimeout(function(){ window.location.reload() }, 10000);
-                               }else{
-                                   swal({
-                                     title: " Error!",
-                                   });
-                               }
-                                         
-                           }
-                       });
-                     } else {
-                       // return;
-                     }
-                   });
-   
-               }
-           }else if(pay_type == 0){
-               $.ajax({
-                   url: "<?php echo base_url() ?>admin/inviteuser/get_Inviteuser",
-                   type: 'POST',
-                    data: {'email':email,'type':'0','course_id':training_id,'time_id':time_id},
-                   dataType : 'json',
-                   success: function(data){
-                       var cnt = data;
-                       if(cnt == 1) {
-                           $.ajax({
-                               url: "<?php echo base_url() ?>learner/training/pay_training",
-                               type: 'POST',
-                               data: {'course_id':training_id,'time_id':time_id,'ilt_course_id':course_id},
-                               dataType : 'json',
-                               success: function(data){
-                                   if(data == 'success'){
-                                       swal({
-                                         title: "You have successfully enroll this course. Please wait until course is started!",
-                                       });
-                                       setTimeout(function(){ window.location.reload() }, 10000);
-                                   }else{
-                                       swal({
-                                         title: " Error!",
-                                       });
-                                   }
-                               }
-                           });
-                           
-                       }else{
-                           $('.alert-modal').click();
-                       }
-                                 
-                   }
-               });
-               
-               
-           }
-       }
-   }
-   
-   // function booknow(id){
-   //   var isLogin = "<?php echo $this->session->userdata ( 'isLoggedIn' )?>";
-   //   if(!isLogin){
-   //     showLogin();
-   //   }else{
-   //     swal({
-   //       title: "Are you sure?",
-   //       buttons: true
-   //     })
-   //     .then((willDelete) => {
-   //       if (willDelete) {
-   //             swal({
-   //               text: "Success Pay!",
-   //               icon: "success"
-   //             });
-   //             $.ajax({
-   //             url : company_url + '/training/pay/' + id,
-   //             type : 'post',
-   //             success : function(res) {
-   //                   if(res.type == 1){
-   //                         swal({
-   //                           text: "You pay successfully!",
-   //                           icon: "success"
-   //                         });
-   //                   }else{
-   //                       if(res.msg){
-   //                           swal({
-   //                             text: res.msg,
-   //                             icon: "warning",
-   //                             dangerMode: true
-   //                           });
-   //                       }
-   //                   }
-   //               }
-   //           });
-   //       } else {
-   //         return;
-   //       }
-   //     });
-   //   }
-   // }
+   function enroll(course_id, course_time_id) {
+        $.ajax({
+            url: '<?= base_url()?>learner/training/booknow',
+            type: 'POST',
+            data: {'course_time_id': course_time_id, 'course_id': course_id},
+            success: function (data, status, xhr) { 
+                new PNotify({
+                    title: 'Success',
+                    text: 'Success Book Now',
+                    type: 'success'
+                });
+                location.reload();
+            },
+            error: function(data){
+                new PNotify({
+                    title: '<?php echo $term['error']; ?>',
+                    text: '<?php echo $term['alreadybooking']; ?>',
+                    type: 'warning'
+                });
+            }
+        });
+    }
 </script>

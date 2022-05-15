@@ -3134,7 +3134,7 @@ footer {
 	-webkit-transform: rotate(270deg);
 	transform: rotate(270deg);
 	transition: all 0.5s;
-	top: 10px;
+	top: 3px;
 }
 
 #accordion .panel-heading.active a:before {

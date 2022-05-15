@@ -281,10 +281,6 @@
             }
         });
     }
-	function pay_now(course_id,training_id, course_time_id, price) {
-		$('#price').val(price);
-		$('#payment_modal').modal();
-    }
     $("#location").on('change',(function () {
         window.location = $('#base_url').val()+ 'learner/training?location='+$("#location").val();
     }));

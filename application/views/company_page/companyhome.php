@@ -52,9 +52,8 @@
 							<div class="col-sm-9 col-xs-9">
                                 <?php if(is_null($course['is_pay']['id'])){ ?>
 									<a href="<?=base_url($company['company_url'].'/demand/view/'.$course['id'])?>" style="margin-left:10px"class="btnBlue">View Detail</a>
-									<a style="margin-left:10px" href="javascript:enroll_virtual(<?= $course['id'] ?>,<?=$course['pay_type'] ?>,'<?= $course['virtual_course_time_id'] ?>', '/learner/demand')" class="btnBlue">Enroll Now</a>
                                 <?php }else {?>
-                                    <a href="javascript:view_course_detail(<?= $course['id'] ?>,0)" class="btnBlue">Access Course</a>
+                                    <a href="javascript:view_course_detail(<?= $course['id'] ?>,0)" class="btnBlue">View Course</a>
                                 <?php }?>
 							</div>
 						</div><!--row-->
@@ -130,7 +129,6 @@
 							?>
 							<div class="col-sm-9 col-xs-9">
 								<a href="<?= base_url($company['company_url'].'/training/view/'.$course['time_id']) ?>" style="margin-left:10px" class="btnBlue">View Detail</a>
-								<a  style="margin-left:10px" href="javascript:enroll_virtual(<?= $course['id'] ?>,<?=$course['pay_type'] ?>,'<?= $course['virtual_course_time_id'] ?>', '/learner/training')" class="btnBlue">Enroll Now</a>
 							</div>
 						</div><!--row-->
                     </div><!--courseBox-->
@@ -206,7 +204,6 @@
 							?>
 							<div class="col-sm-9 col-xs-9">
 								<a href = "<?= base_url($company['company_url'].'/classes/view/'.$course['time_id'])?>" style="margin-left:10px" class="btnBlue">View Detail</a>
-                                <a href="javascript:enroll_virtual(<?= $course['id'] ?>,<?= $pay ?>,'<?= $course['time_id'] ?>', '/learner/live')" class="btnBlue">Enroll Now</a>
 							</div>
 						</div><!--row-->
 					</div><!--coursePrice-->
@@ -253,32 +250,6 @@
     var user_type = "<?= $this->session->userdata('user_type')?>";
 	var userId = "<?= $this->session->userdata('userId')?>";
 	
-	function enroll(id,pay_type){
-		var temp = 1;
-		if(temp == 1){
-			if(!isLogin){
-				showLogin();
-			}else{
-				if(pay_type == 0){
-					window.location = company_url + '/demand/detail/' + id
-				}else if(pay_type == 1){
-					swal({
-					  title: "Are you sure?",
-					  buttons: true
-					})
-					.then((willDelete) => {
-					  if (willDelete) {
-						//window.location = company_url + '/demand/detail/' + id;	
-						window.location = 'https://shop.gosmartacademy.com/shop/?add-to-cart='+id+'&user_id='+userId;
-					  } else {
-						return;
-					  }
-					});
-				}
-			}
-		}
-	}
-
     function view_course_detail(id){
         if(!isLogin){
             showLogin();
@@ -286,14 +257,6 @@
             window.location = company_url + '/demand/detail/' + id;
         }
     }
-	
-	function enroll_virtual(id,pay_type,time_id, url){
-		if(!isLogin){
-			showAcademyLogin(url);
-		}else{
-			window.location = "<?= base_url() ?>"+url
-		}
-   	}
 	function view_course(id){
 		location.href = "<?= base_url($company['company_url'].'/demand/view/')?>"+id;
 	}
