@@ -1,10 +1,10 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
 require APPPATH . '/libraries/BaseController.php';
-// require APPPATH . '/third_party/PHPExcel.php';
-// require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
-// include_once (APPPATH . '/third_party/iio/index.php');
-// require APPPATH . '/libraries/FPDI/fpdi.php';
+require APPPATH . '/third_party/PHPExcel.php';
+require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
+include_once (APPPATH . '/third_party/iio/index.php');
+require APPPATH . '/libraries/FPDI/fpdi.php';
 // require APPPATH . 'third_party/woocommerce/autoload.php';
 // use Automattic\WooCommerce\Client;
 // use Automattic\WooCommerce\HttpClient\HttpClientException;
@@ -806,9 +806,9 @@ class Coursecreation extends BaseController{
                 $content = str_replace("{VIEWCOURSE}", $course_url, $content);
                 $content = str_replace("{ENROLLCOURSE}", base_url() . "company/QC", $content);
                 $content = str_replace("{VIEWLINK}", base_url() . "company/QC", $content);
-                print_r($content);
+                // print_r($content);
                     
-                    // $this->sendemail($item['email'],$item['fullname'],$content,$title);
+                    $this->sendemail($item['email'],$item['fullname'],$content,$title);
             }
         }
         $this->response(array("success"=>true, "msg"=>"Course Republished"));
@@ -1066,9 +1066,9 @@ class Coursecreation extends BaseController{
                     $content = str_replace("{VIEWCOURSE}", $course_url, $content);
                     $content = str_replace("{ENROLLCOURSE}", base_url() . "company/QC", $content);
                     $content = str_replace("{VIEWLINK}", base_url() . "company/QC", $content);
-                    print_r($content);
+                    // print_r($content);
                     
-                    // $this->sendemail($item['email'],$item['fullname'],$content,$title);
+                    $this->sendemail($item['email'],$item['fullname'],$content,$title);
                 }
             }
             
