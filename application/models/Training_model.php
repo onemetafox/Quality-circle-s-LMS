@@ -433,7 +433,7 @@ class Training_model extends AbstractModel
     }
 	
 	function getListByCourseId($courseid){
-        $query = "Select training_course.*, start_day, start_time from training_course LEFT JOIN training_course_time on training_course_time.training_course_id = training_course.id where course_id=".$courseid;
+        $query = "Select training_course.*, start_day, start_time, end_time from training_course LEFT JOIN training_course_time on training_course_time.training_course_id = training_course.id where course_id=".$courseid;
 
         $result = $this->db->query($query);
         $res=$result->result_array();
