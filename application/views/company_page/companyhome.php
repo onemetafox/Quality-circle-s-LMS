@@ -164,11 +164,11 @@
 				<div class="courseBox">
 					<div class="courseImg">
                     	<?php
-							$imgName = end(explode('/', $course['virtual_course_path']));
+							$imgName = end(explode('/', $course['img_path']));
 							$ext = pathinfo($imgName, PATHINFO_EXTENSION);							
-							if($imgName != '' && file_exists(getcwd().'/'.$course['virtual_course_path']) && ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' || $ext == 'PNG' || $ext == 'JPG')){
+							if($imgName != '' && file_exists(getcwd().'/'.$course['img_path']) && ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' || $ext == 'PNG' || $ext == 'JPG')){
 							?>
-                            	<img style="cursor: pointer" src="<?= base_url($course['virtual_course_path']); ?>" onclick="view_live(<?= $course['time_id'] ?>)">
+                            	<img style="cursor: pointer" src="<?= base_url($course['img_path']); ?>" onclick="view_live(<?= $course['time_id'] ?>)">
                             <?php }else{ ?>
                             	<img style="cursor: pointer" src="<?= base_url().'assets/uploads/vilt-default.png'; ?>" onclick="view_live(<?= $course['time_id'] ?>)">
                             <?php } ?>

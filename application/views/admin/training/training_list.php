@@ -561,7 +561,7 @@
                   <div class="form-group row">
                      <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["price"]?></label>
                      <div class="col-sm-6">
-                        <input id="republish-price" onchange="changePrice()" class="form-control">
+                        <input id="republish-price" name="republish-price" onchange="changePrice()" class="form-control">
                      </div>
                   </div>
                   <div class="form-group row">

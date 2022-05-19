@@ -681,6 +681,7 @@ class Coursecreation extends BaseController{
         $mainCourse = (array)$this->Course_model->select($data['republish-id']);
         $mainCourse['discount'] = $data['republish-discount'];
         $mainCourse['amount'] = $data['republish-amount'];
+        $mainCourse['pay_price'] = $data['republish-price'];
         $mainCourse['reg_date'] = date("Y-m-d H:s:i");
         if($data['republish-type'] == "0"){
 
