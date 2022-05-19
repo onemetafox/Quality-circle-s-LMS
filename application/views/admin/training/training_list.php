@@ -474,7 +474,8 @@
                      <tr>
                         <td width="15%">                                
                            <a class="btn btn-danger" onclick="deleteIltCourse(<?=$key?>)" href="javascript:void(0);">Delete</a>
-                           <a href="#republish_modal" class="btn btn-success republish_modal" onclick="republishCourse(<?=$key?>)" href="javascript:void(0);">Republish</a>
+                           
+                           <a href="#republish_modal" class="btn btn-success republish_modal" onclick="republishCourse(<?=$rows['id']?>)" href="javascript:void(0);">Republish</a>
                         </td>
                         <td>
                            <a href="javascript:updateCourse(<?=$key?>,<?=$rows['course_id']?>)"><?=$rows['title']?></a>
@@ -560,7 +561,7 @@
                   <div class="form-group row">
                      <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["price"]?></label>
                      <div class="col-sm-6">
-                        <input id="republish-price" class="form-control">
+                        <input id="republish-price" onchange="changePrice()" class="form-control">
                      </div>
                   </div>
                   <div class="form-group row">

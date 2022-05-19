@@ -96,7 +96,7 @@
 					</div>
 					<?php if(count($courses) > 0) : ?>
 						<?php foreach($courses as $course):
-							$date = explode('-',date('Y-m-d',$course->date_str));
+							$date = explode('-',$course->start_day);
 						 ?>
 		                    <div class="row">
 								<div class="col-sm-12">

@@ -250,34 +250,11 @@ class Training_model extends AbstractModel
             $this->db->where('training_course.create_id', $filter['create_id']);
         }
        
-	   /* if($filter['sort'] == 'upcoming'){
-            $this->db->where('year >=',date("Y"));
-            $this->db->where('month >',date("m"));
-            $this->db->or_group_start();
-            $this->db->where('year >=',date("Y"));
-            $this->db->where('month',date("m"));
-            $this->db->where('sday >=',date("d"));
-            $this->db->group_end();
+        if($filter['sort'] == 'upcoming'){ 
+            $this->db->where("UNIX_TIMESTAMP(CONCAT(a.start_day,' ',a.start_time))  >", time());
             $direction = 'asc';
         }else if($filter['sort'] == 'past'){
-            $this->db->where('month <',date("m"));
-            $this->db->or_group_start();
-            $this->db->where('month',date("m"));
-            $this->db->where('sday <',date("d"));
-            $this->db->group_end();
-            $direction = 'desc';
-        }*/
-		if($filter['sort'] == 'upcoming'){
-            $this->db->where('date_str >=',time());
-            $this->db->or_group_start();
-            $this->db->where('date_str >=',time());
-            $this->db->group_end();
-            $direction = 'asc';
-        }else if($filter['sort'] == 'past'){
-            $this->db->where('date_str <',time());
-            $this->db->or_group_start();
-            $this->db->where('date_str <',time());
-            $this->db->group_end();
+            $this->db->where("UNIX_TIMESTAMP(CONCAT(a.start_day,' ',a.start_time))  <", time());
             $direction = 'desc';
         }
         $query = $this->db->get();

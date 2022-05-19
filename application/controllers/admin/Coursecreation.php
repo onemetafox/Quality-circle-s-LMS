@@ -687,7 +687,7 @@ class Coursecreation extends BaseController{
             $subCourse = (array)$this->Training_model->one(array("course_id"=>$mainCourse['id']));
 
             unset($mainCourse['id']);
-            $course_id = $this->Course_model->save($mainCourse);
+            $course_id = $this->Course_model->insert($mainCourse);
 
             $subCourse['course_id'] = $course_id;
 
@@ -806,12 +806,12 @@ class Coursecreation extends BaseController{
                 $content = str_replace("{VIEWCOURSE}", $course_url, $content);
                 $content = str_replace("{ENROLLCOURSE}", base_url() . "company/QC", $content);
                 $content = str_replace("{VIEWLINK}", base_url() . "company/QC", $content);
-                // print_r($content);
+                print_r($content);
                     
-                    $this->sendemail($item['email'],$item['fullname'],$content,$title);
+                // $this->sendemail($item['email'],$item['fullname'],$content,$title);
             }
         }
-        $this->response(array("success"=>true, "msg"=>"Course Republished"));
+        // $this->response(array("success"=>true, "msg"=>"Course Republished"));
 
 
     }
