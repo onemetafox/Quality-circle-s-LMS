@@ -103,27 +103,11 @@
 										<div class="coursePrice _plr-0">
 											<div class="row">
 												<div class="col-lg-4 col-md-12 col-sm-4 col-xs-4 col-full">
-													<?php echo $course->pay_type == 0 ? 'Onsite Training' : '$'.$course->pay_price; ?>
+													<!-- <?php echo $course->pay_type == 0 ? 'Onsite Training' : '$'.$course->pay_price; ?> -->
 												</div>
 												<?php if($check_value != 'past') {  ?>
 													<div class="col-lg-8 col-md-12 col-sm-8 col-xs-8 col-full">
-													<?php if($this->session->userdata('user_type') == 'Instructor' || $this->session->userdata('user_type') == 'Admin'){?>
-                                                    <a href="javascript:viewcourse(1,<?php echo $course->id ?>,'<?= $course->start_at ?>')" class="btnBlue">Start VILT Course</a>                                                   
-													<?php }else{?>
-                                                    
-                                                    	<?php if(is_null($course->is_pay['id'])){?>
-                                                        	<a href="javascript:enrollNow(<?php echo $course->id ?>,'<?php echo $course->pay_type ?>','<?php echo $course->time_id ?>',<?php echo $course->course_id; ?>,'/learner/live')" class="btnBlue">Enroll Now</a>
-                                                       
-															
-				                                        <?php }else {?>
-				                                        	<?php if($course->expired == 'yes'){?>
-																<a href="javascript:" class="btnGray">View Course</a>
-															<?php }else if($course->expired == 'no') {?>
-																<a href="javascript:viewcourse(0,<?php echo $course->id ?>,'<?= $course->start_at ?>')" class="btnBlue">Start VILT Room</a>
-															<?php }?>
-				                                        <?php }?>
-				                                    <?php }?>
-													<a href="<?php echo base_url($company['company_url'].'/classes/view/'.$course->time_id)?>" class="btnBlue">View Details</a>
+														<a href="<?php echo base_url($company['company_url'].'/classes/view/'.$course->time_id)?>" class="btnBlue">View Details</a>
 													</div>
 												<?php } ?>
 											</div><!--row-->

@@ -253,41 +253,27 @@
                <div class="Number">
                   <?php echo $course->pay_type == 0 ? 'Onsite Training' : '$'.$course->pay_price; ?>
                </div>
-               <?php if($course->pay_type){
-                  $pay = $course->pay_type;
-                  }else{
-                  $pay = '0';
-                  }?>
-               <?php if($this->session->userdata('user_type') == 'Instructor' || $this->session->userdata('user_type') == 'Admin'){?>						
-               <a href="javascript:viewcourse(1,<?php echo $course->id ?>,'<?= $course->start_at ?>')" class="btnBlue">Start VILT Room</a>
-               <?php }else{ ?>
-               <?php if(is_null($course->is_pay['id'])){?>
-               <a href="javascript:enroll(<?php echo $course->id ?>,<?php echo $course->pay_type ?>,<?php echo $course->course_time_id ?>,<?php echo $course->course_id; ?>)" class="btnBlue">Enroll Now</a>
-               <?php /*
-					$activev = 'No';
-					$start_datev = strtotime($course->start_at);
-					$currentDatevilt = time();
-					if($currentDatevilt >= $start_datev && $currentDatevilt <= $enddate){
-						$activev = 'Yes';
-					}
-					if($activev == 'Yes'){
-						
-						
-				?>
-               		<a href="javascript:enroll(<?php echo $course->id ?>,<?php echo $course->pay_type ?>,<?php echo $course->course_time_id ?>,<?php echo $course->course_id; ?>)" class="btnBlue">Enroll Now</a>
-               <?php }else{ ?>
-               		<?php $startdatetime = date('d, M Y h:i:sa',strtotime($course->start_at)); ?>
-               		<a href="javascript:void(0)" onclick='swal({title: "Please wait until course is started! Course start date time is: <?php echo $startdatetime ;?>"});' class="btnBlue">Enroll Now</a>
-               <?php } */?>
-               <?php }else {?>
-               <?php if($course->expired == 'yes'){?>
-               <a href="javascript:" class="btnGray">View Course</a>
-               <?php }else if($course->expired == 'no') {?>
-               <a href="javascript:viewcourse(0,<?php echo $course->id ?>,'<?= $course->start_at ?>')" class="btnBlue">Start VILT Room</a>
-               <?php }?>
-               <?php }?>
-               <?php }?>
-               
+               <?php if(!$this->session->userdata ('isLoggedIn')) {?>
+                  <a href="javascript:showLogin()" class="btnBlue">Register Now</a>
+               <?php }else if($this->session->userdata('user_type') == 'Instructor' || $this->session->userdata('user_type') == 'Admin'){ ?>
+                  <a href="javascript:viewcourse(<?php echo $course->course_id ?>)" class="btnBlue">View Course</a>
+               <?php }else{ switch ($status) {
+                  case 'Enrolled':
+                     echo ' <a href="javascript:viewcourse('.$course->course_id.')" class="btnBlue">View Course</a>';
+                     break;
+                  case 'Paid':
+                     echo ' <a href="javascript:enroll('.$course->course_id .','. $course->id.')" class="btnBlue">Enroll Now</a>';
+                     break;
+                  case 'UnPaid':
+                     echo ' <a href="'.base_url("pricing/payment/"). $course->course_id .'/course" class="btnBlue">Pay Now</a>';
+                     break;
+                  case 'Invited':
+                     echo ' <a href="javascript:enroll('.$course->course_id .','. $course->ids.')" class="btnBlue">Enroll Now</a>';
+                     break;
+                  case 'Uninvited':
+                     echo ' <a href="mailto:admin@qualitycircleint.com" class="btnBlue">Contact Admin</a>';
+                     break;
+               } } ?>
                
             </div>
             <div class="catalogBox" style="background: #f6f6f6">
@@ -359,127 +345,36 @@
    	  $(a.target).prev('.panel-heading').removeClass('active');
    	});
    });
-      var company_url = "<?= base_url($company['company_url'])?>";
-      var isLogin = "<?php echo $this->session->userdata ( 'isLoggedIn' )?>";
-      var email = "<?php echo $this->session->userdata ( 'email' )?>";
-      var user_type = "<?php echo $this->session->userdata('user_type')?>";
+   var company_url = "<?= base_url($company['company_url'])?>";
+   var isLogin = "<?php echo $this->session->userdata ( 'isLoggedIn' )?>";
+   var email = "<?php echo $this->session->userdata ( 'email' )?>";
+   var user_type = "<?php echo $this->session->userdata('user_type')?>";
+   function viewcourse(course_id,pay_type,time_id){
+		window.location = company_url + '/demand/detail/' + course_id + '/?type=ilt&time_id='+ time_id;		
+	}	
    
-   function viewcourse(is_instructor,id,startAt){
-	   
-	var currentDate = new Date();
-	var courseStartDate = new Date(startAt);
-	courseStartDate.setHours(courseStartDate.getHours() - 1);
-	console.log(courseStartDate);
-	
-	if(courseStartDate.getTime() > currentDate.getTime()) {		
-		console.log(courseStartDate.getTime()-currentDate.getTime());
-		swal({
-			title: "This course will be available at "+courseStartDate,
-		});
-		return;
-	}
+   function enroll(course_id, course_time_id) {
+        $.ajax({
+            url: '<?= base_url()?>learner/training/booknow',
+            type: 'POST',
+            data: {'course_time_id': course_time_id, 'course_id': course_id},
+            success: function (data, status, xhr) { 
+                new PNotify({
+                    title: 'Success',
+                    text: 'Success Book Now',
+                    type: 'success'
+                });
+                location.reload();
+            },
+            error: function(data){
+                new PNotify({
+                    title: '<?php echo $term['error']; ?>',
+                    text: '<?php echo $term['alreadybooking']; ?>',
+                    type: 'warning'
+                });
+            }
+        });
+    }
    
-   	$.ajax({
-   		url: "<?php echo base_url() ?>admin/live/enterCourse",
-   		type: 'POST',
-   		data: {
-   			'course_id':id,
-   			'is_instructor': is_instructor,
-			'start_at': startAt
-   		},
-   		dataType : 'json',
-   		success: function(data){
-   			if(data.success == 1){
-   				window.location.href = data.msg;
-   			} else{
-   				swal({
-   					title: "Instructor is not available. Please wait until the instructor is online",
-   				});
-   			}
-   		}
-   	});
-   }
-   
-   function enroll(id,pay_type,time_id,course_id){			
-   	if(!isLogin){
-   		showLogin();
-   	}else{
-   		if(pay_type == 1){
-   			if(user_type !== "Learner"){
-   				// window.location = "<?php echo VILT_URL?>"+id;
-   			}else{
-   				swal({
-   				  title: "You have to pay $99 to take part in this course",
-   				  buttons: true
-   				}).then((willDelete) => {
-   				  if (willDelete) {
-   				  	$.ajax({
-   			            url: "<?php echo base_url() ?>learner/live/pay_course",
-   			            type: 'POST',
-						data: {'course_id':id,'time_id':time_id,'vilt_course_id':course_id},
-   			            dataType : 'json',
-   			            success: function(data){
-   			                if(data == 'success') {
-   			                	swal({
-   								  title: "You have successfully enroll for this course!",
-   								});
-   			     				setTimeout(function(){ window.location.reload() }, 10000);
-   			                }else{
-   			                	swal({
-   								  title: " Error!",
-   								});
-   			                }
-   			                		  
-   			            }
-   			        });
-   				  } else {
-   				    // return;
-   				  }
-   				});
-   
-   			}
-   		}else if(pay_type == 0){
-   			$.ajax({
-   	            url: "<?php echo base_url() ?>admin/inviteuser/get_Inviteuser",
-   	            type: 'POST',
-   	            data: {
-   						'email':email,
-   	        			'type':'1',
-   	        			'course_id':id,
-						'time_id':time_id
-   					},
-   	            dataType : 'json',
-   	            success: function(data){
-   	                var cnt = data;
-   	                if(cnt == 1) {
-   	                	$.ajax({
-   				            url: "<?php echo base_url() ?>learner/live/pay_course",
-   				            type: 'POST',
-							 data: {'course_id':id,'time_id':time_id,'vilt_course_id':course_id},
-   				            dataType : 'json',
-   				            success: function(data){
-   				                if(data == 'success') {
-   				                	swal({
-   									  title: "You have successfully enroll for this course!",
-   									});
-   									setTimeout(function(){ window.location.reload() }, 10000);
-   				                }else{
-   				                	swal({
-   									  title: " Error!",
-   									});
-   				                }
-   				            }
-   				        });
-   	                	
-   	                }else{
-   	                	//$('.alert-modal').click();
-						swal({title: "You don’t have permission to access this user course. Please contact Administrator"});
-   	                }	  
-   	            }
-   	        });
-   			
-   		}
-   	}
-   }
    
 </script>

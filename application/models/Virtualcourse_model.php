@@ -129,11 +129,11 @@ class Virtualcourse_model extends AbstractModel
         }
         $this->db->select("a.start_at, b.*")->from("virtual_course_time a");
         $this->db->join('virtual_course b', 'a.virtual_course_id = b.id', 'left');
-        if($filter['sort'] == 'upcoming'){
-            $this->db->where('a.start_at >', date('y-m-d'));
+        if($filter['sort'] == 'upcoming'){ 
+            $this->db->where("UNIX_TIMESTAMP(CONCAT(a.start_at,' ',a.start_time))  >", time());
             $direction = 'asc';
         }else if($filter['sort'] == 'past'){
-            $this->db->where('a.start_at <', date('y-m-d'));
+            $this->db->where("UNIX_TIMESTAMP(CONCAT(a.start_at,' ',a.start_time))  <", time());
             $direction = 'desc';
         }
         $query = $this->db->get();

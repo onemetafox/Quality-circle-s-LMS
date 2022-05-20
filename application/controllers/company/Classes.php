@@ -13,6 +13,8 @@ class Classes  extends BaseController
         $this->load->model('Translate_model');
         $this->load->model('Virtualcourse_model');
 		$this->load->model('Enrollments_model');
+        $this->load->model('Payment_model');
+        $this->load->model('Inviteuser_model');
 		
         $this->load->helper(array('cookie', 'string', 'language', 'url'));
         $this->load->helper('lms_email');
@@ -96,6 +98,36 @@ class Classes  extends BaseController
         $params["term"] = $this->term;
         $params['company'] = $this->company;
         $course = $this->Virtualcourse_model->select($id);
+        if($course->pay_type == 1){
+            $filter['object_type'] = "live";
+            $filter['object_id'] = $id;
+            $filter['user_id'] = $this->session->userdata()["userId"];
+            $payment = $this->Payment_model->one($filter);
+            if($payment){
+                $enrollment = $this->Enrollments_model->getEnrolledList($filter['user_id'],$course->course_id, $course->id);
+                if($enrollment){
+                    $params['status'] = "Enrolled";    
+                }else{
+                    $params['status'] = "Paid";
+                }
+            }else{
+                $params['status'] = "UnPaid";
+            }
+        }else{
+            $filter['course_id'] = $id;
+            $filter['user_id'] = $this->session->userdata()["userId"];
+            $invite_user = $this->Inviteuser_model->one($filter);
+            if($invite_user){
+                $enrollment = $this->Enrollments_model->getEnrolledList($filter['user_id'],$course->course_id, $course->id);
+                if($enrollment){
+                    $params['status'] = "Enrolled";    
+                }else{
+                    $params['status'] = "Invited";
+                }
+            }else{
+                $params['status'] = "Uninvited";
+            }
+        }
 		$totalCourseEnrollments = $this->Enrollments_model->totalCourseEnrollments($course->course_id,$id);
 		$course->enroll_user_count = $totalCourseEnrollments;
 		$course->course_time_id = $id;
