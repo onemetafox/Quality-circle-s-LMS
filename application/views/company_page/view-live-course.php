@@ -59,6 +59,9 @@
                            <li>Duration: <?php echo $showDuration; ?> </li>
                            <li>Start Date: <?= date("M d, Y h:i:sa", strtotime($course->start_at . " " . $course->start_time));?></li>                                       
                            <li>End Date: <?= date("M d, Y h:i:sa", $enddate);?></li>
+                           <li> Price: $<?= $course->pay_price?></li>
+                           <li> Discount: <?= $course->discount?>%</li>
+                           <li> Cost: $<?= $course->amount?></li>
                            <p><?php echo strip_tags($course->about)?></p>
                         </div>
                         <!--col-8-->
@@ -265,7 +268,7 @@
                   <a href="javascript:showLogin()" class="btnBlue">Register Now</a>
                <?php }else if($this->session->userdata('user_type') == 'Instructor' || $this->session->userdata('user_type') == 'Admin'){ ?>
                   <a href="javascript:viewcourse(<?php echo $course->course_id ?>)" class="btnBlue">View Course</a>
-               <?php }else{ switch ($status) {
+               <?php }else{ print_r($status); switch ($status) {
                   case 'Enrolled':
                      echo ' <a href="javascript:viewcourse('.$course->course_id.')" class="btnBlue">View Course</a>';
                      break;
@@ -276,7 +279,7 @@
                      echo ' <a href="'.base_url("pricing/payment/"). $course->course_id .'/course" class="btnBlue">Pay Now</a>';
                      break;
                   case 'Invited':
-                     echo ' <a href="javascript:enroll('.$course->course_id .','. $course->ids.')" class="btnBlue">Enroll Now</a>';
+                     echo ' <a href="javascript:enroll('.$course->course_id .','. $course->id.')" class="btnBlue">Enroll Now</a>';
                      break;
                   case 'Uninvited':
                      echo ' <a href="mailto:admin@qualitycircleint.com" class="btnBlue">Contact Admin</a>';
@@ -363,7 +366,7 @@
    
    function enroll(course_id, course_time_id) {
         $.ajax({
-            url: '<?= base_url()?>learner/training/booknow',
+            url: '<?= base_url()?>learner/live/booknow',
             type: 'POST',
             data: {'course_time_id': course_time_id, 'course_id': course_id},
             success: function (data, status, xhr) { 

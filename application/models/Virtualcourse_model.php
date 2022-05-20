@@ -154,8 +154,9 @@ class Virtualcourse_model extends AbstractModel
 
 
     function select($id = null){
-        $this->db->select("a.start_at, a.start_time, a.end_time, b.*,DATE_FORMAT(b.reg_date,'%b %d,%Y') as freg_date")->from("virtual_course_time a");
+        $this->db->select("a.start_at, a.start_time, a.end_time, c.pay_type, c.pay_price, c.amount, c.tax_rate, c.discount, b.*,DATE_FORMAT(b.reg_date,'%b %d,%Y') as freg_date")->from("virtual_course_time a");
         $this->db->join('virtual_course b', 'a.virtual_course_id = b.id', 'left');
+        $this->db->join('course c', 'b.course_id = c.id', 'left');
         $this->db->where('a.id', $id);
         $query = $this->db->get();
         $result = $query->row();
