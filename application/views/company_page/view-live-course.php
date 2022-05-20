@@ -49,6 +49,16 @@
                         <!--col-4-->
                         <div class="col-md-7 col-sm-7 courseInfo">
                            <!-- <h5></h5> -->
+                           <li><i class="fa fa-check-square"></i> Enrollments: <?php echo $course->enroll_user_count ?></li>
+                           <br>
+                           <?php
+                              $showDuration = $course->duration > 1 ? $course->duration. " Days" : $course->duration." Day";												
+                              $duration = $course->duration - 1;
+                              $enddate = strtotime('+'.$duration .' days', strtotime($course->start_at. " " . $course->end_time));
+                           ?>
+                           <li>Duration: <?php echo $showDuration; ?> </li>
+                           <li>Start Date: <?= date("M d, Y h:i:sa", strtotime($course->start_at . " " . $course->start_time));?></li>                                       
+                           <li>End Date: <?= date("M d, Y h:i:sa", $enddate);?></li>
                            <p><?php echo strip_tags($course->about)?></p>
                         </div>
                         <!--col-8-->
@@ -234,25 +244,23 @@
                   <?php if(!empty($course->course_self_time)){ ?>
                   <li><i class="fa fa-dot-circle"></i> <?php echo $course->course_self_time?></li>
                   <?php } ?>
-                  <li><i class="fa fa-check-square"></i> Enrollments: <?php echo $course->enroll_user_count ?></li>
+                  
                  
                   <li><i class="fa fa-language"></i> Languages: English</li>
                   
                   <li><i class="fa fa-calendar-alt"></i> Published: <?php echo $course->freg_date?></li> 
-                  <?php
-                     $showDuration = $course->duration > 1 ? $course->duration. " Days" : $course->duration." Day";												
-                     $duration = $course->duration - 1;
-                     $enddate = strtotime('+'.$duration .' days', strtotime($course->start_at. " " . $course->end_time));
-                  ?>
-                  <li>Duration: <?php echo $showDuration; ?> </li>
-                  <li>Start Date: <?= date("M d, Y h:i:sa", strtotime($course->start_at . " " . $course->start_time));?></li>                                       
-                  <li>End Date: <?= date("M d, Y h:i:sa", $enddate);?></li>
+                  <li>
+                     <i class="fa fa-envelope"></i><a href="mailto:admin@qualitycircleint.com"><span class="RequestQuote">Request a quote for...</span></a>
+                     <p class="DeliverySuboption">
+                        <label class="radioBox">On-Site Training
+                        <input type="radio" checked="checked" name="radio">
+                        <span class="checkmark"></span>
+                        </label>
+                     </p>
+                  </li>
                </ul>
                <br>
                <br>
-               <div class="Number">
-                  <?php echo $course->pay_type == 0 ? 'Onsite Training' : '$'.$course->pay_price; ?>
-               </div>
                <?php if(!$this->session->userdata ('isLoggedIn')) {?>
                   <a href="javascript:showLogin()" class="btnBlue">Register Now</a>
                <?php }else if($this->session->userdata('user_type') == 'Instructor' || $this->session->userdata('user_type') == 'Admin'){ ?>

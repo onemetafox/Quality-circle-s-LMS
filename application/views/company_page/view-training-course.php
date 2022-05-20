@@ -256,13 +256,7 @@
          <div class="col-md-3">
             <div class="catalogBox">
                <p><?php echo $course->course_self_time?></p>
-               <h2 class="titleH4" style="font-size:21px;margin-bottom:0px;">Schedule & Purchase</h2>
                <ul class="rightList rightList1">
-                  <li>
-                     <i class="fa fa-bus" aria-hidden="true"></i>
-                     <span class="DeliveryTitle">Delivery Option</span>
-                     <p class="DeliverySuboption">Choose your preferrred delivery method</p>
-                  </li>
                   <li>
                      <i class="fa fa-envelope"></i><a href="mailto:admin@qualitycircleint.com"><span class="RequestQuote">Request a quote for...</span></a>
                      <p class="DeliverySuboption">

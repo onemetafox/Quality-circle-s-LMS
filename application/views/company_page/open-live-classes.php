@@ -57,12 +57,6 @@
 						<div class="col-sm-12">
 							<div class="sortPanel">
 								<div class="sortSet">
-<!--									<label>Sort By :</label>-->
-<!--									<select>-->
-<!--										<option>Price</option>-->
-<!--										<option>Top Rating</option>-->
-<!--										<option>Popular</option>-->
-<!--									</select>-->
 								</div><!--sortSet-->
 							</div><!--sortPanel-->
 						</div><!--col-12-->
