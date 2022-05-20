@@ -264,22 +264,13 @@ class Training_model extends AbstractModel
     }
 
     function select($id = null){
-        //$this->db->select("a.*,training_course.title,training_course.course_id,training_course.description,training_course.duration,training_course.objective,training_course.objective_img,training_course.attend,training_course.attend_img,training_course.agenda,training_course.agenda_img,training_course.instructors,a.month mreg_date, a.sday dreg_date")->from("training_course_time a");
-        //$this->db->join("training_course", 'a.training_course_id = training_course.id', 'left');
-        //$this->db->where('a.id', $id);
-        $this->db->select("a.*, a.id as ids, c.pay_type, c.pay_price, c.amount, c.tax_rate, c.discount, training_course.id as training_course_id, training_course.title,training_course.subtitle,training_course.number,training_course.category,training_course.highlights,training_course.standard_id,training_course.endday,training_course.startday,training_course.course_id,training_course.description,training_course.duration,training_course.location,training_course.objective,training_course.objective_img,training_course.attend,training_course.attend_img,training_course.agenda,training_course.agenda_img,training_course.instructors,training_course.course_pre_requisite,a.month mreg_date, a.sday dreg_date")->from("training_course_time a");
+        $this->db->select("a.*, a.id as ids,c.img_path, c.pay_type, c.pay_price, c.amount, c.tax_rate, c.discount, training_course.id as training_course_id, training_course.title,training_course.subtitle,training_course.number,training_course.category,training_course.highlights,training_course.standard_id,training_course.endday,training_course.startday,training_course.course_id,training_course.description,training_course.duration,training_course.location,training_course.objective,training_course.objective_img,training_course.attend,training_course.attend_img,training_course.agenda,training_course.agenda_img,training_course.instructors,training_course.course_pre_requisite,a.month mreg_date, a.sday dreg_date")->from("training_course_time a");
         $this->db->join("training_course", 'a.training_course_id = training_course.id', 'left');
         $this->db->join('course c','c.id = training_course.course_id', 'left');
         $this->db->where('a.id', $id);
         $query = $this->db->get();
         $result = $query->row();
-        // $course=$this->db->select('pay_type,pay_price,img_path,enroll_users')->from('course')->where('id',$result->course_id)->get()->result();
-        // if(count($course)>0){
-        //     $result->pay_type = $course[0]->pay_type;
-        //     $result->pay_price = $course[0]->pay_price;
-		// 	$result->course_img_path = $course[0]->img_path;
-		// 	$result->enroll_users = $course[0]->enroll_users;
-        // }
+        
         $result->enrolls = count(json_decode($result->enroll_users));
         $instructors = json_decode($result->instructors);
         if(!empty($instructors)){

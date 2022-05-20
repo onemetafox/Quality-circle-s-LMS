@@ -125,12 +125,13 @@ class Training  extends BaseController
         $params["term"] = $this->term;
         $params['company'] = $this->company;
         $course = $this->Training_model->select($id);
-        
+
         if($course->pay_type == 1){
             $filter['object_type'] = "training";
-            $filter['object_id'] = $id;
+            $filter['object_id'] = $course->course_id;
             $filter['user_id'] = $this->session->userdata()["userId"];
             $payment = $this->Payment_model->one($filter);
+            
             if($payment){
                 $enrollment = $this->Enrollments_model->getEnrolledList($filter['user_id'],$course->course_id, $course->ids);
                 if($enrollment){

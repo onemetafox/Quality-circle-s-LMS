@@ -160,8 +160,6 @@ class Virtualcourse_model extends AbstractModel
         $this->db->where('a.id', $id);
         $query = $this->db->get();
         $result = $query->row();
-        // $this->db->select("*,DATE_FORMAT(reg_date,'%b %d,%Y') as freg_date");
-        // $result = parent::select($id);
         $result->enrolls = count(json_decode($result->enroll_users));
         $instructors = json_decode($result->instructors);
         if(!empty($instructors)){

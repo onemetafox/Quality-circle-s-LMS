@@ -17,6 +17,7 @@ class Live extends BaseController {
         $this->load->model('Account_model');
 		$this->load->model('Course_model');
 		$this->load->model('Enrollments_model');		
+		$this->load->model('Company_model');
 		$this->load->helper('common');	
         $this->isLoggedIn();
     }

@@ -100,7 +100,7 @@ class Classes  extends BaseController
         $course = $this->Virtualcourse_model->select($id);
         if($course->pay_type == 1){
             $filter['object_type'] = "live";
-            $filter['object_id'] = $id;
+            $filter['object_id'] = $course->course_id;
             $filter['user_id'] = $this->session->userdata()["userId"];
             $payment = $this->Payment_model->one($filter);
             if($payment){

@@ -268,7 +268,7 @@
                   <a href="javascript:showLogin()" class="btnBlue">Register Now</a>
                <?php }else if($this->session->userdata('user_type') == 'Instructor' || $this->session->userdata('user_type') == 'Admin'){ ?>
                   <a href="javascript:viewcourse(<?php echo $course->course_id ?>)" class="btnBlue">View Course</a>
-               <?php }else{ print_r($status); switch ($status) {
+               <?php }else{ switch ($status) {
                   case 'Enrolled':
                      echo ' <a href="javascript:viewcourse('.$course->course_id.')" class="btnBlue">View Course</a>';
                      break;
