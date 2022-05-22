@@ -290,7 +290,7 @@
                      echo ' <a href="javascript:enroll('.$course->course_id .','. $course->ids.')" class="btnBlue">Enroll Now</a>';
                      break;
                   case 'Uninvited':
-                     echo ' <a href="mailto:admin@qualitycircleint.com" class="btnBlue">Contact Admin</a>';
+                     echo ' <button data-toggle="modal" data-target="#confirm" class="btn btn-success">Contact Admin</button>';
                      break;
                } } ?>
             </div>
@@ -322,6 +322,25 @@
       </div>
    </div>
 </section>
+<div class="modal" id="confirm" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>This is a closed enrollment training by invitation only. It is not open for public enrollment. Please go back to the academy page and browse for an open-enrollment course or contact admin if you are invited to this course and cannot register. </p>
+      </div>
+      <div class="modal-footer">
+        <a href="mailto:admin@qualitycircleint.com" class="btn btn-primary">Contact Admin</a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 <a class="mb-1 mt-1 mr-1 modal-basic btn btn-default alert-modal" href="#modalCenter" hidden></a>
 <div id="modalCenter" class="modal-block mfp-hide">
    <section class="card">
