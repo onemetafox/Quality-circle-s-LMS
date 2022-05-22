@@ -131,7 +131,7 @@ class Classes  extends BaseController
 		$totalCourseEnrollments = $this->Enrollments_model->totalCourseEnrollments($course->course_id,$id);
 		$course->enroll_user_count = $totalCourseEnrollments;
 		$course->course_time_id = $id;
-        $params['upcoming_courses'] = $this->Virtualcourse_model->upcoming_three_course($course->id);
+        $params['upcoming_courses'] = $this->Virtualcourse_model->upcoming_three_course($course->id, $course->category_id);
         $params['course'] = $course;
         $params['user_api_key'] =  $this->session->get_userdata()['api_key'];	
 

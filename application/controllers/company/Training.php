@@ -157,7 +157,7 @@ class Training  extends BaseController
                 $params['status'] = "Uninvited";
             }
         }
-        $params['upcoming_courses'] = $this->Training_model->upcoming_three_course($course->training_course_id);
+        $params['upcoming_courses'] = $this->Training_model->upcoming_three_course($course->training_course_id, $course->category_id);
 		$totalCourseEnrollments = $this->Enrollments_model->totalCourseEnrollments($course->course_id,$id);
 		$course->count_enroll_users = $totalCourseEnrollments;
 		## custom condition #####

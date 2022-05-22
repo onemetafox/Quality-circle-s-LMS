@@ -264,7 +264,7 @@ class Training_model extends AbstractModel
     }
 
     function select($id = null){
-        $this->db->select("a.*, a.id as ids,c.img_path, c.pay_type, c.pay_price, c.amount, c.tax_rate, c.discount, training_course.id as training_course_id, training_course.title,training_course.subtitle,training_course.number,training_course.category,training_course.highlights,training_course.standard_id,training_course.endday,training_course.startday,training_course.course_id,training_course.description,training_course.duration,training_course.location,training_course.objective,training_course.objective_img,training_course.attend,training_course.attend_img,training_course.agenda,training_course.agenda_img,training_course.instructors,training_course.course_pre_requisite,a.month mreg_date, a.sday dreg_date")->from("training_course_time a");
+        $this->db->select("a.*, a.id as ids,c.img_path, c.pay_type, c.pay_price, c.amount, c.category_id, c.tax_rate, c.discount, training_course.id as training_course_id, training_course.title,training_course.subtitle,training_course.number,training_course.category,training_course.highlights,training_course.standard_id,training_course.endday,training_course.startday,training_course.course_id,training_course.description,training_course.duration,training_course.location,training_course.objective,training_course.objective_img,training_course.attend,training_course.attend_img,training_course.agenda,training_course.agenda_img,training_course.instructors,training_course.course_pre_requisite,a.month mreg_date, a.sday dreg_date")->from("training_course_time a");
         $this->db->join("training_course", 'a.training_course_id = training_course.id', 'left');
         $this->db->join('course c','c.id = training_course.course_id', 'left');
         $this->db->where('a.id', $id);
@@ -302,20 +302,21 @@ class Training_model extends AbstractModel
 		
         return $result;
     }
-    function upcoming_three_course($id){
+    function upcoming_three_course($id, $categroy){
         $this->db->select("a.*,training_course.title,training_course.id as training_course_id,training_course.description,training_course.duration,training_course.course_id,a.month mreg_date, a.sday dreg_date")->from("training_course_time a");
         $this->db->join("training_course", 'a.training_course_id = training_course.id', 'left');
-            $this->db->where('training_course.id <> '. $id);
-            $this->db->group_start();
-            $this->db->where('year >=',date("Y"));
-            $this->db->where('month >',date("m"));
-            $this->db->or_group_start();
-            $this->db->where('year >=',date("Y"));
-            $this->db->where('month',date("m"));
-            $this->db->where('sday >=',date("d"));
-            $this->db->group_end();
-            $this->db->group_end();
-            $direction = 'asc';
+        $this->db->where('training_course.id <> '. $id);
+        $this->db->where('training_course.category_id', $categroy);
+        $this->db->group_start();
+        $this->db->where('year >=',date("Y"));
+        $this->db->where('month >',date("m"));
+        $this->db->or_group_start();
+        $this->db->where('year >=',date("Y"));
+        $this->db->where('month',date("m"));
+        $this->db->where('sday >=',date("d"));
+        $this->db->group_end();
+        $this->db->group_end();
+        $direction = 'asc';
         
         $this->db->order_by('a.`year`, a.`month`,a.`sday`', $direction);
        
