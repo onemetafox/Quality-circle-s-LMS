@@ -113,7 +113,6 @@
 											<div class="col-md-10 col-sm-9 col-xs-12 courseInfo">
 												<h5><?php echo $course->title?></h5>
 												<ul class="courseUl">
-												  	<li><?php echo substr($course->description,0,300);?>...</li> 
 												  	<?php
 														$showDuration = $course->duration > 1 ? $course->duration. " Days" : $course->duration." Day";												
 														$duration = $course->duration - 1;

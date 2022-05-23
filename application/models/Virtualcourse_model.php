@@ -110,7 +110,7 @@ class Virtualcourse_model extends AbstractModel
         $this->db->select("a.start_at, a.id as time_id, b.title,b.id")->from("virtual_course_time a");
         $this->db->join('virtual_course b', 'a.virtual_course_id = b.id', 'left');
         $this->db->where('b.id <>', $id);
-        $this->db->where('b.category', $category);
+        $this->db->where('b.category_id', $category);
         // $this->db->where('a.start_at >=', date('y-m-d'));
         $this->db->where("UNIX_TIMESTAMP(CONCAT(start_at,' ',start_time))  >", time());
         $this->db->order_by('a.start_at', 'asc');
@@ -155,7 +155,7 @@ class Virtualcourse_model extends AbstractModel
 
 
     function select($id = null){
-        $this->db->select("a.start_at, a.start_time, a.end_time, c.pay_type, c.pay_price, c.amount, c.categroy_id, c.tax_rate, c.discount, b.*,DATE_FORMAT(b.reg_date,'%b %d,%Y') as freg_date")->from("virtual_course_time a");
+        $this->db->select("a.start_at, a.start_time, a.end_time, c.pay_type, c.pay_price, c.amount, c.tax_rate, c.discount, b.*,DATE_FORMAT(b.reg_date,'%b %d,%Y') as freg_date")->from("virtual_course_time a");
         $this->db->join('virtual_course b', 'a.virtual_course_id = b.id', 'left');
         $this->db->join('course c', 'b.course_id = c.id', 'left');
         $this->db->where('a.id', $id);
