@@ -192,9 +192,9 @@
     	 $.magnificPopup.close();
     })
 	var company_url = "<?= base_url($company['company_url'])?>";
-	var isLogin = "<?php echo $this->session->userdata ( 'isLoggedIn' )?>";
-	var email = "<?php echo $this->session->userdata ( 'email' )?>";
-	var user_type = "<?php echo $this->session->userdata('user_type')?>";
+	// var isLogin = "<?php echo $this->session->userdata ( 'isLoggedIn' )?>";
+	// var email = "<?php echo $this->session->userdata ( 'email' )?>";
+	// var user_type = "<?php echo $this->session->userdata('user_type')?>";
 	var acc = document.getElementsByClassName("accordion");
 	var i;
 
@@ -242,84 +242,6 @@
         window.location =  company_url + '/training?standard=' + $("#standard_id").val()+'&sort='+ctsort;
     }));
 
-	function viewcourse(course_id,pay_type,time_id){
-		window.location = company_url + '/demand/detail/' + course_id + '/?type=ilt&time_id='+ time_id;		
-	}
-
-	function enroll(training_id,pay_type,course_id,time_id,url){
-       if(!isLogin){
-		showAcademyLogin(url);
-       }else{
-           if(pay_type == 1){
-               if(user_type != "Learner"){
-                   // window.location = "<?php echo VILT_URL?>"+id;
-               }else{
-                   swal({
-                     title: "You have to pay $99 to take part in this course",
-                     buttons: true
-                   }).then((willDelete) => {
-                     if (willDelete) {
-                       $.ajax({
-                           url: "<?php echo base_url() ?>learner/training/pay_training",
-                           type: 'POST',
-						   data: {'course_id':training_id,'time_id':time_id,'ilt_course_id':course_id},
-                           dataType : 'json',
-                           success: function(data){
-                               if(data == 'success') {
-                                   swal({
-                                     title: "You have successfully enroll this course. Please wait until course is started!",
-                                   });
-                                   setTimeout(function(){ window.location.reload() }, 10000);
-                               }else{
-                                   swal({
-                                     title: " Error!",
-                                   });
-                               }                                         
-                           }
-                       });
-                     } else {
-                       // return;
-                     }
-                   });
-   
-               }
-           }else if(pay_type == 0){
-               $.ajax({
-                   url: "<?php echo base_url() ?>admin/inviteuser/get_Inviteuser",
-                   type: 'POST',
-                    data: {'email':email,'type':'0','course_id':training_id,'time_id':time_id},
-                   dataType : 'json',
-                   success: function(data){
-                       var cnt = data;
-                       if(cnt == 1) {
-                           $.ajax({
-                               url: "<?php echo base_url() ?>learner/training/pay_training",
-                               type: 'POST',
-                               data: {'course_id':training_id,'time_id':time_id,'ilt_course_id':course_id},
-                               dataType : 'json',
-                               success: function(data){
-                                   if(data == 'success'){
-                                       swal({
-                                         title: "You have successfully enroll this course. Please wait until course is started!",
-                                       });
-                                       setTimeout(function(){ window.location.reload() }, 10000);
-                                   }else{
-                                       swal({
-                                         title: " Error!",
-                                       });
-                                   }
-                               }
-                           });
-                           
-                       }else{
-                           $('.alert-modal').click();
-                       }
-                                 
-                   }
-               });               
-               
-           }
-       }
-   }
+	
 
 </script>
