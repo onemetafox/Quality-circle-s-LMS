@@ -90,7 +90,11 @@ class Training_model extends AbstractModel
             $this->db->group_end();
         }
 
-        $this->db->select("a.*,a.id as training_time_id, training_course.title,training_course.subtitle,training_course.id,training_course.description,training_course.startday,training_course.endday,training_course.duration,training_course.course_id,course.category_id,course.standard_id,a.month mreg_date, a.sday dreg_date")->from("training_course_time as a");
+        $this->db->select("a.*,a.id as training_time_id, training_course.title,
+            training_course.subtitle,training_course.id,training_course.description,training_course.startday,training_course.endday,
+            training_course.duration,training_course.course_id,course.category_id,course.standard_id,a.month mreg_date, a.sday dreg_date, 
+            course.amount, course.discount, course.pay_price")
+            ->from("training_course_time as a");
 				
         $this->db->join("training_course", 'a.training_course_id = training_course.id', 'left');
         $this->db->join("course", 'training_course.course_id = course.id', 'left');

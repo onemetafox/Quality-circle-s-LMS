@@ -32,14 +32,12 @@ class Virtualcourse_model extends AbstractModel
 
     /*start front function*/
     function all($filter = NULL, $order = NULL, $direction = 'asc', $fields = "*"){
-        // if(!empty($filter['search'])) {
-        //     $this->db->group_start();
-        //     $this->db->or_like('virtual_course.title', $filter['search'], 'both'); 
-        //     $this->db->group_end();
-        // }
 
-        $this->db->select("a.start_at, a.id as time_id,b.*,DATE_FORMAT(b.reg_date,'%b %d,%Y'), a.start_time, a.end_time")->from("virtual_course_time a");
+        $this->db->select("a.start_at, a.id as time_id,b.*,DATE_FORMAT(b.reg_date,'%b %d,%Y'), a.start_time, a.end_time, 
+        c.pay_price, c.amount, c.discount")
+        ->from("virtual_course_time a");
         $this->db->join('virtual_course b', 'a.virtual_course_id = b.id', 'left');
+        $this->db->join('course c', 'b.course_id = c.id', 'left');
         if($filter['sort'] == 'upcoming'){
             $this->db->where("UNIX_TIMESTAMP(CONCAT(a.start_at,' ',a.start_time))  >", time());
             $direction = 'asc';
@@ -48,7 +46,6 @@ class Virtualcourse_model extends AbstractModel
             $direction = 'desc';
         }
         unset($filter['sort']);
-        // $result = parent::all($filter,'reg_date',$direction);
         $this->db->order_by('a.start_at', $direction);
         if(isset($filter['limit']) && isset($filter['start']))
         {
@@ -62,7 +59,6 @@ class Virtualcourse_model extends AbstractModel
         $query = $this->db->get();
         $result = $query->result();
 
-        /*while (list($key, $val) = each($result)) {*/
         foreach($result as $key => $val) {
 			
 			$this->db->select(['course_self_time','img_path']);

@@ -93,6 +93,9 @@
 											<li>Duration: <?php echo $showDuration; ?> </li>
 											<li>Start Date: <?= date("M d, Y h:i:sa", strtotime($course->start_at . " " . $course->start_time));?></li>                                       
 											<li>End Date: <?= date("M d, Y h:i:sa", $enddate);?></li>
+											<li> Price: $<?= $course->pay_price?></li>
+											<li> Discount: <?= $course->discount?>%</li>
+											<li> Cost: $<?= $course->amount?></li>
 										</ul>
 										<div class="coursePrice _plr-0">
 											<div class="row">
