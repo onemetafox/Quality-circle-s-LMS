@@ -327,9 +327,6 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Permission Restricted to Invited Users Only</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
       <div class="modal-body">
         <p>This is a closed enrollment training by invitation only. It is not open for public enrollment. Please go back to the academy page and browse for an open-enrollment course or contact admin if you are invited to this course and cannot register. </p>
