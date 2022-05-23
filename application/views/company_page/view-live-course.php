@@ -49,19 +49,23 @@
                         <!--col-4-->
                         <div class="col-md-7 col-sm-7 courseInfo">
                            <!-- <h5></h5> -->
-                           <li><i class="fa fa-check-square"></i> Enrollments: <?php echo $course->enroll_user_count ?></li>
-                           <br>
+                           <p><i class="fa fa-check-square"></i> Enrollments: <?php echo $course->enroll_user_count ?></p>
                            <?php
                               $showDuration = $course->duration > 1 ? $course->duration. " Days" : $course->duration." Day";												
                               $duration = $course->duration - 1;
                               $enddate = strtotime('+'.$duration .' days', strtotime($course->start_at. " " . $course->end_time));
                            ?>
-                           <li>Duration: <?php echo $showDuration; ?> </li>
-                           <li>Start Date: <?= date("M d, Y h:i:sa", strtotime($course->start_at . " " . $course->start_time));?></li>                                       
-                           <li>End Date: <?= date("M d, Y h:i:sa", $enddate);?></li>
-                           <li> Price: $<?= $course->pay_price?></li>
-                           <li> Discount: <?= $course->discount?>%</li>
-                           <li> Cost: $<?= $course->amount?></li>
+                           <ul>
+                              <li>Duration: <?php echo $showDuration; ?> </li>
+                              <li>Start Date: <?= date("M d, Y h:i:sa", strtotime($course->start_at . " " . $course->start_time));?></li>                                       
+                              <li>End Date: <?= date("M d, Y h:i:sa", $enddate);?></li>
+                              <li> Price: $<?= $course->pay_price?></li>
+                              <li> Discount: <?= $course->discount?>%</li>
+                              <li> Cost: $<?= $course->amount?></li>
+                           <ul>
+                           <?php if($course->pay_type == 0) {?>
+                              <p><i class="fa fa-university"></i>Company:<?= $company['name']?></p>
+                           <?php } ?>
                            <p><?php echo strip_tags($course->about)?></p>
                         </div>
                         <!--col-8-->
