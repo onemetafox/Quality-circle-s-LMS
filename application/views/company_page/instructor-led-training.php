@@ -74,7 +74,7 @@
 		                            <select id="category_id" name="category_id">
 		                                <option value="0"> All </option>
 		                                <?php foreach($category as $item){ ?>
-		                                    <option value="<?php echo $item['id']; ?>" <?php $category_id==$item['id']?print 'selected':print ''; ?>> <?php echo $item['name']; ?></option>
+		                                    <option value="<?= $item->id ?>" <?= $category_id==$item->id?'selected':''; ?>> <?= $item->name; ?></option>
 		                                <?php }  ?>
 		                            </select>
 								</div>

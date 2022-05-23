@@ -54,13 +54,33 @@
 			<div class="col-md-9">
 				<div class="catalogBox">
 					<div class="row">
-						<div class="col-sm-12">
+						<div class="col-sm-6">
 							<div class="sortPanel">
 								<div class="sortSet">
-								</div><!--sortSet-->
-							</div><!--sortPanel-->
-						</div><!--col-12-->
-					</div><!--row-->					
+									<label>Category</label>
+		                            <select id="category_id" name="category_id">
+		                                <option value="0"> All </option>
+		                                <?php foreach($category as $item){ ?>
+		                                    <option value="<?= $item->id ?>" <?= $category_id==$item->id?'selected':''; ?>> <?= $item->name; ?></option>
+		                                <?php }  ?>
+		                            </select>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<div class="sortPanel">
+								<div class="sortSet">
+									<label>Standard</label>
+		                            <select id="standard_id" name="standard_id">
+		                                <option value="0"> All </option>
+		                                <?php foreach($standard as $item){ ?>
+											<option value="<?php echo $item->id; ?>" <?php $standard_id==$item->id?print 'selected':print ''; ?>> <?php echo $item->name; ?></option>
+		                                <?php }  ?>
+		                            </select>
+								</div>
+							</div>
+						</div>
+					</div>		
 					<div class="row">
 						<div class="col-sm-12">
 							<?php foreach($courses as $course): ?>
@@ -142,7 +162,7 @@
 
 
 <script type="text/javascript">
-
+	let searchParams = new URLSearchParams(window.location.search);
 	$('.alert-modal').magnificPopup({
         type: 'inline',
         preloader: false,
@@ -172,130 +192,28 @@
 	    });
 	}
     var company_url = "<?= base_url($company['company_url'])?>";
-    var isLogin = "<?php echo $this->session->userdata ('isLoggedIn')?>";
-    var email = "<?php echo $this->session->userdata ('email')?>";
-    var user_type = "<?php echo $this->session->userdata('user_type')?>";
+    // var isLogin = "<?php echo $this->session->userdata ('isLoggedIn')?>";
+    // var email = "<?php echo $this->session->userdata ('email')?>";
+    // var user_type = "<?php echo $this->session->userdata('user_type')?>";
 	$(function(){
         $("ul.pagination a").addClass('page-link');
     });
-	function viewcourse(is_instructor,id, startAt){
 
-			var currentDate = new Date();
-			var courseStartDate = new Date(startAt);
-			courseStartDate.setHours(courseStartDate.getHours() - 1);
-			console.log(courseStartDate);
-
-			if(courseStartDate.getTime() > currentDate.getTime()) {		
-				console.log(courseStartDate.getTime()-currentDate.getTime());
-				swal({
-					title: "This course will be available at "+courseStartDate,
-				});
-				return;
-			}
-			// var same = d1.getTime() === d2.getTime();
-			// var notSame = d1.getTime() !== d2.getTime();
-
-			$.ajax({
-				url: "<?php echo base_url() ?>admin/live/enterCourse",
-				type: 'POST',
-				data: {
-					'course_id':id,
-					'is_instructor': is_instructor,
-					'start_at': startAt
-				},
-				dataType : 'json',
-				success: function(data){
-					if(data.success == 1){
-						window.location.href = data.msg;
-					} else{
-						swal({
-							title: "Instructor is not available. Please wait until the instructor is online",
-						});
-					}
-				}
-			});
-		//}
-	}
-
-	function enrollNow(id,pay_type,time_id,course_id,url){
-		if(!isLogin){
-			showAcademyLogin(url);
-		}else{
-			if(pay_type == 1){
-				if(user_type !== "Learner"){
-					// window.location = "<?php echo VILT_URL?>"+id;
-				}else{
-					swal({
-					  title: "You have to pay 99$ to take part in this course",
-					  buttons: true
-					}).then((willDelete) => {
-					  if (willDelete) {
-					  	$.ajax({
-				            url: "<?php echo base_url() ?>learner/live/pay_course/",
-				            type: 'POST',
-				            data: {'course_id':id,'time_id':time_id,'vilt_course_id':course_id},
-				            dataType : 'json',
-				            success: function(data){
-				                if(data == 'success') {
-				                	swal({
-									  title: "You have successfully enroll for this course!",
-									});
-									setTimeout(function(){ window.location.reload(); }, 10000);
-				                }else{
-				                	swal({
-									  title: " Error!",
-									});
-				                }
-				                		  
-				            }
-				        });
-					  } else {
-					    // return;
-					  }
-					});
-
-				}
-			}else if(pay_type == 0){
-				$.ajax({
-		            url: "<?php echo base_url() ?>admin/inviteuser/get_Inviteuser",
-		            type: 'POST',
-		            data: {'email':email,
-		        			'type':'1',
-		        			'course_id':id,
-							'time_id':time_id
-						},
-		            dataType : 'json',
-		            success: function(data){
-					
-		                var cnt = data;
-		                if(cnt == 1) {
-		                	$.ajax({
-					            url: "<?php echo base_url() ?>learner/live/pay_course/",
-					            type: 'POST',
-					            data: {'course_id':id,'time_id':time_id,'vilt_course_id':course_id},
-					            dataType : 'json',
-					            success: function(data){
-					                if(data == 'success') {
-					                	swal({
-										  title: "You have successfully enroll for this course!",
-										});
-										setTimeout(function(){ window.location.reload() }, 10000);
-					                }else{
-					                	swal({
-										  title: " Error!",
-										});
-					                }
-					            }
-					        });		                	
-		                }else{
-		                	//$('.alert-modal').click();
-							swal({title: "You don’t have permission to access this user course. Please contact Administrator"});
-		                }		                		  
-		            }
-		        });				
-			}
+	$("#category_id").on('change',(function(){
+		var ctsort = 'upcoming';
+		if(searchParams.has('sort')){
+			ctsort = searchParams.get('sort');
 		}
-	}
+        window.location = company_url + '/classes?category='+$("#category_id").val()+'&sort='+ctsort;
+    }));
+
+    $("#standard_id").on('change',(function(){
+		var ctsort = 'upcoming';
+		if(searchParams.has('sort')){
+			ctsort = searchParams.get('sort');
+		}
+        window.location =  company_url + '/classes?standard=' + $("#standard_id").val()+'&sort='+ctsort;
+    }));
 	function sortByDate(e){
 		window.location = company_url + '/classes?sort=' + e.value;
 	}

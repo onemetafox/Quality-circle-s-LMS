@@ -111,7 +111,7 @@ class Training  extends BaseController
         $params['category_id'] = $category_id;
         $params['standard_id'] = $standard_id;
         $params['location'] = $this->Training_model->getLocation();
-        $params['category'] = $this->Category_model->getListByCompanyID($this->session->userdata('company_id'));
+        $params['category'] = (array) $this->Category_model->all();
         $params['standard'] = $this->db->get_where('category_standard')->result();
         /*end*/
         $this->loadViews_front('company_page/instructor-led-training', $params);

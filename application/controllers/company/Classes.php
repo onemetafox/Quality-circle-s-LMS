@@ -15,6 +15,7 @@ class Classes  extends BaseController
 		$this->load->model('Enrollments_model');
         $this->load->model('Payment_model');
         $this->load->model('Inviteuser_model');
+        $this->load->model('Category_model');
 		
         $this->load->helper(array('cookie', 'string', 'language', 'url'));
         $this->load->helper('lms_email');
@@ -30,6 +31,16 @@ class Classes  extends BaseController
         $params['menu_name'] = 'catalog';
         $params["term"] = $this->term;
         $params['company'] = $this->company;
+        $category_id = $this->input->get('category');
+        $standard_id = $this->input->get('standard');
+
+        if($category_id != null && $category_id != 0){
+            $filter['category_id'] = $category_id;
+        }
+
+        if($standard_id != null && $standard_id != 0){
+            $filter['standard_id'] = $standard_id;
+        }
         if($this->session->userdata ( 'isLoggedIn' ) != NULL ){
             $filter['create_id'] = $this->session->userdata('company_id');
         }else{
@@ -88,7 +99,11 @@ class Classes  extends BaseController
         $config['num_tag_open'] = '<li class="page-item">';
         $config['num_tag_close'] = '</li>';
         $this->pagination->initialize($config);
+        $params['category_id'] = $category_id;
+        $params['standard_id'] = $standard_id;
         $params['links'] = $this->pagination->create_links();
+        $params['category'] = $this->Category_model->all();
+        $params['standard'] = $this->db->get_where('category_standard')->result();
         /*end*/
         $this->loadViews_front('company_page/open-live-classes', $params);
     }

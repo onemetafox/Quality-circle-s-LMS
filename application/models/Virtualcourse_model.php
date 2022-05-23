@@ -45,6 +45,12 @@ class Virtualcourse_model extends AbstractModel
             $this->db->where("UNIX_TIMESTAMP(CONCAT(a.start_at,' ',a.start_time))  <", time());
             $direction = 'desc';
         }
+        if((!empty($filter['category_id'])) && isset($filter['category_id'])){
+            $this->db->where('c.category_id', $filter['category_id']);
+        }
+        if((!empty($filter['standard_id'])) && isset($filter['standard_id'])){
+            $this->db->where('FIND_IN_SET(\''. $filter['standard_id'] .'\',c.standard_id)!=',0);
+        }
         unset($filter['sort']);
         $this->db->order_by('a.start_at', $direction);
         if(isset($filter['limit']) && isset($filter['start']))
@@ -119,13 +125,20 @@ class Virtualcourse_model extends AbstractModel
     }
 
     function count($filter = NULL) {
-        if(!empty($filter['search'])) {
-            $this->db->group_start();
-            $this->db->or_like('virtual_course.title', $filter['search'], 'both'); 
-            $this->db->group_end();
-        }
+        // if(!empty($filter['search'])) {
+        //     $this->db->group_start();
+        //     $this->db->or_like('virtual_course.title', $filter['search'], 'both'); 
+        //     $this->db->group_end();
+        // }
         $this->db->select("a.start_at, b.*")->from("virtual_course_time a");
         $this->db->join('virtual_course b', 'a.virtual_course_id = b.id', 'left');
+        $this->db->join("course c", 'b.course_id = c.id', 'left');
+        if((!empty($filter['category_id'])) && isset($filter['category_id'])){
+            $this->db->where('c.category_id', $filter['category_id']);
+        }
+        if((!empty($filter['standard_id'])) && isset($filter['standard_id'])){
+            $this->db->where('FIND_IN_SET(\''. $filter['standard_id'] .'\',c.standard_id)!=',0);
+        }
         if($filter['sort'] == 'upcoming'){ 
             $this->db->where("UNIX_TIMESTAMP(CONCAT(a.start_at,' ',a.start_time))  >", time());
             $direction = 'asc';

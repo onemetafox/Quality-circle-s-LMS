@@ -1,13 +1,13 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Category_model extends CI_Model
+class Category_model extends AbstractModel
 {
     
     /**
      * This function used to manage categories
      */
    	protected $table;
-    
+    var $_table = 'category';
     function __construct()
     {
         parent::__construct();
@@ -39,7 +39,7 @@ class Category_model extends CI_Model
     
     function getList($searchcond = array(), $limit = "", $offset = "")
     {
-        $this->db->select()->from($this->table);
+        $this->db->select('*')->from($this->table);
         
         $this->db->order_by('`id`', 'DESC');
 
