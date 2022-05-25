@@ -332,7 +332,7 @@
         <p>This is a closed enrollment training by invitation only. It is not open for public enrollment. Please go back to the academy page and browse for an open-enrollment course or contact admin if you are invited to this course and cannot register. </p>
       </div>
       <div class="modal-footer">
-        <a href="mailto:admin@qualitycircleint.com" class="btn btn-primary">Contact Admin</button>
+        <a href="mailto:admin@qualitycircleint.com" class="btn btn-primary">Contact Admin</a>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
