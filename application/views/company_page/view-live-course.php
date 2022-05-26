@@ -35,11 +35,11 @@
                         <div class="col-md-5 col-sm-5">
                            <div class="leftImgBox">
                            		<?php 
-									$imgName = end(explode('/', $course->virtual_course_path));
+									$imgName = end(explode('/', $course->img_path));
 									$ext = pathinfo($imgName, PATHINFO_EXTENSION);
-									if($imgName != '' && file_exists(getcwd().'/'.$course->virtual_course_path) && ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' || $ext == 'PNG' || $ext == 'JPG')){							
+									if($imgName != '' && file_exists(getcwd().'/'.$course->img_path) && ($ext == 'jpg' || $ext == 'jpeg' || $ext == 'png' || $ext == 'PNG' || $ext == 'JPG')){							
 								?>
-									<img src="<?php echo base_url($course->virtual_course_path); ?>" class="rounded img-fluid" alt="learnerlearner">
+									<img src="<?php echo base_url($course->img_path); ?>" class="rounded img-fluid" alt="learnerlearner">
 								<?php }else{ ?>
 									<img src="<?php echo base_url().'assets/uploads/vilt-default.png'; ?>" class="rounded img-fluid" alt="learnerlearner">
 								<?php } ?>                                

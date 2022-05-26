@@ -164,47 +164,48 @@ class Virtualcourse_model extends AbstractModel
 
 
     function select($id = null){
-        $this->db->select("a.start_at, a.start_time, a.end_time, c.pay_type, c.pay_price, c.amount, c.tax_rate, c.discount, b.*,DATE_FORMAT(b.reg_date,'%b %d,%Y') as freg_date")->from("virtual_course_time a");
+        $this->db->select("a.start_at, a.start_time, a.end_time, c.pay_type, c.pay_price,  c.img_path,
+        c.amount, c.tax_rate, c.discount, b.*, DATE_FORMAT(b.reg_date,'%b %d,%Y') as freg_date, b.course_id")->from("virtual_course_time a");
         $this->db->join('virtual_course b', 'a.virtual_course_id = b.id', 'left');
         $this->db->join('course c', 'b.course_id = c.id', 'left');
         $this->db->where('a.id', $id);
         $query = $this->db->get();
         $result = $query->row();
-        $result->enrolls = count(json_decode($result->enroll_users));
-        $instructors = json_decode($result->instructors);
-        if(!empty($instructors)){
-            $result->first_instructor = $this->db->where('id',$instructors[0])
-                                                         ->where('user_type','instructor')
-                                                         ->select('id,email,picture')
-                                                         ->get($this->user_table)->row();
-        }
-        $result->is_pay = $this->db->where('user_id',$this->session->userdata('user_id'))
-                    ->where('object_type','live')
-                    ->where('object_id',$result->id)
-                    ->select('id')
-                    ->get('payment_history')
-                    ->row_array();
+        // $result->enrolls = count(json_decode($result->enroll_users));
+        // $instructors = json_decode($result->instructors);
+        // if(!empty($instructors)){
+        //     $result->first_instructor = $this->db->where('id',$instructors[0])
+        //                                                  ->where('user_type','instructor')
+        //                                                  ->select('id,email,picture')
+        //                                                  ->get($this->user_table)->row();
+        // }
+        // $result->is_pay = $this->db->where('user_id',$this->session->userdata('user_id'))
+        //             ->where('object_type','live')
+        //             ->where('object_id',$result->id)
+        //             ->select('id')
+        //             ->get('payment_history')
+        //             ->row_array();
 
-        $start_date = date_format(date_create($result->start_at),"Y-m-d"); 
-        $end_date = date("Y-m-d",strtotime("+".($result->duration-1)." day", strtotime($start_date)));
-        $today = strtotime(date('Y-m-d'));
-        $result->end_date = date_format(date_create($end_date),'M d,Y');
+        // $start_date = date_format(date_create($result->start_at),"Y-m-d"); 
+        // $end_date = date("Y-m-d",strtotime("+".($result->duration-1)." day", strtotime($start_date)));
+        // $today = strtotime(date('Y-m-d'));
+        // $result->end_date = date_format(date_create($end_date),'M d,Y');
 
-        if(strtotime($start_date) <= $today && strtotime($end_date) >= $today)
-            $result->expired = 'no';
-        else $result->expired = 'yes';
+        // if(strtotime($start_date) <= $today && strtotime($end_date) >= $today)
+        //     $result->expired = 'no';
+        // else $result->expired = 'yes';
 		
-		$this->db->select(['course_self_time','img_path']);
-		$this->db->from($this->course_table);
-		$this->db->where('id', $result->course_id);
+		// $this->db->select(['course_self_time','img_path']);
+		// $this->db->from($this->course_table);
+		// $this->db->where('id', $result->course_id);
 
-		$queryss = $this->db->get();
-		$result->course_self_time = $queryss->row_array()['course_self_time']; 
-		$result->virtual_course_path = $queryss->row_array()['img_path']; 
+		// $queryss = $this->db->get();
+		// $result->course_self_time = $queryss->row_array()['course_self_time']; 
+		// $result->virtual_course_path = $queryss->row_array()['img_path']; 
 		  
-		$result->enroll_users_course = $this->db->where('id',$result->course_id)
-                                                             ->select('enroll_users')
-                                                             ->get($this->course_table)->row_array()['enroll_users'];
+		// $result->enroll_users_course = $this->db->where('id',$result->course_id)
+        //                                                      ->select('enroll_users')
+        //                                                      ->get($this->course_table)->row_array()['enroll_users'];
         
         return $result;
     }

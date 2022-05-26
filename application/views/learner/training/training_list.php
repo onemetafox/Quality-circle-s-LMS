@@ -114,7 +114,7 @@
 													<?=$term["enrollnow"]?>
 												</a>
 												<?php }else { ?>
-													<a class="btnBlue" href="<?= base_url('company/'.$company['url'].'/training/view/'.$free_course['training_id'])?>" >
+													<a class="btnBlue" href="<?= base_url('company/'.$company['url'].'/training/view/'.$free_course['course_time_id'])?>" >
 														<?=$term["viewcourse"]?>
 													</a>
 												<?php } ?>
@@ -181,7 +181,7 @@
 														<?=$term["enrollnow"]?>
 													</a>
 												<?php } else{?>
-													<a  class="btnBlue" href="<?= base_url('company/'.$company['url'].'/training/view/'.$paid_course['training_id'])?>"  >
+													<a  class="btnBlue" href="<?= base_url('company/'.$company['url'].'/training/view/'.$paid_course['course_time_id'])?>"  >
 														<?=$term["viewcourse"]?>
 													</a>
 												<?php }?>
