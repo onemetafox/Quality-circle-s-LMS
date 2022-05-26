@@ -253,9 +253,6 @@
 </div>
 <script>
 	var company_url = "<?= base_url('company/'.$company['url'])?>";
-	function viewcourse(course_id){
-		window.location = company_url + '/traing/view/' + course_id;	
-	}
   	function enroll(course_id, id){
 		$('#book_course_id').val(course_id);
 		$('#id').val(id);
