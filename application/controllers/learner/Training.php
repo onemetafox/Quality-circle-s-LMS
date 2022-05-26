@@ -75,7 +75,7 @@ class Training extends BaseController {
             $training_data['location_name'] = $location;
             $training_data['course_name'] = $course;
             $training_data['company'] = $this->Company_model->getListByID($user['company_id'])[0];
-            // print_r($training_data['company']);
+            // print_r($training_data['course_filter_list']);
             // die;
             $this->loadViews("learner/training/training_list", $this->global, $training_data, NULL);
         // }else{

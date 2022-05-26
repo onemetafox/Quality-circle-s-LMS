@@ -36,7 +36,7 @@
                                     <select id="location" name="location" style="border: 1px solid #ccc !important;padding: 8px 10px !important;">
                                         <option value=""> Select Location </option>
                                         <?php foreach($location as $item){ ?>
-                                            <option value="<?php echo $item['location']; ?>" <?php $location_name==$item['location']?print 'selected':print ''; ?>> <?php echo $item['location']; ?></option>
+                                            <option value="<?= $item['location']; ?>" <?= $location_name==$item['location']?'selected':''; ?>> <?= $item['location']; ?></option>
                                         <?php } ?>
                                     </select>
                                     
@@ -44,17 +44,20 @@
                                         <option value=""> Select Course </option>
                                         <?php foreach($course_filter_list as $courseitem){
 											
-											if($courseitem['date_str'] != ''){
-											$currentday = time();
-											$startDate = $courseitem['date_str'];
-											$duration = $courseitem['duration'] - 1;
-											$enddate = strtotime('+'.$duration.' days', $courseitem['date_str']);
-		
-											if($currentday <= $enddate){
+											if($course['course_self_time'] == "Time Restricted"){
+												$showDuration = $paid_course['duration'] > 1 ? $paid_course['duration']. " Days" : $paid_course['duration']." Day";
+												$duration = $paid_course['duration'] - 1;
+												$enddate = strtotime('+'.$duration .' days', strtotime($paid_course['start_day']. " " . $paid_course['end_time']));
+												$currentdays = time();
+											}else{
+												$enddate = $paid_course['duration'] * 8 * 24 * 60;
+												$currentdays = $paid_course['session_time']?$paid_course['session_time']:0;
+											}
+											if($currentdays <= $enddate){
 											
 										?>
-                                            <option value="<?php echo $courseitem['id']; ?>" <?php $course_name==$courseitem['id']?print 'selected':print ''; ?>> <?php echo ucfirst($courseitem['title']); ?></option>
-                                        <?php } } } ?>
+                                            <option value="<?= $courseitem['id']; ?>" <?= $course_name==$courseitem['id']? 'selected': ''; ?>> <?= ucfirst($courseitem['title']); ?></option>
+                                        <?php } }  ?>
                                     </select>
 								</div><!--sortSet-->
 							</div><!--sortPanel-->
@@ -84,9 +87,9 @@
 														$imgName = end(explode('/', $courseimgpath));
 														if($imgName != '' && file_exists(getcwd().'/assets/uploads/company/course/'.$imgName)){								
 													?>
-														<img src="<?php echo base_url($courseimgpath); ?>" class="rounded img-fluid" alt="learnerlearner">
+														<img src="<?= base_url($courseimgpath); ?>" class="rounded img-fluid" alt="learnerlearner">
 													<?php }else{ ?>
-														<img src="<?php echo base_url().'assets/uploads/ilt-default.png'; ?>" class="rounded img-fluid" alt="learnerlearner">
+														<img src="<?= base_url().'assets/uploads/ilt-default.png'; ?>" class="rounded img-fluid" alt="learnerlearner">
 													<?php } ?>
 												</div><!--leftImgBox-->
 											</div><!--col-4-->
@@ -98,8 +101,8 @@
 														$enddate = strtotime('+'.$duration .' days', strtotime($free_course['start_day']. " " . $free_course['end_time']));
 													?>
 													
-													<?php echo ucfirst($free_course['title']);?>, <?php echo $showDuration; ?> <br />
-													<p>Duration: <?php echo $showDuration; ?> </p>
+													<?= ucfirst($free_course['title']);?>, <?= $showDuration; ?> <br />
+													<p>Duration: <?= $showDuration; ?> </p>
 													<p>Start Date: <?= date("M d, Y h:i:sa", strtotime($free_course['start_day'] . " " . $free_course['start_time']));?></p>                                       
 													<p>End Date: <?= date("M d, Y h:i:sa", $enddate);?></p>
 												</h5>
@@ -111,7 +114,7 @@
 													<?=$term["enrollnow"]?>
 												</a>
 												<?php }else { ?>
-													<a class="btnBlue" href="<?= base_url('company/'.$company['url'].'/training/view/'.$free_course['course_id'])?>" >
+													<a class="btnBlue" href="<?= base_url('company/'.$company['url'].'/training/view/'.$free_course['training_id'])?>" >
 														<?=$term["viewcourse"]?>
 													</a>
 												<?php } ?>
@@ -125,17 +128,18 @@
 								endforeach; ?>
 
 								<?php foreach($paid_course_list as $paid_course):
-									if($course['course_self_time'] == "Time Restricted"){
+									if($paid_course['course_self_time'] == "Time Restricted"){
 										$showDuration = $paid_course['duration'] > 1 ? $paid_course['duration']. " Days" : $paid_course['duration']." Day";
 										$duration = $paid_course['duration'] - 1;
 										$enddate = strtotime('+'.$duration .' days', strtotime($paid_course['start_day']. " " . $paid_course['end_time']));
 										$currentdays = time();
+
 									}else{
 										$enddate = $paid_course['duration'] * 8 * 24 * 60;
 										$currentdays = $paid_course['session_time']?$paid_course['session_time']:0;
 									}
-								
-									if($currentdays <= $enddateI){
+
+									if($currentdays <= $enddate){
 								?> 
 									<div class="whitePanel">
 										<div class="row">
@@ -146,9 +150,9 @@
 														$imgName = end(explode('/', $courseimgpath));
 														if($imgName != '' && file_exists(getcwd().'/assets/uploads/company/course/'.$imgName)){								
 													?>
-														<img src="<?php echo base_url($courseimgpath); ?>" class="rounded img-fluid" alt="learnerlearner">
+														<img src="<?= base_url($courseimgpath); ?>" class="rounded img-fluid" alt="learnerlearner">
 													<?php }else{ ?>
-														<img src="<?php echo base_url().'assets/uploads/ilt-default.png'; ?>" class="rounded img-fluid" alt="learnerlearner">
+														<img src="<?= base_url().'assets/uploads/ilt-default.png'; ?>" class="rounded img-fluid" alt="learnerlearner">
 													<?php } ?>
 												</div><!--leftImgBox-->
 											</div><!--col-4-->
@@ -159,8 +163,8 @@
 														$duration = $paid_course['duration'] - 1;
 														$enddate = strtotime('+'.$duration .' days', strtotime($paid_course['start_day']. " " . $paid_course['end_time']));
 													?>
-													<?php echo ucfirst($paid_course['title']);?>, <?php echo $showDuration; ?> <br />
-													<p>Duration: <?php echo $showDuration; ?> </p>
+													<?= ucfirst($paid_course['title']);?>, <?= $showDuration; ?> <br />
+													<p>Duration: <?= $showDuration; ?> </p>
 													<p>Start Date: <?= date("M d, Y h:i:sa", strtotime($paid_course['start_day'] . " " . $paid_course['start_time']));?></p>                                       
 													<p>End Date: <?= date("M d, Y h:i:sa", $enddate);?></p>
 													<p>USD: $ <?= $paid_course['pay_price']?></p>
@@ -177,7 +181,7 @@
 														<?=$term["enrollnow"]?>
 													</a>
 												<?php } else{?>
-													<a  class="btnBlue" href="<?= base_url('company/'.$company['url'].'/training/view/'.$paid_course['course_id'])?>"  >
+													<a  class="btnBlue" href="<?= base_url('company/'.$company['url'].'/training/view/'.$paid_course['training_id'])?>"  >
 														<?=$term["viewcourse"]?>
 													</a>
 												<?php }?>
@@ -189,7 +193,7 @@
 								endforeach; ?>
 							</div><!--col-12-->
 							<div class="col-sm-12 paginationBox">
-	                            <?php echo $links ?>
+	                            <?= $links ?>
 							</div><!--col-12-->
 						<?php }else{ ?>
 							<div class="col-sm-12">

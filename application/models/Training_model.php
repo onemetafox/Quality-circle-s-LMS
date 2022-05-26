@@ -200,7 +200,7 @@ class Training_model extends AbstractModel
 
     function getPaidCourses($filter){
         $user = $this->session->userdata();
-        $query = "SELECT b.id course_id, c.id course_time_id, a.id training_id, a.title, a.description, 
+        $query = "SELECT b.id course_id, c.id course_time_id, a.id training_id, a.title, a.description, b.course_self_time,
                         a.duration, c.date_str, c.start_day, c.start_time, c.end_time, d.id pay_id, f.id enroll_id, b.pay_price, b.course_self_time, g.session_time
                 FROM training_course a
                 LEFT JOIN course b ON a.course_id = b.id

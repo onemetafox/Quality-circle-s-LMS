@@ -132,8 +132,8 @@
 									} 
 								} ?>
 
-								<?php foreach($paid_course_list as $paid_course){		
-									if($course['course_self_time'] == "Time Restricted"){
+								<?php foreach($paid_course_list as $paid_course){	
+									if($paid_course['course_self_time'] == "Time Restricted"){
 										$showDuration = $paid_course['duration'] > 1 ? $paid_course['duration']. " Days" : $paid_course['duration']." Day";
 										$duration = $paid_course['duration'] - 1;
 										$enddate = strtotime('+'.$duration .' days', strtotime($paid_course['start_at']. " " . $paid_course['end_time']));
@@ -142,7 +142,7 @@
 										$enddate = $paid_course['duration'] * 8 * 24 * 60;
 										$currentdays = $paid_course['session_time']?$paid_course['session_time']:0;
 									}
-									
+
 									if($currentdays <= $enddate){ ?> 
 										<div class="whitePanel">
 											<div class="row">
