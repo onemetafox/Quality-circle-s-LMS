@@ -570,8 +570,8 @@
                                            <label class="col-sm-2 control-label text-sm-right pt-1" style="text-align: left !important;">Course Self Time</label>
                                            <div class="col-sm-7">
                                               <select name="course_self_time" class="form-control">
-                                                <option <?php if ($course_data['course_self_time'] == 'Self Pace'):?>selected<?php endif;?> value="Self Pace">Self Pace</option>
                                                 <option <?php if ($course_data['course_self_time'] == 'Time Restricted'):?>selected<?php endif;?> value="Time Restricted">Time Restricted</option>
+                                                <option <?php if ($course_data['course_self_time'] == 'Self Pace'):?>selected<?php endif;?> value="Self Pace">Self Pace</option>
                                               </select>
                                            </div>
                                         </div>
