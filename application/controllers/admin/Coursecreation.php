@@ -665,10 +665,10 @@ class Coursecreation extends BaseController{
     public function getCourse(){
         $filter = $this->input->post();
         if($filter['type'] == 0){
-            $subCourse = (array)$this->Training_model->select($filter["id"]);
+            $subCourse = (array)$this->Training_model->getCourseById($filter["id"]);
             $mainCourse = $this->Course_model->select($subCourse['course_id']);
         }else if($filter['type'] == 1){
-            $subCourse = (array)$this->Live_model->select($filter["id"]);
+            $subCourse = (array)$this->Live_model->getCourseById($filter["id"]);
             $mainCourse = $this->Course_model->select($subCourse['course_id']);
         }else{
             $mainCourse = $this->Course_model->select($filter["id"]);
