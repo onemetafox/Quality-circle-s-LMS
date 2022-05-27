@@ -116,7 +116,7 @@ class Training_model extends AbstractModel
             $this->db->where("UNIX_TIMESTAMP(CONCAT(a.start_day,' ',a.start_time))  <", time());
             $direction = 'desc';
         }
-        $this->db->order_by('a.`year`, a.`month`,a.`sday`', $direction);
+        $this->db->order_by('a.start_day', $direction);
         unset($filter['sort']);
         // unset($filter['category_id']);
         // unset($filter['standard_id']);
