@@ -311,7 +311,7 @@ class Training_model extends AbstractModel
         $this->db->select("a.*,training_course.title,training_course.id as training_course_id,training_course.description,training_course.duration,training_course.course_id,a.month mreg_date, a.sday dreg_date")->from("training_course_time a");
         $this->db->join("training_course", 'a.training_course_id = training_course.id', 'left');
         $this->db->where('training_course.id <> '. $id);
-        $this->db->where('training_course.category_id', $categroy);
+        $this->db->where('training_course.category', $categroy);
         $this->db->where("UNIX_TIMESTAMP(CONCAT(start_day,' ',start_time))  >", time());
         $this->db->order_by('a.start_day', 'asc');
         $this->db->limit('3');

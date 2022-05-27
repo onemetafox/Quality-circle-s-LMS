@@ -29,6 +29,7 @@ class Trainingcourse_model extends CI_Model
         // $this->db->where("training_course_time.start_day >", date('Y-m-d'));
         $this->db->where("UNIX_TIMESTAMP(CONCAT(training_course_time.start_day,' ',training_course_time.start_time))  >", time());
         $this->db->limit('3');
+        $this->db->order_by('training_course_time.start_day', 'asc');
         $result = $this->db->get("course")->result_array();
      
 		foreach($result as $key => $val) {

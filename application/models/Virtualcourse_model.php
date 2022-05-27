@@ -217,6 +217,7 @@ class Virtualcourse_model extends AbstractModel
         // $this->db->where("virtual_course_time.start_at >= '". date('Y-m-d') . "'" );
         $this->db->where("UNIX_TIMESTAMP(CONCAT(virtual_course_time.start_at,' ',virtual_course_time.start_time))  >", time());
         $this->db->limit('3');
+        $this->db->order_by('virtual_course_time.start_at', 'asc');
         $result = $this->db->get("course")->result_array();
         /*if(count($result)>$count){
             array_splice($result,$count,count($result));
