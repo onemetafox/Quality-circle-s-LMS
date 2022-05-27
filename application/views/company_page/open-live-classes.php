@@ -105,6 +105,7 @@
 											<a href="#"><?php echo $course->first_instructor['email']?></a>
                                             
                                             <li><?php echo $course->course_self_time; ?>, Publish date: <?php echo date("M d, Y", strtotime($course->reg_date));?></li>
+											<li> Type: <?= $course->pay_type == 0 ?'Close Enrollment Course': 'Open Enrollment Course'?></li>
                                             <?php
 												$showDuration = $course->duration > 1 ? $course->duration. " Days" : $course->duration." Day";												
 												$duration = $course->duration - 1;
