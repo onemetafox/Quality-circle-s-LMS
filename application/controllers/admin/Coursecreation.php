@@ -705,6 +705,10 @@ class Coursecreation extends BaseController{
             $course_time['start_time'] = $startTime;
             $course_time['date_str'] = strtotime($data['start_day'].' '.$data['start_time']);		
             $course_time['end_time'] = $endTime;
+            $dates = explode("-", $this->input->post('startdays'));
+            $course_time['year'] = $dates[0];
+			$course_time['month'] = $dates[1];
+			$course_time['sday'] = $dates[2];
 			$course_time['reg_date'] = date("Y-m-d H:s:i");
 
             unset($course_time['id']);
@@ -1145,10 +1149,11 @@ class Coursecreation extends BaseController{
             $course_time['start_day'] = $iltCourse['startday'];
 			$course_time['start_time'] = $iltCourse['starttime'];
             $course_time['end_time'] = getEndTime($iltCourse['starttime']);
+            $dates = explode("-", $iltCourse['startday']);
 			// $course_time['date_str'] = strtotime($course_time['start_day'].' '.$course_time['start_time']);
-			$course_time['year'] = date('Y',$timestamp);
-			$course_time['month'] = date('m',$timestamp);
-			$course_time['sday'] = date('d',$timestamp);
+			$course_time['year'] = $dates[0];
+			$course_time['month'] = $dates[1];
+			$course_time['sday'] = $dates[2];
 			$course_time['location'] = $course_data['location'];
 		
             $this->Training_model->insert_time($course_time);
