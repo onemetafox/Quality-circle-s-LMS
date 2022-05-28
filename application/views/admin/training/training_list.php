@@ -116,34 +116,6 @@
                                     <input type="text" id="subtitle" name="subtitle" class="form-control" required>
                                  </div>
                               </div>
-                              <?php /*?>
-                              <div class="form-group row">
-                                 <label class="col-lg-3 control-label text-lg-right pt-2"><?=$term["startday"]?></label>
-                                 <div class="col-lg-9">
-                                    <div class="input-group">
-                                       <span class="input-group-prepend">
-                                       <span class="input-group-text">
-                                       <i class="fas fa-calendar-alt"></i>
-                                       </span>
-                                       </span>
-                                       <input type="text" data-plugin-datepicker="" value="" class="form-control" id="startday" name="startday" data-date-format="yyyy-mm-dd">
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="form-group row">
-                                 <label class="col-lg-3 control-label text-lg-right pt-2">End Day</label>
-                                 <div class="col-lg-9">
-                                    <div class="input-group">
-                                       <span class="input-group-prepend">
-                                       <span class="input-group-text">
-                                       <i class="fas fa-calendar-alt"></i>
-                                       </span>
-                                       </span>
-                                       <input type="text" data-plugin-datepicker="" value="" class="form-control" id="endday" name="endday" data-date-format="yyyy-mm-dd">
-                                    </div>
-                                 </div>
-                              </div>
-                              <?php */?>                             
                               <input type="hidden" name="course_type" id="course_type"/>
                               <div class="form-group row div-location" style="display:none;">
                                  <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["location"]?></label>

@@ -270,7 +270,7 @@ class Live extends BaseController {
         }
     }
     
-    public function showLive($course_id = NULL){
+    public function showLive($d = 0){
         $this->load->library('Sidebar');
         $side_params = array('selected_menu_id' => '7');
         $this->global["sidebar"] = $this->sidebar->generate($side_params, $this->role);
@@ -303,8 +303,18 @@ class Live extends BaseController {
             $training_data['course_list'] = $res_course_list;
             $training_data['training_list'] = $time_list;
 			$training_data['all_course_list'] = $res_all_course_list;
+            $dis_month = $_SESSION['dis_month'];
+            if(intval($d) > 0){
+                $dis_month = $dis_month + 1;
+            }
+            if(intval($d) < 0){
+                $dis_month = $dis_month - 1;
+            }
+            $this->session->set_userdata('dis_month', $dis_month);
+            $training_data['dis_month'] = $dis_month;
             //$training_data['category'] = $this->Category_model->getListByCompanyID($this->session->get_userdata()['company_id']);
             $training_data['category'] = $this->Course_model->getAll(array('create_id' => $this->session->get_userdata() ['company_id'], 'course_type' => 1, 'active' => 1));
+
             $this->loadViews("admin/live/live_list", $this->global, $training_data, NULL);
         }else{
             $this->loadViews("access", $this->global, NULL , NULL);   

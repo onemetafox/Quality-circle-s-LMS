@@ -111,9 +111,13 @@
                                    </div>
                                </div>
                             </div>
+                            <div class="col-md-6 text-right">
+                                <a id="preview" class="btn btn-primary" href="<?=base_url()?>admin/live/showLive/-1"><<</a>
+                                <a id="next" class="btn btn-primary" href="<?=base_url()?>admin/live/showLive/1">>></a>
+                            </div>
                         </div>
                     </footer>
-
+                    <input type="hidden" name="dis_month" id="dis_month" value="<?=$dis_month?>">
                     <table class="table table-responsive-md  mb-0 table-bordered">
                         <tr>
                             <th rowspan="2" colspan="2" width="20%" class="center">Name of Course</th>
@@ -122,7 +126,7 @@
                         </tr>
                         <tr>
                             <?php
-                            $current_month = intval(date("m"));
+                            $current_month = intval(date("m"))+$dis_month;
                             $current_year = intval(date("Y"));
                             for ($i=0;$i<8;$i++){
                                 switch ($current_month){
@@ -184,7 +188,7 @@
                                 </td>
                                 <td><?=$rows['duration']?></td>
                         <?php
-                                $current_month = intval(date("m"));
+                                $current_month = intval(date("m")) +$dis_month;
                                 $current_year = intval(date("Y"));
                                 if ($current_month < 1){
                                     $current_month = 12;
