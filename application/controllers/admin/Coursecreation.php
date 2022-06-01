@@ -1179,18 +1179,18 @@ class Coursecreation extends BaseController{
 			$course_data['agenda'] = $liveCourse['agenda'];
 			$course_data['course_pre_requisite'] = $liveCourse['prerequisite'];
 			$course_data['user_type'] = 0;
-			$course_data['pay_type'] = 0;
+			// $course_data['pay_type'] = 0;
 			$course_data['record_type'] = 0;
-			$course_data['pay_price'] = 0;
+			// $course_data['pay_price'] = 0;
 			$course_data['number'] = $liveCourse['number'];
 			$course_data['course_type'] = $liveCourse['course_type'];
 			$course_data['course_id'] = $liveCourse['id'];
 			$course_data['category_id'] = $liveCourse['category_id'];
 			$course_data['standard_id'] = '['.json_encode($liveCourse['standard_id']).']';
 			$course_data['url'] = '';
-			if($course_data['pay_price'] == null){
-				$course_data['pay_price'] = 0;
-			}
+			// if($course_data['pay_price'] == null){
+			// 	$course_data['pay_price'] = 0;
+			// }
 			$course_data['create_id'] = $this->session->get_userdata()['company_id'];
 			$course_data['img_path'] = str_replace("./", "", "assets/img/" . 'default.png');
 			if($liveCourse['img_path'] != ''){
