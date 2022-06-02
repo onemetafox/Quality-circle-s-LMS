@@ -172,7 +172,12 @@ class Live extends BaseController {
 		if($this->Live_model->isBooking($course_time_id, $this->session->get_userdata()['user_id']) > 0){
             return false;
         }	
-        $id = $this->Live_model->insertTrainingUser($data);
+		$course_user = array(
+			'course_id'=> $course_id,
+			'virtual_course_time_id' => $course_time_id,
+			'user_id'  => $data['user_id']
+		);
+        $id = $this->Live_model->insertTrainingUser($course_user);
         echo $id;
         exit;
         //return $this->Training_model->insertTrainingUser($data);
