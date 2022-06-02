@@ -125,14 +125,14 @@ class Live extends BaseController {
         $data['virtual_course_time_id'] = $course_time_id;
         $data['user_id'] = $this->session->get_userdata() ['user_id'];
         
-		$course = $this->Course_model->select($course_id);
+		$course = (array)$this->Course_model->select($course_id);
 		$enrolledUsersCount = $this->Enrollments_model->getEnrolledList($this->session->get_userdata()['user_id'],$course_id,$course_time_id);		
 		if($enrolledUsersCount == 0){
 			$enrolled_data = array(
 				'user_id' => $this->session->get_userdata()['user_id'],
 				'course_id' => $course_id,			
 				'course_time_id' => $course_time_id,					
-				'course_title' => $course->title,
+				'course_title' => $course['title'],
 				'user_name' => $this->session->get_userdata()['user_name'],
 				'user_email' => $this->session->get_userdata()['email'],
 				'create_date' => date("Y-m-d H:i:s"),					

@@ -400,22 +400,7 @@ class Demand  extends BaseController
 			
             $course = $this->Course_model->select($id);
             $params['course_self_time'] = $course->course_self_time;
-            $pay_data = array(
-                'user_id' => $this->session->get_userdata()['user_id'],
-                'amount' => $course->pay_price,
-                'pay_date' => date("Y-m-d H:i:s"),
-                'company_id' => $this->session->get_userdata()['company_id'],
-                'object_type' => 'course',
-                'object_id' => $id
-            );
-
-            $this->Course_model->insertPayData($pay_data);
-
-            /*-------------------------------------------------------*/
-
-
-            /*-------------------------------------------------------*/
-
+           
             $params["term"] = $this->term;
             $params['company'] = $this->company;
             $params['libraries'] = $this->Course_model->getLibrary($id);
@@ -453,19 +438,6 @@ class Demand  extends BaseController
 				$timesids = $_REQUEST['time_id'];
 			}
 			
-			$enrolledUsersCount = $this->Enrollments_model->getEnrolledList($this->session->get_userdata()['user_id'],$id,$timesids);		
-			if($enrolledUsersCount == 0){
-				$enrolled_data = array(
-					'user_id' => $this->session->get_userdata()['user_id'],
-					'course_id' => $id,
-					'course_time_id' => $timesids,
-					'course_title' => $course->title,
-					'user_name' => $this->session->get_userdata()['user_name'],
-					'user_email' => $this->session->get_userdata()['email'],
-					'create_date' => date("Y-m-d H:i:s"),					
-				);	
-				$this->Enrollments_model->insertEnrolledUser($enrolled_data);
-			}
             $this->loadViews_front('company_page/details-courses', $params);
         }
         else{
@@ -475,17 +447,6 @@ class Demand  extends BaseController
             $params['company'] = $this->company;
             $params['libraries'] = $this->Course_model->getLibrary($id);
 
-/*          //log history of course
-            $last_history = $this->Course_model->getLastHistoryByUserID($id, $this->session->get_userdata()['user_id']);
-            if (count($last_history) == 0) {
-                $last_history = $this->Course_model->getFirstChapter($id)[0];
-                $params['last_history_ch_id'] = $last_history['id'];
-            } else {
-                $ch_id = $last_history[0]['chapter_id'];
-                $params['last_history_ch_id'] = $ch_id;
-            }*/
-            
-            //No log history of course
             $last_history = $this->Course_model->getFirstChapter($id)[0];
             $params['last_history_ch_id'] = $last_history['id'];
 
@@ -499,20 +460,6 @@ class Demand  extends BaseController
             $this->session->set_userdata(array('using_course_id' => $id));
             $params['course_name'] = $course->title;
 			
-			$enrolledUsersCount = $this->Enrollments_model->getEnrolledList($this->session->get_userdata()['user_id'],$id,0);		
-			if($enrolledUsersCount == 0){
-				$enrolled_data = array(
-					'user_id' => $this->session->get_userdata()['user_id'],
-					'course_id' => $id,					
-					'course_title' => $course->title,
-					'course_time_id' => 0,
-					'user_name' => $this->session->get_userdata()['user_name'],
-					'user_email' => $this->session->get_userdata()['email'],
-					'create_date' => date("Y-m-d H:i:s"),					
-				);	
-				$this->Enrollments_model->insertEnrolledUser($enrolled_data);
-			}
-           
             $this->loadViews_front('company_page/details-courses', $params);
         }
     }

@@ -77,10 +77,6 @@
 											$enddate = $free_course['duration'] * 8 * 24 * 60;
 											$currentdays = $free_course['session_time']?$free_course['session_time']:0;
 										}
-										// $startDateI = $free_course['date_str'];
-
-										// $durationI = $free_course['duration'] - 1;
-										// $enddateI = strtotime('+'.$duration .' days', $startDateI);
 										if($currentdays <= $enddate){  ?> 								
 										<div class="whitePanel">
 											<div class="row">
@@ -320,64 +316,7 @@
             }
         });
     }
-	function pay_now(course_id,training_id, course_time_id, price) {
-        swal({
-			title: "You have to pay $"+price+" to take part in this course",
-			buttons: true
-		}).then((willDelete) => {
-			if (willDelete) {
-			$.ajax({
-				url: "<?php echo base_url() ?>learner/live/pay_course",
-				type: 'POST',
-				data: {'course_id':training_id,'time_id':course_time_id,'vilt_course_id':course_id},
-				dataType : 'json',
-				success: function(data){
-					if(data == 'success') {
-						swal({
-							title: "You have successfully enroll this course. Please wait until course is started!",
-						});
-						setTimeout(function(){ location.reload(); }, 10000);
-					}else{
-						swal({
-							title: " Error!",
-						});
-					}
-								
-				}
-			});
-			} else {
-			// return;
-			}
-		});
-    }
-	function enroll(id,pay_type,time_id){
-		if(!isLogin){
-			showLogin();
-		}else{
-			if(pay_type == 0){
-				window.location = '<?=base_url()?>learner/demand/detail_course/' + id+'/'+time_id;
-			}else if(pay_type == 1){
-				swal({
-				  title: "Are you sure?",
-				  buttons: true
-				}).then((willDelete) => {
-				  if(willDelete) {
-					window.location = "<?=base_url()?>learner/demand/pay_course/"+ id+'/'+time_id;
-				  }else{
-				    return;
-				  }
-				});
-			}
-		}
-	}
 	
-	function view_course(id,time_id){
-        if(!isLogin){
-            showLogin();
-        }else{
-            window.location = '<?=base_url()?>learner/demand/detail_course/' + id+'/'+time_id;
-        }
-    }
 	$("#course_id").on('change',(function () {
         window.location = $('#base_url').val()+ 'learner/live?course='+$("#course_id").val();
     }));
