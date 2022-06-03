@@ -450,7 +450,7 @@ class Pricing  extends BaseController
                 $content1 = str_replace("{PAYMENT_TYPE}", "Paypal", $content1);
                 
                 // print_r($content);
-                // $this->sendemail($item['email'],$item['fullname'],$content,$title);
+                // $this->sendemail($item['email'],$item['fullname'],$content1,$title);
             }
         }else{
             
@@ -458,7 +458,12 @@ class Pricing  extends BaseController
         if ( !empty( $_GET['paymentId'] ) && !empty( $_GET['PayerID'] ) ) {
             // $this->paypal->execute_payment( $_GET['paymentId'], $_GET['PayerID'] );
             $insert = $this->Payment_model->save($data);
-            
+            switch($data['object_type']){
+                case 'plan': $data['redirect'] = base_url('company/'.$this->company['url']); break;
+                case 'live': $data['redirect'] = base_url('learner/live'); break;
+                case 'training': $data['redirect'] = base_url('learner/training'); break;
+                case 'course': $data['redirect'] = base_ur('learner/demand'); break;
+            }
             $this->loadViews_front('payment_success', $data);
         }
     }

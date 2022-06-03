@@ -40,7 +40,7 @@
                     <div class="circlNum rightNum activeTime">02</div>
                 </div>
                 <div class="wrapNext">
-                    <a href="<?= base_url()?>" class="nextBTN outlineBTN">Back</a>
+                    <a href="<?= $redirect?>" class="nextBTN outlineBTN">Back</a>
                 </div>
             </div>
             <div class="col-lg-2 col-xs-12 col-sm-2"></div>
