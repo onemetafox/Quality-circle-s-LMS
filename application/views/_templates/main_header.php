@@ -408,7 +408,6 @@
                 success : function(res) {
                     if(res.type == 1){
                         if(res.msg){
-                            console.log(url);
                             if(url== ""){
                                 location.reload();
                             }else{

@@ -269,7 +269,7 @@
                <br>
                <br>
                <?php if(!$this->session->userdata ('isLoggedIn')) {?>
-                  <a href="javascript:showLogin()" class="btnBlue">Register Now</a>
+                  <a href="javascript:showAcademyLogin('')" class="btnBlue">Register Now</a>
                <?php }else if($this->session->userdata('user_type') == 'Instructor' || $this->session->userdata('user_type') == 'Admin'){ ?>
                   <a href="javascript:viewcourse(<?php echo $course->course_id ?>)" class="btnBlue">View Course</a>
                <?php }else{ switch ($status) {
