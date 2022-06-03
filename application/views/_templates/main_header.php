@@ -493,7 +493,7 @@
     function showAcademyLogin(path){
         url = path;
         $('.signin-tab').addClass('active');
-        $("#title").text("Thanks for choosing Quality Circle’s Learning Academy. Please signup if you are not registered to the academy or sign-in to your profile to register for the training.");
+        $("#title").text("Thank you for choosing Quality Circle’s Learning Academy. Please signup if you are not a registered member of the academy,  then sign-in and register for the course. If you are a registered member please sign-in to register for the course.");
         $("#flag").val("0");
         $('.signout-tab').removeClass('active');
         $('#company_signin').addClass('active in');

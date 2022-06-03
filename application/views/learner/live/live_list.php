@@ -114,10 +114,14 @@
 													<a class="btnBlue" href="javascript:enroll(<?=$free_course['course_id']?>,<?=$free_course['course_time_id']?>)" >
 														<?=$term["enrollnow"]?>
 													</a>
+													<a class="btnBlue" href="<?= base_url('company/'.$company['url'].'/classes/view/'.$free_course['course_time_id'])?>" >
+														<?=$term["viewdetails"]?>
+													</a>
+												<?php } else{ ?>
+													<a class="btnBlue" href="<?=base_url('company/'.$company['url'].'/demand/detail/'.$free_course['course_id'])?>" >
+														<?=$term["viewcourse"] ?>
+													</a>
 												<?php } ?>
-												<a class="btnBlue" href="<?= base_url('company/'.$company['url'].'/classes/view/'.$free_course['course_time_id'])?>" >
-													<?=$term["viewcourse"]?>
-												</a>
 												<!-- <a href="<?=base_url()?>learner/live/viewclass/<?=$free_course['training_id']?>" class="btnBlue">Course Details</a> -->
 											</div><!--col-8-->
 										</div><!--row-->
@@ -177,14 +181,21 @@
 														<a class="btnBlue" href="<?=base_url()?>pricing/payment/<?=$paid_course['course_id']?>/course" >
 															Pay Now
 														</a>
+														<a class="btnBlue" href="<?= base_url('company/'.$company['url'].'/classes/view/'.$paid_course['course_time_id'])?>" >
+															<?=$term["viewdetails"]?>
+														</a>
 													<?php }else if(!$paid_course['enroll_id']){ ?>
 														<a class="btnBlue" href="javascript:enroll(<?=$paid_course['course_id']?>,<?=$paid_course['course_time_id']?>)" >
 															<?=$term["enrollnow"]?>
 														</a>
-													<?php }?>
-													<a class="btnBlue" href="<?= base_url('company/'.$company['url'].'/classes/view/'.$paid_course['course_time_id'])?>" >
-														<?=$term["viewcourse"]?>
+														<a class="btnBlue" href="<?= base_url('company/'.$company['url'].'/classes/view/'.$paid_course['course_time_id'])?>" >
+															<?=$term["viewdetails"]?>
+														</a>
+													<?php } else {?>
+														<a class="btnBlue" href="<?=base_url('company/'.$company['url'].'/demand/detail/'.$paid_course['course_id'])?>" >
+														<?=$term["viewcourse"] ?>
 													</a>
+													<?php } ?>
 													<!-- <a href="<?=base_url()?>learner/live/viewclass/<?=$paid_course['training_id']?>" class="btnBlue">Course Details</a> -->
 												</div><!--col-8-->
 											</div><!--row-->
