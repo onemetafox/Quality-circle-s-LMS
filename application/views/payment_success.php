@@ -34,7 +34,7 @@
         <div class="row">
             <div class="col-lg-2 col-xs-12 col-sm-2"></div>
             <div class="col-lg-12 col-xs-12 col-sm-12">
-                <h3 class="selectPlanTitles">Success Payment</h3>
+                <h3 class="selectPlanTitles">Thanks your payment was successful.</h3>
                 <div class="timelineSelectPlan">
                     <div class="circlNum leftNum ">01</div>
                     <div class="circlNum rightNum activeTime">02</div>

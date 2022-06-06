@@ -102,6 +102,7 @@ class Pricing  extends BaseController
             $data['tax_amount'] = $data['sub_total'] * ($data['tax'])/100;
             $data['total'] = $data['sub_total'] * (100 + $data['tax'])/100;
             $data['tax_type'] = "%";
+            $data['object_type'] = 'plan';
            
         }else if($type == 'course'){
             $this->load->model('Course_model');
@@ -122,6 +123,13 @@ class Pricing  extends BaseController
                 $data['tax_type'] = "$";
                 $data['tax_amount'] = $data['sub_total'] + $data['tax'];
             }
+            if($course->course_type == 0){
+                $data['object_type'] =  'training';
+            }else if($course->course_type == 1){
+                $data['object_type'] =  'live';
+            }else{
+                $data['object_type'] =  'course';
+            }
             
             $data['total'] = $course->amount;
         }else{
@@ -133,7 +141,12 @@ class Pricing  extends BaseController
         }else if($user['user_type'] == "Learner"){
             $data['stripe_client_id'] = $this->Company_model->getRow($user['company_id'])->stripe_client_id;
         }
-       
+        switch($data['object_type']){
+            case 'plan': $data['redirect'] = base_url('company/'.$this->company['url']); break;
+            case 'live': $data['redirect'] = base_url('learner/live'); break;
+            case 'training': $data['redirect'] = base_url('learner/training'); break;
+            case 'course': $data['redirect'] = base_ur('learner/demand'); break;
+        }
         $data['type'] = $type;
         $data['id'] = $id;
         $this->loadViews_front('payment', $data);
@@ -299,7 +312,7 @@ class Pricing  extends BaseController
                     $content = str_replace("{PAYMENT_TYPE}", "Paypal", $content);
                     
                     // print_r($content);
-                    // $this->sendemail($item['email'],$item['fullname'],$content,$title);
+                    $this->sendemail($item['email'],$item['fullname'],$content,$title);
                 }
                 foreach($instructor as $item){
                     $content1 = str_replace("{USERNAME}", $fullname, $message);
@@ -310,7 +323,7 @@ class Pricing  extends BaseController
                     $content1 = str_replace("{PAYMENT_TYPE}", "Paypal", $content1);
                     
                     // print_r($content);
-                    // $this->sendemail($item['email'],$item['fullname'],$content,$title);
+                    $this->sendemail($item['email'],$item['fullname'],$content,$title);
                 }
             }else{
                 
@@ -439,7 +452,7 @@ class Pricing  extends BaseController
                 $content = str_replace("{PAYMENT_TYPE}", "Paypal", $content);
                 
                 // print_r($content);
-                // $this->sendemail($item['email'],$item['fullname'],$content,$title);
+                $this->sendemail($item['email'],$item['fullname'],$content,$title);
             }
             foreach($instructor as $item){
                 $content1 = str_replace("{USERNAME}", $fullname, $message);
@@ -450,7 +463,7 @@ class Pricing  extends BaseController
                 $content1 = str_replace("{PAYMENT_TYPE}", "Paypal", $content1);
                 
                 // print_r($content);
-                // $this->sendemail($item['email'],$item['fullname'],$content1,$title);
+                $this->sendemail($item['email'],$item['fullname'],$content1,$title);
             }
         }else{
             

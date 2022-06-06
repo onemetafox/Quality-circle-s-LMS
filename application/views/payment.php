@@ -307,7 +307,7 @@
                     </div>
                 </div>
                 <div class="wrapNext">
-                    <a href="<?= base_url()?>" class="nextBTN outlineBTN">Back</a>
+                    <a href="<?= $redirect?>" class="nextBTN outlineBTN">Back</a>
                     <a href="javascript:pay()" class="nextBTN">Payment</a>
                 </div>
             </div>
