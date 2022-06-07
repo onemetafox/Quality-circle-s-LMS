@@ -1684,7 +1684,7 @@
                type: 'success'
            });
            $.magnificPopup.close();
-        //    viewList();
+           viewList();
        },
        error: function(){
            $("#sendBtn").trigger('loading-overlay:hide');
