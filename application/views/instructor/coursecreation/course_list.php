@@ -34,8 +34,7 @@
 </style>
 <section role="main" class="content-body">
 	<header class="page-header">
-		<h2><?=$term["course"]?></h2>
-	
+		<h2><?=$term["course"]?></h2>	
 		<div class="right-wrapper">
 			<ol class="breadcrumbs">
 				<li>
@@ -44,10 +43,8 @@
 					</a>
 				</li>
 			</ol>
-
 		</div>
 	</header>
-
 	<!-- start: page -->
 	<div class="row">
 		<div class="col-lg-12">
@@ -77,6 +74,21 @@
 							</div>
 						</div>
 						<div class="col-xs-12 col-sm-7 col-md-8 col-lg-9">
+                        	<div class="row">                            
+								<div class="col-sm-4">
+                                    <select data-plugin-selectTwo class="form-control" id="courses_filter" name="courses_filter">
+                                        <option value="" >Select Course</option>
+                                        <?php foreach($course_data_all as $coursefilter){ ?>
+                                        <?php if($coursefilter['title'] != ''){ ?>
+											<option value="<?php echo $coursefilter['id']; ?>" <?php $id==$coursefilter['id']?print 'selected':print ''; ?>> <?php echo $coursefilter['title']; ?></option>
+										<?php } } ?>  
+                                    </select>
+                               </div>
+                               <div class="col-sm-6">
+                                    <a id="filter" class="btn btn-default">Search</a>
+                                    <a href="<?=base_url()?>instructor/coursecreation/getList" class="btn btn-default">Reset</a>
+                               </div>
+                            </div>
 							<div class="row">
 								<div class="col-sm-4">
 									<div class="filter_div">
@@ -139,7 +151,7 @@
 														}else if ($item['course_type'] == 1){
 															echo "VILT";
 														}else{
-															echo "Demand";
+															echo "On Demand";
 														}?>
 													</h6>
                                                     <h6>
@@ -166,7 +178,7 @@
 									if ($this->pagination->cur_page > 1) {
 										$start = ($this->pagination->cur_page-1) * $this->pagination->per_page+1;
 										$end = $start + count($course_data)-1;
-									} else if (count($course_data) > 0) {
+									}else if(count($course_data) > 0) {
 										$start = 1;
 										$end = count($course_data);
 									}
@@ -191,7 +203,6 @@
 		    <section class="card">
 		        <header class="card-header">
 		            <h2 class="card-title"><?=$term["inviteuser"]?></h2>
-
 		        </header>
 		        <div class="card-body">
 		            <div class="form-group row">
@@ -213,9 +224,10 @@
 		    </section>
 		</form>
 	</div>
-	<div id="add_modal" class="modal-block modal-block-primary mfp-hide">
+	
+    <div id="add_modal" class="modal-block modal-block-primary mfp-hide">
 		<form id="add_modal_form" action="" method="POST" novalidate="novalidate">
-		    <input type="hidden" id="add_course_id" name="course_id" class="form-control" >
+		    <input type="hidden" id="add_course_id" name="course_id" class="form-control" >            
 		    <input type="hidden" id="add_course_type" name="course_type" value="0" class="form-control" >
 		    <section class="card">
 		        <header class="card-header">
@@ -253,7 +265,6 @@
 		    </section>
 		</form>
 	</div>
-    
     <a class="edit_invite_modal" data-toggle="modal" data-target="#edit_modal_invite" hidden></a>    
     <div id="edit_modal_invite" class="modal fade">
 	    <div class="modal-dialog">
@@ -353,13 +364,16 @@
 
 	$("#course_type").on('change',(function () {
 	    if($("#course_type").val() == "-1"){
-            window.location = '<?=base_url()?>instructor/coursecreation/getList' ;
-
+            window.location = '<?=base_url()?>instructor/coursecreation/getList';
         }
         else {
             window.location = '<?=base_url()?>instructor/coursecreation/getList?course_type=' + $("#course_type").val();
         }
 	}));
+	
+	$("#filter").on('click',(function () {
+        window.location = '<?=base_url()?>instructor/coursecreation/getList?course=' + $("#courses_filter").val();
+    }));
 
 	function delete_course(id) {
 		(new PNotify({
@@ -402,7 +416,6 @@
 		});
 		*/
 	}
-
     $('.invite_modal').magnificPopup({
         type: 'inline',
         preloader: false,
@@ -447,10 +460,9 @@
 	        {"title": "<?=$term["email"]?>", "data": "email", "class": "text-left", "width": 100},
 	        {"title": "<?=$term["action"]?>", "data": "", "class": "text-left", "width": 200,
 	                mRender: function (data, type, row) {
-
-                        return '<a class="btn btn-default" href="javascript:resend_inviteuser(this,'+row.id+','+row.course_type+',\''+row.first_name +'\',\''+row.last_name +'\',\''+row.email +'\')" style="color:#333;margin-right:5px!important"><?=$term["resend"]?> </a>'+
-							'<a class="btn btn-default" href="javascript:edit_inviteuser(this,'+row.id+',\''+row.first_name +'\',\''+row.last_name +'\',\''+row.email +'\');" style="color:#333;margin-right:5px!important"><?=$term["edit"]?> </a>'+
-                            '<a class="btn btn-default" href="javascript:delete_inviteuser('+row.id+')" style="color:#333"><?=$term["delete"]?> </a>';
+						     return '<a class="btn btn-default" href="javascript:resend_inviteuser(this,'+row.id+','+row.course_type+',\''+row.first_name +'\',\''+row.last_name +'\',\''+row.email +'\')" style="color:#333;margin-right:5px!important"><?=$term["resend"]?> </a>'+
+							 '<a class="btn btn-default" href="javascript:edit_inviteuser(this,'+row.id+',\''+row.first_name +'\',\''+row.last_name +'\',\''+row.email +'\');" style="color:#333;margin-right:5px!important"><?=$term["edit"]?> </a>'+
+							'<a class="btn btn-default" href="javascript:delete_inviteuser('+row.id+')" style="color:#333"><?=$term["delete"]?> </a>';
 	                }
 	    	}
 	    ],
@@ -480,9 +492,9 @@
 		};
 		inviteuser_table.DataTable().ajax.reload();
 		$('.invite_modal').click();
-	}
+	} 
 	
-	function validateEmail(sEmail){
+	function validateEmail(sEmail) {
 		var EmailRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   		return EmailRegex.test(sEmail);
 	}
@@ -513,12 +525,8 @@
                     });
 					setTimeout(function(){ $('.modal-change-dismiss').click(); },2000);
                 },
-                error: function(){
-					new PNotify({
-						title: 'Error',
-						text: 'Something Went Wrong.',
-						type: 'danger'
-					});
+                error: function () {
+
                 }
             });
         }
@@ -570,11 +578,12 @@
 		$('.edit_invite_modal').click();
 		
 	}
+	
 
     function resend_inviteuser(obj, id, course_type, firstname, lastname, email){
         $(obj).attr("disabled",1);
         $.ajax({
-            url: '<?=base_url()?>instructor/inviteuser/createInviteuser/demand',
+            url: '<?=base_url()?>instructor/inviteuser/createInviteuser/demand/1',
             type: 'POST',
             data: {
                 id:id,

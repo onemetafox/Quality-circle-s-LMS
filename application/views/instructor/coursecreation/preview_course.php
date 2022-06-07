@@ -33,7 +33,7 @@
 </style>
 <script type="text/javascript">
 var first_id = "";
-var first_id_checked = "";
+first_id_checked = "";
 </script>
 <section role="main" class="content-body">
 	<header class="page-header">
@@ -56,7 +56,7 @@ var first_id_checked = "";
 			<section class="card" style="width: 85%;">
 				<header class="card-header">
 					<div class="card-actions">
-						<?php echo form_open('instructor/coursecreation/edit_course/'.$course_id, array("id"=>"frm_preview")); ?>
+						<?php echo form_open('instructor/demand/edit_course/'.$course_id, array("id"=>"frm_preview")); ?>
 							<input type="hidden" name="tab_active_id" value="2">
 							<button type="submit" class="btn btn-default" ><?=$term["done"]?> </button>
 						</form>
@@ -77,7 +77,6 @@ var first_id_checked = "";
 
 										<h3 class="titleH3 _mt-0" style="border-bottom: 1px solid #D6D6D6;"><i class="fa fa-book"></i> <?php echo $course_name;?>
 										</h3>
-
 										<?php $first_chapter = 0;
 										foreach($libraries as $chapter):?>
 											<?php if($chapter->parent == 0 && $chapter->exam_id == 0):
@@ -86,13 +85,12 @@ var first_id_checked = "";
                                                 <?php if($chapter->status == 1){ ?>
 													<input <?php if($chapter->status != 1){ ?> disabled="disabled" <?php } ?> onclick="changeSelect(this,<?php echo $chapter->id?>, <?php echo $chapter->exam_id?>)" id="library<?php echo $chapter->id?>" type="radio" name="radio" value="<?php echo $chapter->file_path?>">
 													<span class="checkmark"></span>
-                                                 <?php } ?>
+                                                <?php } ?>
 												</label>
 												
-												<?php if($first_chapter==1) {?>
+												<?php if($first_chapter==1) { ?>
 												<script type="text/javascript">
-												first_id = "<?php echo $chapter->id?>";
-												//alert(first_id);
+												first_id = "<?php echo $chapter->id ?>";
 												</script>
 												<?php }?>
                                                 <?php if($chapter->status==1){ ?>
@@ -134,6 +132,7 @@ var first_id_checked = "";
 											<div class="book_container">
 												<input type="hidden" name="book_path" id="book_path" value="">
                                                 <div class="col-sm-12" id="div_container">
+
 											</div><!--book_container-->
 										</div><!--whitePanel-->
 									</div><!--col-12-->
@@ -144,7 +143,8 @@ var first_id_checked = "";
 				</div>
 			</section>
 		</div>
-	</div>	
+	</div>
+	
 	<!-- end: page -->
 </section>
 <div id="library_modal" class="modal fade">
@@ -167,7 +167,7 @@ var first_id_checked = "";
 		</div>
 	</div>
 </div>
-<form id="form_library_insert" action="<?=base_url()?>instructor/coursecreation/insert_library" method="post">
+<form id="form_library_insert" action="<?=base_url()?>instructor/demand/insert_library" method="post">
 	<input type="hidden" id="course_id" name="course_id" value="<?php (isset($course_id)) ? print $course_id:print '0';?>">
 	<input type="hidden" id="chapter_id" name="chapter_id" value="0">
 	<input type="hidden" id="library_id" name="library_id" value="0">
@@ -257,26 +257,25 @@ var first_id_checked = "";
 	$(function(){
 		if ($("#book_path").val().indexOf(".pdf") > 0){
 			var bookOptions = {
-				height   : 500
-				,width    : 800
-				,maxHeight : 600
-				,centeredWhenClosed : true
-				,hardcovers : true
-				,pageNumbers: false
-				,toolbarPosition: 'top'
-				,toolbar : "lastLeft, left, right, lastRight, toc, zoomin, zoomout, slideshow, flipsound, fullscreen, thumbnails, download"
-				,thumbnailsPosition : 'left'
-				,responsiveHandleWidth : 50
-				,container: window
-				,containerPadding: "20px"
-				,pdf: $("#book_path").val()
+				height   : 500,
+				width    : 800,
+				maxHeight : 600,
+				centeredWhenClosed : true,
+				hardcovers : true,
+				pageNumbers: false,
+				toolbarPosition: 'top',
+				toolbar : "lastLeft, left, right, lastRight, toc, zoomin, zoomout, slideshow, flipsound, fullscreen, thumbnails, download",
+				thumbnailsPosition : 'left',
+				responsiveHandleWidth : 50,
+				container: window,
+				containerPadding: "20px",
+				pdf: $("#book_path").val()
 			};
 			$('#book').wowBook( bookOptions );
 		}else{
             $("#div_container").html("<iframe id='course_container' src = "+$("#book_path").val()+"></iframe>");
 		}
 	})
-
 	var base_url = "<?php echo base_url()?>";
 	//var first_id = '<?php echo $libraries[1]->id;?>';	
 	var active_id = <?=$active_id?>;
@@ -294,6 +293,7 @@ var first_id_checked = "";
 	}
 
 	function changeSelect(el,id,exam_id){
+		course_id = '<?php echo $course_id ?>';
         if (exam_id == "0"){
             if ($('#library'+id).val().indexOf(".pdf") > 0){
 
@@ -321,7 +321,7 @@ var first_id_checked = "";
                 $('.book_container').html("<iframe style='width: 100%' id='course_container' src = "+base_url+$('#library'+id).val()+"></iframe>");
             }
         }else{
-            exam_url = '<?php echo base_url()?>company/<?=$company_url?>/demand/examInstruction/'+exam_id;
+            exam_url = '<?php echo base_url()?>company/<?=$company_url?>/demand/examInstruction/'+exam_id+'/'+course_id;
             $('.book_container').html('<iframe id="course_container" scrolling="no" style="width: 100%; overflow: hidden" src = '+exam_url+'></iframe>');
 
         }

@@ -272,7 +272,7 @@
 	    </div>
 	</div>
 
-	<?php echo form_open('admin/exam/create', array("id"=>"frm_examlist")); ?>
+	<?php echo form_open('instructor/exam/create', array("id"=>"frm_examlist")); ?>
 		<input type="hidden" name="row_id" id="row_id">
 		<input type="hidden" name="exam_type" id="exam_type">
 	</form>
@@ -380,7 +380,7 @@
 	    "ajax": {
 	        "type": "POST",
 	        "async": true,
-	        "url": "<?=base_url()?>admin/inviteuser/getInviteUser",
+	        "url": "<?=base_url()?>instructor/inviteuser/getInviteUser",
 	        "data":function(data) { // add request parameters before submit
                     $.each(ajaxData, function(key, value) {
                         data[key] = value;
@@ -444,7 +444,7 @@
         }else{
             $.magnificPopup.close();
             $.ajax({
-                url: '<?=base_url()?>admin/inviteuser/createInviteuser/demand/1',
+                url: '<?=base_url()?>instructor/inviteuser/createInviteuser/demand/1',
                 type: 'POST',
                 data: formData,
                 processData: false,
@@ -469,7 +469,7 @@
     function resend_inviteuser(obj, id , firstname, lastname, email){
         $(obj).attr("disabled",1);
         $.ajax({
-            url: '<?=base_url()?>admin/inviteuser/createInviteuser/demand',
+            url: '<?=base_url()?>instructor/inviteuser/createInviteuser/demand',
             type: 'POST',
             data: {
                 id:id,
@@ -497,7 +497,7 @@
 
     function delete_inviteuser(id){
         $.ajax({
-	        url: '<?=base_url()?>admin/inviteuser/deleteInviteuser',
+	        url: '<?=base_url()?>instructor/inviteuser/deleteInviteuser',
 	        type: 'POST',
 	        data: {
 	        	id:id

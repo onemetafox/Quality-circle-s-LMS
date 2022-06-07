@@ -20,7 +20,7 @@
 
 		</div>
 	</header>
-
+    
 	<!-- start: page -->
 	<div class="row">
 		<div class="col-lg-12">
@@ -59,7 +59,7 @@
 										<i class="fa fa-dot-circle"></i>
 										<?php echo $course->time_type == 0 ? 'Self paced' : 'Time restricted' ?>
 									</li>
-									<li><i class="fa fa-check-square"></i> enrollments:<?php echo $course->enrolls ?></li>
+									<li><i class="fa fa-check-square"></i> enrollments:<?php echo $course->enroll_users ?></li>
 									<li><i class="fa fa-language"></i> Languages: English</li>
 									<li><i class="fa fa-calendar-alt"></i> Published Date: <?php echo $course->freg_date?></li>
 								</ul>

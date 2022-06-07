@@ -1,7 +1,7 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 
 require APPPATH . '/libraries/BaseController.php';
-require APPPATH . '/third_party/PHPExcel.php';
+// require APPPATH . '/third_party/PHPExcel.php';
 /**
  * Created by PhpStorm.
  * User: Timon
@@ -123,11 +123,20 @@ class User extends BaseController
      */
     public function getData()
     {
-        $type = $this->input->post("type");
-        $table_data['data'] = $this->User_model->getListByFasi($this->session->userdata('user_id'));
-        for ($i = 0; $i < sizeof($table_data['data']); $i++) {
-            $exam = $this->Examassignemployee_model->getExamByEmployee_emerald($table_data['data'][$i]->id);
-            $table_data['data'][$i]->exam = json_encode($exam);
+        // $type = $this->input->post("type");
+        // $table_data['data'] = $this->User_model->getListByFasi($this->session->userdata('user_id'));
+        // for ($i = 0; $i < sizeof($table_data['data']); $i++) {
+        //     $exam = $this->Examassignemployee_model->getExamByEmployee_emerald($table_data['data'][$i]->id);
+        //     $table_data['data'][$i]->exam = json_encode($exam);
+        // }
+        $table_data['data'] = $this->User_model->getList(array('company_id' => $this->session->get_userdata() ['company_id'], 'user_type !=' => 'Admin'));
+        foreach ($table_data['data'] as $key => $row){
+            $table_data['data'][$key]["no"] = $key + 1;
+			$table_data['data'][$key]["picture"] = NULL;
+			$imgName = end(explode('/', $row['picture']));
+			if($imgName != '' && file_exists(getcwd().'/assets/uploads/user/photo/'.$imgName)){
+				$table_data['data'][$key]["picture"] = $row['picture'];		
+			}			
         }
 
         $this->response($table_data);

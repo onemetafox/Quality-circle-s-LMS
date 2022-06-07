@@ -2,9 +2,9 @@
 
 require APPPATH . '/libraries/BaseController.php';
 // require APPPATH . '/third_party/PHPExcel.php';
-require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
-include_once (APPPATH . '/third_party/iio/index.php');
-require APPPATH . '/libraries/FPDI/fpdi.php';
+// require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
+// include_once (APPPATH . '/third_party/iio/index.php');
+// require APPPATH . '/libraries/FPDI/fpdi.php';
 // require APPPATH . 'third_party/woocommerce/autoload.php';
 // use Automattic\WooCommerce\Client;
 // use Automattic\WooCommerce\HttpClient\HttpClientException;
@@ -24,6 +24,8 @@ class Coursecreation extends BaseController{
 		$this->load->model('Live_model');		
 		$this->load->model('Training_model');
         $this->load->model('Company_model');
+        $this->load->helper('common_helper');
+        $this->load->model('Standard_model', "Standard");
         $this->isLoggedIn();
         $this->load->library('Sidebar');
         $side_params = array('selected_menu_id' => '39');
@@ -128,6 +130,10 @@ class Coursecreation extends BaseController{
             if($standard_id != null && $standard_id != 0){
                 $filter['standard_id'] = $standard_id;
             }
+			$course_ids = $this->input->get('course');
+            if($course_ids != null && $course_ids != 0){
+                $filter['id'] = $course_ids;
+            }
             $course_type = $this->input->get('course_type');
             if($course_type != null){
                 $filter['course_type'] = $course_type;
@@ -140,8 +146,7 @@ class Coursecreation extends BaseController{
             $status = $this->input->get('status');
             $start = $this->input->get('per_page');
             if(!isset($status)){
-                $status = 1; // active
-                
+                $status = 1; // active                
             }
             if(!isset($start)){
                 $start = 0;
@@ -187,8 +192,12 @@ class Coursecreation extends BaseController{
             $this->global['course_type'] = $course_type;
             $this->pagination->initialize($config);
             $this->global['links'] = $this->pagination->create_links();
+			$this->global['course_data_all'] = $this->Course_model->getAllCourse();
             $this->global['category'] = $this->Category_model->getListByCompanyID($this->session->userdata('company_id'));
             $this->global['standard'] = $this->db->get_where('category_standard')->result();
+            // echo "<pre>";
+            //     print_r($this->global['standard']);
+            // exit;
             $this->loadViews("instructor/coursecreation/course_list", $this->global, NULL, NULL);
         }else{
             $this->loadViews("access", $this->global, NULL, NULL);
@@ -242,6 +251,7 @@ class Coursecreation extends BaseController{
         $this->load->library('Sidebar');
         if($this->isInstructor()){
             $lang_ar = $this->Translate_model->getLanguageList(array('active_flag' => 1, 'add_flag' => 1));
+			$company_url = $this->session->userdata('company_url');
             $page_data['lang_ar'] = $lang_ar['data'];
             $page_path = "instructor/coursecreation/preview_course";
             $course = $this->Course_model->select($row_id);
@@ -249,6 +259,7 @@ class Coursecreation extends BaseController{
             $this->global['course_name'] = $course->title;
             $this->global['course_id'] = $row_id;
             $this->global['active_id'] = 0;
+			$this->global['company_url'] = $company_url;
             $this->loadViews($page_path, $this->global, NULL, NULL);
         }else{
             $this->loadViews("access", $this->global, NULL , NULL); 
@@ -433,7 +444,7 @@ class Coursecreation extends BaseController{
         $name = time() . ".pdf";
         force_download($name, $data);
         $data['failed_count'] = 0;
-        $data['url'] = base_url() . "admin/library";
+        $data['url'] = base_url() . "instructor/library";
         $this->response($data);
         //unlink(PATH_UPLOAD.$temp_name);
         // $this->load->helper('download');
@@ -448,7 +459,7 @@ class Coursecreation extends BaseController{
         // $attachment = $this->pdf->stream($name, array("Attachment"=>0));
         //force_download($name, $test);
         // $data['failed_count'] = 0;
-        // $data['url'] = base_url()."admin/library";
+        // $data['url'] = base_url()."instructor/library";
         // $this->response($data);
         
     }
@@ -623,16 +634,20 @@ class Coursecreation extends BaseController{
         $course_data['pay_price'] = $this->input->post('pay_price');
         $course_data['show_user'] = $this->input->post('show_user');
         $course_data['pass_mark'] = $this->input->post('pass_mark');
+        $course_data['tax_rate'] = $this->input->post('tax_rate');
+        $course_data['tax_type'] = $this->input->post('tax_type');
+        $course_data['discount'] = $this->input->post('discount');
+        $course_data['amount'] = $this->input->post('amount');
+        
         $course_data['number_of_participants'] = $this->input->post('number_of_participants');
-        $course_data['assesment_end_course_date'] = date('Y-m-d', strtotime($this->input->post('assesment_end_course_date')));         
-      	$course_data['access_restrict'] = $this->input->post('access_restrict');
-		if($this->input->post('is_ass_end') == 'on'){
+        $course_data['assesment_end_course_date'] = date('Y-m-d', strtotime($this->input->post('assesment_end_course_date')));
+        if($this->input->post('is_ass_end') == 'on'){
             $course_data['is_ass_end'] = 1;
         }else{
             $course_data['is_ass_end'] = 0;
-        }   
+        }
         $course_data['instructors'] = json_encode($this->input->post('instructor[]'));
-        $course_data['enroll_users'] = json_encode($this->input->post('user[]'));
+        //$course_data['enroll_users'] = json_encode($this->input->post('user[]'));
         $course_data['create_id'] = $create_id;
         if($course_data['id'] == 0){
 			$course_data['active'] = 0;	
@@ -647,7 +662,164 @@ class Coursecreation extends BaseController{
         }
         $this->response($row_id);
     }
-    
+    public function getCourse(){
+        $filter = $this->input->post();
+        if($filter['type'] == 0){
+            $subCourse = (array)$this->Training_model->getCourseById($filter["id"]);
+            $mainCourse = $this->Course_model->select($subCourse['course_id']);
+        }else if($filter['type'] == 1){
+            $subCourse = (array)$this->Live_model->getCourseById($filter["id"]);
+            $mainCourse = $this->Course_model->select($subCourse['course_id']);
+        }else{
+            $mainCourse = $this->Course_model->select($filter["id"]);
+        }
+        $this->response($mainCourse);
+    }
+    public function republishCourse(){
+        $company = (array) $this->Company_model->getRow($this->session->get_userdata() ['company_id']);
+        $data = $this->input->post();
+        $mainCourse = (array)$this->Course_model->select($data['republish-id']);
+        $mainCourse['discount'] = $data['republish-discount'];
+        $mainCourse['amount'] = $data['republish-amount'];
+        $mainCourse['pay_price'] = $data['republish-price'];
+        $mainCourse['reg_date'] = date("Y-m-d H:s:i");
+        if($data['republish-type'] == "0"){
+
+            $subCourse = (array)$this->Training_model->one(array("course_id"=>$mainCourse['id']));
+
+            unset($mainCourse['id']);
+            $course_id = $this->Course_model->insert($mainCourse);
+
+            $subCourse['course_id'] = $course_id;
+
+            $course_time_model = new AbstractModel("training_course_time");
+            $course_time = (array)$course_time_model->one(array("training_course_id"=>$subCourse["id"]));
+
+            unset($subCourse["id"]);
+            $sub_id = $this->Training_model->insert($subCourse);
+
+            $course_time['training_course_id'] = $sub_id;
+            $startTime = $this->input->post('starttime');
+            $endTime = getEndTime($startTime);
+            $course_time['start_day'] = $this->input->post('startdays');
+            $course_time['start_time'] = $startTime;
+            $course_time['date_str'] = strtotime($data['start_day'].' '.$data['start_time']);		
+            $course_time['end_time'] = $endTime;
+            $dates = explode("-", $this->input->post('startdays'));
+            $course_time['year'] = $dates[0];
+			$course_time['month'] = $dates[1];
+			$course_time['sday'] = $dates[2];
+			$course_time['reg_date'] = date("Y-m-d H:s:i");
+
+            unset($course_time['id']);
+            $this->Training_model->insert_time($course_time);
+
+            $course_type = "face to face ILT Platform at" . substr($mainCourse["location"],1);
+            $detail = $this->Training_model->getListByCourseId($data['republish-id']);	
+            $course_url = base_url('company/'.$company['url']). "/training/view/" . $this->Training_model->get_course_time_id($detail[0]['id'])->id;
+            $start_date = "<li> Start Date: " . date("M d, Y h:i:sa", strtotime($course_time['start_day'] . " " . $course_time['start_time'])) . "</li>";
+            $end_date = "<li> End Date: " . date("M d, Y h:i:sa", strtotime("+".($detail[0]["duration"]-1) . " days", strtotime($course_time['start_day']. " " . $course_time['end_time']))) . "</li>";
+            
+        }else if($data['republish-type'] == "1"){
+
+            $subCourse = (array)$this->Live_model->one(array("course_id"=>$mainCourse['id']));
+
+            unset($mainCourse['id']);
+            $course_id = $this->Course_model->insert($mainCourse);
+
+            $subCourse['startday'] = $this->input->post('startdays');
+            $subCourse['course_id'] = $course_id;
+
+            unset($subCourse["id"]);
+            $sub_id = $this->Live_model->insert($subCourse);
+
+            $course_time['virtual_course_id'] = $sub_id;
+			$startTime = $this->input->post('starttime');
+            $endTime = getEndTime($startTime);
+            $course_time['start_at'] = $this->input->post('startdays');
+            $course_time['start_time'] = $startTime;
+            $course_time['end_time'] = $endTime;
+			$course_time['reg_date'] = date("Y-m-d H:s:i");
+
+			$this->Live_model->insert_time($course_time);
+
+            $course_type = "VILT platform";
+            $detail = $this->Live_model->getListByCourseId($data['republish-id']);		
+            $course_url = base_url('company/'.$company['url'].'/classes/view/'.$this->Live_model->get_course_time_id($detail[0]['id'])->id);
+            $start_date = "<li> Start Date: " . date("M d, Y h:i:sa", strtotime($course_time['start_at'] . " " . $course_time['start_time'])) . "</li>";
+            $end_date = "<li> End Date: " . date("M d, Y h:i:sa", strtotime("+" . ($detail[0]["duration"]-1) ." days", strtotime($course_time['start_at']. " " . $course_time['end_time']))) . "</li>";
+
+        }else{
+            $mainCourse['start_at'] = $this->input->post("startdays");
+            $mainCourse['end_at'] = $this->input->post("enddays");
+            unset($mainCourse['id']);
+            $this->Course_model->insert($mainCourse);
+
+            $course_type = "On Demand platform at your own pace";
+            $course_url = base_url('company/'.$company['url'].'/demand/view/'.$data['republish-id']);
+            $start_date = "";
+            $end_date = "";
+
+        }
+        if($mainCourse["pay_type"] == 1){
+            if($mainCourse['category_id'] != ""){
+                $category = $this->Category_model->getRow($mainCourse['category_id'])[0]["name"];
+            }
+            if( $mainCourse['standard_id'] ){
+                $category = $category . " and standard " . substr($this->Standard->getStrStandard($mainCourse['standard_id']), 1);
+            }
+            $users = [];
+            $item['email']="oglave_13@yahoo.com";
+            $item['fullname'] = $this->User_model->getFullNameByEmail($item['email']);
+            array_push($users,$item);
+            $item['email']="ricardo.johnson@tijulecompany.com";
+            $item['fullname'] = $this->User_model->getFullNameByEmail($item['email']);
+            array_push($users,$item);
+            $item['email']="nicola.mighty@tijulecompany.com";
+            $item['fullname'] = $this->User_model->getFullNameByEmail($item['email']);
+            array_push($users,$item);
+            $item['email']="efitzgerald@tijulecompany.com";
+            $item['fullname'] = $this->User_model->getFullNameByEmail($item['email']);
+            array_push($users,$item);
+            $item['email']="seniordev1994128@gmail.com";
+            $item['fullname'] = 'James Coulter';
+            array_push($users,$item);
+            // $users = $this->User_model->getUsersForBlast($this->session->get_userdata()['company_id']);
+            $this->load->library('email');
+            $email_temp = $this->getEmailTemp('create_course',$this->session->get_userdata()['company_id']);
+            $message = $email_temp['message'];
+            $title = $email_temp['subject'];
+            $img_url = base_url() . $detail[0]["img_path"];
+            foreach($users as $item){
+                $content = str_replace("{USERNAME}", $item['fullname'], $message);
+                $content = str_replace("{COURSETITLE}", $mainCourse['title'], $content);
+                $content = str_replace("{CATEGORY}", $category, $content);
+                $content = str_replace("{COURSETYPE}", $course_type, $content);
+                $content = str_replace("{PAYTYPE}", $mainCourse['pay_type'] == 0? "Closed Enrollment Course": "Open Enrollment Course", $content);
+                $content = str_replace("{DURATION}", $detail[0]['duration'], $content);
+                $content = str_replace("{PRICE}", $mainCourse['pay_price'], $content);
+                $content = str_replace("{DISCOUNT}", $mainCourse['discount'], $content);
+                $content = str_replace("{AMOUNT}", $mainCourse['amount'], $content);
+                $content = str_replace("{IMAGEURL}", $img_url, $content);
+                $content = str_replace("{COMPANYURL}", base_url($company['company_url']), $content);
+
+                $content = str_replace("{COMPANYLOGO}", base_url()."assets/logos/logo1.png", $content);
+                $content = str_replace("{EXAMPLERLOGO}", base_url()."assets/logos/logo2.png", $content);
+                
+                $content = str_replace("{STARTDATE}", $start_date, $content);
+                $content = str_replace("{ENDDATE}", $end_date, $content);
+                $content = str_replace("{VIEWCOURSE}", $course_url, $content);
+                $content = str_replace("{ENROLLCOURSE}", base_url() . "company/QC", $content);
+                $content = str_replace("{VIEWLINK}", base_url() . "company/QC", $content);
+                // print_r($content);
+                    
+                $this->sendemail($item['email'],$item['fullname'],$content,$title);
+            }
+        }
+        // $this->response(array("success"=>true, "msg"=>"Course Republished"));
+
+
+    }
     public function save_course_profile(){
 		$countryName = $this->Location_model->getCountryNameById($this->input->post('country'));
 		$stateName = $this->Location_model->getStateNameById($this->input->post('state'));
@@ -658,149 +830,266 @@ class Coursecreation extends BaseController{
         $course_data['subtitle'] = $this->input->post('subtitle');
         $course_data['category_id'] = $this->input->post('category_id');
         $course_data['standard_id'] = implode(',',$this->input->post('standard_id'));
-        $course_data['about'] = $this->input->post('aboutvalue');
+       	$course_data['about'] = $this->input->post('aboutvalue');
 		$course_data['prerequisite'] = $this->input->post('prerequisitevalue');
 		$course_data['course_self_time'] = $this->input->post('course_self_time');
 		$course_data['learning_objective'] = $this->input->post('learning_objectivevalue');
-		$course_data['agenda'] = $this->input->post('agendavalue');
-		$course_data['duration'] = $this->input->post('duration');
-        if($this->input->post('course_type') == 0){
-			$course_data['address'] = $this->input->post('address');
-			$course_data['country'] = $this->input->post('country');
-			$course_data['state'] = $this->input->post('state');
-			$course_data['city'] = $this->input->post('city');
-			$course_data['location'] = $this->input->post('address').', '.$countryName.', '.$stateName.', '.$cityName;	
-		}else{
-			$course_data['location'] = 'Online';		
-			$course_data['address'] = NULL;
-			$course_data['country'] = 0;
-			$course_data['state'] = 0;
-			$course_data['city'] = 0;
-		}
-		if($this->input->post('course_type') == 2){
-			$course_data['start_at'] = $this->input->post('start_at');
-			$course_data['end_at'] = $this->input->post('end_at');	
-		}else{
-			$course_data['start_at'] = NULL;
-			$course_data['end_at'] = NULL;	
-		}
-        
+		$course_data['agenda'] = $this->input->post('agendavalue');		
+
         $course_data['course_type'] = $this->input->post('course_type');
-		$newstring = preg_replace('~[^A-Za-z0-9 ?.!]~','',$this->input->post('number'));
-		$return = '';
-		foreach(explode(' ', $newstring) as $word){
-			$return .= strtoupper($word[0]);
-		}
-		$course_data['number'] = $return.'_'.$course_data['id'];
-        if($this->input->post('status') == 'on'){
-            $course_data['active'] = 1;
+
+        $user = (array) $this->User_model->select($this->session->get_userdata()['user_id']);
+		// $plan = $this->Plan_model->getPlanCompany($this->session->get_userdata()['company_id']);
+        $plan = $this->Plan_model->select($user['plan_id']);
+        if(!$plan->id){
+            $plan = $this->Plan_model->select('1');
+        }
+        $company = (array) $this->Company_model->getRow($this->session->get_userdata() ['company_id']);
+
+        $filter['company_id'] = $this->session->get_userdata()['company_id'];
+        $filter['course_type'] = $course_data['course_type'];
+        $limit = $this->Course_model->getLimitation($filter);
+
+        $result = array('success'=>true, 'msg'=>'Success Course created');
+        if($course_data['course_type'] == 2){
+            if($limit > $plan->demand_limit ){
+                $result = array('success'=>false, 'msg'=>'Full maximum demand course');
+                
+            }
+        }else if($course_data['course_type'] == 1){
+            if($limit > $plan->vilt_room_limit ){
+                $result = array('success'=>false, 'msg'=>'Full maximum VILT course');
+            }
         }else{
-            $course_data['active'] = 2;
+            if($limit > $plan->ilt_room_limit ){
+                $result = array('success'=>false, 'msg'=>'Full maximum ILT course');
+            }
         }
-        $highlight = $this->input->post('highlight[]');
-		$prerequisitehighlight = $this->input->post('prerequisitehighlight[]');
-        if($_FILES['image_path']['name'] != ""){
-            /*random upload filename*/
-            $_FILES['image_path']['name'] = microtime(true) . '.' . pathInfo($_FILES['image_path']['name'], PATHINFO_EXTENSION);
-            $course_data['img_path'] = COURSE_FILE_PATH . $_FILES['image_path']["name"];
-        }
-		$courseData = $this->Course_model->select($course_data['id']);		
-		if($_FILES['objective_img']['name'] != ''){
-			$upload_path = sprintf('%scompany/course/', PATH_UPLOAD);
-			if(!file_exists($upload_path)){
-				$this->makeDirectory($upload_path);
-			}			
-			$rslt = $this->doUpload('objective_img', $upload_path);			
-			if($rslt['possible'] == 1){
-				if(!empty($courseData->objective_img)){
-					if(file_exists($courseData->objective_img)){
-						unlink($courseData->objective_img);
-					}
-				}
-				$course_data['objective_img'] = str_replace("./", "", $rslt['path']);
-			}else $course_data['objective_img'] = str_replace("./", "", "assets/img/" . 'default.png');		
-		} 
-		$course_data['attend'] = $this->input->post('attendvalue');
-		if($_FILES['attend_img']['name'] != ''){
-			$upload_path = sprintf('%scompany/course/', PATH_UPLOAD);
-			if(!file_exists($upload_path)){
-				$this->makeDirectory($upload_path);
-			}
-			
-			$rslt = $this->doUpload('attend_img', $upload_path);		
-			if($rslt['possible'] == 1){
-				if(!empty($courseData->attend_img)){
-					if(file_exists($courseData->attend_img)){
-						unlink($courseData->attend_img);
-					}
-				}
-				$course_data['attend_img'] = str_replace("./", "", $rslt['path']);
-			}else $course_data['attend_img'] = str_replace("./", "", "assets/img/" . 'default.png');		
-		}
-		if($_FILES['agenda_img']['name'] != ''){
-			$upload_path = sprintf('%scompany/course/', PATH_UPLOAD);
-			if(!file_exists($upload_path)){
-				$this->makeDirectory($upload_path);
-			}
-			$rslt = $this->doUpload('agenda_img', $upload_path);		
-			if($rslt['possible'] == 1){
-				if(!empty($courseData->agenda_img)){
-					if(file_exists($courseData->agenda_img)){
-						unlink($courseData->agenda_img);
-					}
-				}
-				$course_data['agenda_img'] = str_replace("./", "", $rslt['path']);
-			}else $course_data['agenda_img'] = str_replace("./", "", "assets/img/" . 'default.png');		
-		}
-        $this->Course_model->update_course($course_data, $course_data['id']);
-        $this->Course_model->delete_highlight($course_data['id']);
-		$this->Course_model->delete_prerequisite_highlight($course_data['id']);
-		
-        if($_FILES['image_path']['name'] != ""){
+        if(!$result['success']){
+            $this->Course_model->remove($course_data['id']);
+            $this->response($result);
+        }else{
             $upload_path = sprintf('%scompany/course/', PATH_UPLOAD);
-            if(!file_exists($upload_path)){
-                $this->makeDirectory($upload_path);
+            $courseData = $this->Course_model->select($course_data['id']);
+            if($_FILES['objective_img']['name'] != ''){
+                $upload_path = sprintf('%scompany/course/', PATH_UPLOAD);
+                if(!file_exists($upload_path)){
+                    $this->makeDirectory($upload_path);
+                }			
+                $rslt = $this->doUpload('objective_img', $upload_path);		
+                if($rslt['possible'] == 1){
+                    if(!empty($courseData->objective_img)){
+                        if(file_exists($courseData->objective_img)){
+                            unlink($courseData->objective_img);
+                        }
+                    }
+                    $course_data['objective_img'] = str_replace("./", "", $rslt['path']);
+                }else $course_data['objective_img'] = str_replace("./", "", "assets/img/" . 'default.png');		
+            } 
+            $course_data['attend'] = $this->input->post('attendvalue');
+            
+            if($_FILES['attend_img']['name'] != ''){
+                $upload_path = sprintf('%scompany/course/', PATH_UPLOAD);
+                if(!file_exists($upload_path)){
+                    $this->makeDirectory($upload_path);
+                }
+                
+                $rslt = $this->doUpload('attend_img', $upload_path);		
+                if($rslt['possible'] == 1){
+                    if(!empty($courseData->attend_img)){
+                        if(file_exists($courseData->attend_img)){
+                            unlink($courseData->attend_img);
+                        }
+                    }
+                    $course_data['attend_img'] = str_replace("./", "", $rslt['path']);
+                }else $course_data['attend_img'] = str_replace("./", "", "assets/img/" . 'default.png');		
             }
-            $_FILES['image_path']['name'] = sprintf('%s', $_FILES['image_path']['name']);
-            $_FILES['image_path']['type'] = $_FILES['image_path']['type'];
-            $_FILES['image_path']['tmp_name'] = $_FILES['image_path']['tmp_name'];
-            $_FILES['image_path']['size'] = $_FILES['image_path']['size'];
-            $_FILES['image_path']['error'] = $_FILES['image_path']['error'];
-            $config['upload_path'] = $upload_path;
-            $config['allowed_types'] = '*';
-            $this->load->library('upload', $config);
-            $this->upload->initialize($config);
-            if(!$this->upload->do_upload('image_path')){
-                $error = array('error' => $this->upload->display_errors());
+            if($_FILES['agenda_img']['name'] != ''){
+                $upload_path = sprintf('%scompany/course/', PATH_UPLOAD);
+                if(!file_exists($upload_path)){
+                    $this->makeDirectory($upload_path);
+                }
+                $rslt = $this->doUpload('agenda_img', $upload_path);		
+                if($rslt['possible'] == 1){
+                    if(!empty($courseData->agenda_img)){
+                        if(file_exists($courseData->agenda_img)){
+                            unlink($courseData->agenda_img);
+                        }
+                    }
+                    $course_data['agenda_img'] = str_replace("./", "", $rslt['path']);
+                }else $course_data['agenda_img'] = str_replace("./", "", "assets/img/" . 'default.png');		
+            }
+            $course_data['duration'] = $this->input->post('duration');
+            if($this->input->post('course_type') == 0){
+                $course_data['address'] = $this->input->post('address');
+                $course_data['country'] = $this->input->post('country');
+                $course_data['state'] = $this->input->post('state');
+                $course_data['city'] = $this->input->post('city');
+                $course_data['location'] = $this->input->post('address').', '.$countryName.', '.$stateName.', '.$cityName;	
             }else{
-                $data = array('upload_data' => $this->upload->data());
+                $course_data['location'] = 'Online';
+                $course_data['address'] = NULL;
+                $course_data['country'] = 0;
+                $course_data['state'] = 0;
+                $course_data['city'] = 0;
             }
+            if($course_data['course_type'] != 2){
+                $course_data['start_at'] = $this->input->post('start_at');
+                $course_data['end_at'] = $this->input->post('end_at');	
+            }else{
+                $course_data['start_at'] = NULL;
+                $course_data['end_at'] = NULL;	
+            }
+                    
+            
+            $newstring = preg_replace('~[^A-Za-z0-9 ?.!]~','',$this->input->post('number'));
+            $return = '';
+            foreach(explode(' ', $newstring) as $word){
+                $return .= strtoupper($word[0]);
+            }
+            $course_data['number'] = $return.'_'.$course_data['id'];
+            
+            if($this->input->post('status') == 'on'){
+                $course_data['active'] = 1;
+            }else{
+                $course_data['active'] = 2;
+            }			
+            $highlight = $this->input->post('highlight[]');
+            $prerequisitehighlight = $this->input->post('prerequisitehighlight[]');
+            
+            if($_FILES['image_path']['name'] != ""){
+                /*random upload filename*/
+                $_FILES['image_path']['name'] = microtime(true) . '.' . pathInfo($_FILES['image_path']['name'], PATHINFO_EXTENSION);
+                $course_data['img_path'] = COURSE_FILE_PATH . $_FILES['image_path']["name"];
+            }				
+            $this->Course_model->update_course($course_data, $course_data['id']);
+            $this->Course_model->delete_highlight($course_data['id']);
+            $this->Course_model->delete_prerequisite_highlight($course_data['id']);
+            if($_FILES['image_path']['name'] != ""){
+                $upload_path = sprintf('%scompany/course/', PATH_UPLOAD);
+                if(!file_exists($upload_path)){
+                    $this->makeDirectory($upload_path);
+                }
+                $_FILES['image_path']['name'] = sprintf('%s', $_FILES['image_path']['name']);
+                $_FILES['image_path']['type'] = $_FILES['image_path']['type'];
+                $_FILES['image_path']['tmp_name'] = $_FILES['image_path']['tmp_name'];
+                $_FILES['image_path']['size'] = $_FILES['image_path']['size'];
+                $_FILES['image_path']['error'] = $_FILES['image_path']['error'];
+                $config['upload_path'] = $upload_path;
+                $config['allowed_types'] = '*';
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+                if(!$this->upload->do_upload('image_path')){
+                    $error = array('error' => $this->upload->display_errors());
+                }else{
+                    $data = array('upload_data' => $this->upload->data());
+                }
+            }
+            for ($i = 0;$i < count($highlight);$i++){
+                $this->Course_model->insert_highlight(array("course_id" => $course_data['id'], "content" => $highlight[$i]));
+            }
+            for($i = 0;$i < count($prerequisitehighlight);$i++){
+                $this->Course_model->insert_prerequisite_highlight(array("course_id" => $course_data['id'], "content" => $prerequisitehighlight[$i]));
+            }
+
+            $course_data['startday'] = $this->input->post('start_at');
+            $course_data['starttime'] = $this->input->post('starttime');
+            if($course_data['category_id'] != ""){
+                $category = $this->Category_model->getRow($course_data['category_id'])[0]["name"];
+            }
+            if( $this->input->post('standard_id') ){
+                $category = $category . " and standard " . substr($this->Standard->getStrStandard($course_data['standard_id']), 1);
+            }
+            if($course_data['course_type'] == 2){
+                $course_type = "On Demand platform at your own pace";
+                $course_url = base_url('company/'.$company['url'].'/demand/view/'.$course_data['id']);
+                $start_date = "";
+                $end_date = "";
+                // $category = "On Demand";
+            }
+            if($course_data['course_type'] == 1){
+                $course_type = "VILT platform";
+                $this->addLive($course_data);
+                $detail = $this->Live_model->getListByCourseId($course_data['id']);		
+                $course_url = base_url('company/'.$company['url'].'/classes/view/'.$this->Live_model->get_course_time_id($detail[0]['id'])->id);
+                $start_date = "<li> Start Date: " . date("M d, Y h:i:sa", strtotime($detail[0]["start_at"] . " " . $detail[0]["start_time"])) . "</li>";
+                $end_date = "<li> End Date: " . date("M d, Y h:i:sa",strtotime("+" . ($detail[0]["duration"]-1) . " days", strtotime($detail[0]['start_at']. " " . $detail[0]['end_time']))) . "</li>";
+            }
+            if($course_data['course_type'] == 0){
+                $course_type = "face to face ILT Platform at" . substr($course_data["location"],1);
+                
+                $this->addIltCourse($course_data);
+                $detail = $this->Training_model->getListByCourseId($course_data["id"]);	
+                $course_url = base_url('company/'.$company['url']). "/training/view/" . $this->Training_model->get_course_time_id($detail[0]['id'])->id;
+                $start_date = "<li> Start Date: " . date("M d, Y h:i:sa", strtotime($detail[0]["start_day"] . " " . $detail[0]["start_time"])) . "</li>";
+                $end_date = "<li> End Date: " . date("M d, Y h:i:sa", strtotime("+" . ($detail[0]["duration"]-1) . " days", strtotime($detail[0]['start_day']. " " . $detail[0]['end_time']))) . "</li>";
+            }
+            
+            // Add Course Detail To WooCommerce Store
+            // $courseData = array('name' => $course_data['title'], 'type' => 'simple', 'regular_price' => $price, 'description' => $course_data['about'], 'short_description' => $course_data['about'], 'categories' => [['id' => 35]], 'images' => [['src' => 'https://shop.gosmartacademy.com/wp-content/uploads/2020/06/course.png']]);
+            $users = [];
+            $item['email']="oglave_13@yahoo.com";
+            $item['fullname'] = $this->User_model->getFullNameByEmail($item['email']);
+            array_push($users,$item);
+            $item['email']="ricardo.johnson@tijulecompany.com";
+            $item['fullname'] = $this->User_model->getFullNameByEmail($item['email']);
+            array_push($users,$item);
+            $item['email']="nicola.mighty@tijulecompany.com";
+            $item['fullname'] = $this->User_model->getFullNameByEmail($item['email']);
+            array_push($users,$item);
+            $item['email']="efitzgerald@tijulecompany.com";
+            $item['fullname'] = $this->User_model->getFullNameByEmail($item['email']);
+            array_push($users,$item);
+            $item['email']="seniordev1994128@gmail.com";
+            $item['fullname'] = 'James Coulter';
+            array_push($users,$item);
+            // $users = $this->User_model->getUsersForBlast($this->session->get_userdata()['company_id']);
+            $this->load->library('email');
+            $email_temp = $this->getEmailTemp('create_course',$this->session->get_userdata()['company_id']);
+            $message = $email_temp['message'];
+            $title = $email_temp['subject'];
+            $img_url = base_url() . $detail[0]["img_path"];
+            if($courseData->pay_type == 1){
+                foreach($users as $item){
+                    $content = str_replace("{USERNAME}", $item['fullname'], $message);
+                    $content = str_replace("{COURSETITLE}", $course_data['title'], $content);
+                    $content = str_replace("{CATEGORY}", $category, $content);
+                    $content = str_replace("{COURSETYPE}", $course_type, $content);
+                    $content = str_replace("{PAYTYPE}", $courseData->pay_type == 0? "Closed Enrollment Course": "Open Enrollment Course", $content);
+                    $content = str_replace("{DURATION}", $detail[0]['duration'], $content);
+                    $content = str_replace("{PRICE}", $courseData->pay_price, $content);
+                    $content = str_replace("{DISCOUNT}", $courseData->discount, $content);
+                    $content = str_replace("{AMOUNT}", $courseData->amount, $content);
+                    $content = str_replace("{IMAGEURL}", $img_url, $content);
+                    $content = str_replace("{COMPANYURL}", base_url($company['company_url']), $content);
+    
+                    $content = str_replace("{COMPANYLOGO}", base_url()."assets/logos/logo1.png", $content);
+                    $content = str_replace("{EXAMPLERLOGO}", base_url()."assets/logos/logo2.png", $content);
+                    
+                    $content = str_replace("{STARTDATE}", $start_date, $content);
+                    $content = str_replace("{ENDDATE}", $end_date, $content);
+                    $content = str_replace("{VIEWCOURSE}", $course_url, $content);
+                    $content = str_replace("{ENROLLCOURSE}", base_url() . "company/QC", $content);
+                    $content = str_replace("{VIEWLINK}", base_url() . "company/QC", $content);
+                    // print_r($content);
+                    
+                    $this->sendemail($item['email'],$item['fullname'],$content,$title);
+                }
+            }
+            
+            $this->response($result);
+            // redirect('instructor/coursecreation/getList');
         }
-        for ($i = 0;$i < count($highlight);$i++){
-            $this->Course_model->insert_highlight(array("course_id" => $course_data['id'], "content" => $highlight[$i]));
-        }
-		for($i = 0;$i < count($prerequisitehighlight);$i++){
-            $this->Course_model->insert_prerequisite_highlight(array("course_id" => $course_data['id'], "content" => $prerequisitehighlight[$i]));
-        }
-		if($course_data['course_type'] == 1){
-			$this->addLive($course_data);
-		}
-		if($course_data['course_type'] == 0){
-			$this->addIltCourse($course_data);
-		}
-        // Add Course Detail To WooCommerce Store
-        // $courseData = array('name' => $course_data['title'], 'type' => 'simple', 'regular_price' => $price, 'description' => $course_data['about'], 'short_description' => $course_data['about'], 'categories' => [['id' => 35]], 'images' => [['src' => 'https://shop.gosmartacademy.com/wp-content/uploads/2020/06/course.png']]);
-        // $ccResult = $this->woocommerce->post('products', $courseData);
-        redirect('instructor/coursecreation/getList');
+		
     }
 	
 	public function addIltCourse($iltCourse){
 		$trainingDetail = $this->Training_model->getListByCourseId($iltCourse['id']);		
 		if(empty($trainingDetail)){
-			$startday = NULL;
+			$startday = NULL; 
 			$endday = NULL; 
 			$starttime = date('H:i:s');
-			$course_data['startday'] = $startday;
+			$course_data['startday'] = $iltCourse['startday'];
 			$course_data['endday'] = $endday;
 			$course_data['title'] = $iltCourse['title'];
 			$course_data['subtitle'] = $iltCourse['subtitle'];
@@ -837,7 +1126,7 @@ class Coursecreation extends BaseController{
 			$timestamp = time();
 			$course_data['instructors'] = json_encode($this->input->post('instructor[]'));
 			$course_data['highlights'] = json_encode($this->input->post('highlight[]'));
-			if($liveCourse['course_type'] == 0){
+			if($course_data['course_type'] == 0){
 				$explode = explode(',',$iltCourse['location']);			 
 				$course_data['address'] = $iltCourse['address'];
 				$course_data['country'] = $explode[count($explode)-3];
@@ -853,21 +1142,33 @@ class Coursecreation extends BaseController{
 			}
 			$row_id = $this->Training_model->insert_course($course_data);
 			$course_time['training_course_id'] = $row_id;
-			$course_time['year'] = date('Y',$timestamp);
-			$course_time['month'] = date('m',$timestamp);
-			$course_time['sday'] = date('d',$timestamp);
+			$course_time['country_id'] = $iltCourse['country'];
+			$course_time['state_id'] = $iltCourse['state'];
+			$course_time['city_id'] = $iltCourse['city'];
+			// $course_time['start_day'] = date('Y-m-d',$timestamp);
+            $course_time['start_day'] = $iltCourse['startday'];
+			$course_time['start_time'] = $iltCourse['starttime'];
+            $course_time['end_time'] = getEndTime($iltCourse['starttime']);
+            $dates = explode("-", $iltCourse['startday']);
+			// $course_time['date_str'] = strtotime($course_time['start_day'].' '.$course_time['start_time']);
+			$course_time['year'] = $dates[0];
+			$course_time['month'] = $dates[1];
+			$course_time['sday'] = $dates[2];
 			$course_time['location'] = $course_data['location'];
-			$this->Training_model->insert_time($course_time);
-		}
+		
+            $this->Training_model->insert_time($course_time);
+		}else{
+            
+        }
 	}
 
 	public function addLive($liveCourse){
 		$liveDetail = $this->Live_model->getListByCourseId($liveCourse['id']);		
 		if(empty($liveDetail)){
 			$startday = NULL; 
-			$endday = NULL;
+			$endday = NULL; 
 			$starttime = date('H:i:s');
-			$course_data['startday'] = $startday;
+			$course_data['startday'] = $liveCourse['startday'];
 			$course_data['endday'] = $endday;
 			$course_data['title'] = $liveCourse['title'];
 			$course_data['subtitle'] = $liveCourse['subtitle'];
@@ -878,18 +1179,18 @@ class Coursecreation extends BaseController{
 			$course_data['agenda'] = $liveCourse['agenda'];
 			$course_data['course_pre_requisite'] = $liveCourse['prerequisite'];
 			$course_data['user_type'] = 0;
-			$course_data['pay_type'] = 0;
+			// $course_data['pay_type'] = 0;
 			$course_data['record_type'] = 0;
-			$course_data['pay_price'] = 0;
+			// $course_data['pay_price'] = 0;
 			$course_data['number'] = $liveCourse['number'];
 			$course_data['course_type'] = $liveCourse['course_type'];
 			$course_data['course_id'] = $liveCourse['id'];
 			$course_data['category_id'] = $liveCourse['category_id'];
 			$course_data['standard_id'] = '['.json_encode($liveCourse['standard_id']).']';
 			$course_data['url'] = '';
-			if($course_data['pay_price'] == null){
-				$course_data['pay_price'] = 0;
-			}
+			// if($course_data['pay_price'] == null){
+			// 	$course_data['pay_price'] = 0;
+			// }
 			$course_data['create_id'] = $this->session->get_userdata()['company_id'];
 			$course_data['img_path'] = str_replace("./", "", "assets/img/" . 'default.png');
 			if($liveCourse['img_path'] != ''){
@@ -925,12 +1226,18 @@ class Coursecreation extends BaseController{
 				$course_data['state'] = '';
 				$course_data['city'] = '';
 			}		
+            
 			$row_id = $this->Live_model->insert_course($course_data);
 			$course_time['virtual_course_id'] = $row_id;
-			$course_time['start_at'] = $start_at;
+			$course_time['start_time'] = $liveCourse['starttime'];
+            $course_time['end_time'] = getEndTime($liveCourse['starttime']);
+            $course_time['start_at'] = $liveCourse['startday'];
 			$course_time['reg_date'] = $start_at;
 			$this->Live_model->insert_time($course_time);
-		}
+		}else{
+            // print_r($liveDetail);
+            // print_r($liveCourse);
+        }
 	}
     
     public function edit_course_tab($row_id = 0, $tab_id = 1){
@@ -960,7 +1267,7 @@ class Coursecreation extends BaseController{
                 $course_data['pay_price'] = 0;
                 $course_data['show_user'] = 0;
                 $course_data['instructors'] = "";
-                $course_data['enroll_users'] = "";
+                //$course_data['enroll_users'] = "";
                 $course_data['title'] = "";
                 $course_data['subtitle'] = "";
                 $course_data['about'] = "";
@@ -1012,17 +1319,19 @@ class Coursecreation extends BaseController{
                 $course_data['limit_time'] = 0;
                 $course_data['pay_type'] = 0;
                 $course_data['pay_price'] = 0;
+                $course_data['amount'] = 0;
                 $course_data['show_user'] = 0;
                 $course_data['pass_mark'] = 0;
                 $course_data['is_ass_end'] = 0;
                 $course_data['instructors'] = "";
-                $course_data['enroll_users'] = "";
+                //$course_data['enroll_users'] = "";
                 $course_data['title'] = "";
 				$course_data['address'] = "";
 				$course_data['country'] = 0;
 				$course_data['city'] = 0;
 				$course_data['state'] = 0;
                 $course_data['subtitle'] = "";
+                $course_data['discount'] = "100";
                 $course_data['about'] = "";
                 $course_data['location'] = "";
                 $course_data['start_at'] = date("Y-m-d");
@@ -1080,11 +1389,6 @@ class Coursecreation extends BaseController{
         $dataHtml = "";
         $dataget = array('course_id' => $this->input->post('course_id'), 'parent' => 0);
         $results = $this->Course_model->data_gets('chapter', $dataget, '', 'position', 'ASC');
-        // echo "<pre>";
-        //     print_r($results);
-        // exit;
-        //count($results);
-        //exit();
         if($results && $this->input->post('course_id') > 0){
             $dataHtml.= '<div>
               <ul class="my-sortable list-group">';
@@ -1092,7 +1396,7 @@ class Coursecreation extends BaseController{
                 if($val->exam_id == 0){
 					$chstatus = 'Deactivate';
 					if($val->status == 0){$chstatus = 'Activate';}
-                    $dataHtml.= '<li class="list-group-item items" data-id="0" data-cid="' . $val->id . '" data-status="' . $chstatus . '" style="margin-bottom: 15px; "><img src="' . base_url() . 'assets/img/chapter.png" style="height:22px; width:33px"><b>' . $val->title . '</b>';
+                    $dataHtml.= '<li class="list-group-item items" data-id="0" data-cid="' . $val->id . '"  data-status="' . $chstatus . '" style="margin-bottom: 15px; "><img src="' . base_url() . 'assets/img/chapter.png" style="height:22px; width:33px"><b>' . $val->title . '</b>';
                     $dataHtml.= $this->view_chapter_pages($val->id);
                     $dataHtml.= '</li>';
                 }
@@ -1122,9 +1426,9 @@ class Coursecreation extends BaseController{
         if($results){
             foreach ($results as $val){
 				$chstatus = 'Deactivate';
-				if($val->status == 0){$chstatus = 'Activate';}
-                if($val->quiz_id != 0) $dataHtml.= '<li class="list-group-item items " data-id="' . $val->id . '" data-cid="' . $cid . '" data-status="' . $chstatus . '" style="background-color:#ff6628;margin: 14px 0px 7px 0px;">' . $val->title . '</li>';
-                else $dataHtml.= '<li class="list-group-item items " data-id="' . $val->id . '" data-status="' . $chstatus . '" data-cid="' . $cid . '" style="margin: 14px 0px 7px 0px;">' . $val->title . '</li>';
+				if($val->status == 0){$chstatus = 'Activate';}					
+                if($val->quiz_id != 0) $dataHtml.= '<li class="list-group-item items " data-id="' . $val->id . '" data-cid="' . $cid . '"  data-status="' . $chstatus . '" style="background-color:#ff6628;margin: 14px 0px 7px 0px;">' . $val->title . '</li>';
+                else $dataHtml.= '<li class="list-group-item items " data-id="' . $val->id . '" data-cid="' . $cid . '" data-status="' . $chstatus . '" style="margin: 14px 0px 7px 0px;">' . $val->title . '</li>';
             }
         }else{
             $dataHtml.= '<li class="list-group-item box_area2" align="center" style="border:none;"></li>';

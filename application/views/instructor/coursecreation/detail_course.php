@@ -48,8 +48,7 @@
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css_flipbook/main.css">
 <script src="<?php echo base_url(); ?>assets/js_flipbook/vendor/modernizr-2.7.1.min.js"></script>
 <style>
-	iframe{
-	
+	iframe{	
 		min-height: 30rem;
 	}
 </style>
@@ -99,7 +98,7 @@ var first_id_checked = "";
                                                         first_id_checked = "<?php echo $chapter->id ?>";
                                                     }
                                                 </script>
-                                            <?php }?>    
+                                            <?php } ?>
 											<?php endif;?>
 											<!-- <div style="padding:15px;padding-bottom:0;border-top:1px solid #ececeb;border-bottom:1px solid #ececeb"> -->
 											<?php foreach($libraries as $page):?>
@@ -156,14 +155,12 @@ var first_id_checked = "";
 		$('#library'+active_id).prop('checked','checked');
 		$("#book_path").val(base_url+$('#library'+active_id).val());
 	}
-
     function next_Lesson() {
         var radios = $(':radio');
         var el = radios[0].lastElementChild;
         for(var i = 0 ; i < radios.length; i++){
             if($(radios[i]).prop('checked') == true)
             {
-
                 if(i+1 < radios.length) {
                     $(radios[i]).prop('checked', false);
                     $(radios[i+1]).prop('checked','checked');
@@ -173,14 +170,12 @@ var first_id_checked = "";
             }
         }
     }
-
     function preview_Lesson() {
         var radios = $(':radio');
         var el = radios[0].lastElementChild;
         for(var i = 0 ; i < radios.length; i++){
             if($(radios[i]).prop('checked') == true)
             {
-
                 if(i-1 >= 0) {
                     $(radios[i]).prop('checked', false);
                     $(radios[i-1]).prop('checked','checked');
@@ -190,7 +185,6 @@ var first_id_checked = "";
             }
         }
     }
-
     function showFilterLeft() {
         if(is_show == 0){
             $('#filter-Left').removeClass('hidden');
@@ -211,9 +205,7 @@ var first_id_checked = "";
             $('#btn_sider').css('float', 'left');
             is_show = 0;
         }
-
     }
-
 	var html_container = "<div class='whitePanel'><div class='book_container'><div id='book'></div></div></div>";
 	$("#div_container").html(html_container);
 	function finish_course(id){
@@ -221,36 +213,34 @@ var first_id_checked = "";
 			title: "Are you sure?",
 			buttons: true
 		})
-				.then((willDelete) => {
+		.then((willDelete) => {
 			if (willDelete) {
-			location.href = "<?=base_url()?>instructor/coursecreation/view_course/"+id;
-		}
-	});
+				location.href = "<?=base_url()?>instructor/coursecreation/view_course/"+id;
+			}
+		});
 	}
 	$(function(){
 		if ($("#book_path").val().indexOf(".pdf") > 0){
 			var bookOptions = {
-				height   : 500
-				,width    : 800
-				,maxHeight : 600
-				,centeredWhenClosed : true
-				,hardcovers : true
-				,pageNumbers: false
-				,toolbarPosition: 'top'
-				,toolbar : "lastLeft, left, right, lastRight, toc, zoomin, zoomout, slideshow, flipsound, fullscreen, thumbnails, download"
-				,thumbnailsPosition : 'left'
-				,responsiveHandleWidth : 50
-				,container: window
-				,containerPadding: "20px"
-				,pdf: $("#book_path").val()
+				height   : 500,
+				width    : 800,
+				maxHeight : 600,
+				centeredWhenClosed : true,
+				hardcovers : true,
+				pageNumbers: false,
+				toolbarPosition: 'top',
+				toolbar : "lastLeft, left, right, lastRight, toc, zoomin, zoomout, slideshow, flipsound, fullscreen, thumbnails, download",
+				thumbnailsPosition : 'left',
+				responsiveHandleWidth : 50,
+				container: window,
+				containerPadding: "20px",
+				pdf: $("#book_path").val()
 			};
 			$('#book').wowBook( bookOptions );
 		}else{
 			$("#div_container").html("<iframe id='course_container' src = "+$("#book_path").val()+"></iframe>");
 		}
-	})
-
-
+	});
 	function changeSelect(el,id,exam_id){
 		if (exam_id == "0"){
 			if ($('#library'+id).val().indexOf(".pdf") > 0){

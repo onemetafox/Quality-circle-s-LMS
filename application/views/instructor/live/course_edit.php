@@ -1,5 +1,3 @@
-
-
 <style>
     .control-label{
         font-size: 16px !important;
@@ -42,7 +40,7 @@
 
 <style>
     iframe{
-       
+     
         min-height: 30rem;
     }
 </style>
@@ -107,7 +105,9 @@
                                                         <div class="list-group">
                                                             <a href="javascript:void(0);" onclick="btnCreateChapter()" class="btn btn-primary modal-with-form">New Session</a></br>
                                                             <a href="javascript:void(0);" onclick="btnCreatePage()" class="btn btn-info modal-with-form">New Page</a> </br>
-                                                            <a href="#modalFormCreateExam" class="create-exam btn btn-warning modal-with-form">New Exam</a>
+                                                            <a href="#modalFormCreateExam" class="create-exam btn btn-warning modal-with-form">New Exam</a></br>
+                                                            <a href="#modalFormCreateQuiz" class="create-quiz btn modal-with-form" style="background-color: #ff6628; color: white">New Quiz</a>
+
                                                         </div>
                                                         <div id="modalFormCreateExam" class="modal-block modal-block-primary mfp-hide">
                                                             <section class="card">
@@ -135,6 +135,38 @@
                                                                     <div class="row">
                                                                         <div class="col-md-12 text-right">
                                                                             <button class="btn btn-primary modal-create-confirm"><?=$term["create"]?></button>
+                                                                            <button class="btn btn-default modal-create-dismiss"><?=$term["cancel"]?></button>
+                                                                        </div>
+                                                                    </div>
+                                                                </footer>
+                                                            </section>
+                                                        </div>
+                                                        <div id="modalFormCreateQuiz" class="modal-block modal-block-primary mfp-hide">
+                                                            <section class="card">
+                                                                <header class="card-header">
+                                                                    <h2 class="card-title">Quiz Edit</h2>
+                                                                </header>
+                                                                <div class="card-body">
+                                                                    <div class="form-group row">
+                                                                        <label class="col-sm-3 control-label text-lg-right pt-2">Quiz Page Title</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" id="quiz_page_title" name="quiz_page_title" class="form-control">
+                                                                        </div>
+                                                                        <label class="col-sm-3 control-label text-lg-right pt-2">Quiz</label>
+                                                                        <div class="col-sm-9">
+                                                                            <select class="form-control" id="quiz_id" name="quiz_id">
+                                                                                <?php foreach ($quiz_data as $data) {
+                                                                                    //$str_selected = $data['id']==$exam_id?'selected':'';
+                                                                                    print '<option value="'.$data['id'].'" >'.$data['title'].'</option>';
+                                                                                } ?>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <footer class="card-footer">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12 text-right">
+                                                                            <button class="btn btn-primary modal-create-quiz"><?=$term["create"]?></button>
                                                                             <button class="btn btn-default modal-create-dismiss"><?=$term["cancel"]?></button>
                                                                         </div>
                                                                     </div>
@@ -562,6 +594,20 @@
         }
     });
 
+    $('.create-quiz').magnificPopup({
+        type: 'inline',
+        preloader: false,
+        modal: true,
+
+        // When elemened is focused, some mobile browsers in some cases zoom in
+        // It looks not nice, so we disable it:
+        callbacks: {
+            beforeOpen: function() {
+
+            }
+        }
+    });
+
     $('.modal-create-confirm').click(function (e) {
         e.preventDefault();
         if($('.modal-create-confirm').html().indexOf('<?=$term["create"]?>') >= 0){
@@ -603,6 +649,69 @@
                     new PNotify({
                         title: '<?php echo $term['success']; ?>',
                         text: '<?php echo 'Successfully Save Exam'; ?>',
+                        type: 'success'
+                    });
+                    $.magnificPopup.close();
+                    viewList();
+                },
+                error: function(){
+                    $("#sendBtn").trigger('loading-overlay:hide');
+                    new PNotify({
+                        title: '<?php echo $term['error']; ?>',
+                        text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
+                        type: 'error'
+                    });
+                }
+            });
+        }
+
+
+    })
+
+    $('.modal-create-quiz').click(function (e) {
+        e.preventDefault();
+        if($('.modal-create-quiz').html().indexOf('<?=$term["create"]?>') >= 0)
+        {
+            $.ajax({
+                url: $('#base_url').val()+'instructor/live/save_quiz_page',
+                type: 'POST',
+                data: {'chapter_id':$('#chapter_id').val(),
+                    'course_id':$('#course_id').val(),
+                    'quiz_id':$('#quiz_id').val(),
+                    'quiz_page_title':$('#quiz_page_title').val()
+                },
+                success: function (data, status, xhr) {
+                    new PNotify({
+                        title: '<?php echo $term['success']; ?>',
+                        text: '<?php echo 'Successfully Save Quiz'; ?>',
+                        type: 'success'
+                    });
+                    $.magnificPopup.close();
+                    viewList();
+                },
+                error: function(){
+                    $("#sendBtn").trigger('loading-overlay:hide');
+                    new PNotify({
+                        title: '<?php echo $term['error']; ?>',
+                        text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
+                        type: 'error'
+                    });
+                }
+            });
+        }
+        else
+        {
+            $.ajax({
+                url: $('#base_url').val()+'instructor/live/update_quiz_page',
+                type: 'POST',
+                data: {'page_id':$('#page_id').val(),
+                    'quiz_id':$('#quiz_id').val(),
+                    'quiz_page_title':$('#quiz_page_title').val()
+                },
+                success: function (data, status, xhr) {
+                    new PNotify({
+                        title: '<?php echo $term['success']; ?>',
+                        text: '<?php echo 'Successfully Save Quiz'; ?>',
                         type: 'success'
                     });
                     $.magnificPopup.close();
@@ -739,6 +848,26 @@
                     }
                     $('.modal-create-confirm').html('Update');
                     $('.create-exam').click();
+                }
+            });
+        }
+
+        if(functionName == 'view_quiz_page'){
+            var url = "<?php echo base_url() ?>instructor/live/"+functionName;
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                success: function(data){
+                    loaderStop();
+                    $('#quiz_page_title').val(data.title);
+                    for(var i = 0;i < document.getElementById("quiz_id").length;i++){
+                        if(document.getElementById("quiz_id").options[i].value == data.quiz_id ){
+                            document.getElementById("quiz_id").selectedIndex = i;
+                        }
+                    }
+                    $('.modal-create-quiz').html('Update');
+                    $('.create-quiz').click();
                 }
             });
         }
@@ -927,6 +1056,15 @@
         view_function(formData, 'view_exam_page', 'allchapter');
     }
 
+    function btnEditquizpage(){
+
+        if($("#w4-content-new-page").hasClass("active show")) $("#w4-content").removeClass("active show");
+        $("#w4-content").addClass("active show");
+        $("#state_now").val('');
+        formData = "activity=view_chapter&course_id="+$('#course_id').val()+"&page_id="+$('#page_id').val();
+        view_function(formData, 'view_quiz_page', 'allchapter');
+    }
+
     function loaderStart(){
         jQuery("#status").fadeIn();
         jQuery("#preloader").fadeIn();
@@ -1030,6 +1168,8 @@
                 success: function (data, status, xhr) {
                     if(data == '1'){
                         btnEditexampage();
+                    }else if(data == '2'){
+                        btnEditquizpage();
                     }else{
                         btnEditpage();
                     }

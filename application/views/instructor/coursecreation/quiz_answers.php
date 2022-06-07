@@ -122,7 +122,7 @@
                                                     'correctCheck'=>$question[$count]['content']['correctCheck'],
                                                     'checkbox'=>$question[$count]['content']['checkbox'],
                                                 );
-                                    $this->load->view('admin/exam/subviews/multichoice', $checkData);
+                                    $this->load->view('instructor/exam/subviews/multichoice', $checkData);
                                     break;
                                 case 'checkbox':
                                     $checkData = array(
@@ -130,7 +130,7 @@
                                                     'correctCheck'=>$question[$count]['content']['correctCheck'],
                                                     'checkbox'=>$question[$count]['content']['checkbox'],
                                                 );
-                                    $this->load->view('admin/exam/subviews/checkbox', $checkData);
+                                    $this->load->view('instructor/exam/subviews/checkbox', $checkData);
                                     break;
                                 case 'true-false':
                                     $checkData = array(
@@ -138,22 +138,22 @@
                                                 'tftext'=>$question[$count]['content']['tf'],
                                                 'settrue'=>$question[$count]['content']['settrue'],
                                             );
-                                    $this->load->view('admin/exam/subviews/true_false', $checkData);
+                                    $this->load->view('instructor/exam/subviews/true_false', $checkData);
                                     break;
                                 case 'fill-blank':
                                     $checkData = array(
                                         'title'=>$question[$count]['ques_title'],
                                         'blank'=>$question[$count]['content']['blank'],
                                     );
-                                    $this->load->view('admin/exam/subviews/preview_fill_blank', $checkData);
+                                    $this->load->view('instructor/exam/subviews/preview_fill_blank', $checkData);
                                     break;
                                 case 'essay':
                                     
-                                    $this->load->view('admin/exam/subviews/essay');
+                                    $this->load->view('instructor/exam/subviews/essay');
                                     break;
                                 case 'matching':
                                     $this->load->view(
-                                        'admin/exam/subviews/matching',
+                                        'instructor/exam/subviews/matching',
                                         array(
                                             'content'=>$question[$count]['content']['choice'],
                                             'match'=>$question[$count]['content']['match'],

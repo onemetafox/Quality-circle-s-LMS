@@ -2,8 +2,8 @@
 
 include_once (APPPATH . '/libraries/BaseController.php');
 // require APPPATH . '/third_party/PHPExcel.php';
-require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
-include_once (APPPATH . '/third_party/iio/index.php');
+// require APPPATH . '/third_party/TCPDF-master/tcpdf.php';
+// include_once (APPPATH . '/third_party/iio/index.php');
 /**
  * Created by PhpStorm.
  * User: Timon

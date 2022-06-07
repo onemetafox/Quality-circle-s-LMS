@@ -1,6 +1,7 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 require APPPATH . '/libraries/BaseController.php';
-class Training extends BaseController {
+
+class Training extends BaseController{
     /**
      * This is default constructor of the class
      */
@@ -13,8 +14,9 @@ class Training extends BaseController {
         $this->load->model('Course_model');
         $this->load->model('Certification_model');
         $this->load->model('Exam_model');
-		$this->load->model('Countries_model');
-		$this->load->model('Location_model');		
+		$this->load->model('Location_model');
+		$this->load->model('Countries_model');	
+        $this->load->helper('common_helper');
         $this->isLoggedIn();
     }
     /**
@@ -24,7 +26,7 @@ class Training extends BaseController {
         $this->session->set_userdata('dis_month', 0);
         $this->showTraining();
     }
-
+    
     public function detail_course($row_id = 0){
         $page_path = "instructor/training/detail_course";
         $course = $this->Training_model->select($row_id);
@@ -32,18 +34,16 @@ class Training extends BaseController {
         $this->global['course_name'] = $course->title;
         $this->global['course_id'] = $row_id;
         $this->load->view($page_path, $this->global);
-        //        $this->loadViews($page_path, $this->global, NULL , NULL);
-        
     }
     
     public function createCourse(){
-		$timestamp = strtotime($this->input->post('startday'));
+        $timestamp = strtotime($this->input->post('startday'));
         $month = date('m', $timestamp);
         $sday = date('d', $timestamp);
         $course_data['title'] = $this->input->post('title');
 		$course_data['subtitle'] = $this->input->post('subtitle');
-		$course_data['startday'] = $this->input->post('startday');
-		$course_data['endday'] = $this->input->post('endday');
+		$course_data['startday'] = NULL;
+		$course_data['endday'] = NULL;
 		$standardids = json_encode($this->input->post('standard_id[]'));
 		$course_data['standard_id'] = $standardids;		
         $course_data['description'] = $this->input->post('description');
@@ -99,8 +99,9 @@ class Training extends BaseController {
             $course_data['objective_img'] = str_replace("./", "", $rslt['path']);
         }else{
             $course_data['objective_img'] = str_replace("./", "", $objective_img_url);
-        }				
+        }
         $res = $this->Training_model->insert_course($course_data);
+		
 		if(!empty($_REQUEST['number'])){
 			$newstring = preg_replace('~[^A-Za-z0-9 ?.!]~','',$this->input->post('number'));
 			$return = '';
@@ -110,21 +111,19 @@ class Training extends BaseController {
 			$course_datas['number'] = $return.'_'.$res;
 		}
 		$this->Training_model->update_course($course_datas, $res);
-        $data['month'] = $month;
+        /*$data['month'] = $month;
         $data['sday'] = $sday;
-        $data['year'] = $year;
-        $data['location'] = $this->input->post('location');
         $data['training_course_id'] = $res;
-        $this->Training_model->insert_time($data);
+		$data['location'] = $course_data['location'];
+		$data['date_str'] = $timestamp;		
+        $this->Training_model->insert_time($data);*/
         $this->response($res);
     }
     
     public function getPayUser(){
-        $id = $this->input->post('id');
         $tid = $this->input->post('tid');
-        $company = $this->session->get_userdata() ['company_id'];
         $res = $this->Training_model->getPayUser($tid);
-        foreach ($res as $key => $row){
+        foreach($res as $key => $row){
             $res[$key]["no"] = $key + 1;
         }
         $records["data"] = $res;
@@ -150,7 +149,7 @@ class Training extends BaseController {
 		$course_data['startday'] = NULL;
 		$course_data['endday'] = NULL;
 		$standardids = json_encode($this->input->post('standard_id[]'));
-		$course_data['standard_id'] = $standardids;
+		$course_data['standard_id'] = $standardids; 
 		if(!empty($_REQUEST['number'])){
 			$newstring = preg_replace('~[^A-Za-z0-9 ?.!]~','',$this->input->post('number'));
 			$return = '';
@@ -225,6 +224,7 @@ class Training extends BaseController {
     public function add_time(){
         $startDays = $this->input->post('startdays');
 		$startTime = $this->input->post('starttime');
+        $endTime = getEndTime($startTime);
 		$startDays = explode('-',$startDays);
 		$year = $startDays[0];
 		$month = $startDays[1];
@@ -255,6 +255,7 @@ class Training extends BaseController {
 		
 		$data['start_day'] = $this->input->post('startdays');
 		$data['start_time'] = $startTime;
+        $data['end_time'] = $endTime;
 		$data['date_str'] = strtotime($data['start_day'].' '.$data['start_time']);	
         $data['training_course_id'] = $id;
         return $this->Training_model->insert_time($data);
@@ -263,7 +264,7 @@ class Training extends BaseController {
     public function getinstructor(){
         $company_id = $this->session->get_userdata() ['company_id'];
         $table_data = $this->User_model->getInstructor($company_id);
-        foreach ($table_data["data"] as $key => $row){
+        foreach($table_data["data"] as $key => $row){
             $table_data["data"][$key]["no"] = $key + 1;
         }
         $records["data"] = $table_data["data"];
@@ -278,8 +279,9 @@ class Training extends BaseController {
     }
     
     public function update_time(){
-        $startDays = $this->input->post('startdays');
+		$startDays = $this->input->post('startdays');
 		$startTime = $this->input->post('starttime');
+        $endTime = getEndTime($startTime);
 		$startDays = explode('-',$startDays);
 		$year = $startDays[0];
 		$month = $startDays[1];
@@ -300,6 +302,7 @@ class Training extends BaseController {
 		$data['country_id'] = $country_id;
 		$data['state_id'] = $state_id;
 		$data['city_id'] = $city_id;
+		
 		$data['location'] = $countryName;
 		if($stateName != ''){
 			$data['location'] = $countryName.', '.$stateName;
@@ -310,7 +313,8 @@ class Training extends BaseController {
 		
 		$data['start_day'] = $this->input->post('startdays');
 		$data['start_time'] = $startTime;
-		$data['date_str'] = strtotime($data['start_day'].' '.$data['start_time']);		 
+		$data['date_str'] = strtotime($data['start_day'].' '.$data['start_time']);		
+        $data['end_time'] = $endTime;
 		$time_id = $this->input->post('time_id');
         $data['training_course_id'] = $id;
        	return $this->Training_model->update_time($data, array('id' => $time_id));	
@@ -330,7 +334,8 @@ class Training extends BaseController {
 	public function showTrainingFilter($course_id = NULL){
         $this->load->library('Sidebar');
         $side_params = array('selected_menu_id' => '6');
-        $this->global["sidebar"] = $this->sidebar->generate($side_params, $this->role);			
+        $this->global["sidebar"] = $this->sidebar->generate($side_params, $this->role);
+        if($this->isInstructor()){			
             $training_data = array();
             $result_list = $this->Training_model->getListByCompanyId($this->session->get_userdata() ['company_id']);	
 			if($course_id != ''){
@@ -365,12 +370,9 @@ class Training extends BaseController {
             /*print_r($training_data['category']);
             die();*/
 			
-			$training_data['category'] = $this->Course_model->getAll(array('create_id' => $this->session->get_userdata() ['company_id'], 'course_type' => 0, 'active' => 1));
-			$training_data['category_ids'] = $this->Category_model->getListByCompanyID($this->session->get_userdata() ['company_id']);
-			$training_data['course_list'] = $res_course_list;
-			$training_data['training_list'] = $time_list;
-			$training_data['all_course_list'] = $res_course_list;
-		
+            $training_data['course_list'] = $res_course_list;
+            $training_data['training_list'] = $time_list;
+			$training_data['all_course_list'] = $res_all_course_list;
             $dis_month = $_SESSION['dis_month'];
             if(intval($d) > 0){
                 $dis_month = $dis_month + 1;
@@ -382,45 +384,70 @@ class Training extends BaseController {
             $training_data['dis_month'] = $dis_month;
 			$training_data['countries'] = $this->Location_model->getAllCounties();
             $this->loadViews("instructor/training/training_list", $this->global, $training_data, NULL);
+        }else{
+            $this->loadViews("access", $this->global, NULL , NULL);
+        }
     }
     
     public function showTraining($d = 0){
         $this->load->library('Sidebar');
-        $side_params = array('selected_menu_id' => '5');
+        $side_params = array('selected_menu_id' => '6');
         $this->global["sidebar"] = $this->sidebar->generate($side_params, $this->role);
-        $training_data = array();
-        $result_list = $this->Training_model->getListByCompanyId($this->session->get_userdata() ['company_id']);
-        $res_id_list = $this->Training_model->getListCourseId($this->session->get_userdata() ['company_id']);
-        $time_list = array();
-        foreach ($res_id_list as $key => $row){
-            foreach ($result_list as $k => $r){
-                if ($r['training_course_id'] == $row['id']){
-                    if (!array_key_exists($r['month'], $time_list[$row['id']])) $time_list[$row['id']][$r['month']] = array();
-                    array_push($time_list[$row['id']][$r['month']], $r);
+        if($this->isInstructor()){			
+            $training_data = array();
+            $result_list = $this->Training_model->getListByCompanyId($this->session->get_userdata() ['company_id']);			
+            $res_id_list = $this->Training_model->getListCourseId($this->session->get_userdata() ['company_id']);
+            $time_list = array();
+            foreach($res_id_list as $key => $row){
+                foreach($result_list as $k => $r){
+                    if($r['training_course_id'] == $row['id']){
+                        if(!array_key_exists($r['month'], $time_list[$row['id']])) $time_list[$row['id']][$r['month']] = array();
+                        array_push($time_list[$row['id']][$r['month']], $r);
+                    }
                 }
             }
+            // var_dump($time_list);
+            // die();
+            $res_course_list = array();
+            foreach($res_id_list as $key => $row){
+                $res_course_list[$row['id']] = $row;
+            }
+            //$training_data['category'] = $this->Category_model->getListByCompanyID($this->session->get_userdata()['company_id']);
+            $training_data['category'] = $this->Course_model->getAll(array('create_id' => $this->session->get_userdata() ['company_id'], 'course_type' => 0, 'active' => 1));
+			$training_data['category_ids'] = $this->Category_model->getListByCompanyID($this->session->get_userdata() ['company_id']);
+            /*print_r($training_data['category']);
+            die();*/
+			
+            $training_data['course_list'] = $res_course_list;
+            $training_data['training_list'] = $time_list;
+			$training_data['all_course_list'] = $res_course_list;
+            $dis_month = $_SESSION['dis_month'];
+            if(intval($d) > 0){
+                $dis_month = $dis_month + 1;
+            }
+            if(intval($d) < 0){
+                $dis_month = $dis_month - 1;
+            }
+            $this->session->set_userdata('dis_month', $dis_month);
+            $training_data['dis_month'] = $dis_month;
+			$training_data['countries'] = $this->Location_model->getAllCounties();
+            $this->loadViews("instructor/training/training_list", $this->global, $training_data, NULL);
+        }else{
+            $this->loadViews("access", $this->global, NULL , NULL);
         }
-        $res_course_list = array();
-        foreach ($res_id_list as $key => $row){
-            $res_course_list[$row['id']] = $row;
+    }
+
+    public function delete(){
+        $out_data = array();
+        $id = $this->input->post('id');
+        if($this->Training_model->deleteCourse($id)){
+            $out_data["status"] = "Success";
+            $out_data["message"] = "";
+        }else{
+            $out_data["status"] = "Fail";
+            $out_data["message"] = "Could not delete the row.";
         }
-        // $training_data['category'] = $this->Category_model->getListByCompanyID($this->session->get_userdata()['company_id']);
-        $training_data['category'] = $this->Course_model->getAll(array('create_id' => $this->session->get_userdata() ['company_id'], 'course_type' => 0, 'active' => 1));
-		$training_data['category_ids'] = $this->Category_model->getListByCompanyID($this->session->get_userdata() ['company_id']);
-        $training_data['course_list'] = $res_course_list;
-        $training_data['training_list'] = $time_list;
-		$training_data['all_course_list'] = $res_course_list;
-        $dis_month = $_SESSION['dis_month'];
-        if (intval($d) > 0){
-            $dis_month = $dis_month + 1;
-        }
-        if (intval($d) < 0){
-            $dis_month = $dis_month - 1;
-        }
-        $this->session->set_userdata('dis_month', $dis_month);
-        $training_data['dis_month'] = $dis_month;
-		$training_data['countries'] = $this->Location_model->getAllCounties();
-        $this->loadViews("instructor/training/training_list", $this->global, $training_data, NULL);
+        $this->response($out_data);
     }
 	
 	public function deleteIltCourse(){
@@ -436,23 +463,10 @@ class Training extends BaseController {
         $this->response($out_data);
     }
     
-    public function delete(){
-        $out_data = array();
-        $id = $this->input->post('id');
-        if ($this->Training_model->deleteCourse($id)){
-            $out_data["status"] = "Success";
-            $out_data["message"] = "";
-        } else {
-            $out_data["status"] = "Fail";
-            $out_data["message"] = "Could not delete the row.";
-        }
-        $this->response($out_data);
-    }
-    
     public function getuser(){
         $company_id = $this->session->get_userdata() ['company_id'];
         $table_data = $this->User_model->getUser($company_id);
-        foreach ($table_data["data"] as $key => $row){
+        foreach($table_data["data"] as $key => $row){
             $table_data["data"][$key]["no"] = $key + 1;
         }
         $records["data"] = $table_data["data"];
@@ -460,5 +474,6 @@ class Training extends BaseController {
         $records['recordsFiltered'] = $table_data['filtertotal'];
         $this->response($records);
     }
+
 }
 ?>

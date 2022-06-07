@@ -54,7 +54,7 @@
                             $(td).html('---');
                         }
                     }
-                },{         //http://localhost/ols/admin/examhistory/preview_history/24
+                },{         //http://localhost/ols/instructor/examhistory/preview_history/24
                     "targets": [6],
                     "createdCell": function (td, cellData, rowData, row, col) {
                         $(td).html('<a class="btn btn-default btn-sm" target="blank" href="<?= base_url()?>instructor/coursecreation/view_quiz_answers/'+rowData['group_id']+'/'+rowData['user_id']+'">View Quiz Answers</a>');

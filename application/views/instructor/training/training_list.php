@@ -1,16 +1,11 @@
 <style>
-   td:hover{
-   		background: grey;
-   }
-   .datepicker> .datepicker-days{
-   		display: initial;
-   }
+   td:hover{ background: grey; }
+   .datepicker> .datepicker-days{ display: initial; }
 </style>
 <section role="main" class="content-body">
    <header class="page-header">
       <h2><?=$term["instructorledtraining"]?></h2>
-      <div class="right-wrapper">
-      </div>
+      <div class="right-wrapper"></div>
    </header>
    <input type="hidden" id="base_url" value="<?= base_url()?>">
    <!-- start: page -->
@@ -72,7 +67,7 @@
                      </form>
                   </div>
                   <a class="modal-with-form add-course-column" href="#modalFormNewCourse" hidden>
-                  <button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add-course"> <i class="fa fa-plus"></i> <?=$term["addnewcolumn"]?></button>
+					<button type="button" class="mb-1 mt-0 mr-1 btn btn-default" id="btn-add-course"> <i class="fa fa-plus"></i> <?=$term["addnewcolumn"]?></button>
                   </a>
                   <div id="modalFormNewCourse" class="modal-block modal-block-lg mfp-hide">
                      <form id="new-course-form" action="" method="POST" novalidate="novalidate">
@@ -86,10 +81,10 @@
                                  <label class="col-sm-2 control-label text-lg-right pt-2"><?=$term['course']?></label>
                                  <div class="col-sm-6">
                                     <select class="form-control" id="category_id" name="category_id">
-                                    	<option value="">Select Course</option>
-                                       	<?php foreach($category as $item){ ?>
-                                       	<option value="<?php echo $item->id; ?>"><?php echo $item->title; ?></option>
-                                       	<?php }  ?>
+                                       <option value="">Select Course</option>
+                                       <?php foreach($category as $item){ ?>
+                                       <option value="<?php echo $item->id; ?>"><?php echo $item->title; ?></option>
+                                       <?php }  ?>
                                     </select>
                                  </div>
                                  <label class="col-sm-2 control-label text-lg-right pt-2">Duration(day)</label>
@@ -112,7 +107,7 @@
                               <div class="form-group row">
                                  <label class="col-sm-3 control-label text-lg-right"><?=$term['title']?></label>
                                  <div class="col-sm-9">
-                                 	<input type="text" id="title" name="title" readonly="readonly" class="form-control" required>                                    
+                                    <input type="text" id="title" name="title" readonly="readonly" class="form-control" required>                                    
                                  </div>
                               </div>
                               <div class="form-group row">
@@ -121,32 +116,6 @@
                                     <input type="text" id="subtitle" name="subtitle" class="form-control" required>
                                  </div>
                               </div>
-                              <?php /*?><div class="form-group row">
-                                 <label class="col-lg-3 control-label text-lg-right pt-2"><?=$term["startday"]?></label>
-                                 <div class="col-lg-9">
-                                    <div class="input-group">
-                                       <span class="input-group-prepend">
-                                       <span class="input-group-text">
-                                       <i class="fas fa-calendar-alt"></i>
-                                       </span>
-                                       </span>
-                                       <input type="text" data-plugin-datepicker="" value="" class="form-control" id="startday" name="startday" data-date-format="yyyy-mm-dd">
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="form-group row">
-                                 <label class="col-lg-3 control-label text-lg-right pt-2">End Day</label>
-                                 <div class="col-lg-9">
-                                    <div class="input-group">
-                                       <span class="input-group-prepend">
-                                       <span class="input-group-text">
-                                       <i class="fas fa-calendar-alt"></i>
-                                       </span>
-                                       </span>
-                                       <input type="text" data-plugin-datepicker="" value="" class="form-control" id="endday" name="endday" data-date-format="yyyy-mm-dd">
-                                    </div>
-                                 </div>
-                              </div> <?php */?>                             
                               <input type="hidden" name="course_type" id="course_type"/>
                               <div class="form-group row div-location" style="display:none;">
                                  <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["location"]?></label>
@@ -155,32 +124,31 @@
                                  </div>
                               </div>
                               <div id="div-address" style="display:none;">
-                                  <div class="form-group row">
-                                     <label class="col-sm-3 control-label text-lg-right pt-2">Address</label>
-                                     <div class="col-sm-9">
-                                        <textarea class="form-control" rows="3"  id="address" name="address"></textarea>
-                                     </div>
-                                  </div>
-                                  <div class="form-group row">
-                                     <label class="col-sm-3 control-label text-lg-right pt-2">Country</label>
-                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="country" name="country">
-                                     </div>
-                                  </div>
-                                  <div class="form-group row">
-                                     <label class="col-sm-3 control-label text-lg-right pt-2">State</label>
-                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="state" name="state">
-                                     </div>
-                                  </div>
-                                  <div class="form-group row">
-                                     <label class="col-sm-3 control-label text-lg-right pt-2">City</label>
-                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="city" name="city">
-                                     </div>
-                                  </div>
+                                 <div class="form-group row">
+                                    <label class="col-sm-3 control-label text-lg-right pt-2">Address</label>
+                                    <div class="col-sm-9">
+                                       <textarea class="form-control" rows="3"  id="address" name="address"></textarea>
+                                    </div>
+                                 </div>
+                                 <div class="form-group row">
+                                    <label class="col-sm-3 control-label text-lg-right pt-2">Country</label>
+                                    <div class="col-sm-9">
+                                       <input type="text" class="form-control" id="country" name="country">
+                                    </div>
+                                 </div>
+                                 <div class="form-group row">
+                                    <label class="col-sm-3 control-label text-lg-right pt-2">State</label>
+                                    <div class="col-sm-9">
+                                       <input type="text" class="form-control" id="state" name="state">
+                                    </div>
+                                 </div>
+                                 <div class="form-group row">
+                                    <label class="col-sm-3 control-label text-lg-right pt-2">City</label>
+                                    <div class="col-sm-9">
+                                       <input type="text" class="form-control" id="city" name="city">
+                                    </div>
+                                 </div>
                               </div>
-                              
                               <div class="form-group row">
                                  <label class="col-sm-3 control-label text-lg-right pt-2">Highlights</label>
                                  <div class="col-sm-7 addmorehigh">
@@ -188,26 +156,28 @@
                                     <input type="text" placeholder="highlight" required="required" class="highlights form-control" name="highlights[]">
                                     <input type="text" placeholder="highlight" required="required" class="highlights form-control" name="highlights[]">                                    
                                  </div>
-                                 <a href="javascript:void(0)"><div id="addmorebtn" class="col-sm-2 btn">ADD MORE</div></a>
+                                 <a href="javascript:void(0)">
+                                    <div id="addmorebtn" class="col-sm-2 btn">ADD MORE</div>
+                                 </a>
                               </div>
                               <div class="form-group row">
                                  <label class="col-sm-3 control-label text-lg-right">Category</label>
                                  <div class="col-sm-9">
                                     <select class="form-control" id="category" onchange="getCategoryTitle()" name="category">
                                        <?php foreach($category_ids as $items){ ?>
-											<option value="<?php echo $items['id']; ?>"><?php echo $items['name']; ?></option>
+                                       <option value="<?php echo $items['id']; ?>"><?php echo $items['name']; ?></option>
                                        <?php }  ?>
                                     </select>
                                  </div>
-                           		</div>
-                                <div class="form-group row">
-                                   <label class="col-sm-3 control-label text-lg-right"><?=$term['standard']?></label>
-                                   <div class="col-sm-9">
-                                      <select class="form-control" id="standard_id" name="standard_id[]" multiple="multiple"></select>
-                                   </div>
-                                </div>
-                                <input type="hidden" name="number" id="number">
-                                <div class="form-group row">
+                              </div>
+                              <div class="form-group row">
+                                 <label class="col-sm-3 control-label text-lg-right"><?=$term['standard']?></label>
+                                 <div class="col-sm-9">
+                                    <select class="form-control" id="standard_id" name="standard_id[]" multiple="multiple"></select>
+                                 </div>
+                              </div>
+                              <input type="hidden" name="number" id="number">
+                              <div class="form-group row">
                                  <label class="col-sm-3 control-label text-lg-right pt-2">Number</label>
                                  <div class="col-sm-9">
                                     <input type="text" disabled="disabled" class="form-control number_value" />
@@ -218,7 +188,7 @@
                                  <div class="col-sm-9">
                                     <textarea class="form-control" data-plugin-markdown-editor rows="3" id="objective" name="objective"></textarea>
                                  </div>
-                              </div>                              
+                              </div>
                               <div class="form-group row">
                                  <label class="col-lg-3 control-label text-lg-right pt-2"><?=$term["learningobjectives"]?> File Upload</label>
                                  <div class="col-sm-3">
@@ -337,7 +307,7 @@
                                  <label class="col-sm-3 control-label text-lg-right pt-2">City</label>
                                  <div class="col-sm-6">
                                      	<select class="form-control" required id="city" name="city" style="width:264px;">
-											<option value="" >Select City</option>
+											         <option value="" >Select City</option>
                                     	</select>
                                  </div>
                               </div>
@@ -350,59 +320,18 @@
                             <div class="form-group row">
                             	<label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["starttime"]?></label>
                                 <div class="col-sm-6">
-                                    <div class="input-group">
-                                    <span class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="far fa-clock"></i>
-                                        </span>
-                                    </span>
-                                    <input type="text" id="starttime" name="starttime" data-plugin-timepicker class="form-control" data-plugin-options="{ &quot;showMeridian&quot;: true }">
-                                    </div>
+                                    <select class="form-control" id="starttime" name="starttime" style="width:264px;">
+                                       <option value="7:00 AM">7:00 AM</option>
+                                       <option value="8:00 AM">8:00 AM</option>
+                                       <option value="9:00 AM">9:00 AM</option>
+                                       <option value="10:00 AM">10:00 AM</option>
+                                    </select>
                                 </div>
                             </div>
                               <input class="hidden" name="year" id="change_year">
                               <input class="hidden" name="month" id="change_month">
                               <input class="hidden" name="change_day" id="change_day">      
                               <input class="hidden" name = "year" id="change_year">
-                              <?php /*?>
-                              <div class="form-group row">
-                                 <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["month"]?></label>
-                                 <div class="col-sm-6">
-                                    <select class="form-control mb3" id="change_month" name="change_month" >
-                                       <option value='1'>Jan</option>
-                                       <option value='2'>Feb</option>
-                                       <option value='3'>Mar</option>
-                                       <option value='4'>Apr</option>
-                                       <option value='5'>May</option>
-                                       <option value='6'>Jun</option>
-                                       <option value='7'>Jul</option>
-                                       <option value='8'>Aug</option>
-                                       <option value='9'>Sep</option>
-                                       <option value='10'>Oct</option>
-                                       <option value='11'>Nov</option>
-                                       <option value='12'>Dec</option>
-                                    </select>
-                                 </div>
-                              </div>
-                              <div class="form-group row">
-                                 <label class="col-sm-3 control-label text-lg-right pt-2">Start Day</label>
-                                 <div class="col-sm-6">
-                                    <div data-plugin-spinner="" data-plugin-options="{ &quot;value&quot;:1, &quot;min&quot;: 1, &quot;max&quot;: 30 }">
-                                       <div class="input-group" style="width:150px;">
-                                          <input type="text" id="change_day" name="change_day" class="spinner-input form-control" maxlength="2" >
-                                          <div class="input-group-append">
-                                             <button type="button" class="btn btn-default spinner-up">
-                                             <i class="fas fa-angle-up"></i>
-                                             </button>
-                                             <button type="button" class="btn btn-default spinner-down">
-                                             <i class="fas fa-angle-down"></i>
-                                             </button>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <?php */?>
                               <div class="form-group row">
                                  <div class="col-sm-1"></div>
                                  <div class="col-sm-10">
@@ -431,26 +360,26 @@
             <div class="card-body">
                <footer class="card-footer">
                   <div class="row">
-                    <div class="col-md-6 text-left">
+                     <div class="col-md-6 text-left">
                         <div class="row">
                            <div class="col-sm-6">
-                                <select data-plugin-selectTwo class="form-control" id="courses_filter" name="courses_filter">
-                                    <option value="" >Select Course</option>
-                                    <?php foreach ($all_course_list as $ckey => $course_data){ ?>
-                                        <option value=<?php echo $course_data['course_id']; ?>><?php echo $course_data['title']; ?></option>
-                                    <?php }?>
-                                </select>
+                              <select data-plugin-selectTwo class="form-control" id="courses_filter" name="courses_filter">
+                                 <option value="" >Select Course</option>
+                                 <?php foreach ($all_course_list as $ckey => $course_data){ ?>
+                                 <option value=<?php echo $course_data['course_id']; ?>><?php echo $course_data['title']; ?></option>
+                                 <?php }?>
+                              </select>
                            </div>
                            <div class="col-sm-6">
-                                <a id="filter" class="btn btn-primary">Search</a>
-                                <a href="<?=base_url()?>instructor/training/" class="btn btn-default">Reset</a>
+                              <a id="filter" class="btn btn-primary">Search</a>
+                              <a href="<?=base_url()?>instructor/training/" class="btn btn-default">Reset</a>
                            </div>
-                       </div>
-                    </div>
-                    <div class="col-md-6 text-right">
+                        </div>
+                     </div>
+                     <div class="col-md-6 text-right">
                         <a id="preview" class="btn btn-primary" href="<?=base_url()?>instructor/training/showTraining/-1"><<</a>
                         <a id="next" class="btn btn-primary" href="<?=base_url()?>instructor/training/showTraining/1">>></a>
-                    </div>
+                     </div>
                   </div>
                </footer>
                <input type="hidden" name="dis_month" id="dis_month" value="<?=$dis_month?>">
@@ -508,75 +437,70 @@
                             if($current_month > 12){
                                 $current_month = $current_month - 12;
                                 $current_year = $current_year + 1;
-                            }
-                            
+                            }                            
                         }
                         ?>
                   </tr>
                   <div id="getCourseAlllist">
-                  <?php
-                     foreach($course_list as $key => $rows){
-               		?>
-                  <tr>
-                  	<td width="6%">                                
-                        <a class="btn btn-danger" onclick="deleteIltCourse(<?=$key?>)" href="javascript:void(0);">Delete</a>
-                    </td>
-                    <td>
-                    <a href="javascript:updateCourse(<?=$key?>,<?=$rows['course_id']?>)"><?=$rows['title']?></a></td>
-                    <td><?=$rows['duration']?></td>
-                    <?php
-                        $current_month = intval(date("m")) +$dis_month;
-                        $current_year = intval(date("Y"));
-                        if($current_month < 1){
-                            $current_month = 12;
-                            $current_year = $current_year - 1;
-                        }
-                        $i = 0;
-                        while($i < 8){
-                            $i ++;
-                            $is_exist = 0;
-                            if($current_month > 12) $current_month = $current_month-12;
-                            foreach ($training_list[$key] as $k => $r){
-                                if($k == $current_month) {
-                                    $is_exist = 1;
-              		?>
-                    <td onclick="javascript:addTime(<?=$key?>,<?=$current_month?>,<?=$current_year?>)">
-						<?php foreach ($r  as $n => $j){                                                    
-                           if($j['year'] == $current_year){ ?>                           
-                        <a class="btn btn-xs btn-primary " href="javascript:updateTime(<?=$key?>,<?=$j['month']?>,<?=$j['sday']?>, '<?=$j['location']?>', <?=$j['id']?>,<?=$current_year?>,'<?=$j['start_day']?>','<?=$j['start_time']?>','<?=$j['country_id']?>','<?=$j['state_id']?>','<?=$j['city_id']?>')" style="font-size: 8px; color: white">
-                        <?= $j['sday'] ?> -
-                        <?php
-                           $timestamp = mktime(0, 0, 0, $current_month, 1, intval(date("y")));
-                           $last_date = date('t', $timestamp);						   
-                           if($j['sday']+$j['duration']>$last_date){
-                               echo $j['sday']+$j['duration']-$last_date-1;
-                           }else{
-                               echo $j['sday']+$j['duration']-1;
-                           }  ?>
+                     <?php foreach($course_list as $key => $rows){ ?>
+                     <tr>
+                        <td width="15%">                                
+                           <a class="btn btn-danger" onclick="deleteIltCourse(<?=$key?>)" href="javascript:void(0);">Delete</a>
                            
-                        :<?= $j['location'] ?>
-                        </a></br>
-                        <?php }}?>
-                     </td>
-                     <?php
-                        }
-                        }
-                        if($is_exist == 0) {
-                   	?>
-                     <td onclick="javascript:addTime(<?=$key?>,<?=$current_month?>,<?=$current_year?>)"></td>
-                     <?php
-                        }
-                        $current_month++;
-                        if($current_month > 12){
-                            $current_month = $current_month - 12;
-                            $current_year = $current_year + 1;
-                        }
-                        }
-                        ?>
-                  </tr>
-                  <?php
-                     }
-					?>
+                           <a href="#republish_modal" class="btn btn-success republish_modal" onclick="republishCourse(<?=$rows['id']?>)" href="javascript:void(0);">Republish</a>
+                        </td>
+                        <td>
+                           <a href="javascript:updateCourse(<?=$key?>,<?=$rows['course_id']?>)"><?=$rows['title']?></a>
+                        </td>
+                        <td><?=$rows['duration']?></td>
+                        <?php
+                           $current_month = intval(date("m")) +$dis_month;
+                           $current_year = intval(date("Y"));
+                           if($current_month < 1){
+                               $current_month = 12;
+                               $current_year = $current_year - 1;
+                           }
+                           $i = 0;
+                           while($i < 8){
+                               $i ++;
+                               $is_exist = 0;
+                               if($current_month > 12) $current_month = $current_month-12;
+                               foreach ($training_list[$key] as $k => $r) {
+                                   if($k == $current_month) {
+                                       $is_exist = 1;
+                           ?>
+                        <td onclick="javascript:addTime(<?=$key?>,<?=$current_month?>,<?=$current_year?>)">
+                           <?php foreach ($r  as $n => $j){                                                    
+                              if($j['year'] == $current_year){?>                           
+                           		<a class="btn btn-xs btn-primary " href="javascript:updateTime(<?=$key?>,<?=$j['month']?>,<?=$j['sday']?>, '<?=$j['location']?>', <?=$j['id']?>,<?=$current_year?>,'<?=$j['start_day']?>','<?=$j['start_time']?>','<?=$j['country_id']?>','<?=$j['state_id']?>','<?=$j['city_id']?>')" style="font-size: 8px; color: white">
+                           <?= $j['sday'] ?> -
+                           <?php
+                              $timestamp = mktime(0, 0, 0, $current_month, 1, intval(date("y")));
+                              $last_date = date('t', $timestamp);						   
+                              if($j['sday']+$j['duration']>$last_date){
+                                  echo $j['sday']+$j['duration']-$last_date-1;
+                              }else{
+                                  echo $j['sday']+$j['duration']-1;
+                              }  ?>
+                           :<?= $j['location'] ?>
+                           </a></br>
+                           <?php }} ?>
+                        </td>
+                        <?php
+                           } }
+                           if($is_exist == 0) {
+                       	?>
+                        <td onclick="javascript:addTime(<?=$key?>,<?=$current_month?>,<?=$current_year?>)"></td>
+                        <?php
+                           }
+                           $current_month++;
+                           if($current_month > 12){
+                               $current_month = $current_month - 12;
+                               $current_year = $current_year + 1;
+                           } }
+                       	?>
+                     </tr>
+                     <?php } ?>
                   </div>
                </table>
             </div>
@@ -591,6 +515,68 @@
          </section>
       </div>
    </div>
+   <div id="republish_modal" class="modal-block modal-block-primary mfp-hide" style="max-width: 800px!important">
+		<form id="republish_form" action="" method="POST" novalidate="novalidate">
+		    <input type="hidden" id="republish-id" name="republish-id" class="form-control" >
+          <input type="hidden" id="republish-type" name="republish-type" class="form-control" >
+		    <section class="card">
+		        <header class="card-header">
+		            <h2 class="card-title"><?=$term["republish"]?></h2>
+		        </header>
+		        <div class="card-body">
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["title"]?></label>
+                     <div class="col-sm-6">
+                        <input type="text" class="form-control" readonly id="republish-title">
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["price"]?></label>
+                     <div class="col-sm-6">
+                        <input id="republish-price" name="republish-price" onchange="changePrice()" class="form-control">
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["discount"]?></label>
+                     <div class="col-sm-6">
+                        <input id="republish-discount" onchange="changePrice()" name= "republish-discount" class="form-control">
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["amount"]?></label>
+                     <div class="col-sm-6">
+                        <input id="republish-amount" name="republish-amount" readonly class="form-control">
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["startday"]?></label>
+                     <div class="col-sm-6">
+                     <input data-plugin-datepicker id="startdays" name="startdays"  class="form-control" data-date-format="yyyy-mm-dd">
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["starttime"]?></label>
+                     <div class="col-sm-6">
+                        <select class="form-control" id="starttime" name="starttime" style="width:264px;">
+                           <option value="7:00 AM">7:00 AM</option>
+                           <option value="8:00 AM">8:00 AM</option>
+                           <option value="9:00 AM">9:00 AM</option>
+                           <option value="10:00 AM">10:00 AM</option>
+                        </select>
+                     </div>
+                  </div>
+		        </div>
+		        <footer class="card-footer">
+		            <div class="row">
+		                <div class="col-md-12 text-right">
+							<a class="btn btn-default" href="javascript:republish()" style="color:#333"><i class="fas fa-plus"></i> <?=$term["republish"]?> </a>
+		                    <button class="btn btn-default modal-change-dismiss"><?=$term["cancel"]?></button>
+		                </div>
+		            </div>
+		        </footer>
+		    </section>
+		</form>
+	</div>
    <a class="modal-with-form invite_modal" href="#modalForm" hidden>
    </a>
    <div id="modalForm" class="modal-block modal-block-primary mfp-hide" style="max-width: 800px!important">
@@ -600,7 +586,6 @@
             <header class="card-header">
                <h2 class="card-title"><?=$term["inviteuser"]?></h2>
             </header>
-
             <div class="card-body">
                <div class="form-group row">
                   <div class="col-sm-1"></div>
@@ -613,6 +598,7 @@
             <footer class="card-footer">
                <div class="row">
                   <div class="col-md-12 text-right">
+                     <a href="#add_exist_modal" class="btn btn-default add_exist_modal" style="color:#333"><i class="fas fa-plus"></i> <?=$term["inviteuser"]?> </a>
                      <a href="#add_modal" class="btn btn-default add_modal" style="color:#333"><i class="fas fa-plus"></i> <?=$term["add"]?> </a>
                      <button class="btn btn-default modal-change-dismiss"><?=$term["cancel"]?></button>
                   </div>
@@ -662,961 +648,1153 @@
          </section>
       </form>
    </div>
+   <div id="add_exist_modal" class="modal-block modal-block-primary mfp-hide" style="min-width: 900px;">
+      <form id="add_exist_form" action="" method="POST" novalidate="novalidate">
+         <input type="hidden" name="course_id" class="form-control" >
+         <input type="hidden" name="course_type" value="0" class="form-control" >
+         <input type="hidden" name="add_ilt_time_id" value="" class="form-control" >
+         <section class="card">
+            <header class="card-header">
+               <h2 class="card-title"><?=$term["add"]?> <?=$term["inviteuser"]?></h2>
+            </header>
+            <div class="card-body">
+               <table class="table table-responsive-md table-striped table-bordered mb-0" id="datatable_addexistuser"></table>
+            </div>
+            <footer class="card-footer">
+               <div class="row">
+                  <div class="col-md-12 text-right">
+                     <button class="btn btn-default modal-change-dismiss"><?=$term["cancel"]?></button>
+                  </div>
+               </div>
+            </footer>
+         </section>
+      </form>
+   </div>
    <!-- end: page -->
 </section>
 <script>
-	function getCategoryTitle(){
-		$('#number').val($( "#category option:selected" ).text());
-	}
-	$('#addmorebtn').on('click',function(){
-		$('.addmorehigh').append('<input type="text" placeholder="highlight" class="highlights form-control" name="highlights[]">');
-	});
-	
-	function deletehighlight(delid){
-		$('#deletebtn_'+delid).remove();
-	}
-	
-	function deleteIltCourse(deleteId){
-        (new PNotify({
-            title: "<?php echo $term['confirmation']; ?>",
-            text: "<?php echo $term['areyousuretodelete']; ?>",
-            icon: 'fas fa-question',
-            confirm: {
-                confirm: true
-            },
-            button: {
-                closer: false,
-                sticker: false
-            },
-            addclass: 'stack-modal',
-            stack: {
-                'dir1': 'down',
-                'dir2': 'right',
-                'modal':true
-            }
-        })).get().on('pnotify.confirm', function(){
-					
-			var url = '<?= base_url()?>instructor/training/deleteIltCourse/'+deleteId;
-			
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: {id:deleteId},
-                success: function (data, status, xhr){
-                    if(status == "success") {
-                        document.location.href = '';
-                    } else {
-                        new PNotify({
-
-                            title: 'Fail!',
-                            text: status,
-                            type: 'danger'
-                        });
-                    }
-                },
-                error: function(){
-                    new PNotify({
-                        title: '<?php echo $term['error']; ?>',
-                        text: '<?php echo $term['youcantdeletethisitem']; ?>',
-                        type: 'error'
-                    });
-                }
+   function republish(){
+      var formData = new FormData($('#republish_form')[0]);
+      $.ajax({
+         url: $('#base_url').val() + 'instructor/coursecreation/republishCourse',
+         type: 'POST',
+         data: formData,
+         processData: false,
+         contentType: false,
+         success: function (data, status, xhr){
+            $.magnificPopup.close();
+            new PNotify({
+               title: 'Success',
+               text: 'Upload',
+               type: 'success'
             });
-        });
+            document.location.reload();
+         },
+         error: function(){
+            new PNotify({
+               title: '<?php echo $term['error']; ?>',
+               text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
+               type: 'error'
+            });
+            $.magnificPopup.close();
+         }
+      });
+   }
+   function changePrice(){
+      var price = $("#republish-price").val();
+      var discount = $("#republish-discount").val();
+      var amount = price * (100 - discount) / 100;
+      $("#republish-amount").val(amount);
+   }
+   function getCategoryTitle(){
+		$('#number').val($( "#category option:selected" ).text());
+   }
+   $('#addmorebtn').on('click',function(){
+		$('.addmorehigh').append('<input type="text" placeholder="highlight" class="highlights form-control" name="highlights[]">');
+   });
 
-    }
-	
-	$(document).on('click','#filter',function(){
+   
+   function deletehighlight(delid){
+		$('#deletebtn_'+delid).remove();
+   }
+
+   function republishCourse(course_id){
+      var url = '<?= base_url()?>instructor/coursecreation/getCourse';
+      $.ajax({
+         url: url,
+         type: 'POST',
+         data: {
+            id:course_id,
+            type : 0
+         },
+         success: function (data, status, xhr){
+            $("#republish-title").val(data.title);
+            $("#republish-price").val(data.pay_price);
+            $("#republish-discount").val(data.discount);
+            $("#republish-amount").val(data.amount);
+            $("#republish-id").val(data.id);
+            $("#republish-type").val(data.course_type);
+            $("#republishForm").modal('show');
+         },
+         error: function(){
+            new PNotify({
+               title: '<?php echo $term['error']; ?>',
+               text: '<?php echo $term['youcantdeletethisitem']; ?>',
+               type: 'error'
+            });
+         }
+      });
+   }
+   
+   function deleteIltCourse(deleteId){
+		(new PNotify({
+			  title: "<?php echo $term['confirmation']; ?>",
+			  text: "<?php echo $term['areyousuretodelete']; ?>",
+			  icon: 'fas fa-question',
+			  confirm: {
+				  confirm: true
+			  },
+			  button: {
+				  closer: false,
+				  sticker: false
+			  },
+			  addclass: 'stack-modal',
+			  stack: {
+				  'dir1': 'down',
+				  'dir2': 'right',
+				  'modal':true
+			  }
+		})).get().on('pnotify.confirm', function(){
+   				
+   		var url = '<?= base_url()?>instructor/training/deleteIltCourse/'+deleteId;
+   		
+              $.ajax({
+                  url: url,
+                  type: 'POST',
+                  data: {id:deleteId},
+                  success: function (data, status, xhr){
+                      if(status == "success") {
+                          document.location.href = '';
+                      } else {
+                          new PNotify({
+                              title: 'Fail!',
+                              text: status,
+                              type: 'danger'
+                          });
+                      }
+                  },
+                  error: function(){
+                      new PNotify({
+                          title: '<?php echo $term['error']; ?>',
+                          text: '<?php echo $term['youcantdeletethisitem']; ?>',
+                          type: 'error'
+                      });
+                  }
+              });
+          });
+   
+      }
+   
+   $(document).on('click','#filter',function(){
 		var courseId = $('#courses_filter').val();
 		window.location.href="<?=base_url()?>instructor/training/showTrainingFilter/"+courseId;
-	});
+   });
    var $user_table = $('#datatable_user');
+   var $add_exist_table = $('#datatable_addexistuser');
    var $instructor_table = $('#datatable_instructor');
    var enroll_users = '';
    var instructors = '';
    var isShowList = false;
-   
+     
    jQuery(document).ready(function() {
-       $('[data-plugin-selectTwo]').each(function() {
-           var $this = $( this ),
+      $('[data-plugin-selectTwo]').each(function() {
+            var $this = $( this ),
                opts = {};
    
-           var pluginOptions = $this.data('plugin-options');
-           if(pluginOptions)
+            var pluginOptions = $this.data('plugin-options');
+            if(pluginOptions)
                opts = pluginOptions;
    
-           $this.themePluginSelect2(opts);
-       });
+            $this.themePluginSelect2(opts);
+      });
    
-       $('[data-plugin-ios-switch]').each(function () {
-           var $this = $(this);
+      $('[data-plugin-ios-switch]').each(function () {
+            var $this = $(this);
    
-           $this.themePluginIOS7Switch();
-       });
+            $this.themePluginIOS7Switch();
+      });
    });
-   
-   
-   
+     
    jQuery(document).ready(function() {
-       $('[data-plugin-ios-switch]').each(function () {
-           var $this = $(this);
+      $('[data-plugin-ios-switch]').each(function () {
+            var $this = $(this);
    
-           $this.themePluginIOS7Switch();
-       });
+            $this.themePluginIOS7Switch();
+      });
    
-       $('[data-plugin-datepicker]').each(function () {
-           var $this = $(this);
+      $('[data-plugin-datepicker]').each(function () {
+            var $this = $(this);
    
-           $this.themePluginDatePicker();
-       });
-       $('[data-plugin-masked-input]').each(function() {
-           var $this = $( this );
+            $this.themePluginDatePicker();
+      });
+      $('[data-plugin-masked-input]').each(function() {
+            var $this = $( this );
    
-           $this.themePluginMaskedInput();
-       });
+            $this.themePluginMaskedInput();
+      });
    
-       $('[data-plugin-markdown-editor]').each(function() {
-           var $this = $( this ),
+      $('[data-plugin-markdown-editor]').each(function() {
+            var $this = $( this ),
                opts = {};
    
-           var pluginOptions = $this.data('plugin-options');
-           if(pluginOptions)
+            var pluginOptions = $this.data('plugin-options');
+            if(pluginOptions)
                opts = pluginOptions;
    
-           $this.themePluginMarkdownEditor(opts);
-       });
-   
+            $this.themePluginMarkdownEditor(opts);
+      });
+      $add_exist_table.dataTable({
+         "ordering": true,
+         "info": true,
+         "searching": true,
+
+         "ajax": {
+               "type": "POST",
+               "async": true,
+               "url":$('#base_url').val() +"instructor/user/view",
+               "data": {
+                  'user_type': 'Learner',
+                  'active': 1
+               },
+               "dataSrc": "data",
+               "dataType": "json",
+               "cache":    false,
+         },
+         "columnDefs": [{
+               "targets": [4],
+               "createdCell": function (td, cellData, rowData, row, col) {
+                  $(td).html('<a href="javascript:add_exist_user('+rowData['id']+')" class="add-row"><i class="fas fa-plus"></i></i></a>');
+               }
+         }],
+         "columns": [
+               { "title": "#", "data": "no", "class": "center" },
+               { "title": "<?=$term["firstname"]?>", "data": "first_name", "class": "text-left"},
+               { "title": "<?=$term["lastname"]?>", "data": "last_name", "class": "text-left"},
+               { "title": "<?=$term["email"]?>", "data": "email", "class": "text-left"},
+               { "title": "<?=$term["action"]?>", "data": "id", "class": "text-center"},
+         ],
+         "lengthMenu": [
+               [5, 10, 20, 50, 150, -1],
+               [5, 10, 20, 50, 150, "All"] // change per page values here
+         ],
+         "scrollY": false,
+         "scrollX": true,
+         "scrollCollapse": false,
+         "jQueryUI": true,
+
+         "paging": true,
+         "pagingType": "full_numbers",
+         "pageLength": 50, // default record count per page
+         dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
+         bProcessing: true,
+      });
    
    });
    
    $instructor_table.dataTable({
    
-       "ordering": true,
-       "info": true,
-       "searching": false,
+         "ordering": true,
+         "info": true,
+         "searching": false,
    
-       "ajax": {
-           "type": "POST",
-           "async": true,
-           "url": "<?=base_url()?>instructor/training/getinstructor",
-           "data": '',
-           "dataSrc": "data",
-           "dataType": "json",
-           "cache":    false,
-       },
-       "columnDefs": [{
-           "targets": [0],
-           "createdCell": function (td, cellData, rowData, row, col) {
+         "ajax": {
+            "type": "POST",
+            "async": true,
+            "url": "<?=base_url()?>instructor/training/getinstructor",
+            "data": '',
+            "dataSrc": "data",
+            "dataType": "json",
+            "cache":    false,
+         },
+         "columnDefs": [{
+            "targets": [0],
+            "createdCell": function (td, cellData, rowData, row, col) {
                if(instructors.indexOf(cellData) > 0){
-                   $(td).html('<input type="checkBox" name="instructor[]" checked required value="'+rowData.id+'">');
+                     $(td).html('<input type="checkBox" name="instructor[]" checked required value="'+rowData.id+'">');
                }else{
-                   $(td).html('<input type="checkBox" name="instructor[]" required value="'+rowData.id+'">');
+                     $(td).html('<input type="checkBox" name="instructor[]" required value="'+rowData.id+'">');
                }
-           }
-       } ],
-       "columns": [
-           { "title": "", "data": "id", "class": "text-left", "width":10 },
-           { "title": "#", "data": "no", "class": "center", "width":50 },
-           { "title": "<?=$term["name"]?>", "data": "fullname", "class": "text-left", "width":"*" }
-       ],
+            }
+         } ],
+         "columns": [
+            { "title": "", "data": "id", "class": "text-left", "width":10 },
+            { "title": "#", "data": "no", "class": "center", "width":50 },
+            { "title": "<?=$term["name"]?>", "data": "fullname", "class": "text-left", "width":"*" }
+         ],
    
-       "scrollY": false,
-       "scrollX": true,
-       "scrollCollapse": false,
-       "jQueryUI": true,
+         "scrollY": false,
+         "scrollX": true,
+         "scrollCollapse": false,
+         "jQueryUI": true,
    
-       "paging": false,
-       "pagingType": "full_numbers",
-       "pageLength": 10, // default record count per page
+         "paging": false,
+         "pagingType": "full_numbers",
+         "pageLength": 10, // default record count per page
    
-       dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
-       bProcessing: true,
+         dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
+         bProcessing: true,
    });
    
    var readURL_attendImg = function(input) {
-       if(input.files && input.files[0]) {
-           var reader = new FileReader();
-           reader.onload = function (e) {
+         if(input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
                $('#attend_img_preview').css("background-image", "url("+e.target.result+")");
-           }   
-           reader.readAsDataURL(input.files[0]);
-       }
+            }   
+            reader.readAsDataURL(input.files[0]);
+         }
    }
    
    $("#attend_img").on('change', function(){
-       readURL_attendImg(this);
-       $("#attend_img_preview").children().hide();
+         readURL_attendImg(this);
+         $("#attend_img_preview").children().hide();
    });
    
    $("#attend_img_preview").on('click', function() {
-       $("#attend_img").click();
+         $("#attend_img").click();
    });    
    
    var readURL_agendaImg = function(input) {
-       if(input.files && input.files[0]) {
-           var reader = new FileReader();
-           reader.onload = function (e) {
+         if(input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
                $('#agenda_img_preview').css("background-image", "url("+e.target.result+")");
-           }
-           reader.readAsDataURL(input.files[0]);
-       }
+            }
+            reader.readAsDataURL(input.files[0]);
+         }
    }
    
    $("#agenda_img").on('change', function(){
-       readURL_agendaImg(this);
-       $("#agenda_img_preview").children().hide();
+         readURL_agendaImg(this);
+         $("#agenda_img_preview").children().hide();
    });
    
    $("#agenda_img_preview").on('click', function() {
-       $("#agenda_img").click();
+         $("#agenda_img").click();
    });   
    
    var readURL_objectiveImg = function(input) {
-       if(input.files && input.files[0]) {
-           var reader = new FileReader();
-           reader.onload = function (e) {
+         if(input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
                $('#objective_img_preview').css("background-image", "url("+e.target.result+")");
-           }
-           reader.readAsDataURL(input.files[0]);
-       }
+            }
+            reader.readAsDataURL(input.files[0]);
+         }
    }
    
    $("#objective_img").on('change', function(){
-       readURL_objectiveImg(this);
-       $("#objective_img_preview").children().hide();
+         readURL_objectiveImg(this);
+         $("#objective_img_preview").children().hide();
    });
    
    $("#objective_img_preview").on('click', function() {
-       $("#objective_img").click();
+         $("#objective_img").click();
    });  
    
    function addTime(id, month, year) {
-       $('#change_day').val(1);
-       $('#change_id').val(id);
-       for(var i = 0;i < document.getElementById("change_month").length;i++){
-           if(document.getElementById("change_month").options[i].value == month ){
+         $('#change_day').val(1);
+         $('#change_id').val(id);
+         for(var i = 0;i < document.getElementById("change_month").length;i++){
+            if(document.getElementById("change_month").options[i].value == month ){
                document.getElementById("change_month").selectedIndex = i;
-           }
-       }
-       $('#change_year').val(year);
-       $('#change_location').val();
-       $('.modal-change-confirm').html("Add");
-       $('.change-time').click();
-       enroll_users = '<?=$enroll_users?>';
+            }
+         }
+         $('#change_year').val(year);
+         $('#change_location').val();
+         $('.modal-change-confirm').html("Add");
+         $('.change-time').click();
+         enroll_users = '<?=$enroll_users?>';
    }
    
    function showPayUser() {
-       if($('.btn-user-list').html() == 'Show User List'){
-           $('.btn-user-list').html('Hide User List')
-           $user_table.show();
-           if(!isShowList) {
-               $user_table.dataTable({
+         if($('.btn-user-list').html() == 'Show User List'){
+            $('.btn-user-list').html('Hide User List')
+            $user_table.show();
+            var ajaxData = {"id":0,'course_type':0};
+            if(!isShowList) {
+               $user_table.dataTable({     
+                     "ordering": true,
+                     "info": true,
+                     "searching": false,
    
-                   "ordering": true,
-                   "info": true,
-                   "searching": false,
-   
-                   "ajax": {
-                       "type": "POST",
-                       "async": true,
-                       "url": "<?=base_url()?>instructor/training/getPayUser",
-                       "data": {
+                     "ajax": {
+                        "type": "POST",
+                        "async": true,
+                        //  "url": "<?=base_url()?>instructor/training/getPayUser",
+                        "url": "<?=base_url()?>instructor/inviteuser/getInviteUser",
+                        //  "data": {
+                        //      'id': $('#change_id').val(),
+                        //      'tid': $('#time_id').val()
+                        //  },
+                        "data":{ // add request parameters before submit
                            'id': $('#change_id').val(),
-                           'tid': $('#time_id').val()
-                       },
-                       "dataSrc": "data",
-                       "dataType": "json",
-                       "cache": false
-                   },
+                           'course_type': 0
+                        },
+                        "dataSrc": "data",
+                        "dataType": "json",
+                        "cache": false
+                     },
    
-                   "columns": [
-                       {"title": "#", "data": "no", "class": "center", "width": 50},
-                       {"title": "<?=$term["name"]?>", "data": "fullname", "class": "text-left", "width": "*"}
-                   ],
+                     // "columns": [
+                     //     {"title": "#", "data": "no", "class": "center", "width": 50},
+                     //     {"title": "<?=$term["name"]?>", "data": "fullname", "class": "text-left", "width": "*"}
+                     // ],
+                     "columns": [
+                        {"title": "#", "data": "no", "class": "center", "width": 50},
+                        {"title": "<?=$term["firstname"]?>", "data": "first_name", "class": "text-left", "width": 100},
+                        {"title": "<?=$term["lastname"]?>", "data": "last_name", "class": "text-left", "width": 100},
+                        {"title": "<?=$term["email"]?>", "data": "email", "class": "text-left", "width": 100},
+                     ],
    
-                   "scrollY": false,
-                   "scrollX": true,
-                   "scrollCollapse": false,
-                   "jQueryUI": true,
+                     "scrollY": false,
+                     "scrollX": true,
+                     "scrollCollapse": false,
+                     "jQueryUI": true,
    
-                   "paging": true,
-                   "pagingType": "full_numbers",
-                   "pageLength": 10, // default record count per page
+                     "paging": true,
+                     "pagingType": "full_numbers",
+                     "pageLength": 10, // default record count per page
    
-                   dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
-                   bProcessing: true
+                     dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
+                     bProcessing: true
                });
                isShowList = true;
-           }else{
+            }else{
                $user_table.DataTable().ajax.reload('', false);
-           }
+            }
    
-       }else{
-           $('.btn-user-list').html('Show User List')
-           $user_table.hide();
-       }
+         }else{
+            $('.btn-user-list').html('Show User List')
+            $user_table.hide();
+         }
    }
    
    $('#category_id').on('change',function(){
-   		var selectedText = $(this).find("option:selected").text();
-   		var course_id = $(this).find("option:selected").val();		
-	   	if(course_id != '' && selectedText != ''){
-		   $.ajax({
-			   url: $('#base_url').val()+'instructor/training/getCourseDetail',
-			   type: 'POST',
-			   data: {course_id:course_id},
-			   success: function (data, status, xhr){
-				   //console.log(data['course']);
-				   $('#chapter_date_time').html('');
-				   /*chapter_date_time*/
-				   	$('#attend_img_preview').css("background-image", "url("+'../'+data['course']['attend_img']+")");
-					$('#agenda_img_preview').css("background-image", "url("+'../'+data['course']['agenda_img']+")");
-					$('#objective_img_preview').css("background-image", "url("+'../'+data['course']['objective_img']+")");
-				   	$('#course_type').val(data['course']['course_type']);
-					$('#duration').val(data['course']['duration']);
-					$('#course_pre_requisite').val($.trim(data['course']['prerequisite']));
-					//$('#startday').val($.trim(data['course']['start_at']));
-					$('#duration').val($.trim(data['course']['duration']));
-					//$('#endday').val($.trim(data['course']['end_at']));
-					$('#category').val($.trim(data['course']['category_id']));					
-					$('#title').val($.trim(selectedText));
-					$('#description').val($.trim(data['course']['about'])); 
-					$('#subtitle').val(data['course']['subtitle']);
-					$('#objective').val($.trim(data['course']['learning_objective']));
-					$('#attend').val($.trim(data['course']['attend']));
-					$('#agenda').val($.trim(data['course']['agenda']));
-					$('#objective_img_url').val(data['course']['objective_img']);
-					$('#attend_img_url').val(data['course']['attend_img']);
-					$('#agenda_img_url').val(data['course']['agenda_img']);
-				   	if(data['course']['course_type'] == 0){
-						$('#address').val(data['course']['address']);
-						$('#country').val(data['course']['country']);
-						$('#state').val(data['course']['state']);
-						$('#city').val(data['course']['city']);						
-						$('#div-address').show();
-						$('.div-location').hide();
-					}else{						
-						$('#div-address').hide();
-						$('.div-location').show();
-					}
-					get_standard_list($.trim(data['course']['category_id']));
-					$.each(data['chapter'], function(key, value){
-					   	if(value['session_dateTime'] != ''){							
-						 	/*$('#chapter_date_time').append('<div class="form-group row"><label class="col-sm-3 control-label text-lg-right pt-2">Chapter</label><div class="col-sm-9"><input type="text" class="form-control" readonly value="'+value['title']+'" id="chapter_title" name="chapter_title"></div></div><div class="form-group row"><label class="col-sm-3 control-label text-lg-right pt-2">Session</label><div class="col-sm-9"><input type="text" class="form-control" value="'+value['session_dateTime']+'" readonly id="chapter_session" name="chapter_session"></div></div>');*/
-							$('#agenda').val($('#agenda').val()+"\n\n"+value['session_dateTime']);
-							return false;
-						}					   
-					});
-			   }
-		   });
-		   return false;
-	   }   
+      var selectedText = $(this).find("option:selected").text();
+      var course_id = $(this).find("option:selected").val();		
+      if(course_id != '' && selectedText != ''){
+         $.ajax({
+         url: $('#base_url').val()+'instructor/training/getCourseDetail',
+         type: 'POST',
+         data: {course_id:course_id},
+         success: function (data, status, xhr){
+            //console.log(data['course']);
+            $('#chapter_date_time').html('');
+            /*chapter_date_time*/
+               $('#attend_img_preview').css("background-image", "url("+'../'+data['course']['attend_img']+")");
+            $('#agenda_img_preview').css("background-image", "url("+'../'+data['course']['agenda_img']+")");
+            $('#objective_img_preview').css("background-image", "url("+'../'+data['course']['objective_img']+")");
+               $('#course_type').val(data['course']['course_type']);
+            $('#duration').val(data['course']['duration']);
+            $('#course_pre_requisite').val($.trim(data['course']['prerequisite']));
+            //$('#startday').val($.trim(data['course']['start_at']));
+            $('#duration').val($.trim(data['course']['duration']));
+            //$('#endday').val($.trim(data['course']['end_at']));
+            $('#category').val($.trim(data['course']['category_id']));					
+            $('#title').val($.trim(selectedText));
+            $('#description').val($.trim(data['course']['about'])); 
+            $('#subtitle').val(data['course']['subtitle']);
+            $('#objective').val($.trim(data['course']['learning_objective']));
+            $('#attend').val($.trim(data['course']['attend']));
+            $('#agenda').val($.trim(data['course']['agenda']));
+            $('#objective_img_url').val(data['course']['objective_img']);
+            $('#attend_img_url').val(data['course']['attend_img']);
+            $('#agenda_img_url').val(data['course']['agenda_img']);
+               if(data['course']['course_type'] == 0){
+               $('#address').val(data['course']['address']);
+               $('#country').val(data['course']['country']);
+               $('#state').val(data['course']['state']);
+               $('#city').val(data['course']['city']);						
+               $('#div-address').show();
+               $('.div-location').hide();
+            }else{						
+               $('#div-address').hide();
+               $('.div-location').show();
+            }
+            get_standard_list($.trim(data['course']['category_id']));
+            $.each(data['chapter'], function(key, value){
+                  if(value['session_dateTime'] != ''){							
+                  /*$('#chapter_date_time').append('<div class="form-group row"><label class="col-sm-3 control-label text-lg-right pt-2">Chapter</label><div class="col-sm-9"><input type="text" class="form-control" readonly value="'+value['title']+'" id="chapter_title" name="chapter_title"></div></div><div class="form-group row"><label class="col-sm-3 control-label text-lg-right pt-2">Session</label><div class="col-sm-9"><input type="text" class="form-control" value="'+value['session_dateTime']+'" readonly id="chapter_session" name="chapter_session"></div></div>');*/
+                  $('#agenda').val($('#agenda').val()+"\n\n"+value['session_dateTime']);
+                  return false;
+               }					   
+            });
+         }
+      });
+      return false;
+   }   
    });
    
    function updateCourse(id,course_id){
-       $.ajax({
-           url: $('#base_url').val()+'instructor/training/getCourseInstructor',
-           type: 'POST',
-           data: {id:id},
-           success: function (data, status, xhr) {
+      $.ajax({
+            url: $('#base_url').val()+'instructor/training/getCourseInstructor',
+            type: 'POST',
+            data: {id:id},
+            success: function (data, status, xhr) {
                instructors = data;
                $instructor_table.DataTable().ajax.reload('', false);
-           }
-       });
-	   
-	   $.ajax({
-           url: $('#base_url').val()+'instructor/training/getCourseByTrainingId',
-           type: 'POST',
-           data: {id:id},
-           success: function (data, status, xhr){
-			   	//console.log(data);
-				var myHighlights = jQuery.parseJSON(data['highlights']);
-				if(myHighlights != null){
-				$('.addmorehigh').html('');
-				$.each(myHighlights, function (index, value){
-				 $('.addmorehigh').append('<div id="deletebtn_'+index+'"><input type="text" value="'+value+'" class="highlights form-control" name="highlights[]"><a href="javascript:void(0)" onclick="deletehighlight('+index+')">Delete</a></div>');
-				});
-				}
-				$('#attend_img_preview').css("background-image", "url("+'../'+data['attend_img']+")");
-				$('#agenda_img_preview').css("background-image", "url("+'../'+data['agenda_img']+")");
-				$('#objective_img_preview').css("background-image", "url("+'../'+data['objective_img']+")");
-				$('#id').val(id);
-				$('#title').val(data['title']);
-				$('#subtitle').val(data['subtitle']);
-				//$('#startday').val(data['startday']);
-				//$('#endday').val(data['endday']);
-				$('.number_value').val($.trim(data['number']));
-				$('#category').val(data['category']);
-				$('#standard_id').val(data['standard_id']);
-				$('#category_id').val($.trim(data['course_id']));
-				$('#endday').val(data['endday']);
-				$('#duration').val(data['duration']);
-				$('#objective_img_url').val(data['objective_img']);
-				$('#description').val(data['about']);
-				$('#attend').val(data['attend']);
-				$('#attend_img_url').val(data['attend_img']);
-				$('#agenda').val(data['agenda']);
-				$('#agenda_img_url').val(data['agenda_img']);
-				$('#description').val(data['description']);
-				$('#address').val(data['address']);
-				$('#country').val(data['country']);
-				$('#state').val(data['state']);
-				$('#city').val(data['city']);
-				$('#objective').val($.trim(data['objective']));
-				$('#course_pre_requisite').val(data['course_pre_requisite']);
-				get_standard_list_chk($.trim(data['category']));				
-				$('.div-startday').hide();
-				if(data['course_type'] == 0){
-					$('#div-address').show();
-					$('.div-location').hide();
-				}else{						
-					$('#div-address').hide();
-					$('.div-location').show();
-				}
-				for(var i = 0;i < document.getElementById("standard_id").length;i++){					
-				   if(document.getElementById("standard_id").options[i].value == standard_id ){
-					   document.getElementById("standard_id").selectedIndex = i;
-				   }
-				}
-			   	$('.modal-create-confirm').html('Change');
-       			$('.add-course-column').click();
-           }
-       });
-       return false;
-   }
-
-   function updateTime(id, month, day, location, time_id,year,startDays,startTime,country,state,city){
-       $('#change_day').val(day);
-       for(var i = 0;i < document.getElementById("change_month").length;i++){
-           if(document.getElementById("change_month").options[i].value == month ){
-               document.getElementById("change_month").selectedIndex = i;
-           }
-       }
+            }
+      });
    
-       $('.btn-user-list').prop('hidden', false);
-       $('#change_id').val(id);
-       $('#change_year').val(year);
-       $('#time_id').val(time_id);
-	   $('#add_course_time_id').val(time_id);
-       $('#change_location').val(location);
-	   $('#startdays').val(startDays);
-	   $('#starttime').val(startTime);
-	   $('#country').val(country);
-		getStateByCountryId(country,state);
-		getCityByStateId(state,city);
-       $('.modal-change-confirm').html("Change");
-       $('.change-time').click();
+      $.ajax({
+         url: $('#base_url').val()+'instructor/training/getCourseByTrainingId',
+         type: 'POST',
+         data: {id:id},
+         success: function (data, status, xhr){
+               //console.log(data);
+            var myHighlights = jQuery.parseJSON(data['highlights']);
+            if(myHighlights != null){
+               $('.addmorehigh').html('');
+            $.each(myHighlights, function (index, value){
+               $('.addmorehigh').append('<div id="deletebtn_'+index+'"><input type="text" value="'+value+'" class="highlights form-control" name="highlights[]"><a href="javascript:void(0)" onclick="deletehighlight('+index+')">Delete</a></div>');
+            });
+            }
+            $('#attend_img_preview').css("background-image", "url("+'../'+data['attend_img']+")");
+            $('#agenda_img_preview').css("background-image", "url("+'../'+data['agenda_img']+")");
+            $('#objective_img_preview').css("background-image", "url("+'../'+data['objective_img']+")");
+            $('#id').val(id);
+            $('#title').val(data['title']);
+            $('#subtitle').val(data['subtitle']);
+            //$('#startday').val(data['startday']);
+            //$('#endday').val(data['endday']);
+            $('.number_value').val($.trim(data['number']));
+            $('#category').val(data['category']);
+            $('#standard_id').val(data['standard_id']);
+            $('#category_id').val($.trim(data['course_id']));
+            $('#endday').val(data['endday']);
+            $('#duration').val(data['duration']);
+            $('#objective_img_url').val(data['objective_img']);
+            $('#description').val(data['about']);
+            $('#attend').val(data['attend']);
+            $('#attend_img_url').val(data['attend_img']);
+            $('#agenda').val(data['agenda']);
+            $('#agenda_img_url').val(data['agenda_img']);
+            $('#description').val(data['description']);
+            $('#address').val(data['address']);
+            $('#country').val(data['country']);
+            $('#state').val(data['state']);
+            $('#city').val(data['city']);
+            $('#objective').val($.trim(data['objective']));
+            $('#course_pre_requisite').val(data['course_pre_requisite']);
+            get_standard_list_chk($.trim(data['category']));				
+            $('.div-startday').hide();
+            if(data['course_type'] == 0){
+               $('#div-address').show();
+               $('.div-location').hide();
+            }else{						
+               $('#div-address').hide();
+               $('.div-location').show();
+            }
+            for(var i = 0;i < document.getElementById("standard_id").length;i++){					
+               if(document.getElementById("standard_id").options[i].value == standard_id ){
+                  document.getElementById("standard_id").selectedIndex = i;
+               }
+            }
+               $('.modal-create-confirm').html('Change');
+               $('.add-course-column').click();
+         }
+         });
+      return false;
+   }
+   
+   function updateTime(id, month, day, location, time_id,year,startDays,startTime,country,state,city){
+      $('#change_day').val(day);
+      for(var i = 0;i < document.getElementById("change_month").length;i++){
+            if(document.getElementById("change_month").options[i].value == month ){
+               document.getElementById("change_month").selectedIndex = i;
+            }
+      }
+   
+      $('.btn-user-list').prop('hidden', false);
+      $('#change_id').val(id);
+      $('#change_year').val(year);
+      $('#time_id').val(time_id);
+      $('#add_course_time_id').val(time_id);
+      $('#change_location').val(location);
+      $('#startdays').val(startDays);
+      $('#starttime').val(startTime);		
+      $('#country').val(country);
+      getStateByCountryId(country,state);
+      getCityByStateId(state,city);
+      $('.modal-change-confirm').html("Change");
+      $('.change-time').click();
    }
    
    $('.add-column').magnificPopup({
-       type: 'inline',
-       preloader: false,
-       modal: true,
+      type: 'inline',
+      preloader: false,
+      modal: true,
    
-       // When elemened is focused, some mobile browsers in some cases zoom in
-       // It looks not nice, so we disable it:
-       callbacks: {
-           beforeOpen: function() {
+      // When elemened is focused, some mobile browsers in some cases zoom in
+      // It looks not nice, so we disable it:
+      callbacks: {
+            beforeOpen: function() {
    
-           }
-       }
+            }
+      }
    });
    
    $('.change-time').magnificPopup({
-       type: 'inline',
-       preloader: false,
-       modal: true,
+      type: 'inline',
+      preloader: false,
+      modal: true,
    
-       // When elemened is focused, some mobile browsers in some cases zoom in
-       // It looks not nice, so we disable it:
-       callbacks: {
-           beforeOpen: function() {
+      // When elemened is focused, some mobile browsers in some cases zoom in
+      // It looks not nice, so we disable it:
+      callbacks: {
+            beforeOpen: function() {
    
-           }
-       }
+            }
+      }
    });
    
    $('.add-course-column').magnificPopup({
-       type: 'inline',
-       preloader: false,
-       modal: true,
+      type: 'inline',
+      preloader: false,
+      modal: true,
    
-       // When elemened is focused, some mobile browsers in some cases zoom in
-       // It looks not nice, so we disable it:
-       callbacks: {
-           beforeOpen: function() {
+      // When elemened is focused, some mobile browsers in some cases zoom in
+      // It looks not nice, so we disable it:
+      callbacks: {
+            beforeOpen: function() {
                $instructor_table.DataTable().ajax.reload('', false);
-           },
+            },
    
    
-       }
+      }
    });
    
    $('.modal-add-confirm').click(function (e) {
-       e.preventDefault();
-   $('.div-location').hide();
+      e.preventDefault();
+      $('.div-location').hide();
       
-       if($('#title_1').val() == '' || $('#duration_1').val() == '') {
-           new PNotify({
+      if($('#title_1').val() == '' || $('#duration_1').val() == '') {
+            new PNotify({
                title: 'Failed',
                text: 'Fill Data.',
                type: 'danger'
-           });
-           return;
-       }else{
-           $.magnificPopup.close();
-           $('#title').val($('#title_1').val());
-           $('#duration').val($('#duration_1').val());
-           $('.add-course-column').click();
-   
-       }
-   
+            });
+            return;
+      }else{
+            $.magnificPopup.close();
+            $('#title').val($('#title_1').val());
+            $('#duration').val($('#duration_1').val());
+            $('.add-course-column').click();     
+      }     
    
    });
    
    $('.modal-change-delete').click(function (e){
-       e.preventDefault();
-       (new PNotify({
-           title: "<?php echo $term['confirmation']; ?>",
-           text: "<?php echo $term['areyousuretodelete']; ?>",
-           icon: 'fas fa-question',
-           confirm: {
+      e.preventDefault();
+      (new PNotify({
+            title: "<?php echo $term['confirmation']; ?>",
+            text: "<?php echo $term['areyousuretodelete']; ?>",
+            icon: 'fas fa-question',
+            confirm: {
                confirm: true
-           },
-           button: {
+            },
+            button: {
                closer: false,
                sticker: false
-           },
-           addclass: 'stack-modal',
-           stack: {
+            },
+            addclass: 'stack-modal',
+            stack: {
                'dir1': 'down',
                'dir2': 'right',
                'modal':true
-           }
-       })).get().on('pnotify.confirm', function(){
-           $.ajax({
+            }
+      })).get().on('pnotify.confirm', function(){
+            $.ajax({
                url: $('#base_url').val()+'instructor/training/deleteTime',
                type: 'POST',
                data: {id:$('#time_id').val()},
                success: function (data, status, xhr) {
-                   if(status == "success") {
-                       document.location.reload();
-                   } else {
-                       new PNotify({
+                  if(status == "success") {
+                        document.location.reload();
+                  } else {
+                        new PNotify({
                            title: 'Fail!',
                            text: status,
                            type: 'danger'
-                       });
-                   }
+                        });
+                  }
                },
                error: function(){
-                   new PNotify({
-                       title: '<?php echo $term['error']; ?>',
-                       text: '<?php echo $term['youcantdeletethisitem']; ?>',
-                       type: 'error'
-                   });
+                  new PNotify({
+                        title: '<?php echo $term['error']; ?>',
+                        text: '<?php echo $term['youcantdeletethisitem']; ?>',
+                        type: 'error'
+
+                  });
                }
-           });
-       });
+            });
+      });
    
    });
    
    $('.modal-create-confirm').click(function(e){
-       e.preventDefault();
+      e.preventDefault();
    $('.div-location').hide();		
+     
+   var formData = new FormData($('#new-course-form')[0]);		
+   $.magnificPopup.close();		
+      if($('.modal-create-confirm').html().indexOf('<?=$term["add"]?>') >= 0){
+             //if($('#start_day').val() == '' || $('#location').val() == '') {				
+   if($('#start_day').val() == '' || $('#startday').val() == '' || $('#title').val() == '' || $('#category_id').val() == ''){
+   	   new PNotify({
+   		   title: 'Failed',
+   		   text: 'Fill Data.',
+   		   type: 'danger'
+   	   });
+   	   return;
+      }else{
+   	   $.ajax({
+   		   url: $('#base_url').val() + 'instructor/training/createCourse',
+   		   type: 'POST',
+   		   data: formData,
+   		   processData: false,
+   		   contentType: false,
+   		   success: function (data, status, xhr){
+   			   $.magnificPopup.close();
+   			   new PNotify({
+   				   title: 'Success',
+   				   text: 'Upload',
+   				   type: 'success'
+   			   });
+   			   document.location.reload();
+   		   },
+   		   error: function(){
    
-	var formData = new FormData($('#new-course-form')[0]);		
-	$.magnificPopup.close();		
-    if($('.modal-create-confirm').html().indexOf('<?=$term["add"]?>') >= 0){
-           //if($('#start_day').val() == '' || $('#location').val() == '') {				
-	if($('#start_day').val() == '' || $('#startday').val() == '' || $('#title').val() == '' || $('#category_id').val() == ''){
-		   new PNotify({
-			   title: 'Failed',
-			   text: 'Fill Data.',
-			   type: 'danger'
-		   });
-		   return;
-	   }else{
-		   $.ajax({
-			   url: $('#base_url').val() + 'instructor/training/createCourse',
-			   type: 'POST',
-			   data: formData,
-			   processData: false,
-			   contentType: false,
-			   success: function (data, status, xhr){
-				   $.magnificPopup.close();
-				   new PNotify({
-					   title: 'Success',
-					   text: 'Upload',
-					   type: 'success'
-				   });
-				   document.location.reload();
-			   },
-			   error: function(){
-
-				   new PNotify({
-					   title: '<?php echo $term['error']; ?>',
-					   text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
-					   type: 'error'
-				   });
-				   $.magnificPopup.close();
-
-			   }
-		   });
-	   }
-	}else{
-	if($('#title').val() == '' || $('#category_id').val() == ''){
-	   new PNotify({
-		   title: 'Failed',
-		   text: 'Fill Data.',
-		   type: 'danger'
-	   });
+   			   new PNotify({
+   				   title: '<?php echo $term['error']; ?>',
+   				   text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
+   				   type: 'error'
+   			   });
+   			   $.magnificPopup.close();
+   
+   		   }
+   	   });
+      }
    }else{
-	   $.ajax({
-			url: $('#base_url').val()+'instructor/training/updateCourse',
-			type: 'POST',
-			data: formData,
-			processData:false,
-			contentType: false,
-			success: function (data, status, xhr){
-				$.magnificPopup.close();
-				new PNotify({
-					title: 'Success',
-					text: 'Upload',
-					type: 'success'
-				});
-				document.location.reload();
-			},
-			error: function(err){
-		   	console.log(err);
-				new PNotify({
-					title: '<?php echo $term['error']; ?>',
-					text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
-					type: 'error'
-				});
-				$.magnificPopup.close();
-			}
-		   });
-   	}
-       }
-   });
-   
-   $('.modal-change-confirm').click(function(e){
-       e.preventDefault();
-       var formData = new FormData($('#change-time-form')[0]);
-        if($('#startdays').val() == '' || $('#starttime').val() == '' || $('#country').val() == ''){
-           new PNotify({
-               title: 'Failed',
-               text: 'Fill Data.',
-               type: 'danger'
-           });
-           return;
-       }else{			
-           $.magnificPopup.close();
-           if($('.modal-change-confirm').html().indexOf('<?=$term["add"]?>') >= 0) {
-               $.ajax({
-                   url: $('#base_url').val()+'instructor/training/add_time',
-                   type: 'POST',
-                   data: formData,
-                   processData:false,
-                   contentType: false,
-                   success: function (data, status, xhr) {					   
-                       document.location.reload();
-                       $.magnificPopup.close();
-                       new PNotify({
-                           title: 'Success',
-                           text: 'Upload',
-                           type: 'success'
-                       });
-                   },
-                   error: function(){
-                       new PNotify({
-                           title: '<?php echo $term['error']; ?>',
-                           text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
-                           type: 'error'
-                       });
-                       $.magnificPopup.close();
-                   }
+   if($('#title').val() == '' || $('#category_id').val() == ''){
+      new PNotify({
+   	   title: 'Failed',
+   	   text: 'Fill Data.',
+   	   type: 'danger'
+      });
+   }else{
+      $.ajax({
+   		url: $('#base_url').val()+'instructor/training/updateCourse',
+   		type: 'POST',
+   		data: formData,
+   		processData:false,
+   		contentType: false,
+   		success: function (data, status, xhr){
+   			$.magnificPopup.close();
+   			new PNotify({
+   				title: 'Success',
+   				text: 'Upload',
+   				type: 'success'
+   			});
+   			document.location.reload();
+   		},
+   		error: function(err){
+   	   	console.log(err);
+   			new PNotify({
+   				title: '<?php echo $term['error']; ?>',
+   				text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
+   				type: 'error'
+   			});
+   			$.magnificPopup.close();
+   		}
+   	   });
+     	}
+         }
+      });
+      
+      $('.modal-change-confirm').click(function(e){
+            e.preventDefault();
+            var formData = new FormData($('#change-time-form')[0]);
+            if($('#startdays').val() == '' || $('#starttime').val() == '' || $('#country').val() == ''){
+               new PNotify({
+                  title: 'Failed',
+                  text: 'Fill Data.',
+                  type: 'danger'
                });
-           } else {
-               $.ajax({
-                   url: $('#base_url').val()+'instructor/training/update_time',
-                   type: 'POST',
-                   data: formData,
-                   processData:false,
-                   contentType: false,
-                   success: function (data, status, xhr) {
-                       document.location.reload();
-                       $.magnificPopup.close();
-                       new PNotify({
-                           title: 'Success',
-                           text: 'Upload',
-                           type: 'success'
-                       });
-                   },
-                   error: function(){
-                       new PNotify({
-                           title: '<?php echo $term['error']; ?>',
-                           text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
-                           type: 'error'
-                       });
-                       $.magnificPopup.close();
-                   }
-               });
-           }
-       }
-   
-   
-   });
-   $('.invite_modal').magnificPopup({
-       type: 'inline',
-       preloader: false,
-       callbacks: {
-           beforeOpen: function() {
-           }
-       }
-   });
-   $('.add_modal').magnificPopup({
-       type: 'inline',
-       preloader: false,
-       callbacks: {
-           beforeOpen: function() {
-           }
-       }
-   });
-   var inviteuser_table = $("#datatable_inviteuser");
-   var ajaxData = {"id":0,'course_type':0};
-   inviteuser_table.dataTable({
-       "ordering": true,
-       "info": true,
-       "searching": false,
-   
-       "ajax": {
-           "type": "POST",
-           "async": true,
-           "url": "<?=base_url()?>instructor/inviteuser/getInviteUser",
-           "data":function(data) { // add request parameters before submit
-                   $.each(ajaxData, function(key, value) {
-                       data[key] = value;
-                   });
-           },
-           "dataSrc": "data",
-           "dataType": "json",
-           "cache": false
-       },
-   
-       "columns": [
-           {"title": "#", "data": "no", "class": "center", "width": 50},
-           {"title": "<?=$term["firstname"]?>", "data": "first_name", "class": "text-left", "width": 100},
-           {"title": "<?=$term["lastname"]?>", "data": "last_name", "class": "text-left", "width": 100},
-           {"title": "<?=$term["email"]?>", "data": "email", "class": "text-left", "width": 100},
-           {"title": "<?=$term["action"]?>", "data": "", "class": "text-left", "width": 200,
-           		mRender: function (data, type, row){   
-				return '<a class="btn btn-default" href="javascript:resend_inviteuser(this,'+row.id+',\''+row.first_name +'\',\''+row.last_name +'\',\''+row.email +'\')" style="color:#333;margin-right:5px!important"><?=$term["resend"]?> </a>'+
-                		'<a class="btn btn-default" href="javascript:delete_inviteuser('+row.id+')" style="color:#333"><?=$term["delete"]?> </a>';
-				}
-           }
-       ],
-       "scrollY": false,
-       "scrollX": true,
-       "scrollCollapse": false,
-       "jQueryUI": true,
-   
-       "paging": true,
-       "pagingType": "full_numbers",
-       "pageLength": 10, // default record count per page
-       dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
-       bProcessing: true
-   });
-   var isShow = false;
-   
-   function inviteuser(){
-       var id = $("#change_id").val();
-       $('#add_modal_form')[0].reset();
-       $('#add_course_id').val(id);
-       $('#add_course_type').val('0');
-	   $('#add_course_time_id').val($('#time_id').val());
-   
-       $('#sel_id').val(id);
-       //$("#datatable_user").show();
-       ajaxData={
-           'id':id,
-           'course_type':0
-       };
-       inviteuser_table.DataTable().ajax.reload();
-       $('.invite_modal').click();
-   }
-   
-   function add_invite_user(){
-       var formData = new FormData($('#add_modal_form')[0]);
-       if($('#first_name').val() == '' || $('#last_name').val() == '' || $('#send_email').val() == '') {
-           new PNotify({
-               title: 'Failed',
-               text: 'Fill Data.',
-               type: 'danger'
-           });
-           return;
-       }else{
-           $.magnificPopup.close();
-           $.ajax({
+               return;
+            }else{
+               $.magnificPopup.close();
+               if($('.modal-change-confirm').html().indexOf('<?=$term["add"]?>') >= 0) {
+      
+                  $.ajax({
+                        url: $('#base_url').val()+'instructor/training/add_time',
+                        type: 'POST',
+                        data: formData,
+                        processData:false,
+                        contentType: false,
+                        success: function (data, status, xhr) {						 
+                           document.location.reload();
+                           $.magnificPopup.close();
+                           new PNotify({
+                              title: 'Success',
+                              text: 'Upload',
+                              type: 'success'
+                           });
+                        },
+                        error: function(){
+                           new PNotify({
+                              title: '<?php echo $term['error']; ?>',
+                              text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
+                              type: 'error'
+                           });
+                           $.magnificPopup.close();
+                        }
+                  });
+               } else {
+                  $.ajax({
+                        url: $('#base_url').val()+'instructor/training/update_time',
+                        type: 'POST',
+                        data: formData,
+                        processData:false,
+                        contentType: false,
+                        success: function (data, status, xhr) {
+                           document.location.reload();
+                           $.magnificPopup.close();
+                           new PNotify({
+                              title: 'Success',
+                              text: 'Upload',
+                              type: 'success'
+                           });
+                        },
+                        error: function(error){
+                           new PNotify({
+                              title: '<?php echo $term['error']; ?>',
+                              text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
+                              type: 'error'
+                           });
+                           $.magnificPopup.close();
+                        }
+                  });
+               }
+            }
+      
+      
+      });
+      $('.invite_modal').magnificPopup({
+            type: 'inline',
+            preloader: false,
+            callbacks: {
+               beforeOpen: function() {
+               }
+            }
+      });
+      $('.add_modal').magnificPopup({
+            type: 'inline',
+            preloader: false,
+            callbacks: {
+               beforeOpen: function() {
+               }
+            }
+      });
+      $('.add_exist_modal').magnificPopup({
+            type: 'inline',
+            preloader: false,
+            callbacks: {
+               beforeOpen: function() {
+               }
+            }
+      });
+      $('.republish_modal').magnificPopup({
+            type: 'inline',
+            preloader: false,
+            callbacks: {
+               beforeOpen: function() {
+               }
+            }
+      });
+      var inviteuser_table = $("#datatable_inviteuser");
+      var ajaxData = {"id":0,'course_type':0};
+      inviteuser_table.dataTable({
+            "ordering": true,
+            "info": true,
+            "searching": false,
+      
+            "ajax": {
+               "type": "POST",
+               "async": true,
+               "url": "<?=base_url()?>instructor/inviteuser/getInviteUser",
+               "data":function(data) { // add request parameters before submit
+                        $.each(ajaxData, function(key, value) {
+                           data[key] = value;
+                        });
+               },
+               "dataSrc": "data",
+               "dataType": "json",
+               "cache": false
+            },
+      
+            "columns": [
+               {"title": "#", "data": "no", "class": "center", "width": 50},
+               {"title": "<?=$term["firstname"]?>", "data": "first_name", "class": "text-left", "width": 100},
+               {"title": "<?=$term["lastname"]?>", "data": "last_name", "class": "text-left", "width": 100},
+               {"title": "<?=$term["email"]?>", "data": "email", "class": "text-left", "width": 100},
+               {"title": "<?=$term["action"]?>", "data": "", "class": "text-left", "width": 200,
+               mRender: function (data, type, row){   
+               return '<a class="btn btn-default" href="javascript:resend_inviteuser(this,'+row.id+',\''+row.first_name +'\',\''+row.last_name +'\',\''+row.email +'\')" style="color:#333;margin-right:5px!important"><?=$term["resend"]?> </a>'+
+                  '<a class="btn btn-default" href="javascript:delete_inviteuser('+row.id+')" style="color:#333"><?=$term["delete"]?> </a>';
+               }
+               }
+            ],
+            "scrollY": false,
+            "scrollX": true,
+            "scrollCollapse": false,
+            "jQueryUI": true,
+      
+            "paging": true,
+            "pagingType": "full_numbers",
+            "pageLength": 10, // default record count per page
+            dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
+            bProcessing: true
+      });
+      var isShow = false;
+      
+      function inviteuser(){
+         var id = $("#change_id").val();
+         $('#add_modal_form')[0].reset();
+         $('#add_course_id').val(id);
+         $('#add_course_type').val('0');
+         $('#add_course_time_id').val($('#time_id').val());
+
+         // $('#add_invite_form')[0].reset();
+         // $('#add_invite_form name=[add_course_id]').val(id);
+         // $('#add_invite_form name=[add_course_type]').val('0');
+         // $('#add_invite_form name=[add_course_time_id]').val($('#time_id').val());
+
+         $('#sel_id').val(id);
+         //$("#datatable_user").show();
+         ajaxData={  'id':id, 'course_type':0 };
+         inviteuser_table.DataTable().ajax.reload();
+         $('.invite_modal').click();
+      }
+     
+      function add_exist_user(id){
+         var formData = new FormData($('#add_modal_form')[0]);
+         formData.append('user_id',id);
+         $.ajax({
+            url: '<?=base_url()?>instructor/inviteuser/addExistUser/training/1',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data, status, xhr) {
+               if(data.success == "true"){
+                  $.magnificPopup.close();
+                  new PNotify({
+                     title: 'Success',
+                     text: data.msg,
+                     type: 'success'
+                  });
+                  document.location.reload();
+               }else{
+                  new PNotify({
+                     title: 'Faild',
+                     text: data.msg,
+                     type: 'error'
+                  });
+               }
+            },
+            error: function(){   
+            }
+         });
+      }
+      function add_invite_user(){
+         var formData = new FormData($('#add_modal_form')[0]);
+         if($('#first_name').val() == '' || $('#last_name').val() == '' || $('#send_email').val() == '') {
+             new PNotify({
+                 title: 'Failed',
+                 text: 'Fill Data.',
+                 type: 'danger'
+             });
+             return;
+         }else{
+            $.magnificPopup.close();
+            $.ajax({
                url: '<?=base_url()?>instructor/inviteuser/createInviteuser/training/1',
                type: 'POST',
                data: formData,
                processData: false,
                contentType: false,
                success: function (data, status, xhr) {
-                   $.magnificPopup.close();
-                   new PNotify({
-                       title: 'Success',
-                       text: 'Add',
-                       type: 'success'
-                   });
-                   //document.location.reload();
+                  if(data.succss == "true"){
+                     $.magnificPopup.close();
+                     new PNotify({
+                        title: 'Success',
+                        text: data.msg,
+                        type: 'success'
+                     });
+                     document.location.reload();
+                  }else{
+                     new PNotify({
+                        title: 'Faild',
+                        text: data.msg,
+                        type: 'error'
+                     });
+                  }
                },
                error: function(){   
                }
-           });
-       }
-   }
-   
-   function resend_inviteuser(obj, id , firstname, lastname, email){
-       $(obj).attr("disabled",1);
-       $.ajax({
-           url: '<?=base_url()?>instructor/inviteuser/createInviteuser/training',
-           type: 'POST',
-           data: {
-               id:id,
-			   add_ilt_time_id: $('#add_course_time_id').val(),
-               course_id: $("#add_course_id").val(),
-               first_name: firstname,
-			   course_type: 0,
-               last_name: lastname,
-               email: email
-           },
-           success: function (data, status, xhr) {
-               $(obj).removeAttr("disabled");
-   
-               //$.magnificPopup.close();
-               new PNotify({
-                   title: 'Success',
-                   text: 'Resend',
-                   type: 'success'
-               });
-               //document.location.reload();
-           },
-           error: function(){   
-           }
-       });
-   }
-   function delete_inviteuser(id){
-       $.ajax({
-           url: '<?=base_url()?>instructor/inviteuser/deleteInviteuser',
-           type: 'POST',
-           data: {
-               id:id
-           },
-           success: function (data, status, xhr) {
-               //$.magnificPopup.close();
-               new PNotify({
-                   title: 'Success',
-                   text: 'Delete',
-                   type: 'success'
-               });
-               ajaxData={
-                   'id':$('#add_course_id').val(),
-                   'course_type':0
-               };
-               inviteuser_table.DataTable().ajax.reload();
-               //document.location.reload();
-           },
-           error: function () {
-               new PNotify({
-                   title: '<?php echo $term['error']; ?>',
-                   text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
-                   type: 'error'
-               });
-               $.magnificPopup.close();   
-           }
-       });
-   }
-   
-   $('#category').on('change',function(){
-		get_standard_list($('#category').val());
-   });
-   
-   function get_standard_list_chk(id){
-	   	//$('#standard_id').empty();
-		var standard_array = <?php echo isset($course_data['standard_id'])?$course_data['standard_id']:0;?>;
-	   	$.ajax({
-		   url: '<?php echo base_url() ?>instructor/category/getStandardList',
-		   type: 'POST',
-		   data: {category_id:id},
-		   dataType : 'json',
-		   success: function (data, status, xhr){
-			   var standard = data.data;
-			   html = '';
-			   for(var i = 0; i < standard.length; i++){
-			   		selected = '';
-				   	if(jQuery.inArray(standard[i].id, standard_array)!= -1){
-						selected = 'selected';
-					}
-					html += '<option '+selected+' value="'+standard[i].id+'">'+standard[i].name+'</option>';
-			   };
-			   $('#standard_id').append(html);
-		   },
-	   });
-   }
-   
-   function get_standard_list(id){
-	   	$('#standard_id').empty();
-		//var standard_id = <?php echo isset($course_data['standard_id'])?$course_data['standard_id']:0;?>;
-	   	$.ajax({
-		   url: '<?php echo base_url() ?>instructor/category/getStandardList',
-		   type: 'POST',
-		   data: {category_id:id},
-		   dataType : 'json',
-		   success: function (data, status, xhr){
-			   var standard = data.data;
-			   html = '';
-			   for(var i = 0; i < standard.length; i++){
-					html += '<option value="'+standard[i].id+'">'+standard[i].name+'</option>';
-			   };
-			   $('#standard_id').append(html);
-		   },
-	   });
-   }
-   
-   function getStateByCountryId(CountryID,state=0){
-       if(CountryID != ''){
-           var appendrow = '';
-           $('#state').html('<option value="">Select State</option>');
-		   $('#city').html('<option value="">Select City</option>');
-           $.ajax({
-               url: "<?=base_url()?>admin/coursecreation/getStateById",
-               type: 'POST',
-               dataType: 'JSON',
-               data: {'country': CountryID},
-               success: function(data){
-                   appendrow += '<option value="">Select State</option>';
-                   $.each(data, function(index, value){
-					   	selected = '';
-					   	if(state == value.id){
-							selected = 'selected';
-						}
-                       	appendrow += '<option '+selected+' value="'+value.id+'">'+value.name+'</option>';
-                   });
-                   $('#state').html(appendrow);
+            });
+         }
+     }
+     
+     function resend_inviteuser(obj, id , firstname, lastname, email){
+         $(obj).attr("disabled",1);
+         $.ajax({
+             url: '<?=base_url()?>instructor/inviteuser/createInviteuser/training/1',
+             type: 'POST',
+             data: {
+                 	id:id,
+   		   			add_ilt_time_id: $('#add_course_time_id').val(),
+                 	course_id: $("#add_course_id").val(),
+                 	first_name: firstname,
+   		   			course_type: 0,
+                 	last_name: lastname,
+                 	email: email
+             },
+             success: function (data, status, xhr) {
+                 $(obj).removeAttr("disabled");
+     
+                 //$.magnificPopup.close();
+                 new PNotify({
+                     title: 'Success',
+                     text: 'Resend',
+                     type: 'success'
+                 });
+                 //document.location.reload();
+             },
+             error: function(){   
+             }
+         });
+     }
+	 
+     function delete_inviteuser(id){
+         $.ajax({
+             url: '<?=base_url()?>instructor/inviteuser/deleteInviteuser',
+             type: 'POST',
+             data: { id:id },
+             success: function (data, status, xhr) {
+                 //$.magnificPopup.close();
+                 new PNotify({
+                     title: 'Success',
+                     text: 'Delete',
+                     type: 'success'
+                 });
+                 ajaxData={
+                     'id':$('#add_course_id').val(),
+                     'course_type':0
+                 };
+                 inviteuser_table.DataTable().ajax.reload();
+                 //document.location.reload();
+             },
+             error: function () {
+                 new PNotify({
+                     title: '<?php echo $term['error']; ?>',
+                     text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
+                     type: 'error'
+                 });
+                 $.magnificPopup.close();   
+             }
+         });
+     }
+     
+     $('#category').on('change',function(){
+   		get_standard_list($('#category').val());
+     });
+     
+ 	function get_standard_list_chk(id){
+      	//$('#standard_id').empty();
+   	var standard_array = <?php echo isset($course_data['standard_id'])?$course_data['standard_id']:0;?>;
+   	$.ajax({
+   	   url: '<?php echo base_url() ?>instructor/category/getStandardList',
+   	   type: 'POST',
+   	   data: {category_id:id},
+   	   dataType : 'json',
+   	   success: function (data, status, xhr){
+   		   var standard = data.data;
+   		   html = '';
+   		   for(var i = 0; i < standard.length; i++){
+   		   		selected = '';
+   			   	if(jQuery.inArray(standard[i].id, standard_array)!= -1){
+   					selected = 'selected';
    				}
-           });
-       }
-   	}
+   				html += '<option '+selected+' value="'+standard[i].id+'">'+standard[i].name+'</option>';
+   		   };
+   		   $('#standard_id').append(html);
+   	   },
+      });
+   }
+     
+   function get_standard_list(id){
+      $('#standard_id').empty();
+   //var standard_id = <?php echo isset($course_data['standard_id'])?$course_data['standard_id']:0;?>;
+      $.ajax({
+         url: '<?php echo base_url() ?>instructor/category/getStandardList',
+         type: 'POST',
+         data: {category_id:id},
+         dataType : 'json',
+         success: function (data, status, xhr){
+            var standard = data.data;
+            html = '';
+            for(var i = 0; i < standard.length; i++){
+               html += '<option value="'+standard[i].id+'">'+standard[i].name+'</option>';
+            };
+            $('#standard_id').append(html);
+         },
+      });
+   }
+	 
+   function getStateByCountryId(CountryID,state=0){
+      if(CountryID != ''){
+         var appendrow = '';
+         $('#state').html('<option value="">Select State</option>');
+      $('#city').html('<option value="">Select City</option>');
+         $.ajax({
+            url: "<?=base_url()?>instructor/coursecreation/getStateById",
+            type: 'POST',
+            dataType: 'JSON',
+            data: {'country': CountryID},
+            success: function(data){
+                  appendrow += '<option value="">Select State</option>';
+                  $.each(data, function(index, value){
+                  selected = '';
+                  if(state == value.id){
+                  selected = 'selected';
+               }
+                     appendrow += '<option '+selected+' value="'+value.id+'">'+value.name+'</option>';
+                  });
+                  $('#state').html(appendrow);
+            }
+         });
+      }
+   }
 	
 	function getCityByStateId(StateID,city=0){
        if(StateID != ''){
            var appendrow2 = '';
            $('#city').html('<option value="">Select State</option>');
            $.ajax({
-               url: "<?=base_url()?>admin/coursecreation/getCityById",
+               url: "<?=base_url()?>instructor/coursecreation/getCityById",
                type: 'POST',
                dataType: 'JSON',
                data: {'state': StateID},
@@ -1634,5 +1812,5 @@
            });
        }
    	}
-   
+     
 </script>

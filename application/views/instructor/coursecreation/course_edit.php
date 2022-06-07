@@ -240,7 +240,7 @@
                                  <div id="w4-content" class="tab-pane">
                                     <div class="form-group row">
                                        <div class="col-sm-11"></div>
-                                       <a class="col-sm-1 btn btn-primary modal-with-form" href="<?=base_url()?>admin/coursecreation/preview_course/<?=$course_data['id']?>">Preview</a>
+                                       <a class="col-sm-1 btn btn-primary modal-with-form" href="<?=base_url()?>instructor/coursecreation/preview_course/<?=$course_data['id']?>">Preview</a>
                                     </div>
                                     <div class="form-group row border" style="padding: 10px">
                                        <div class="col-sm-2">
@@ -380,7 +380,7 @@
                                        <div class="col-sm-5"></div>
                                        <a class="col-sm-1 btn btn-primary modal-with-form" href="javascript:void(0)" onclick="viewList()">View List</a>
                                        <div class="col-sm-1"></div>
-                                       <a class="col-sm-1 btn btn-primary modal-with-form" href="<?=base_url()?>admin/coursecreation/preview_course/<?=$course_data['id']?>">Preview</a>
+                                       <a class="col-sm-1 btn btn-primary modal-with-form" href="<?=base_url()?>instructor/coursecreation/preview_course/<?=$course_data['id']?>">Preview</a>
                                        <div class="col-sm-1"></div>
                                        <div class="col-sm-1">
                                           <div class="btn-group flex-wrap" >
@@ -436,7 +436,7 @@
                                           <div class="form-group page_v" >
                                              <input class="form-control incl ctitle ptitle" type="text" value="" id="text_from_title" name="text_from_title" placeholder="Page Title" data-id="0" onblur="save_chapter(this.id)" required>
                                              <button type="button" id="library_btn" class="mb-1 mt-1 mr-1 btn btn-primary" onclick="library_modal()"><i class="fa fa-plus-square"></i> Insert Library File</button>
-                                             <button type="button" style="text-align: right" id="show_library_btn" class="mb-1 mt-1 mr-1 btn btn-primary" onclick="show_library_btn_func()">X</button>                                             
+                                             <button type="button" style="text-align: right" id="show_library_btn" class="mb-1 mt-1 mr-1 btn btn-primary" onclick="show_library_btn_func()"><i class="fa fa-minus-square"></i>Remove Library File</button>                                             
                                              <input size="16" type="text" value="" readonly id="form_datetimeId" class="form_datetime" name="session_dateTime"> <a href="javascript:void(0)" onclick="remove_sessionDateTime()">x</a>
                                              <div class="col-sm-12" id="div_container"></div>
                                           </div>
@@ -570,8 +570,8 @@
                                            <label class="col-sm-2 control-label text-sm-right pt-1" style="text-align: left !important;">Course Self Time</label>
                                            <div class="col-sm-7">
                                               <select name="course_self_time" class="form-control">
-                                                <option <?php if ($course_data['course_self_time'] == 'Self Pace'):?>selected<?php endif;?> value="Self Pace">Self Pace</option>
                                                 <option <?php if ($course_data['course_self_time'] == 'Time Restricted'):?>selected<?php endif;?> value="Time Restricted">Time Restricted</option>
+                                                <option <?php if ($course_data['course_self_time'] == 'Self Pace'):?>selected<?php endif;?> value="Self Pace">Self Pace</option>
                                               </select>
                                            </div>
                                         </div>
@@ -587,19 +587,25 @@
                                            </div>
                                         </div>
                                     </div><?php */ ?>
-                                    <div id="course_type_demand_date" <?php if($course_data['course_type'] == 2){ ?> style="display:block" <?php } else { ?>style="display:none"<?php } ?>>
-                                    <div class="form-group row col-sm-12">
-                                       <label class="col-sm-2 control-label text-sm-right pt-1" style="text-align: left !important;">Start Date</label>
-                                       <div class="col-sm-7">
-                                          <input type="text" data-plugin-datepicker=""  data-date-format="yyyy-mm-dd" class="form-control" name="start_at" value="<?=$course_data['start_at']?>">
-                                       </div>
-                                    </div>
-                                    <div class="form-group row col-sm-12">
-                                       <label class="col-sm-2 control-label text-sm-right pt-1" style="text-align: left !important;">End Date</label>
-                                       <div class="col-sm-7">
-                                          <input type="text" data-plugin-datepicker=""  data-date-format="yyyy-mm-dd" class="form-control" name="end_at" value="<?=$course_data['end_at']?>">
-                                       </div>
-                                    </div>
+                                    <div id="course_type_demand_date" <?php if($course_data['course_type'] != 2){ ?> style="display:block" <?php } else { ?>style="display:none"<?php } ?>>
+                                        <div class="form-group row col-sm-12">
+                                            <label class="col-sm-2 control-label text-sm-right pt-1" style="text-align: left !important;">Start Date</label>
+                                            <div class="col-sm-7">
+                                                <input type="text" data-plugin-datepicker=""  data-date-format="yyyy-mm-dd" class="form-control" name="start_at" value="<?=$course_data['start_at']?>">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row col-sm-12">
+                                            <label class="col-sm-2 control-label text-sm-right pt-1" style="text-align: left !important;">Start Time</label>
+                                            <div class="col-sm-7">
+                                                <!-- <input type="text" data-plugin-datepicker=""  data-date-format="yyyy-mm-dd" class="form-control" name="end_at" value="<?=$course_data['end_at']?>"> -->
+                                                <select class="form-control" id="starttime" name="starttime" >
+                                                    <option value="7:00 AM">7:00 AM</option>
+                                                    <option value="8:00 AM">8:00 AM</option>
+                                                    <option value="9:00 AM">9:00 AM</option>
+                                                    <option value="10:00 AM">10:00 AM</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                     
                                     <div id="course_type_div_online" <?php if($course_data['course_type'] == 2 || $course_data['course_type'] == 1){ ?> style="display:block" <?php } else { ?>style="display:none"<?php } ?>>
@@ -718,27 +724,6 @@
                                    	</div>
                                     <hr />
                                     <?php } ?>
-                                    <?php /* ?>
-                                    <div class="form-group row col-sm-12">
-                                       <label class="col-sm-6">Course Pre-Requisite Highlights : (Min. 3 highlights required)</label>
-                                       <a class="btn btn-default" onclick="add_prerequisite_highlight()"><i class="el el-plus-sign"></i>&nbsp;<?=$term["addhighlight"]?></a>
-                                    </div>
-                                    <div class="form-group row col-sm-12">
-                                       <div class="col-sm-1"></div>
-                                       <div id="prerequisite_highlight_div" class="col-sm-5">
-                                          <input type="text" class="form-control highlight-input" name="prerequisitehighlight[]" required value="<?=$prerequisitehighlight[0]['content']?>">
-                                          <input type="text" class="form-control highlight-input" name="prerequisitehighlight[]" required value="<?=$prerequisitehighlight[1]['content']?>">
-                                          <input type="text" class="form-control highlight-input" name="prerequisitehighlight[]" required value="<?=$prerequisitehighlight[2]['content']?>">
-                                          <?php
-                                             if (count($prerequisitehighlight) > 3){
-                                                 for ($i=3;$i<count($prerequisitehighlight);$i++){
-                                                     echo '<input type="text" class="form-control highlight-input" name="prerequisitehighlight[]" required value="'.$prerequisitehighlight[$i]['content'].'">';
-                                                 }
-                                             }
-                                             ?>
-                                       </div>
-                                    </div>
-									<?php */ ?>
                                     <div class="form-group row col-sm-12">
                                        <label class="col-sm-6">Course Pre-Requisite</label>
                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalPre">Add</button>
@@ -896,7 +881,7 @@
       </div>
    </div>
 </div>
-<form id="form_library_insert" action="<?=base_url()?>admin/coursecreation/insert_library" method="post" target="blank_iframe">
+<form id="form_library_insert" action="<?=base_url()?>instructor/coursecreation/insert_library" method="post" target="blank_iframe">
    <input type="hidden" id="course_id" name="course_id" value="<?php (isset($course_id)) ? print $course_id:print '0';?>">
    <input type="hidden" id="course_price" name="course_price" value="<?php (isset($course_price)) ? print $course_price:print '0';?>">
    <input type="hidden" id="select_id" name="chapter_id" value="0">
@@ -922,7 +907,7 @@
            $('#state').html('<option value="">Select State</option>');
 		   $('#city').html('<option value="">Select City</option>');
            $.ajax({
-               url: "<?=base_url()?>admin/coursecreation/getStateById",
+               url: "<?=base_url()?>instructor/coursecreation/getStateById",
                type: 'POST',
                dataType: 'JSON',
                data: {'country': CountryID},
@@ -942,7 +927,7 @@
            var appendrow2 = '';
            $('#city').html('<option value="">Select State</option>');
            $.ajax({
-               url: "<?=base_url()?>admin/coursecreation/getCityById",
+               url: "<?=base_url()?>instructor/coursecreation/getCityById",
                type: 'POST',
                dataType: 'JSON',
                data: {'state': StateID},
@@ -982,14 +967,14 @@
 	$(document).on('click','.course_type_radio',function(){
 		var type = this.value;
 		if(type == 2){			
-			$('#course_type_demand_date').show();
+			$('#course_type_demand_date').hide();
 			$('#course_self_div').show();
 			$('#course_time_div').hide();
             $('select[name=course_self_time]').val("Self Pace");
 		}else{
 			$('#course_self_div').hide();
 			$('#course_time_div').show();
-			$('#course_type_demand_date').hide();
+			$('#course_type_demand_date').show();
             $('select[name=course_self_time]').val("Time Restricted");
 		}
 		if(type == 1 || type == 2){
@@ -1019,7 +1004,7 @@
 			var pageTitle = $('#text_from_title').val();
 			   $.ajax({
 				type: "POST",
-				url: "<?=base_url()?>admin/coursecreation/saveSessionDateTime", 
+				url: "<?=base_url()?>instructor/coursecreation/saveSessionDateTime", 
 				data: {"dateTime":date,"courseId":courseId,"pageTitle":pageTitle},
 				success: function (data) {
 					
@@ -1035,7 +1020,7 @@
    		var pageTitle = $('#text_from_title').val();
    		$.ajax({
    			type: "POST",
-   			url: "<?=base_url()?>admin/coursecreation/removeSessionDateTime",  
+   			url: "<?=base_url()?>instructor/coursecreation/removeSessionDateTime",  
    			data: {"courseId":courseId,"pageTitle":pageTitle},
    			success: function (data) {
    				if(data == 1){
@@ -1144,7 +1129,7 @@
    $("#quiz_chapter_id").change(function(){
    $.ajax({
    type: "POST",
-   url: "<?=base_url()?>admin/coursecreation/getPageByChapterId",
+   url: "<?=base_url()?>instructor/coursecreation/getPageByChapterId",
    data: {"chapter_id":Number($(this).val())},
    success: function (data, status, xhr) {
        var html = "<option value='0' selected>none</option>";
@@ -1188,7 +1173,7 @@
    
    if (class_name_setting.indexOf("active") > 0){   ////////////////////////////Setting////////////////////////////
        $.ajax({
-           url: $('#base_url').val()+'admin/coursecreation/save_course_setting',
+           url: $('#base_url').val()+'instructor/coursecreation/save_course_setting',
            type: 'POST',
            data: formData,
            processData:false,
@@ -1221,7 +1206,7 @@
    if (class_name_profile.indexOf("active") > 0){   ////////////////////////////Profile////////////////////////////
        var price = $("#payy_pricee").val();
         $.ajax({
-           url: $('#base_url').val()+'admin/coursecreation/save_course_profile?price='+price,
+           url: $('#base_url').val()+'instructor/coursecreation/save_course_profile?price='+price,
            type: 'POST',
            data: formData,
         //    processData:false,
@@ -1267,7 +1252,7 @@
         var formData = new FormData($('#form_course')[0]);
         var price = $("#payy_pricee").val();
         $.ajax({
-           url: $('#base_url').val()+'admin/coursecreation/save_course_profile?price='+price,
+           url: $('#base_url').val()+'instructor/coursecreation/save_course_profile?price='+price,
            type: 'POST',
            data: formData,
            processData:false,
@@ -1286,7 +1271,7 @@
                         type: 'success'
                     });
                 }
-                // window.location.href= '<?php echo base_url() ?>admin/coursecreation/getList';
+                // window.location.href= '<?php echo base_url() ?>instructor/coursecreation/getList';
                
            },
            error: function(){
@@ -1370,7 +1355,7 @@
    "ajax": {
        "type": "POST",
        "async": true,
-       "url": "<?=base_url()?>admin/coursecreation/getinstructor",
+       "url": "<?=base_url()?>instructor/coursecreation/getinstructor",
        "data": '',
        "dataSrc": "data",
        "dataType": "json",
@@ -1415,7 +1400,7 @@
    "ajax": {
        "type": "POST",
        "async": true,
-       "url": "<?=base_url()?>admin/coursecreation/getuser",
+       "url": "<?=base_url()?>instructor/coursecreation/getuser",
        "data": '',
        "dataSrc": "data",
        "dataType": "json",
@@ -1684,7 +1669,7 @@
    if($('.modal-create-confirm').html().indexOf('<?=$term["create"]?>') >= 0)
    {
    $.ajax({
-       url: $('#base_url').val()+'admin/coursecreation/save_exam_page',
+       url: $('#base_url').val()+'instructor/coursecreation/save_exam_page',
        type: 'POST',
        data: {'chapter_id':$('#chapter_id').val(),
            'course_id':$('#course_id').val(),
@@ -1714,7 +1699,7 @@
    else
    {
    $.ajax({
-       url: $('#base_url').val()+'admin/coursecreation/update_exam_page',
+       url: $('#base_url').val()+'instructor/coursecreation/update_exam_page',
        type: 'POST',
        data: {'chapter_id':$('#chapter_id').val(),
            'exam_id':$('#exam_id').val(),
@@ -1749,7 +1734,7 @@
    if($('.modal-create-quiz').html().indexOf('<?=$term["create"]?>') >= 0)
    {
    $.ajax({
-       url: $('#base_url').val()+'admin/coursecreation/save_quiz_page',
+       url: $('#base_url').val()+'instructor/coursecreation/save_quiz_page',
        type: 'POST',
        data: {'chapter_id':$('#quiz_chapter_id').val(),
            'course_id':$('#course_id').val(),
@@ -1781,7 +1766,7 @@
    {
    $('#quiz_chapter_id').prop('disabled', false);
    $.ajax({
-       url: $('#base_url').val()+'admin/coursecreation/update_quiz_page',
+       url: $('#base_url').val()+'instructor/coursecreation/update_quiz_page',
        type: 'POST',
        data: {'page_id':$('#page_id').val(),
            'quiz_id':$('#quiz_id').val(),
@@ -1859,7 +1844,7 @@
    function view_function(formData, functionName, className){
    
    if(functionName == 'view_chapter_and_page'){
-   var url = "<?php echo base_url() ?>admin/coursecreation/"+functionName;
+   var url = "<?php echo base_url() ?>instructor/coursecreation/"+functionName;
    $.ajax({
        url: url,
        type: 'POST',
@@ -1875,7 +1860,7 @@
    }
    
    if(functionName == 'view_chapter'){
-   var url = "<?php echo base_url() ?>admin/coursecreation/"+functionName;
+   var url = "<?php echo base_url() ?>instructor/coursecreation/"+functionName;
    $.ajax({
        url: url,
        type: 'POST',
@@ -1896,7 +1881,7 @@
    }
    
    if(functionName == 'view_chapter_page'){
-   var url = "<?php echo base_url() ?>admin/coursecreation/"+functionName;
+   var url = "<?php echo base_url() ?>instructor/coursecreation/"+functionName;
    $.ajax({
        url: url,
        type: 'POST',
@@ -1918,7 +1903,7 @@
    }
    
    if(functionName == 'view_exam_page'){
-   var url = "<?php echo base_url() ?>admin/coursecreation/"+functionName;
+   var url = "<?php echo base_url() ?>instructor/coursecreation/"+functionName;
    $.ajax({
        url: url,
        type: 'POST',
@@ -1939,7 +1924,7 @@
    }
    
    if(functionName == 'view_quiz_page'){
-   var url = "<?php echo base_url() ?>admin/coursecreation/"+functionName;
+   var url = "<?php echo base_url() ?>instructor/coursecreation/"+functionName;
    $.ajax({
        url: url,
        type: 'POST',
@@ -1973,7 +1958,7 @@
    }
    
    if(functionName == 'view_only_chapter_page'){
-   var url = "<?php echo base_url() ?>admin/coursecreation/"+functionName;
+   var url = "<?php echo base_url() ?>instructor/coursecreation/"+functionName;
    $.ajax({
        url: url,
        type: 'POST',
@@ -1993,7 +1978,7 @@
    }
    
    if (functionName == 'view_only_chapter_page1'){
-   var url = "<?php echo base_url() ?>admin/coursecreation/"+functionName;
+   var url = "<?php echo base_url() ?>instructor/coursecreation/"+functionName;
    $.ajax({
        url: url,
        type: 'POST',
@@ -2014,7 +1999,7 @@
    }
    
    function single_view_function(formData, functionName, className){
-   var url = "<?php echo base_url() ?>admin/coursecreation/"+functionName;
+   var url = "<?php echo base_url() ?>instructor/coursecreation/"+functionName;
    $.ajax({
    url: url,
    type: 'POST',
@@ -2037,7 +2022,7 @@
    function btnCreateChapter(){
    create_type = "chapter";
    $.ajax({
-   url: "<?php echo base_url() ?>admin/coursecreation/create_temp_chapter",
+   url: "<?php echo base_url() ?>instructor/coursecreation/create_temp_chapter",
    type: 'POST',
    data: {'course_id':$('#course_id').val()},
    dataType : 'json',
@@ -2069,7 +2054,7 @@
    function btnCreatePage(){
    create_type = "page";
    $.ajax({
-   url: '<?php echo base_url() ?>admin/coursecreation/create_temp_page',
+   url: '<?php echo base_url() ?>instructor/coursecreation/create_temp_page',
    type: 'POST',
    data: {'course_id':$('#course_id').val(), 'page_type':$('#page_type').val()},
    dataType : 'json',
@@ -2099,7 +2084,7 @@
    loaderStart();
    
    $.ajax({
-   url: '<?php echo base_url() ?>admin/coursecreation/create_temp_page_id',
+   url: '<?php echo base_url() ?>instructor/coursecreation/create_temp_page_id',
    type: 'POST',
    data: {'parent':$('#chapter_id').val(), 'course_id':$('#course_id').val(), 'page_type':$('#page_type_with').val()},
    dataType : 'json',
@@ -2259,7 +2244,7 @@ function statusFun(elm){
 	   chapter_id = pageid;
 	   
 	   $.ajax({
-		   url: $('#base_url').val()+'admin/coursecreation/update_row',
+		   url: $('#base_url').val()+'instructor/coursecreation/update_row',
 		   type: 'POST',
 		   data: {'page_id':pageid},
 		   success: function (data, status, xhr){			   	
@@ -2277,7 +2262,7 @@ function statusFun(elm){
 	   chapter_id = chapid;
 	   
 	   $.ajax({
-		   url: $('#base_url').val()+'admin/coursecreation/update_row',
+		   url: $('#base_url').val()+'instructor/coursecreation/update_row',
 		   type: 'POST',
 		   data: {'page_id':chapid},
 		   success: function (data, status, xhr){
@@ -2302,7 +2287,7 @@ function statusFun(elm){
    chapter_id = pageid;
    
    $.ajax({
-       url: $('#base_url').val()+'admin/coursecreation/check_exam_page',
+       url: $('#base_url').val()+'instructor/coursecreation/check_exam_page',
        type: 'POST',
        data: {'page_id':pageid},
        success: function (data, status, xhr) {
@@ -2321,7 +2306,7 @@ function statusFun(elm){
    chapter_id = chapid;
    
    $.ajax({
-       url: $('#base_url').val()+'admin/coursecreation/check_exam_page',
+       url: $('#base_url').val()+'instructor/coursecreation/check_exam_page',
        type: 'POST',
        data: {'page_id':chapid},
        success: function (data, status, xhr) {
@@ -2486,7 +2471,7 @@ function statusFun(elm){
    var html_container = "<div class='whitePanel'><div class='book_container'><div id='book'></div></div></div>";
    
    $.ajax({
-   url: '<?php echo base_url() ?>admin/library/getPathById',
+   url: '<?php echo base_url() ?>instructor/library/getPathById',
    type: 'POST',
    data: {'id': library_id},
    success: function (data, status, xhr) {
@@ -2496,7 +2481,7 @@ function statusFun(elm){
            $("#div_container").removeClass('hidden');
            $("#show_library_btn").removeClass('hidden');
            if (data.indexOf(".pdf") > 0){
-               $("#div_container").html("<iframe style='width: 100%' id='course_container' src = "+'<?php echo base_url()?>admin/flipbook/view_book/'+library_id+"></iframe>");
+               $("#div_container").html("<iframe style='width: 100%' id='course_container' src = "+'<?php echo base_url()?>instructor/flipbook/view_book/'+library_id+"></iframe>");
            }else{
                $("#div_container").html("<iframe style='width: 100%' id='course_container' src = "+'<?php echo base_url()?>'+data+"></iframe>");
            }
@@ -2515,7 +2500,7 @@ function statusFun(elm){
    
    function chapter_view(cid){
 	$.ajax({
-		url: '<?php echo base_url() ?>admin/coursecreation/getSessionDateTime',
+		url: '<?php echo base_url() ?>instructor/coursecreation/getSessionDateTime',
 		type: 'POST',
 		data: {'id':cid},
 		dataType : 'json',
@@ -2545,7 +2530,7 @@ function statusFun(elm){
    var html_container = "<div class='whitePanel'><div class='book_container'><div id='book'></div></div></div>";
    
    $.ajax({
-   url: '<?php echo base_url() ?>admin/library/getPathById',
+   url: '<?php echo base_url() ?>instructor/library/getPathById',
    type: 'POST',
    data: {'id': library_id},
    success: function (data, status, xhr) {
@@ -2555,7 +2540,7 @@ function statusFun(elm){
            $("#div_container").removeClass('hidden');
            $("#show_library_btn").removeClass('hidden');
            if (data.indexOf(".pdf") > 0){
-               $("#div_container").html("<iframe style='width: 100%' id='course_container' src = "+'<?php echo base_url()?>admin/flipbook/view_book/'+library_id+"></iframe>");
+               $("#div_container").html("<iframe style='width: 100%' id='course_container' src = "+'<?php echo base_url()?>instructor/flipbook/view_book/'+library_id+"></iframe>");
            }else{
                $("#div_container").html("<iframe style='width: 100%' id='course_container' src = "+'<?php echo base_url()?>'+data+"></iframe>");
            }
@@ -2638,7 +2623,7 @@ function statusFun(elm){
    function save_function(formData, functionName, className){
    
    if($('#state_now').val() == 'page'){
-   var url = "<?php echo base_url() ?>admin/coursecreation/"+functionName;
+   var url = "<?php echo base_url() ?>instructor/coursecreation/"+functionName;
    $.ajax({
        url: url,
        type: 'POST',
@@ -2660,7 +2645,7 @@ function statusFun(elm){
    
    }
    if($('#state_now').val() == 'chapter'){
-   var url = "<?php echo base_url() ?>admin/coursecreation/"+functionName;
+   var url = "<?php echo base_url() ?>instructor/coursecreation/"+functionName;
    $.ajax({
        url: url,
        type: 'POST',
@@ -2683,7 +2668,7 @@ function statusFun(elm){
        $('.box_area2').removeClass('box_area1');
        $('.box_area2').html('');
    }
-   var url = "<?php echo base_url() ?>admin/coursecreation/"+functionName;
+   var url = "<?php echo base_url() ?>instructor/coursecreation/"+functionName;
    $.ajax({
        url: url,
        type: 'POST',
@@ -2704,7 +2689,7 @@ function statusFun(elm){
    
    function delete_self(){
    $.ajax({
-   url: '<?php echo base_url() ?>admin/coursecreation/delete_self',
+   url: '<?php echo base_url() ?>instructor/coursecreation/delete_self',
    type: 'POST',
    data: {'create_chapter':'chapter', 'course_id':$('#course_id').val()},
    dataType : 'json',
@@ -2728,7 +2713,7 @@ function statusFun(elm){
    
    function delete_self_page(){
    $.ajax({
-   url: '<?php echo base_url() ?>admin/coursecreation/delete_self_page',
+   url: '<?php echo base_url() ?>instructor/coursecreation/delete_self_page',
    type: 'POST',
    data: {'create_chapter':'chapter','course_id':$('#course_id').val()},
    dataType : 'json',
@@ -2772,7 +2757,7 @@ function statusFun(elm){
    function save_now(){
    loaderStart();
    
-   var url = "<?php echo base_url() ?>admin/coursecreation/update_chapter_detail";
+   var url = "<?php echo base_url() ?>instructor/coursecreation/update_chapter_detail";
    $.ajax({
    url: url,
    type: 'POST',
@@ -2792,7 +2777,7 @@ function statusFun(elm){
    function addblackchapter(){
    
    formData = "activity=page_available&course_id="+$('#course_id').val();
-   var url = "<?php echo base_url() ?>admin/coursecreation/page_available";
+   var url = "<?php echo base_url() ?>instructor/coursecreation/page_available";
    $.ajax({
    url: url,
    type: 'POST',
@@ -2814,7 +2799,7 @@ function statusFun(elm){
    }
    
     function viewList() {
-        window.location.href= '<?php echo base_url() ?>admin/coursecreation/edit_course_tab/'+$('#course_id').val()+'/2';
+        window.location.href= '<?php echo base_url() ?>instructor/coursecreation/edit_course_tab/'+$('#course_id').val()+'/2';
     }
 
     function btn_func(id){
@@ -2828,7 +2813,7 @@ function statusFun(elm){
    
    function page_updated(){
    formData = "activity=update_chapterpage_detail&course_id="+$('#course_id').val();
-   var url = "<?php echo base_url() ?>admin/coursecreation/update_page_detail";
+   var url = "<?php echo base_url() ?>instructor/coursecreation/update_page_detail";
    $.ajax({
    url: url,
    type: 'POST',
@@ -2868,7 +2853,7 @@ function statusFun(elm){
    
    var library_form_data = new FormData($("#form_library_insert")[0]);
    $.ajax({
-       url:  '<?=base_url()?>admin/coursecreation/insert_library',
+       url:  '<?=base_url()?>instructor/coursecreation/insert_library',
        type: 'POST',
        data: library_form_data,
        processData:false,
@@ -2899,7 +2884,7 @@ function statusFun(elm){
    "ajax": {
        "type": "POST",
        "async": true,
-       "url":$('#base_url').val() +"admin/library/view",
+       "url":$('#base_url').val() +"instructor/library/view",
        "dataSrc": "data",
        "dataType": "json",
        "cache":    false
@@ -2965,7 +2950,7 @@ function statusFun(elm){
 	   $('#standard_id').empty();
 	   //var standard_id = <?php echo isset($course_data['standard_id'])?$course_data['standard_id']:0;?>;
 	   $.ajax({
-	   url: '<?php echo base_url() ?>admin/category/getStandardList',
+	   url: '<?php echo base_url() ?>instructor/category/getStandardList',
 	   type: 'POST',
 	   data: {category_id:id},
 	   dataType : 'json',

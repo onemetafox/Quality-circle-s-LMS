@@ -40,7 +40,7 @@
 	        },
 	        
 	        "columnDefs": [
-                {         //http://localhost/ols/admin/examhistory/preview_history/24
+                {         //http://localhost/ols/instructor/examhistory/preview_history/24
                     "targets": [5],
                     "createdCell": function (td, cellData, rowData, row, col) {
                         if(rowData['exam_title'] != '') {

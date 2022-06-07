@@ -73,7 +73,7 @@
                         $(td).html('Pass');
                     }
                 }
-            },{         //http://localhost/ols/admin/examhistory/preview_history/24
+            },{         //http://localhost/ols/instructor/examhistory/preview_history/24
                     "targets": [6],
                     "createdCell": function (td, cellData, rowData, row, col) {
                         if(cellData == 1){

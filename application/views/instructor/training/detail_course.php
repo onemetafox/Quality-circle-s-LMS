@@ -189,7 +189,7 @@
 		})
 				.then((willDelete) => {
 			if (willDelete) {
-			location.href = "<?=base_url()?>admin/training/view_course/"+id;
+			location.href = "<?=base_url()?>instructor/training/view_course/"+id;
 		}
 	});
 	}

@@ -66,7 +66,7 @@
                                                                 'userAns'=>$userAns['description']
                                                             );
 
-                                                $this->load->view('admin/exam/reportcard/multichoice', $checkData);
+                                                $this->load->view('instructor/exam/reportcard/multichoice', $checkData);
                                                 break;
                                             case 'checkbox':
                                                 $checkData = array(
@@ -74,7 +74,7 @@
                                                                 'checkbox'=>json_decode($question['content'],true)['checkbox'],
                                                                 'userAns'=>$userAns['description']
                                                             );
-                                                $this->load->view('admin/exam/reportcard/checkbox', $checkData);
+                                                $this->load->view('instructor/exam/reportcard/checkbox', $checkData);
                                                 break;
                                             case 'true-false':
                                                 $checkData = array(
@@ -82,19 +82,19 @@
                                                             'settrue'=>json_decode($question['content'],true)['settrue'],
                                                             'userAns'=>$userAns['description']
                                                         );
-                                                $this->load->view('admin/exam/reportcard/true_false', $checkData);
+                                                $this->load->view('instructor/exam/reportcard/true_false', $checkData);
                                                 break;
                                             case 'fill-blank':
                                                 $checkData = array('blank'=>json_decode($question['content'],true)['blank'],'userAns'=>$userAns['description']);
-                                                $this->load->view('admin/exam/reportcard/fill_blank', $checkData);
+                                                $this->load->view('instructor/exam/reportcard/fill_blank', $checkData);
                                                 break;
                                             case 'essay':
                                                 $checkData = array('userAns'=>$userAns['description']);
-                                                $this->load->view('admin/exam/reportcard/essay', $checkData);
+                                                $this->load->view('instructor/exam/reportcard/essay', $checkData);
                                                 break;
                                             case 'matching':
                                                 $this->load->view(
-                                                    'admin/exam/reportcard/matching',
+                                                    'instructor/exam/reportcard/matching',
                                                     array(
                                                         'content'=>json_decode($question['content'],true)['choice'],
                                                         'match'=>json_decode($question['content'],true)['match'],

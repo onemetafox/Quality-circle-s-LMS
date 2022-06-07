@@ -50,15 +50,29 @@
                                             <label class="col-sm-2 control-label text-lg-right pt-2"><?=$term["starttime"]?></label>
                                             <div class="col-sm-8">
                                                 <div class="input-group">
-                                                    <span class="input-group-prepend">
-                                                        <span class="input-group-text">
-                                                            <i class="far fa-clock"></i>
-                                                        </span>
-                                                    </span>
-                                                    <input type="text" id="starttime" name="starttime" data-plugin-timepicker="" class="form-control" data-plugin-options="{ &quot;showMeridian&quot;: true }">
+                                                            <!-- <span class="input-group-prepend">
+                                                                <span class="input-group-text">
+                                                                    <i class="far fa-clock"></i>
+                                                                </span>
+                                                            </span>
+                                                    <input type="text" id="starttime" name="starttime" data-plugin-timepicker="" class="form-control" data-plugin-options="{ &quot;showMeridian&quot;: true }"> -->
+                                                    <select class="form-control" id="starttime" name="starttime" style="width:264px;">
+                                                        <option value="7:00 AM">7:00 AM</option>
+                                                        <option value="8:00 AM">8:00 AM</option>
+                                                        <option value="9:00 AM">9:00 AM</option>
+                                                        <option value="10:00 AM">10:00 AM</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-1"></div>
+                                            <div class="col-sm-10">
+                                                <table class="table table-responsive-md table-striped table-bordered mb-0" id="datatable_user">
+                                                </table>
+                                            </div>
+                                        </div>
+
                                     </div>
                                     <footer class="card-footer">
                                         <div class="row">
@@ -66,6 +80,7 @@
                                                 <a class="btn btn-default" href="javascript:inviteuser()"><?=$term["inviteuser"] ?></a>
                                                 <button class="btn btn-default modal-change-delete"><?=$term["delete"]?></button>
                                                 <button class="btn btn-primary modal-change-confirm"><?php $id==0?print $term["add"]:print $term["update"]?></button>
+                                                <a href="javascript:showPayUser()" class="btn btn-primary btn-user-list" hidden>Show User List</a>
                                                 <button class="btn btn-default modal-change-dismiss"><?=$term["cancel"]?></button>
                                             </div>
                                         </div>
@@ -96,9 +111,13 @@
                                    </div>
                                </div>
                             </div>
+                            <div class="col-md-6 text-right">
+                                <a id="preview" class="btn btn-primary" href="<?=base_url()?>instructor/live/showLive/-1"><<</a>
+                                <a id="next" class="btn btn-primary" href="<?=base_url()?>instructor/live/showLive/1">>></a>
+                            </div>
                         </div>
                     </footer>
-
+                    <input type="hidden" name="dis_month" id="dis_month" value="<?=$dis_month?>">
                     <table class="table table-responsive-md  mb-0 table-bordered">
                         <tr>
                             <th rowspan="2" colspan="2" width="20%" class="center">Name of Course</th>
@@ -107,7 +126,7 @@
                         </tr>
                         <tr>
                             <?php
-                            $current_month = intval(date("m"));
+                            $current_month = intval(date("m"))+$dis_month;
                             $current_year = intval(date("Y"));
                             for ($i=0;$i<8;$i++){
                                 switch ($current_month){
@@ -160,15 +179,16 @@
                             foreach ($course_list as $key => $rows) {
                         ?>
                             <tr>
-                                <td width="6%">                                
+                                <td width="15%">                                
                                 	<a class="btn btn-danger" onclick="deleteLiveClass(<?=$key?>)" href="javascript:void(0);">Delete</a>
+                                    <a href="#republish_modal" class="btn btn-success republish_modal" onclick="republishCourse(<?=$key?>)" href="javascript:void(0);">Republish</a>
                                 </td>
                                 <td>
                                 	<a href="<?= base_url()?>instructor/live/editLive/<?=$key?>"><?=$rows['title']?></a>
                                 </td>
                                 <td><?=$rows['duration']?></td>
                         <?php
-                                $current_month = intval(date("m"));
+                                $current_month = intval(date("m")) +$dis_month;
                                 $current_year = intval(date("Y"));
                                 if ($current_month < 1){
                                     $current_month = 12;
@@ -195,13 +215,13 @@
                                                     $sday = date('d', $timestamp);
                                                     if($year == $current_year){?>
                         
-                                                    <a class="btn btn-xs btn-primary " href="javascript:updateTime(<?=$key?>,'<?=$date?>','<?=$hour?>',<?=$j['id']?>)" style="font-size: 8px; color: white">
+                                                    <a class="btn btn-xs btn-primary " href="javascript:updateTime(<?=$key?>,'<?=$j['start_at']?>','<?=$j['start_time']?>',<?=$j['id']?>)" style="font-size: 8px; color: white">
                                                     
                                                         <?= $rows['instructor_email'] ?>
                                                         </br>
                                                         <?= $sday ?>
                                                         :
-                                                        <?= $hour ?>
+                                                        <?= $j['start_time'] ?>
                                                     </a></br>
                                                 <?php }}?>
                                             </td>
@@ -228,6 +248,68 @@
     </div>
     <a class="modal-with-form invite_modal" href="#modalForm" hidden>
     </a>
+    <div id="republish_modal" class="modal-block modal-block-primary mfp-hide" style="max-width: 800px!important">
+		<form id="republish_form" action="" method="POST" novalidate="novalidate">
+		    <input type="hidden" id="republish-id" name="republish-id" class="form-control" >
+          <input type="hidden" id="republish-type" name="republish-type" class="form-control" >
+		    <section class="card">
+		        <header class="card-header">
+		            <h2 class="card-title"><?=$term["republish"]?></h2>
+		        </header>
+		        <div class="card-body">
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["title"]?></label>
+                     <div class="col-sm-6">
+                        <input type="text" class="form-control" readonly id="republish-title">
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["price"]?></label>
+                     <div class="col-sm-6">
+                        <input id="republish-price" name = "republish-price" class="form-control">
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["discount"]?></label>
+                     <div class="col-sm-6">
+                        <input id="republish-discount" onchange="changePrice()" name= "republish-discount" class="form-control">
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["amount"]?></label>
+                     <div class="col-sm-6">
+                        <input id="republish-amount" name="republish-amount" readonly class="form-control">
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["startday"]?></label>
+                     <div class="col-sm-6">
+                     <input data-plugin-datepicker id="startdays" name="startdays"  class="form-control" data-date-format="yyyy-mm-dd">
+                     </div>
+                  </div>
+                  <div class="form-group row">
+                     <label class="col-sm-3 control-label text-lg-right pt-2"><?=$term["starttime"]?></label>
+                     <div class="col-sm-6">
+                        <select class="form-control" id="starttime" name="starttime" style="width:264px;">
+                           <option value="7:00 AM">7:00 AM</option>
+                           <option value="8:00 AM">8:00 AM</option>
+                           <option value="9:00 AM">9:00 AM</option>
+                           <option value="10:00 AM">10:00 AM</option>
+                        </select>
+                     </div>
+                  </div>
+		        </div>
+		        <footer class="card-footer">
+		            <div class="row">
+		                <div class="col-md-12 text-right">
+							<a class="btn btn-default" href="javascript:republish()" style="color:#333"><i class="fas fa-plus"></i> <?=$term["republish"]?> </a>
+		                    <button class="btn btn-default modal-change-dismiss"><?=$term["cancel"]?></button>
+		                </div>
+		            </div>
+		        </footer>
+		    </section>
+		</form>
+	</div>
     <div id="modalForm" class="modal-block modal-block-primary mfp-hide" style="max-width: 800px!important">
         <form id="modal_form" action="" method="POST" novalidate="novalidate">
             <input type="hidden" id="sel_id" name="sel_id" class="form-control" >
@@ -248,6 +330,7 @@
                 <footer class="card-footer">
                     <div class="row">
                         <div class="col-md-12 text-right">
+                            <a href="#add_exist_modal" class="btn btn-default add_exist_modal" style="color:#333"><i class="fas fa-plus"></i> <?=$term["inviteuser"]?> </a>
                             <a href="#add_modal" class="btn btn-default add_modal" style="color:#333"><i class="fas fa-plus"></i> <?=$term["add"]?> </a>
                             <button class="btn btn-default modal-change-dismiss"><?=$term["cancel"]?></button>
                         </div>
@@ -297,10 +380,158 @@
             </section>
         </form>
     </div>
+    <div id="add_exist_modal" class="modal-block modal-block-primary mfp-hide" style="min-width: 900px;">
+      <form id="add_exist_form" action="" method="POST" novalidate="novalidate">
+         <input type="hidden" name="course_id" class="form-control" >
+         <input type="hidden" name="course_type" value="0" class="form-control" >
+         <input type="hidden" name="add_ilt_time_id" value="" class="form-control" >
+         <section class="card">
+            <header class="card-header">
+               <h2 class="card-title"><?=$term["add"]?> <?=$term["inviteuser"]?></h2>
+            </header>
+            <div class="card-body">
+               <table class="table table-responsive-md table-striped table-bordered mb-0" id="datatable_addexistuser"></table>
+            </div>
+            <footer class="card-footer">
+               <div class="row">
+                  <div class="col-md-12 text-right">
+                     <button class="btn btn-default modal-change-dismiss"><?=$term["cancel"]?></button>
+                  </div>
+               </div>
+            </footer>
+         </section>
+      </form>
+   </div>
     <!-- end: page -->
 </section>
 
 <script>
+    function changePrice(){
+        var price = $("#republish-price").val();
+        var discount = $("#republish-discount").val();
+        var amount = price * (100 - discount) / 100;
+        $("#republish-amount").val(amount);
+    }
+    function republish(){
+      var formData = new FormData($('#republish_form')[0]);
+        $.ajax({
+            url: $('#base_url').val() + 'instructor/coursecreation/republishCourse',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (data, status, xhr){
+                $.magnificPopup.close();
+                new PNotify({
+                   title: 'Success',
+                   text: 'Upload',
+                   type: 'success'
+                });
+                document.location.reload();
+            },
+            error: function(){
+                new PNotify({
+                title: '<?php echo $term['error']; ?>',
+                text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
+                type: 'error'
+                });
+                $.magnificPopup.close();
+            }
+        });
+    }
+    function republishCourse(course_id){
+        var url = '<?= base_url()?>instructor/coursecreation/getCourse';
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: {
+                id:course_id,
+                type : 1
+            },
+            success: function (data, status, xhr){
+                $("#republish-title").val(data.title);
+                $("#republish-price").val(data.pay_price);
+                $("#republish-discount").val(data.discount);
+                $("#republish-amount").val(data.amount);
+                $("#republish-id").val(data.id);
+                $("#republish-type").val(data.course_type);
+                $("#republishForm").modal('show');
+            },
+            error: function(){
+                new PNotify({
+                title: '<?php echo $term['error']; ?>',
+                text: '<?php echo $term['youcantdeletethisitem']; ?>',
+                type: 'error'
+                });
+            }
+        });
+    }
+    var isShowList = false;
+    var $user_table = $('#datatable_user');
+    function showPayUser() {
+        var id = $("#time_id").val();
+        if($('.btn-user-list').html() == 'Show User List'){
+            $('.btn-user-list').html('Hide User List')
+            $user_table.show();
+            var ajaxData = {"id":id,'course_type':1};
+            if(!isShowList) {
+                $user_table.dataTable({     
+                    "ordering": true,
+                    "info": true,
+                    "searching": false,
+
+                    "ajax": {
+                    "type": "POST",
+                    "async": true,
+                    //  "url": "<?=base_url()?>instructor/training/getPayUser",
+                    "url": "<?=base_url()?>instructor/inviteuser/getInviteUserVirtual",
+                    //  "data": {
+                    //      'id': $('#change_id').val(),
+                    //      'tid': $('#time_id').val()
+                    //  },
+                    "data":function(data) { // add request parameters before submit
+                        $.each(ajaxData, function(key, value) {
+                            data[key] = value;
+                        });
+                    },
+                    "dataSrc": "data",
+                    "dataType": "json",
+                    "cache": false
+                    },
+
+                    // "columns": [
+                    //     {"title": "#", "data": "no", "class": "center", "width": 50},
+                    //     {"title": "<?=$term["name"]?>", "data": "fullname", "class": "text-left", "width": "*"}
+                    // ],
+                    "columns": [
+                    {"title": "#", "data": "no", "class": "center", "width": 50},
+                    {"title": "<?=$term["firstname"]?>", "data": "first_name", "class": "text-left", "width": 100},
+                    {"title": "<?=$term["lastname"]?>", "data": "last_name", "class": "text-left", "width": 100},
+                    {"title": "<?=$term["email"]?>", "data": "email", "class": "text-left", "width": 100},
+                    ],
+
+                    "scrollY": false,
+                    "scrollX": true,
+                    "scrollCollapse": false,
+                    "jQueryUI": true,
+
+                    "paging": true,
+                    "pagingType": "full_numbers",
+                    "pageLength": 10, // default record count per page
+
+                    dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
+                    bProcessing: true
+                });
+                isShowList = true;
+            }else{
+                $user_table.DataTable().ajax.reload('', false);
+            }
+
+        }else{
+            $('.btn-user-list').html('Show User List')
+            $user_table.hide();
+        }
+   }
 	function deleteLiveClass(deleteId){
         (new PNotify({
             title: "<?php echo $term['confirmation']; ?>",
@@ -356,6 +587,7 @@
 	});
 
     var $table = $('#datatable');
+    var $add_exist_table = $('#datatable_addexistuser');
 
     jQuery(document).ready(function() {
         $('[data-plugin-ios-switch]').each(function () {
@@ -374,6 +606,51 @@
 
             $this.themePluginMaskedInput();
         });
+        $add_exist_table.dataTable({
+            "ordering": true,
+            "info": true,
+            "searching": true,
+
+            "ajax": {
+                "type": "POST",
+                "async": true,
+                "url":$('#base_url').val() +"instructor/user/view",
+                "data": {
+                    'user_type': 'Learner',
+                    'active': 1
+                },
+                "dataSrc": "data",
+                "dataType": "json",
+                "cache":    false,
+            },
+            "columnDefs": [{
+                "targets": [4],
+                "createdCell": function (td, cellData, rowData, row, col) {
+                    $(td).html('<a href="javascript:add_exist_user('+rowData['id']+')" class="add-row"><i class="fas fa-plus"></i></i></a>');
+                }
+            }],
+            "columns": [
+                { "title": "#", "data": "no", "class": "center" },
+                { "title": "<?=$term["firstname"]?>", "data": "first_name", "class": "text-left"},
+                { "title": "<?=$term["lastname"]?>", "data": "last_name", "class": "text-left"},
+                { "title": "<?=$term["email"]?>", "data": "email", "class": "text-left"},
+                { "title": "<?=$term["action"]?>", "data": "id", "class": "text-center"},
+            ],
+            "lengthMenu": [
+                [5, 10, 20, 50, 150, -1],
+                [5, 10, 20, 50, 150, "All"] // change per page values here
+            ],
+            "scrollY": false,
+            "scrollX": true,
+            "scrollCollapse": false,
+            "jQueryUI": true,
+
+            "paging": true,
+            "pagingType": "full_numbers",
+            "pageLength": 50, // default record count per page
+            dom: '<"row"<"col-lg-6"l><"col-lg-6"f>><"table-responsive"t>p',
+            bProcessing: true,
+        });
     });
 
 
@@ -391,10 +668,11 @@
         $('.change-time').click();
     }
 
-    function updateTime(id, date,hour, time_id) {
+    function updateTime(id, date,start_time, time_id) {
+        $('.btn-user-list').prop('hidden', false);
 		$('#add_course_id').val(id);
         $('#startday').val(date);
-        $('#starttime').val(hour);
+        $('#starttime').val(start_time);
         $('#change_id').val(id);
         $('#time_id').val(time_id);
 		$('#add_course_time_id').val(time_id);
@@ -549,8 +827,24 @@
             }
         }
     });
+    $('.add_exist_modal').magnificPopup({
+        type: 'inline',
+        preloader: false,
+        callbacks: {
+            beforeOpen: function() {
+            }
+        }
+    });
+    $('.republish_modal').magnificPopup({
+        type: 'inline',
+        preloader: false,
+        callbacks: {
+            beforeOpen: function() {
+            }
+        }
+    });
     var inviteuser_table = $("#datatable_inviteuser");
-    var ajaxData = {"id":0,'course_type':1,};
+    var ajaxData = {"id":0,'course_type':1};
     inviteuser_table.dataTable({
         "ordering": true,
         "info": true,
@@ -561,9 +855,9 @@
             "async": true,
             "url": "<?=base_url()?>instructor/inviteuser/getInviteUserVirtual",
             "data":function(data) { // add request parameters before submit
-                    $.each(ajaxData, function(key, value) {
-                        data[key] = value;
-                    });
+                $.each(ajaxData, function(key, value) {
+                    data[key] = value;
+                });
             },
             "dataSrc": "data",
             "dataType": "json",
@@ -611,7 +905,36 @@
         inviteuser_table.DataTable().ajax.reload();
         $('.invite_modal').click();
     }
-
+    function add_exist_user(id){
+        var formData = new FormData($('#add_modal_form')[0]);
+        formData.append('user_id',id);
+        $.ajax({
+        url: '<?=base_url()?>instructor/inviteuser/addExistUser/classes/1',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data, status, xhr) {
+            if(data.success == "true"){
+                $.magnificPopup.close();
+                new PNotify({
+                    title: 'Success',
+                    text: data.msg,
+                    type: 'success'
+                });
+                document.location.reload();
+            }else{
+                new PNotify({
+                    title: 'Faild',
+                    text: data.msg,
+                    type: 'error'
+                });
+            }
+        },
+        error: function(){   
+        }
+        });
+    }
     function add_invite_user(){
         var formData = new FormData($('#add_modal_form')[0]);
         if ($('#first_name').val() == '' || $('#last_name').val() == '' || $('#send_email').val() == '') {
@@ -630,13 +953,21 @@
                 processData: false,
                 contentType: false,
                 success: function (data, status, xhr) {
-                    $.magnificPopup.close();
-                    new PNotify({
-                        title: 'Success',
-                        text: 'Add',
-                        type: 'success'
-                    });
-                    //document.location.reload();
+                    if(data.succss == "true"){
+                        $.magnificPopup.close();
+                        new PNotify({
+                            title: 'Success',
+                            text: data.msg,
+                            type: 'success'
+                        });
+                        document.location.reload();
+                    }else{
+                        new PNotify({
+                            title: 'Faild',
+                            text: data.msg,
+                            type: 'error'
+                        });
+                    }
                 },
                 error: function () {
 
@@ -649,7 +980,7 @@
     function resend_inviteuser(obj, id , firstname, lastname, email){
         $(obj).attr("disabled",1);
         $.ajax({
-            url: '<?=base_url()?>instructor/inviteuser/createInviteuser/classes',
+            url: '<?=base_url()?>instructor/inviteuser/createInviteuser/classes/1',
             type: 'POST',
             data: {
 				add_course_time_id: $('#add_course_time_id').val(),

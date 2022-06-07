@@ -27,7 +27,7 @@
 <script src="<?php echo base_url(); ?>assets/js_flipbook/vendor/modernizr-2.7.1.min.js"></script>
 <style>
     iframe{
-        
+       
         min-height: 30rem;
     }
 </style>
