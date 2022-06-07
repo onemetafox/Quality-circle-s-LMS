@@ -65,8 +65,8 @@
                                 <?php foreach($libraries as $page):?>
                                     <?php if($page->parent != 0 && $page->parent == $chapter->id/* &&  $page->status == 1 */):?>
 
-                                        <label class="radioBox" style="margin-left:20px; <?= $chapter->status == 0?'color: #c5c5c5':''?>"><?= $page->title?>
-                                            <input <?= $chapter->status == 0?'disabled style="color: #c5c5c5"':''?> onclick="changeSelect(this,<?= $page->id?>,<?= $page->exam_id?>,<?= $page->quiz_id?>)" id="library<?= $page->id?>" type="radio" name="radio" value="<?= $page->file_path?>">
+                                        <label class="radioBox" style="margin-left:20px; <?= $page->status == 0?'color: #c5c5c5':''?>"><?= $page->title?>
+                                            <input <?= $page->status == 0?'disabled style="color: #c5c5c5"':''?> onclick="changeSelect(this,<?= $page->id?>,<?= $page->exam_id?>,<?= $page->quiz_id?>)" id="library<?= $page->id?>" type="radio" name="radio" value="<?= $page->file_path?>">
                                             <span class="checkmark"></span>
                                         </label>
                                     <?php endif;?>
