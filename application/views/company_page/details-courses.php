@@ -19,21 +19,21 @@
     }
 
 </style>
-	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo base_url(); ?>assets/img_flipbook/touch/apple-touch-icon-144x144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo base_url(); ?>assets/img_flipbook/touch/apple-touch-icon-114x114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo base_url(); ?>assets/img_flipbook/touch/apple-touch-icon-72x72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="<?php echo base_url(); ?>assets/img_flipbook/touch/apple-touch-icon-57x57-precomposed.png">
-    <link rel="shortcut icon" sizes="196x196" href="<?php echo base_url(); ?>assets/img_flipbook/touch/touch-icon-196x196.png">
-    <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/img_flipbook/touch/apple-touch-icon.png">
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?= base_url(); ?>assets/img_flipbook/touch/apple-touch-icon-144x144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?= base_url(); ?>assets/img_flipbook/touch/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?= base_url(); ?>assets/img_flipbook/touch/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="<?= base_url(); ?>assets/img_flipbook/touch/apple-touch-icon-57x57-precomposed.png">
+    <link rel="shortcut icon" sizes="196x196" href="<?= base_url(); ?>assets/img_flipbook/touch/touch-icon-196x196.png">
+    <link rel="shortcut icon" href="<?= base_url(); ?>assets/img_flipbook/touch/apple-touch-icon.png">
 
     <!-- Tile icon for Win8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="<?php echo base_url(); ?>assets/img_flipbook/touch/apple-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileImage" content="<?= base_url(); ?>assets/img_flipbook/touch/apple-touch-icon-144x144-precomposed.png">
     <meta name="msapplication-TileColor" content="#222222">
 
-	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css_flipbook/normalize.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/wow_book/wow_book.css" type="text/css" />
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css_flipbook/main.css">
-    <script src="<?php echo base_url(); ?>assets/js_flipbook/vendor/modernizr-2.7.1.min.js"></script>
+	<link rel="stylesheet" href="<?= base_url(); ?>assets/css_flipbook/normalize.css">
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/wow_book/wow_book.css" type="text/css" />
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/css_flipbook/main.css">
+    <script src="<?= base_url(); ?>assets/js_flipbook/vendor/modernizr-2.7.1.min.js"></script>
 <style>
 	iframe{
 		
@@ -51,22 +51,22 @@
                 <div class="catalogBox" id="filter-Left">
 					<ul class="filtersLeft">
 						<li>
-						<h3 class="titleH3 _mt-0"><i class="fa fa-book"></i> <?php echo $course_name;?>
+						<h3 class="titleH3 _mt-0"><i class="fa fa-book"></i> <?= $course_name;?>
 						</h3>
 
                             <?php foreach($libraries as $chapter):?>
-                                <?php if($chapter->parent == 0 && $chapter->exam_id == 0 && $chapter->status == 1): ?>
-                                    <label class="radioBox" style="margin-top:20px; font-size: 20px; font-family: bold ;<?php echo $chapter->assess == 0?'color: #c5c5c5':''?>"><?php echo $chapter->title?>
-                                        <input  <?php echo $chapter->assess == 0?'disabled style="color: #c5c5c5"':''?>  onclick="changeSelect(this,<?php echo $chapter->id?>,<?php echo $chapter->exam_id?>,<?php echo $chapter->quiz_id?>)" id="library<?php echo $chapter->id?>" type="radio" name="radio" value="<?php echo $chapter->file_path?>">
+                                <?php if($chapter->parent == 0 && $chapter->exam_id == 0 /*&& $chapter->status == 1 */): ?>
+                                    <label class="radioBox" style="margin-top:20px; font-size: 20px; font-family: bold ;<?= $chapter->status == 0?'color: #c5c5c5':''?>"><?= $chapter->title?>
+                                        <input  <?= $chapter->status == 0?'disabled style="color: #c5c5c5"':''?>  onclick="changeSelect(this,<?= $chapter->id?>,<?= $chapter->exam_id?>,<?= $chapter->quiz_id?>)" id="library<?= $chapter->id?>" type="radio" name="radio" value="<?= $chapter->file_path?>">
                                         <span class="checkmark"></span>
                                     </label>
                                 <?php endif;?>
                                 <!-- <div style="padding:15px;padding-bottom:0;border-top:1px solid #ececeb;border-bottom:1px solid #ececeb"> -->
                                 <?php foreach($libraries as $page):?>
-                                    <?php if($page->parent != 0 && $page->parent == $chapter->id && $page->status == 1):?>
+                                    <?php if($page->parent != 0 && $page->parent == $chapter->id/* &&  $page->status == 1 */):?>
 
-                                        <label class="radioBox" style="margin-left:20px; <?php echo $chapter->assess == 0?'color: #c5c5c5':''?>"><?php echo $page->title?>
-                                            <input <?php echo $chapter->assess == 0?'disabled style="color: #c5c5c5"':''?> onclick="changeSelect(this,<?php echo $page->id?>,<?php echo $page->exam_id?>,<?php echo $page->quiz_id?>)" id="library<?php echo $page->id?>" type="radio" name="radio" value="<?php echo $page->file_path?>">
+                                        <label class="radioBox" style="margin-left:20px; <?= $chapter->status == 0?'color: #c5c5c5':''?>"><?= $page->title?>
+                                            <input <?= $chapter->status == 0?'disabled style="color: #c5c5c5"':''?> onclick="changeSelect(this,<?= $page->id?>,<?= $page->exam_id?>,<?= $page->quiz_id?>)" id="library<?= $page->id?>" type="radio" name="radio" value="<?= $page->file_path?>">
                                             <span class="checkmark"></span>
                                         </label>
                                     <?php endif;?>
@@ -74,9 +74,9 @@
                                 <!-- </div> -->
                             <?php endforeach;?>
                             <?php foreach ($libraries as $chapter):?>
-                                <?php if($chapter->parent == 0 && $chapter->exam_id != 0 && $chapter->status == 1): ?>
-                                    <label class="radioBox" style="margin-top:20px <?php echo $chapter->assess == 0?'color: #c5c5c5':''?>"><?php echo $chapter->title?><i class="fas fa-star"></i>
-                                        <input <?php echo $chapter->assess == 0?'disabled style="color: #c5c5c5"':''?> onclick="changeSelect(this,<?php echo $chapter->id?>,<?php echo $chapter->exam_id?>,<?php echo $chapter->quiz_id?>)" id="library<?php echo $chapter->id?>" type="radio" name="radio" value="<?php echo $chapter->file_path?>">
+                                <?php if($chapter->parent == 0 && $chapter->exam_id != 0 /*&& $chapter->status == 1*/): ?>
+                                    <label class="radioBox" style="margin-top:20px; <?= $chapter->status == 0?'color: #c5c5c5':''?>"><?= $chapter->title?><i class="fas fa-star"></i>
+                                        <input <?= $chapter->status == 0?'disabled style="color: #c5c5c5"':''?> onclick="changeSelect(this,<?= $chapter->id?>,<?= $chapter->exam_id?>,<?= $chapter->quiz_id?>)" id="library<?= $chapter->id?>" type="radio" name="radio" value="<?= $chapter->file_path?>">
                                         <span class="checkmark"></span>
                                     </label>
                                 <?php endif;?>
@@ -109,10 +109,10 @@
 	</div><!--container-->
 </section><!--sectionBox-->
 
-<script src="<?php echo base_url(); ?>assets/js_flipbook/vendor/jquery-1.11.2.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/js_flipbook/helper.js"></script>
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/wow_book/pdf.combined.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/wow_book/wow_book.min.js"></script>
+<script src="<?= base_url(); ?>assets/js_flipbook/vendor/jquery-1.11.2.min.js"></script>
+<script src="<?= base_url(); ?>assets/js_flipbook/helper.js"></script>
+<script type="text/javascript" src="<?= base_url(); ?>assets/wow_book/pdf.combined.min.js"></script>
+<script src="<?= base_url(); ?>assets/wow_book/wow_book.min.js"></script>
 <!-- <script src="js/main.js"></script> -->
 <script type="text/javascript">
 
@@ -131,7 +131,7 @@
         var course_id = '<?= $course_id?>';
         var user_id = '<?= $user_id ?>';
         $.ajax({
-            url: '<?php echo base_url($company['company_url']);?>/demand/setSelfPace',
+            url: '<?= base_url($company['company_url']);?>/demand/setSelfPace',
             type: 'POST',
             data: {
                 'course_id': course_id,
@@ -142,7 +142,7 @@
             },
             error: function () {
                 new PNotify({
-                    title: '<?php echo $term['error']; ?>',
+                    title: '<?= $term['error']; ?>',
                     text: 'You can not select this Session.',
                     type: 'error'
                 });
@@ -225,8 +225,8 @@
             }
         });
     }
-    var company_url = "<?php echo base_url($company['company_url'])?>";
-    var base_url = "<?php echo base_url()?>";
+    var company_url = "<?= base_url($company['company_url'])?>";
+    var base_url = "<?= base_url()?>";
 
 //    var first_id = '<?php //foreach ($libraries as $li) {
 //                        if($li->exam_id == 0) {
@@ -234,12 +234,12 @@
 //                            break;
 //                        }
 //                    }?>//';
-    var first_id = <?php echo $last_history_ch_id?>;
+    var first_id = <?= $last_history_ch_id?>;
     $('#library'+first_id).prop('checked','checked');
     
     if($('#library'+first_id).val() == ''){
         new PNotify({
-            title: '<?php echo $term['error']; ?>',
+            title: '<?= $term['error']; ?>',
             text: 'There is no Content.',
             type: 'error'
         });
@@ -279,7 +279,7 @@
             var course_id = '<?= $course_id?>';
             var user_id = '<?= $user_id ?>';
             $.ajax({
-                url: '<?php echo base_url($company['company_url']);?>/demand/setSelfPace',
+                url: '<?= base_url($company['company_url']);?>/demand/setSelfPace',
                 type: 'POST',
                 data: {
                     'course_id': course_id,
@@ -290,7 +290,7 @@
                 },
                 error: function () {
                     new PNotify({
-                        title: '<?php echo $term['error']; ?>',
+                        title: '<?= $term['error']; ?>',
                         text: 'You can not select this Session.',
                         type: 'error'
                     });
@@ -306,27 +306,27 @@
         
         if($('#library'+id).val() == '' && exam_id == 0 && quiz_id == 0){
             new PNotify({
-                title: '<?php echo $term['error']; ?>',
+                title: '<?= $term['error']; ?>',
                 text: 'There is no Content.',
                 type: 'error'
             });
 
         }else {
             $.ajax({
-                url: '<?php echo base_url($company['company_url']);?>/demand/checkAssessment',
+                url: '<?= base_url($company['company_url']);?>/demand/checkAssessment',
                 type: 'POST',
                 data: {'id': id},
                 success: function (data, status, xhr) {
                     if (data.check_num === 0) {
                         if(data.msg == null){
                             new PNotify({
-                                title: '<?php echo $term['error']; ?>',
+                                title: '<?= $term['error']; ?>',
                                 text: 'You can not select this Session.',
                                 type: 'error'
                             });
                         }else if(data.msg == 'exam'){
                             (new PNotify({
-                                title: "<?php echo $term['confirmation']; ?>",
+                                title: "<?= $term['confirmation']; ?>",
                                 text: "You exceed the Exam Maximum Num., Restart This Course?",
                                 icon: 'fas fa-question',
                                 confirm: {
@@ -344,7 +344,7 @@
                                 }
                             })).get().on('pnotify.confirm', function(){
                                 $.ajax({
-                                    url: '<?php echo base_url($company['company_url']);?>/demand/restartCourse',
+                                    url: '<?= base_url($company['company_url']);?>/demand/restartCourse',
                                     type: 'POST',
                                     data: {id:id},
                                     success: function (data, status, xhr) {
@@ -358,7 +358,7 @@
                                     },
                                     error: function(){
                                         new PNotify({
-                                            title: '<?php echo $term['error']; ?>',
+                                            title: '<?= $term['error']; ?>',
                                             text: 'You cannot restart.',
                                             type: 'error'
                                         });
@@ -368,7 +368,7 @@
                         }
                         else{
                             new PNotify({
-                                title: '<?php echo $term['error']; ?>',
+                                title: '<?= $term['error']; ?>',
                                 text: data.msg,
                                 type: 'error'
                             });
@@ -410,20 +410,20 @@
                             }else{
 
                                 $.ajax({
-                                    url: '<?php echo base_url($company['company_url']);?>/demand/checkQuizExist',
+                                    url: '<?= base_url($company['company_url']);?>/demand/checkQuizExist',
                                     type: 'POST',
-                                    data: {'exam_id': exam_id,'chapter_id':id,'quiz_id':quiz_id,'course_id':'<?php echo $course_id?>'},
+                                    data: {'exam_id': exam_id,'chapter_id':id,'quiz_id':quiz_id,'course_id':'<?= $course_id?>'},
                                     success: function (data, status, xhr) {
 
                                         if(data.quiz_num > 0)
                                         {
                                             if(data.exist_num >0){
-                                                exam_url = '<?php echo base_url($company['company_url']);?>/demand/view_QuizGroup/'+quiz_id+'/'+id;
+                                                exam_url = '<?= base_url($company['company_url']);?>/demand/view_QuizGroup/'+quiz_id+'/'+id;
                                                 //alert(exam_url);
                                                $('#div_container').html('<iframe id="course_container" scrolling="no" style="width: 100%; overflow: hidden" src = '+exam_url+'></iframe>');
                                             }else{
                                                 new PNotify({
-                                                    title: '<?php echo $term['error']; ?>',
+                                                    title: '<?= $term['error']; ?>',
                                                     text: 'You exceed the Attempt Num.',
                                                     type: 'error'
                                                 });
@@ -431,7 +431,7 @@
 
                                         }else{
                                             new PNotify({
-                                                title: '<?php echo $term['error']; ?>',
+                                                title: '<?= $term['error']; ?>',
                                                 text: 'There is no Content.',
                                                 type: 'error'
                                             });
@@ -439,7 +439,7 @@
                                     },
                                     error: function () {
                                         new PNotify({
-                                            title: '<?php echo $term['error']; ?>',
+                                            title: '<?= $term['error']; ?>',
                                             text: 'There is no Content.',
                                             type: 'error'
                                         });
@@ -451,19 +451,19 @@
                         else{
                             $.ajax({
 
-                                url: '<?php echo base_url($company['company_url']);?>/demand/checkExamExist',
+                                url: '<?= base_url($company['company_url']);?>/demand/checkExamExist',
                                 type: 'POST',
-                                data: {'exam_id': exam_id,'chapter_id':id,'course_id':'<?php echo $course_id?>'},
+                                data: {'exam_id': exam_id,'chapter_id':id,'course_id':'<?= $course_id?>'},
                                 success: function (data, status, xhr) {
                                     if(data.exam_num > 0)
                                     {
 
                                         if(data.exist_num >0){
-                                            exam_url = '<?php echo base_url($company['company_url']);?>/demand/examInstruction/' + exam_id+'/<?php echo $course_id?>?chapter_id='+id;
-                                            $('#div_container').html('<input id="s_course_id" value="<?php echo $course_id?>" type="hidden"><iframe id="course_container" scrolling="no" style="width: 100%; overflow: hidden" src = ' + exam_url + '></iframe>');
+                                            exam_url = '<?= base_url($company['company_url']);?>/demand/examInstruction/' + exam_id+'/<?= $course_id?>?chapter_id='+id;
+                                            $('#div_container').html('<input id="s_course_id" value="<?= $course_id?>" type="hidden"><iframe id="course_container" scrolling="no" style="width: 100%; overflow: hidden" src = ' + exam_url + '></iframe>');
                                         }else{
                                             new PNotify({
-                                                title: '<?php echo $term['error']; ?>',
+                                                title: '<?= $term['error']; ?>',
                                                 text: 'You exceed the Exam Maximum Num.',
                                                 type: 'error'
                                             });
@@ -471,7 +471,7 @@
 
                                     }else{
                                         new PNotify({
-                                            title: '<?php echo $term['error']; ?>',
+                                            title: '<?= $term['error']; ?>',
                                             text: 'There is no Content.',
                                             type: 'error'
                                         });
@@ -479,7 +479,7 @@
                                 },
                                 error: function () {
                                     new PNotify({
-                                        title: '<?php echo $term['error']; ?>',
+                                        title: '<?= $term['error']; ?>',
                                         text: 'There is no Content.',
                                         type: 'error'
                                     });
@@ -492,7 +492,7 @@
                 },
                 error: function () {
                     new PNotify({
-                        title: '<?php echo $term['error']; ?>',
+                        title: '<?= $term['error']; ?>',
                         text: 'You can not select this Session.',
                         type: 'error'
                     });
