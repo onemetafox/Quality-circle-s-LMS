@@ -14,7 +14,7 @@
     span.checkmark {
         display: none;
     }
-    label.radioBox {
+    label.cours-0 {
         cursor: not-allowed;
     }
 
@@ -56,7 +56,7 @@
 
                             <?php foreach($libraries as $chapter):?>
                                 <?php if($chapter->parent == 0 && $chapter->exam_id == 0 /*&& $chapter->status == 1 */): ?>
-                                    <label class="radioBox" style="margin-top:20px; font-size: 20px; font-family: bold ;<?= $chapter->status == 0?'color: #c5c5c5':''?>"><?= $chapter->title?>
+                                    <label class="radioBox cours-<?=$chapter->status?>" style="margin-top:20px; font-size: 20px; font-family: bold ;<?= $chapter->status == 0?'color: #c5c5c5':''?>"><?= $chapter->title?>
                                         <input  <?= $chapter->status == 0?'disabled style="color: #c5c5c5"':''?>  onclick="changeSelect(this,<?= $chapter->id?>,<?= $chapter->exam_id?>,<?= $chapter->quiz_id?>)" id="library<?= $chapter->id?>" type="radio" name="radio" value="<?= $chapter->file_path?>">
                                         <span class="checkmark"></span>
                                     </label>
@@ -65,7 +65,7 @@
                                 <?php foreach($libraries as $page):?>
                                     <?php if($page->parent != 0 && $page->parent == $chapter->id/* &&  $page->status == 1 */):?>
 
-                                        <label class="radioBox" style="margin-left:20px; <?= $page->status == 0?'color: #c5c5c5':''?>"><?= $page->title?>
+                                        <label class="radioBox cours-<?=$page->status?>" style="margin-left:20px; <?= $page->status == 0?'color: #c5c5c5':''?>"><?= $page->title?>
                                             <input <?= $page->status == 0?'disabled style="color: #c5c5c5"':''?> onclick="changeSelect(this,<?= $page->id?>,<?= $page->exam_id?>,<?= $page->quiz_id?>)" id="library<?= $page->id?>" type="radio" name="radio" value="<?= $page->file_path?>">
                                             <span class="checkmark"></span>
                                         </label>
@@ -75,7 +75,7 @@
                             <?php endforeach;?>
                             <?php foreach ($libraries as $chapter):?>
                                 <?php if($chapter->parent == 0 && $chapter->exam_id != 0 /*&& $chapter->status == 1*/): ?>
-                                    <label class="radioBox" style="margin-top:20px; <?= $chapter->status == 0?'color: #c5c5c5':''?>"><?= $chapter->title?><i class="fas fa-star"></i>
+                                    <label class="radioBox cours-<?=$chapter->status?>" style="margin-top:20px; <?= $chapter->status == 0?'color: #c5c5c5':''?>"><?= $chapter->title?><i class="fas fa-star"></i>
                                         <input <?= $chapter->status == 0?'disabled style="color: #c5c5c5"':''?> onclick="changeSelect(this,<?= $chapter->id?>,<?= $chapter->exam_id?>,<?= $chapter->quiz_id?>)" id="library<?= $chapter->id?>" type="radio" name="radio" value="<?= $chapter->file_path?>">
                                         <span class="checkmark"></span>
                                     </label>
