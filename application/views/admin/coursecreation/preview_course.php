@@ -56,7 +56,7 @@ first_id_checked = "";
 			<section class="card" style="width: 85%;">
 				<header class="card-header">
 					<div class="card-actions">
-						<?php echo form_open('admin/demand/edit_course/'.$course_id, array("id"=>"frm_preview")); ?>
+						<?php echo form_open('admin/coursecreation/edit_course_tab/'.$course_id . '/2', array("id"=>"frm_preview")); ?>
 							<input type="hidden" name="tab_active_id" value="2">
 							<button type="submit" class="btn btn-default" ><?=$term["done"]?> </button>
 						</form>
