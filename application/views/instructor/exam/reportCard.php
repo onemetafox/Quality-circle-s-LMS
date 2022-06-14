@@ -85,7 +85,7 @@
                               <td colspan="3"><img src="<?php echo base_url().'assets/certificate/' ?>footer.jpg" /></td>
                            </tr>
                         </table>
-                        <form id="print_form" method="POST" action="<?= base_url()?>admin/demand/print_exam_certificate">
+                        <form id="print_form" method="POST" action="<?= base_url()?>instructor/demand/print_exam_certificate">
                            <input type="hidden" id="content" name="content">
                         </form>
                     </div>
@@ -163,7 +163,7 @@
                                                                 'userAns'=>$userAns['description']
                                                             );
 
-                                                $this->load->view('admin/exam/reportcard/multichoice', $checkData);
+                                                $this->load->view('instructor/exam/reportcard/multichoice', $checkData);
                                                 break;
                                             case 'checkbox':
                                                 $checkData = array(
@@ -171,7 +171,7 @@
                                                                 'checkbox'=>json_decode($question['content'],true)['checkbox'],
                                                                 'userAns'=>$userAns['description']
                                                             );
-                                                $this->load->view('admin/exam/reportcard/checkbox', $checkData);
+                                                $this->load->view('instructor/exam/reportcard/checkbox', $checkData);
                                                 break;
                                             case 'true-false':
                                                 $checkData = array(
@@ -179,19 +179,19 @@
                                                             'settrue'=>json_decode($question['content'],true)['settrue'],
                                                             'userAns'=>$userAns['description']
                                                         );
-                                                $this->load->view('admin/exam/reportcard/true_false', $checkData);
+                                                $this->load->view('instructor/exam/reportcard/true_false', $checkData);
                                                 break;
                                             case 'fill-blank':
                                                 $checkData = array('blank'=>json_decode($question['content'],true)['blank'],'userAns'=>$userAns['description']);
-                                                $this->load->view('admin/exam/reportcard/fill_blank', $checkData);
+                                                $this->load->view('instructor/exam/reportcard/fill_blank', $checkData);
                                                 break;
                                             case 'essay':
                                                 $checkData = array('userAns'=>$userAns['description']);
-                                                $this->load->view('admin/exam/reportcard/essay', $checkData);
+                                                $this->load->view('instructor/exam/reportcard/essay', $checkData);
                                                 break;
                                             case 'matching':
                                                 $this->load->view(
-                                                    'admin/exam/reportcard/matching',
+                                                    'instructor/exam/reportcard/matching',
                                                     array(
                                                         'content'=>json_decode($question['content'],true)['choice'],
                                                         'match'=>json_decode($question['content'],true)['match'],
@@ -230,7 +230,7 @@
                 $('#print_form').submit(); 
 
                 $.ajax({
-                    //url: "<?= base_url()?>admin/demand/print_exam_certificate",
+                    //url: "<?= base_url()?>instructor/demand/print_exam_certificate",
                     url:"",
                     type: 'POST',
                     data: {                

@@ -96,7 +96,7 @@ class Training extends BaseController {
 				'user_id' => $this->session->get_userdata()['user_id'],
 				'course_id' => $course_id,			
 				'course_time_id' => $course_time_id,					
-				'course_title' => $course->title,
+				'course_title' => $course['title'],
 				'user_name' => $this->session->get_userdata()['user_name'],
 				'user_email' => $this->session->get_userdata()['email'],
 				'create_date' => date("Y-m-d H:i:s"),					

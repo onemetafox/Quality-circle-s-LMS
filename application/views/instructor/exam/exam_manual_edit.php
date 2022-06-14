@@ -205,7 +205,7 @@
 											$question['content'] = json_decode($question['content'],true);
 											switch ($question['type']) {
 												case 'essay':
-													$this->load->view('admin/exam/subviews/essay');
+													$this->load->view('instructor/exam/subviews/essay');
 													break;
 												default:
 													echo 1;

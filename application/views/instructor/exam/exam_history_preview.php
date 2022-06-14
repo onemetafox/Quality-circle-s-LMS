@@ -75,33 +75,33 @@
 															'correctCheck'=>json_decode($answers[$qnum]['description'],true)['multichoice'],
 															'checkbox'=>$question['content']['checkbox'],
 													);
-													$this->load->view('admin/exam/subviews/multichoice', $checkData);
+													$this->load->view('instructor/exam/subviews/multichoice', $checkData);
 													break;
 												case 'checkbox':
 													$checkData = array(
 															'correctCheck'=>json_decode($answers[$qnum]['description'],true)['checkbox'],
 															'checkbox'=>$question['content']['checkbox'],
 													);
-													$this->load->view('admin/exam/subviews/checkbox', $checkData);
+													$this->load->view('instructor/exam/subviews/checkbox', $checkData);
 													break;
 												case 'true-false':
 													$checkData = array(
 															'tftext'=>$question['content']['tf'],
 															'settrue'=>json_decode($answers[$qnum]['description'],true)['true_false'],
 													);
-													$this->load->view('admin/exam/subviews/true_false_preview', $checkData);
+													$this->load->view('instructor/exam/subviews/true_false_preview', $checkData);
 													break;
 												case 'fill-blank':
 													$checkData = array('blank'=>json_decode($answers[$qnum]['description'],true)['blank']);
-													$this->load->view('admin/exam/subviews/fill_blank_preview', $checkData);
+													$this->load->view('instructor/exam/subviews/fill_blank_preview', $checkData);
 													break;
 												case 'essay':
 													$answer = $answers[$qnum]['description'];
-													$this->load->view('admin/exam/subviews/essay_preview',array("answer"=>$answer));
+													$this->load->view('instructor/exam/subviews/essay_preview',array("answer"=>$answer));
 													break;
 												case 'matching':
 													$this->load->view(
-															'admin/exam/subviews/matching_preview',
+															'instructor/exam/subviews/matching_preview',
 															array(
 																	'content'=>$question['content']['choice'],
 																	'match'=>$question['content']['match'],

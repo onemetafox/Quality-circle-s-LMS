@@ -8,7 +8,7 @@
     <h2>Enrolled Courses</h2>
     <div class="right-wrapper">
       <ol class="breadcrumbs">
-        <li> <a href="<?php echo base_url(); ?>home"> <i class="fas fa-home"></i> </a> </li>
+        <li> <a href="<?= base_url(); ?>home"> <i class="fas fa-home"></i> </a> </li>
         <li><span>
           <?=$term["exam"]?>
           </span></li>
@@ -48,13 +48,13 @@
                                 <option value="">Select Course</option>  
                                 <?php if(isset($mydata['data']) && !empty($mydata['data'])){ ?>
               					<?php foreach($mydata['data'] as $myenrollsearch){ ?>
-                                	<option value="<?php echo $myenrollsearch['id'] ?>"><?php echo $myenrollsearch['title'] ?></option>
+                                	<option value="<?= $myenrollsearch['id'] ?>"><?= $myenrollsearch['title'] ?></option>
                                 <?php } } ?>
                   			</select>
                        </div>
                        <div class="col-sm-3">
                             <a onclick="searchData();" class="btn btn-primary" id="searchBTN">Search</a>
-                            <a href="<?php echo base_url('admin/examhistory/enrolledcourse');?>" class="btn btn-default">Reset</a>
+                            <a href="<?= base_url('admin/examhistory/enrolledcourse');?>" class="btn btn-default">Reset</a>
                        </div>
                    	</div>
                    	</form>
@@ -84,20 +84,20 @@
                     }
                 ?>
               <tr role="row" class="odd">
-                <td class="center sorting_<?php $myenroll['no']  ?>"><?php echo $myenroll['no'] ?></td>
-                <td class="text-left"><?php echo $myenroll['title'] ?></td>
-                <td class="text-left"><?php echo $course_type; ?></td>
-                <td class="text-left"><?php echo $myenroll['count'] ?></td>
+                <td class="center sorting_<?php $myenroll['no']  ?>"><?= $myenroll['no'] ?></td>
+                <td class="text-left"><?= $myenroll['title'] ?></td>
+                <td class="text-left"><?= $course_type; ?></td>
+                <td class="text-left"><?= $myenroll['count'] ?></td>
                 <td class=" text-left">
                   <?php if($myenroll['type'] == 2){ ?>
-                      <a style="background-color:#1D2127; color:#FFF; border:0px;" target="_blank" class="btn btn-default btn-sm" id="append_view_<?php echo $myenroll['id'] ?>" href="<?= base_url()?>admin/examhistory/enrolled_course_users/<?php echo $myenroll['id'] ?>/0">View</a>
+                      <a style="background-color:#1D2127; color:#FFF; border:0px;" target="_blank" class="btn btn-default btn-sm" id="append_view_<?= $myenroll['id'] ?>" href="<?= base_url()?>admin/examhistory/enrolled_course_users/<?= $myenroll['id'] ?>/0">View</a>
                     <?php if($user['user_type'] == "Admin"){ ?>
-                      <a style="background-color:#e81b06; color:#FFF; border:0px;"  class="btn btn-default btn-sm"  href="javascript:deleteEnroll('<?php echo $myenroll['id'] ?>')">Delete</a>
+                      <a style="background-color:#e81b06; color:#FFF; border:0px;"  class="btn btn-default btn-sm"  href="javascript:deleteEnroll('<?= $myenroll['id'] ?>')">Delete</a>
                     <?php }?>
                   <?php }else{ ?>
-                      <a style="background-color:#1D2127; color:#FFF; border:0px;" class="btn btn-default btn-sm" id="append_view_<?php echo $myenroll['id'] ?>" href="javascript:void(0)" onclick="getEnrolled(<?php echo $myenroll['id'] ?>)">View</a>
+                      <a style="background-color:#1D2127; color:#FFF; border:0px;" class="btn btn-default btn-sm" id="append_view_<?= $myenroll['id'] ?>" href="javascript:void(0)" onclick="getEnrolled(<?= $myenroll['id'] ?>)">View</a>
                     <?php if($user['user_type'] == "Admin"){ ?>
-                      <a style="background-color:#e81b06; color:#FFF; border:0px;"  class="btn btn-default btn-sm"  href="javascript:deleteEnroll('<?php echo $myenroll['id'] ?>')">Delete</a>
+                      <a style="background-color:#e81b06; color:#FFF; border:0px;"  class="btn btn-default btn-sm"  href="javascript:deleteEnroll('<?= $myenroll['id'] ?>')">Delete</a>
                     <?php }?>
                   <?php } ?>
                 </td>
@@ -107,47 +107,41 @@
               <?php $course_times = getCourseDetail($myenroll['id'],$myenroll['type']); 
                     if($course_times != ''){							
                   ?>
-              <tr style="display:none;" role="row" class="odd" id="sub_tr_<?php echo $myenroll['id'] ?>">
+              <tr style="display:none;" role="row" class="odd" id="sub_tr_<?= $myenroll['id'] ?>">
                 <td colspan="5"><table width="100%">
                     <thead style="background-color:#1D2127; color:#FFF">
-                    <td><b>S.No.</b></td>
+                      <td><b>S.No.</b></td>
                       <td><b>Course Title</b></td>
                       <td><b>Schedule Date</b></td>
                       <td><b>Total Count</b></td>
                       <td><b>Action</b></td>
-                        </thead>
-                      <?php foreach($course_times as $keys => $courseSchedule){ 
-                        
-                        $totalEnCount = getScheTotalCount($myenroll['id'],$courseSchedule['time_id']); 
-                        ?>
+                    </thead>
+                    <?php foreach($course_times as $keys => $courseSchedule){ 
+                      $totalEnCount = getScheTotalCount($myenroll['id'],$courseSchedule['time_id']); 
+                    ?>
                     <tr role="row" class="odd">
-                      <td><?php echo $keys+1; ?></td>
-                      <td class="text-left"><?php echo $courseSchedule['title'] ?></td>
-                      <?php if($myenroll['type'] == 1){ 
-                            $stringDate = strtotime($courseSchedule['start_at']);
-                            ?>
-                      <td class="text-left"><?php echo date('F d,Y',strtotime($courseSchedule['start_at'])) ?></td>
-                      <?php } ?>
-                      <?php if($myenroll['type'] == 0){ 
-                                $stringDate = $courseSchedule['date_str'];
-                                if($courseSchedule['date_str'] != ''){
-                            ?>
-                      <td class="text-left"><?php echo date('F d,Y',$courseSchedule['date_str']) ?></td>
+                      <td><?= $keys+1; ?></td>
+                      <td class="text-left"><?= $courseSchedule['title'] ?></td>
+                      <?php if($myenroll['type'] == 1){ ?>
+                        <td class="text-left"><?= date('F d,Y',strtotime($courseSchedule['start_at'])) ?></td>
+                      <?php } else if($myenroll['type'] == 0){ ?>
+                        <td class="text-left"><?= date('F d,Y',strtotime($courseSchedule['start_day'])) ?></td>
                       <?php } else{ ?>
-                      <td class="text-left">Not Available</td>
-                      <?php } } ?>
-                      <td class="text-left"><?php echo $totalEnCount;?></td>
+                        <td class="text-left">Not Available</td>
+                      <?php } 
+                      } ?>
+                      <td class="text-left"><?= $totalEnCount;?></td>
                       <td class="text-left">
-                        <a target="_blank" class="btn btn-default btn-sm" id="append_view_<?php echo $courseSchedule['id'] ?>" href="<?= base_url()?>admin/examhistory/enrolled_course_users/<?php echo $myenroll['id'] ?>/<?php echo $courseSchedule['time_id'] ?>/<?php echo $stringDate;?>">View</a>
+                        <a target="_blank" class="btn btn-default btn-sm" id="append_view_<?= $courseSchedule['id'] ?>" href="<?= base_url()?>admin/examhistory/enrolled_course_users/<?= $myenroll['id'] ?>/<?= $courseSchedule['time_id'] ?>/<?= $stringDate;?>">View</a>
                       <?php if($user['user_type'] == "Admin"){ ?>
-                        <a style="background-color:#e81b06; color:#FFF; border:0px;" target="_blank" class="btn btn-default btn-sm"  href="javascript:deleteEnroll('<?php echo $myenroll['id'] ?>')">Delete</a>
+                        <a style="background-color:#e81b06; color:#FFF; border:0px;" target="_blank" class="btn btn-default btn-sm"  href="javascript:deleteEnroll('<?= $myenroll['id'] ?>')">Delete</a>
                       <?php }?>
                       </td>
                     </tr>
                     <?php } ?>
                   </table></td>
               </tr>
-              <?php }}} ?>
+              <?php }} ?>
             </tbody>
           </table>
           </div>
@@ -168,8 +162,8 @@
 	}
   function deleteEnroll(id){
     (new PNotify({
-            title: "<?php echo $term['confirmation']; ?>",
-            text: "<?php echo $term['areyousuretodelete']; ?>",
+            title: "<?= $term['confirmation']; ?>",
+            text: "<?= $term['areyousuretodelete']; ?>",
 			icon: 'fas fa-question',
 			confirm: {
 				confirm: true
@@ -197,8 +191,8 @@
         },
 				error: function(){
 					new PNotify({
-                        title: '<?php echo $term['error']; ?>',
-                        text: '<?php echo $term['youcantdeletethisitem']; ?>',
+                        title: '<?= $term['error']; ?>',
+                        text: '<?= $term['youcantdeletethisitem']; ?>',
 						type: 'error'
 					});		
 				}

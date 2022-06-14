@@ -92,7 +92,7 @@
 			}
 		})).get().on('pnotify.confirm', function(){
 			$.ajax({
-                url: '<?=base_url()?>admin/exam/delete',
+                url: '<?=base_url()?>instructor/exam/delete',
                 type: 'POST',
                 data: {'id': id},
                 success: function (data, status, xhr) {	
