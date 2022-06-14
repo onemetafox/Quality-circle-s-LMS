@@ -2005,18 +2005,31 @@ class Demand extends BaseController{
 						foreach($table_data["data"] as $ukey => $userv){
 							if($cvval != ''){
 								//$queryvilt = "Select * from virtual_course_time where virtual_course_id = ".$cvval['id']." and start_at >= '".date("Y-m-d h:i:s")."'";
-								$queryvilt = "Select a.*, b.course_id from virtual_course_time a left join virtual_course b on a.virtual_course_id = b.id where virtual_course_id = ".$cvval['id'];
+								$queryvilt = "SELECT a.*, b.course_id, c.pay_type FROM virtual_course_time a 
+                                            LEFT JOIN virtual_course b ON a.virtual_course_id = b.id 
+                                            LEFT JOIN course c ON c.id = b.course_id
+                                            WHERE virtual_course_id = ".$cvval['id'];
 								$vilttimeres = $this->db->query($queryvilt);
 								$timevres = $vilttimeres->result_array();
 								if(!empty($timevres)){									
 									foreach($timevres as $vckeys => $vctime){
 										$durationVilt = $cvval['duration']-1;
-										$startDatev = strtotime($vctime['start_at'] . " " . $vctime['start_time']);
+										$startDatev = strtotime($vctime['start_at']);
 										$currentDate = time();
-										$endDatev = strtotime('+'.$durationVilt.' days', strtotime($vctime['start_at']. " " . $vctime['end_time']));						
+										if($durationVilt > 0){
+											$endDatev = strtotime('+'.$durationVilt.' days', $startDatev);
+										}else{
+											$currentDate = date("Y-m-d");
+											$startDatev = date("Y-m-d",$startDatev);
+											$endDatev = $startDatev;
+										}										
 										
 										if($currentDate >= $startDatev && $currentDate <= $endDatev){
-											$queryvirtual = "Select * from payment_history where object_id =  ".$vctime['course_id']." and user_id =  ".$userv->id." and object_type = 'live'";
+                                            if($vctime['pay_type'] == 1){
+                                                $queryvirtual = "Select * from payment_history where object_id =  ".$vctime['course_id']." and user_id =  ".$userv->id." and object_type = 'live'";
+                                            }else{
+                                                $queryvirtual = "Select * from enrollments where course_id =  ".$vctime['course_id']." and user_id =  ".$userv->id;
+                                            }
 											$resultvirtual = $this->db->query($queryvirtual);
 											if(!empty($resultvirtual->result_array())){
 												$recordsvilt["data"][$i]['id'] = $userv->id;
@@ -2037,8 +2050,7 @@ class Demand extends BaseController{
 				}
 			}
 			if(!empty($recordsvilt)){
-				$xv = 0;				
-				$recordsvilt["data"] = array_intersect_key($recordsvilt["data"], array_unique(array_map('serialize', $recordsvilt["data"])));
+				$xv = 0;		
 				foreach($recordsvilt["data"] as $datakeyv => $datav){
 					$myarrvilt["data"][$xv]['id'] = $datav['id'];
 					$myarrvilt["data"][$xv]['first_name'] = $datav['first_name'];
@@ -2073,7 +2085,10 @@ class Demand extends BaseController{
 						foreach($table_data["data"] as $ikey => $useri){
 							if($cival != ''){
 								//$queryilt = "Select * from training_course_time where training_course_id = ".$cival['id']." and date_str >= '".time()."'";
-								$queryilt = "Select a.*, b.course_id from training_course_time a left join training_course b on a.training_course_id = b.id where training_course_id = ".$cival['id']."";
+								$queryilt = "SELECT a.*, b.course_id, c.pay_type FROM training_course_time a 
+                                            LEFT JOIN training_course b ON a.training_course_id = b.id 
+                                            LEFT JOIN course c ON c.id = b.course_id
+                                            WHERE training_course_id = ".$cival['id']."";
 								$ilttimeres = $this->db->query($queryilt);
 								$timeires = $ilttimeres->result_array();
 								if(!empty($timeires)){
@@ -2081,12 +2096,13 @@ class Demand extends BaseController{
 										$startDatei = strtotime($ictime['start_day'] . " " . $ictime['start_time']);
 										$durationIlt = $cival['duration']-1;
                                         $endDatei = strtotime('+'.$durationIlt .' days', strtotime($ictime['start_at']. " " . $ictime['end_time']));
-										
-										$currentDatei = time();	
-                                        
-										if($currentDatei >= $startDatei && $currentDatei <= $endDatei){		
-                                            								
-											$queryiltp = "Select * from payment_history where object_id =  ".$ictime['course_id']." and user_id =  ".$useri->id." and object_type = 'training'";
+										$currentDatei = time();										
+										if($currentDatei >= $startDatei && $currentDatei <= $endDatei){										
+                                            if($ictime['pay_type'] == 1){
+                                                $queryiltp = "Select * from payment_history where object_id =  ".$ictime['course_id']." and user_id =  ".$useri->id." and object_type = 'training'";
+                                            }else{
+                                                $queryiltp = "Select * from enrollments where course_id =  ".$ictime['course_id']." and user_id =  ".$useri->id;
+                                            }
 											$resultiltp = $this->db->query($queryiltp);
 											if(!empty($resultiltp->result_array())){
 												$recordsilt["data"][$ix]['id'] = $useri->id;
@@ -2104,7 +2120,6 @@ class Demand extends BaseController{
 							}
 						}
 					}				
-
 
 				}
 			}

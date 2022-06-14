@@ -18,7 +18,7 @@
             <section class="card">
                 <header class="card-header">
                     <div class="card-actions">
-                        <h4 class="card-title">pass mark :  <?php echo $pass_mark?></h4>
+                        <h4 class="card-title">pass mark :  <?= $pass_mark?></h4>
                     </div>
 
                     <h2 class="card-title">Assessment</h2>
@@ -30,39 +30,35 @@
                         <tr>
                             <th>Delegate Name</th>
                             <?php foreach ($course_session as $session){?>
-                                <th><?php echo $session->title?></th>
+                                <th><?= $session->title?></th>
                             <?php }?>
                             <th>Average</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($course_pay_user as $pay_user => $row){
-							//$row['object_id'] = 35;
-							?>
+                        <?php foreach ($course_pay_user as $pay_user => $row){ ?>
                             <tr>
-                                <td><h4><?php echo $row['fullname']?></h4></td>
+                                <td><h4><?= $row['fullname']?></h4></td>
                                 <?php for($i = 0; $i < count($course_session); $i++){?>
                                     <td></td>
                                 <?php }?>
                                 <td></td>
                                 <td></td>
                             </tr>
-                            <tr data-item-type="6" data-item-user-id="<?php echo $row['user_id']?>" data-item-id="<?php echo $row['object_id']?>">
+                            <tr data-item-type="6" data-item-user-id="<?= $row['user_id']?>" data-item-id="<?= $row['object_id']?>">
                                 <td class="page-type other">Quiz</td>
                                 <?php
-                                $row_sum = 0;
-                                $row_num = 0;
-                                foreach ($course_session as $session){
-
-                                    if(is_null($asses_data[$row['user_id']][$session->id][6])){
-                                        $row_num++;
-                                    }
-                                    $row_sum = $row_sum + $asses_data[$row['user_id']][$session->id][6];
-                                    ?>
-                                    <td class="quiz-<?php echo $row['user_id']?>-<?php echo $session->id?>"><?php  echo is_null($asses_data[$row['user_id']][$session->id][6])? '':$asses_data[$row['user_id']][$session->id][6]?></td>
+                                    $row_sum = 0;
+                                    $row_num = 0;
+                                    foreach ($course_session as $session){
+                                        if(is_null($asses_data[$row['user_id']][$session->id][6])){
+                                            $row_num++;
+                                        }
+                                        $row_sum = $row_sum + $asses_data[$row['user_id']][$session->id][6];?>
+                                    <td class="quiz-<?= $row['user_id']?>-<?= $session->id?>"><?= is_null($asses_data[$row['user_id']][$session->id][6])? '':$asses_data[$row['user_id']][$session->id][6]?></td>
                                 <?php }?>
-                                <td class="other quiz-<?php echo $row['user_id']?>-avg"><?php echo round($row_sum/(count($course_session)-$row_num), 2).'%'; ?></td>
+                                <td class="other quiz-<?= $row['user_id']?>-avg"><?= round($row_sum/(count($course_session)-$row_num), 2).'%'; ?></td>
                                 <td class="actions">
                                     <a href="#" class="hidden on-editing save-row"><i class="fas fa-save"></i></a>
                                     <a href="#" class="hidden on-editing cancel-row"><i class="fas fa-times"></i></a>
@@ -70,7 +66,7 @@
                                     <a href="#" class="hidden on-default remove-row"><i class="far fa-trash-alt"></i></a>
                                 </td>
                             </tr>
-                            <tr data-item-type="1" data-item-user-id="<?php echo$row['user_id']?>" data-item-id="<?php echo $row['object_id']?>">
+                            <tr data-item-type="1" data-item-user-id="<?=$row['user_id']?>" data-item-id="<?= $row['object_id']?>">
                                 <td class="other page-type">Exercise</td>
                                 <?php
                                 $row_sum = 0;
@@ -82,9 +78,9 @@
                                     }
                                     $row_sum = $row_sum + $asses_data[$row['user_id']][$session->id][1];
                                     ?>
-                                    <td class="exercise-<?php echo $row['user_id']?>-<?php echo $session->id?>"><?php echo is_null($asses_data[$row['user_id']][$session->id][1])? '':$asses_data[$row['user_id']][$session->id][1]?></td>
+                                    <td class="exercise-<?= $row['user_id']?>-<?= $session->id?>"><?= is_null($asses_data[$row['user_id']][$session->id][1])? '':$asses_data[$row['user_id']][$session->id][1]?></td>
                                 <?php }?>
-                                <td class="other exercise-<?php echo $row['user_id']?>-avg"><?php echo round($row_sum/(count($course_session)-$row_num), 2).'%';  ?></td>
+                                <td class="other exercise-<?= $row['user_id']?>-avg"><?= round($row_sum/(count($course_session)-$row_num), 2).'%';  ?></td>
                                 <td class="actions">
                                     <a href="#" class="hidden on-editing save-row"><i class="fas fa-save"></i></a>
                                     <a href="#" class="hidden on-editing cancel-row"><i class="fas fa-times"></i></a>
@@ -92,7 +88,7 @@
                                     <a href="#" class="hidden on-default remove-row"><i class="far fa-trash-alt"></i></a>
                                 </td>
                             </tr>
-                            <tr data-item-type="2" data-item-user-id="<?php echo$row['user_id']?>" data-item-id="<?php echo$row['object_id']?>">
+                            <tr data-item-type="2" data-item-user-id="<?=$row['user_id']?>" data-item-id="<?=$row['object_id']?>">
                                 <td class="other page-type">Evening Work</td>
                                 <?php
                                 $row_sum = 0;
@@ -105,9 +101,9 @@
                                     }
                                     $row_sum = $row_sum + $asses_data[$row['user_id']][$session->id][2];
                                     ?>
-                                    <td class="evening-<?php echo $row['user_id']?>-<?php echo $session->id?>"><?php echo is_null($asses_data[$row['user_id']][$session->id][2])? '':$asses_data[$row['user_id']][$session->id][2]?></td>
+                                    <td class="evening-<?= $row['user_id']?>-<?= $session->id?>"><?= is_null($asses_data[$row['user_id']][$session->id][2])? '':$asses_data[$row['user_id']][$session->id][2]?></td>
                                 <?php }?>
-                                <td class="other evening-<?php echo $row['user_id']?>-avg"><?php echo round($row_sum/(count($course_session)-$row_num), 2).'%';  ?></td>
+                                <td class="other evening-<?= $row['user_id']?>-avg"><?= round($row_sum/(count($course_session)-$row_num), 2).'%';  ?></td>
                                 <td class="actions">
                                     <a href="#" class="hidden on-editing save-row"><i class="fas fa-save"></i></a>
                                     <a href="#" class="hidden on-editing cancel-row"><i class="fas fa-times"></i></a>
@@ -115,7 +111,7 @@
                                     <a href="#" class="hidden on-default remove-row"><i class="far fa-trash-alt"></i></a>
                                 </td>
                             </tr>
-                            <tr data-item-type="3" data-item-user-id="<?php echo$row['user_id']?>" data-item-id="<?php echo$row['object_id']?>">
+                            <tr data-item-type="3" data-item-user-id="<?=$row['user_id']?>" data-item-id="<?=$row['object_id']?>">
                                 <td class="other page-type">Precourse Work</td>
                                 <?php
                                 $row_sum = 0;
@@ -127,9 +123,9 @@
                                     }
                                     $row_sum = $row_sum + $asses_data[$row['user_id']][$session->id][3];
                                     ?>
-                                    <td class="precourse-<?php echo $row['user_id']?>-<?php echo $session->id?>"><?php echo is_null($asses_data[$row['user_id']][$session->id][3])? '':$asses_data[$row['user_id']][$session->id][3]?></td>
+                                    <td class="precourse-<?= $row['user_id']?>-<?= $session->id?>"><?= is_null($asses_data[$row['user_id']][$session->id][3])? '':$asses_data[$row['user_id']][$session->id][3]?></td>
                                 <?php }?>
-                                <td class="other precourse-<?php echo $row['user_id']?>-avg"><?php echo round($row_sum/(count($course_session)-$row_num), 2).'%'; ?></td>
+                                <td class="other precourse-<?= $row['user_id']?>-avg"><?= round($row_sum/(count($course_session)-$row_num), 2).'%'; ?></td>
                                 <td class="actions">
                                     <a href="#" class="hidden on-editing save-row"><i class="fas fa-save"></i></a>
                                     <a href="#" class="hidden on-editing cancel-row"><i class="fas fa-times"></i></a>
@@ -137,7 +133,7 @@
                                     <a href="#" class="hidden on-default remove-row"><i class="far fa-trash-alt"></i></a>
                                 </td>
                             </tr>
-                            <tr data-item-type="4" data-item-user-id="<?php echo $row['user_id']?>" data-item-id="<?php echo $row['object_id']?>">
+                            <tr data-item-type="4" data-item-user-id="<?= $row['user_id']?>" data-item-id="<?= $row['object_id']?>">
                                 <td class="other page-type">Handout</td>
                                 <?php
                                 $row_sum = 0;
@@ -149,9 +145,9 @@
                                     }
                                     $row_sum = $row_sum + $asses_data[$row['user_id']][$session->id][4];
                                     ?>
-                                    <td class="handout-<?php echo $row['user_id']?>-<?php echo $session->id?>"><?php echo is_null($asses_data[$row['user_id']][$session->id][4])? '':$asses_data[$row['user_id']][$session->id][4]?></td>
+                                    <td class="handout-<?= $row['user_id']?>-<?= $session->id?>"><?= is_null($asses_data[$row['user_id']][$session->id][4])? '':$asses_data[$row['user_id']][$session->id][4]?></td>
                                 <?php }?>
-                                <td class="other handout-<?php echo $row['user_id']?>-avg"><?php echo round($row_sum/(count($course_session)-$row_num), 2).'%'; ?></td>
+                                <td class="other handout-<?= $row['user_id']?>-avg"><?= round($row_sum/(count($course_session)-$row_num), 2).'%'; ?></td>
                                 <td class="actions">
                                     <a href="#" class="hidden on-editing save-row"><i class="fas fa-save"></i></a>
                                     <a href="#" class="hidden on-editing cancel-row"><i class="fas fa-times"></i></a>
@@ -159,7 +155,7 @@
                                     <a href="#" class="hidden on-default remove-row"><i class="far fa-trash-alt"></i></a>
                                 </td>
                             </tr>
-                            <tr data-item-type="5" data-item-user-id="<?php echo$row['user_id']?>" data-item-id="<?php echo$row['object_id']?>">
+                            <tr data-item-type="5" data-item-user-id="<?=$row['user_id']?>" data-item-id="<?=$row['object_id']?>">
                                 <td class="other page-type">Cause study</td>
                                 <?php
                                 $row_sum = 0;
@@ -171,9 +167,9 @@
                                     }
                                     $row_sum = $row_sum + $asses_data[$row['user_id']][$session->id][5];
                                     ?>
-                                    <td class="cause-<?php echo $row['user_id']?>-<?php echo $session->id?>"><?php echo is_null($asses_data[$row['user_id']][$session->id][6])? '':$asses_data[$row['user_id']][$session->id][5] ?></td>
+                                    <td class="cause-<?= $row['user_id']?>-<?= $session->id?>"><?= is_null($asses_data[$row['user_id']][$session->id][6])? '':$asses_data[$row['user_id']][$session->id][5] ?></td>
                                 <?php }?>
-                                <td class="other cause-<?php echo $row['user_id']?>-avg"><?php echo round($row_sum/(count($course_session)-$row_num), 2).'%'; ?></td>
+                                <td class="other cause-<?= $row['user_id']?>-avg"><?= round($row_sum/(count($course_session)-$row_num), 2).'%'; ?></td>
                                 <td class="actions">
                                     <a href="#" class="hidden on-editing save-row"><i class="fas fa-save"></i></a>
                                     <a href="#" class="hidden on-editing cancel-row"><i class="fas fa-times"></i></a>
@@ -204,9 +200,9 @@
                                     else
                                         $is_all_null_num++;
                                     ?>
-                                    <td class="total-<?php echo $row['user_id']?>-<?php echo $session->id?>"><?php echo $is_null_num!=6?round($sum_mark_total/(6-$is_null_num), 2):'';?></td>
+                                    <td class="total-<?= $row['user_id']?>-<?= $session->id?>"><?= $is_null_num!=6?round($sum_mark_total/(6-$is_null_num), 2):'';?></td>
                                 <?php }?>
-                                <td class="total-<?php echo $row['user_id']?>-all"><?php echo $is_all_null_num!=count($course_session)? round($all_total/(count($course_session)-$is_all_null_num), 2):'';?></td>
+                                <td class="total-<?= $row['user_id']?>-all"><?= $is_all_null_num!=count($course_session)? round($all_total/(count($course_session)-$is_all_null_num), 2):'';?></td>
                                 <td></td>
                             </tr>
                             <tr>
@@ -452,8 +448,8 @@
                     },
                     error: function(){
                         new PNotify({
-                            title: '<?php echo $term['error']; ?>',
-                            text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
+                            title: '<?= $term['error']; ?>',
+                            text: '<?= $term['thereissomeissuetryagainlater']; ?>',
                             type: 'error'
                         });
                     }

@@ -521,12 +521,20 @@ class Course_model extends AbstractModel
     function get_pay_user($course_id){
         //$query = "SELECT ph.*, CONCAT(u.first_name, ' ', u.last_name)AS fullname FROM payment_history as ph JOIN user as u ON ph.user_id = u.id WHERE ph.object_type = 'course' AND ph.object_id = $course_id GROUP BY ph.user_id";
 
-        $query = "SELECT ph.*, CONCAT(u.first_name, ' ', u.last_name)AS fullname FROM payment_history as ph JOIN user as u ON ph.user_id = u.id WHERE ph.object_type = 'course' AND ph.object_id = $course_id ";
-
+        $query = "SELECT ph.*, CONCAT(u.first_name, ' ', u.last_name)AS fullname FROM payment_history as ph JOIN user as u ON ph.user_id = u.id WHERE ph.object_type <> 'plan' AND ph.object_id = $course_id ";
+        
         $result = $this->db->query($query);
         $res=$result->result_array();
 
         return $res;
+    }
+    function getAssessUser($course, $user_id){
+        if($course['pay_type'] == 1){
+            $query = "SELECT ph.*, CONCAT(u.first_name, ' ', u.last_name)AS fullname FROM payment_history as ph JOIN user as u ON ph.user_id = u.id WHERE ph.object_type <> 'plan' AND ph.object_id = ". $course['id']." and ph.user_id=$user_id GROUP BY ph.user_id";
+        }else{
+            $query = "SELECT *, course_id object_id, user_name as fullname FROM enrollments WHERE enrollments.course_id = " . $course['id'] ." and user_id=$user_id";
+        }
+        return $this->db->query($query)->result_array();
     }
 
     function getExamId($course_id){
