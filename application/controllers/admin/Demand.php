@@ -2005,22 +2005,18 @@ class Demand extends BaseController{
 						foreach($table_data["data"] as $ukey => $userv){
 							if($cvval != ''){
 								//$queryvilt = "Select * from virtual_course_time where virtual_course_id = ".$cvval['id']." and start_at >= '".date("Y-m-d h:i:s")."'";
-								$queryvilt = "Select * from virtual_course_time where virtual_course_id = ".$cvval['id'];
+								$queryvilt = "Select a.*, b.course_id from virtual_course_time a left join virtual_course b on a.virtual_course_id = b.id where virtual_course_id = ".$cvval['id'];
 								$vilttimeres = $this->db->query($queryvilt);
 								$timevres = $vilttimeres->result_array();
 								if(!empty($timevres)){									
 									foreach($timevres as $vckeys => $vctime){
 										$durationVilt = $cvval['duration']-1;
-										$startDatev = strtotime($vctime['start_at']);
+										$startDatev = strtotime($vctime['start_at'] . " " . $vctime['start_time']);
 										$currentDate = time();
-										if($durationVilt > 0){
-											$endDatev = strtotime('+'.$durationVilt.' days', $startDatev);
-										}else{
-											$endDatev = strtotime('+1 day', $startDatev);
-										}										
+										$endDatev = strtotime('+'.$durationVilt.' days', strtotime($vctime['start_at']. " " . $vctime['end_time']));						
 										
 										if($currentDate >= $startDatev && $currentDate <= $endDatev){
-											$queryvirtual = "Select * from payment_history where object_id =  ".$vctime['virtual_course_id']." and user_id =  ".$userv->id." and object_type = 'live'";
+											$queryvirtual = "Select * from payment_history where object_id =  ".$vctime['course_id']." and user_id =  ".$userv->id." and object_type = 'live'";
 											$resultvirtual = $this->db->query($queryvirtual);
 											if(!empty($resultvirtual->result_array())){
 												$recordsvilt["data"][$i]['id'] = $userv->id;
@@ -2077,21 +2073,20 @@ class Demand extends BaseController{
 						foreach($table_data["data"] as $ikey => $useri){
 							if($cival != ''){
 								//$queryilt = "Select * from training_course_time where training_course_id = ".$cival['id']." and date_str >= '".time()."'";
-								$queryilt = "Select * from training_course_time where training_course_id = ".$cival['id']."";
+								$queryilt = "Select a.*, b.course_id from training_course_time a left join training_course b on a.training_course_id = b.id where training_course_id = ".$cival['id']."";
 								$ilttimeres = $this->db->query($queryilt);
 								$timeires = $ilttimeres->result_array();
 								if(!empty($timeires)){
 									foreach($timeires as $ickeys => $ictime){
-										$startDatei = $ictime['date_str'];
+										$startDatei = strtotime($ictime['start_day'] . " " . $ictime['start_time']);
 										$durationIlt = $cival['duration']-1;
-										if($durationIlt > 0){
-											$endDatei = strtotime('+'.$durationIlt.' days', $startDatei);
-										}else{
-											$endDatei = strtotime('+1 day', $startDatei);
-										}
-										$currentDatei = time();										
-										if($currentDatei >= $startDatei && $currentDatei <= $endDatei){										
-											$queryiltp = "Select * from payment_history where object_id =  ".$ictime['training_course_id']." and user_id =  ".$useri->id." and object_type = 'training'";
+                                        $endDatei = strtotime('+'.$durationIlt .' days', strtotime($ictime['start_at']. " " . $ictime['end_time']));
+										
+										$currentDatei = time();	
+                                        
+										if($currentDatei >= $startDatei && $currentDatei <= $endDatei){		
+                                            								
+											$queryiltp = "Select * from payment_history where object_id =  ".$ictime['course_id']." and user_id =  ".$useri->id." and object_type = 'training'";
 											$resultiltp = $this->db->query($queryiltp);
 											if(!empty($resultiltp->result_array())){
 												$recordsilt["data"][$ix]['id'] = $useri->id;
