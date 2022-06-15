@@ -184,7 +184,7 @@ class Training_model extends AbstractModel
             LEFT JOIN course c ON c.id = b.course_id
             LEFT JOIN enrollments f ON f.user_id = d.id AND f.course_id = c.id AND f.course_time_id = e.id
             LEFT JOIN ( SELECT SUM( course_time ) session_time, user_id, course_id FROM course_session WHERE user_id = '".$user['user_id']."' GROUP BY course_id ) g ON g.course_id = c.id AND d.id = g.user_id
-            WHERE a.course_type = 0 AND d.payment_status = '1' AND d.email = '".$user['email']."' AND b.create_id = '".$user['company_id']."' AND c.pay_type = 0 ";
+            WHERE a.course_type = 0 AND d.email = '".$user['email']."' AND b.create_id = '".$user['company_id']."' AND c.pay_type = 0 ";
         if($filter['location']){
             $query = $query . " And e.location = '".$filter['location']."'";
         }

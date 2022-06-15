@@ -160,7 +160,7 @@ class Pricing  extends BaseController
         if($user['user_type'] == "Admin"){
             $stripe_secret_id =  $this->Settings_model->getStripeSecretId()->value;
         }else if($user['user_type'] == "Learner"){
-            $stripe_secret_id = $this->Company_model->getRow($user['company_id'])->stripe_client_id;
+            $stripe_secret_id = $this->Company_model->getRow($user['company_id'])->stripe_secret_id;
         }
         \Stripe\Stripe::setApiKey($stripe_secret_id);
 
@@ -238,11 +238,11 @@ class Pricing  extends BaseController
                 ];
 
                 $success = true;
-                $message = 'Payment made successfully.';
+                $strip_message = 'Payment made successfully.';
             } else {
 
                 $success = true;
-                $message = 'Something went wrong.';
+                $strip_message = 'Something went wrong.';
             }
         }
 
@@ -329,9 +329,9 @@ class Pricing  extends BaseController
                 
             }
             $insert = $this->Payment_model->save($data);
-            echo json_encode(['success' => $success, 'message' => $message, 'data' => $data]);
+            echo json_encode(['success' => $success, 'message' => $strip_message, 'data' => $data]);
         } else {
-            echo json_encode(['success' => $success, 'message' => $message, 'data' => $data]);
+            echo json_encode(['success' => $success, 'message' => $strip_message, 'data' => $data]);
         }
     }
     public function paypalPayment(){
