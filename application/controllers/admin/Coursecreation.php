@@ -676,6 +676,7 @@ class Coursecreation extends BaseController{
         $this->response($mainCourse);
     }
     public function republishCourse(){
+        
         $company = (array) $this->Company_model->getRow($this->session->get_userdata() ['company_id']);
         $data = $this->input->post();
         $mainCourse = (array)$this->Course_model->select($data['republish-id']);
@@ -683,10 +684,13 @@ class Coursecreation extends BaseController{
         $mainCourse['amount'] = $data['republish-amount'];
         $mainCourse['pay_price'] = $data['republish-price'];
         $mainCourse['reg_date'] = date("Y-m-d H:s:i");
+
+        $this->load->model("Chapter_model", "Chapter");
+        $chapters = (array)$this->Chapter->all(array("course_id"=> $mainCourse['id']));
+        
         if($data['republish-type'] == "0"){
-
+            
             $subCourse = (array)$this->Training_model->one(array("course_id"=>$mainCourse['id']));
-
             unset($mainCourse['id']);
             $course_id = $this->Course_model->insert($mainCourse);
 
@@ -761,6 +765,13 @@ class Coursecreation extends BaseController{
             $end_date = "";
 
         }
+
+        foreach($chapters as $session){
+            $session = get_object_vars($session);
+            unset($session['id']);
+            $session['course_id'] = $course_id;
+            $this->Chapter->insert($session);
+        }
         if($mainCourse["pay_type"] == 1){
             if($mainCourse['category_id'] != ""){
                 $category = $this->Category_model->getRow($mainCourse['category_id'])[0]["name"];
@@ -816,7 +827,7 @@ class Coursecreation extends BaseController{
                 $this->sendemail($item['email'],$item['fullname'],$content,$title);
             }
         }
-        // $this->response(array("success"=>true, "msg"=>"Course Republished"));
+        $this->response(array("success"=>true, "msg"=>"Course Republished"));
 
 
     }
