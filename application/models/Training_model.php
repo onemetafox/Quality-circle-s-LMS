@@ -276,34 +276,34 @@ class Training_model extends AbstractModel
         $query = $this->db->get();
         $result = $query->row();
         
-        // $result->enrolls = count(json_decode($result->enroll_users));
-        // $instructors = json_decode($result->instructors);
-        // if(!empty($instructors)){
-        //     $result->first_instructor = $this->db->where('id',$instructors[0])->where('user_type','instructor')
-        //         ->select('id,email,picture')
-        //         ->get($this->user_table)->row();
-        // }
-        // $result->is_pay = $this->db->where('user_id',$this->session->userdata('user_id'))
-        //             ->where('object_type','training')
-        //             ->where('object_id',$result->training_course_id)
-        //             ->select('id')
-        //             ->get('payment_history')
-        //             ->row_array();
-        // $start_date = date_format(date_create($result->mreg_date.'/'.$result->dreg_date),"m/d"); 
-        // $end_date = date("m/d",strtotime("+".($result->duration-1)." day", strtotime($start_date)));
-        // $result->end_month = date_format(date_create($end_date),"n");
-        // $result->end_day = date_format(date_create($end_date),"j");
-        // $today = strtotime(date('m/d'));
-        // if(strtotime($start_date) <= $today && strtotime($end_date) >= $today)
-        //      $result->expired = 'no';
-        // else $result->expired = 'yes';
+        $result->enrolls = count(json_decode($result->enroll_users));
+        $instructors = json_decode($result->instructors);
+        if(!empty($instructors)){
+            $result->first_instructor = $this->db->where('id',$instructors[0])->where('user_type','instructor')
+                ->select('id,email,picture')
+                ->get($this->user_table)->row();
+        }
+        $result->is_pay = $this->db->where('user_id',$this->session->userdata('user_id'))
+                    ->where('object_type','training')
+                    ->where('object_id',$result->training_course_id)
+                    ->select('id')
+                    ->get('payment_history')
+                    ->row_array();
+        $start_date = date_format(date_create($result->mreg_date.'/'.$result->dreg_date),"m/d"); 
+        $end_date = date("m/d",strtotime("+".($result->duration-1)." day", strtotime($start_date)));
+        $result->end_month = date_format(date_create($end_date),"n");
+        $result->end_day = date_format(date_create($end_date),"j");
+        $today = strtotime(date('m/d'));
+        if(strtotime($start_date) <= $today && strtotime($end_date) >= $today)
+             $result->expired = 'no';
+        else $result->expired = 'yes';
 		
-		// $this->db->select('course_self_time');
-		// $this->db->from($this->courses_table);
-		// $this->db->where('id', $result->course_id);
+		$this->db->select('course_self_time');
+		$this->db->from($this->courses_table);
+		$this->db->where('id', $result->course_id);
 
-		// $queryss = $this->db->get();
-		// $result->course_self_time = $queryss->row_array()['course_self_time']; 
+		$queryss = $this->db->get();
+		$result->course_self_time = $queryss->row_array()['course_self_time']; 
 		
         return $result;
     }
