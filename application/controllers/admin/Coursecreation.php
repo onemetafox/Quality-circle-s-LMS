@@ -768,10 +768,12 @@ class Coursecreation extends BaseController{
 
         foreach($chapters as $session){
             $session = get_object_vars($session);
+            $session['prev_id'] = $session['id'];
             unset($session['id']);
             $session['course_id'] = $course_id;
             $this->Chapter->insert($session);
         }
+        $this->Chapter->updateParent($course_id);
         if($mainCourse["pay_type"] == 1){
             if($mainCourse['category_id'] != ""){
                 $category = $this->Category_model->getRow($mainCourse['category_id'])[0]["name"];
