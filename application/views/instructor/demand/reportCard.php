@@ -34,15 +34,27 @@
 <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3"><?php echo $certificate['LOCATION'];?></td></tr>
 <tr>
 <td width="100">&nbsp;</td>
-<td width="100" style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45"><?php echo strtoupper($certificate['NUMBER']);?> CEU</td>
+<td width="100" style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45">
+
+<?php if($certificate['NUMBER'] != ""){ echo strtoupper($certificate['NUMBER']);?> CEU <?php } ?>
+
+</td>
 <td align="right" width="100"><?php echo $certificate['SIGNATURE']; ?></td>
 </tr>
 <tr>
-<td style="font-size:15px;font-family:tahoma;" align="center">5001 <br />Certificate Number</td>
+<td style="font-size:15px;font-family:tahoma;" align="center"><?php echo $certificate['CERTIFICATE NUMBER'];?> <br />Certificate Number</td>
 <td style="font-size:15px;font-family:tahoma;" align="center"><?php echo date_format(date_create($certificate['CERTIFICATION DATE']),"M d, Y")?> <br />Certificate Date</td>
 <td style="font-size:15px;font-family:tahoma;" align="center"><?php echo($certificate['CATEGORY']);?></td>
 </tr>
-<tr><td colspan="3"><img src="<?php echo base_url().'assets/certificate/' ?>footer.jpg" /></td></tr>
+<tr>
+<td colspan="3">
+<?php if($certificate['COURSE TYPE'] == 'Non-Certification'){?>
+<img src="<?php echo base_url().'assets/certificate/' ?>footer.jpg" />
+<?php }else{ ?>
+<img src="<?php echo base_url().'assets/certificate/' ?>footer-3.jpg" />
+<?php } ?>
+</td>
+</tr>
 </table>
 </main>
 <script>

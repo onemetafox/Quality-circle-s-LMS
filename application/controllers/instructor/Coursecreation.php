@@ -631,6 +631,8 @@ class Coursecreation extends BaseController{
         $course_data['time_type'] = $this->input->post('time_type');
         $course_data['limit_time'] = $this->input->post('limit_time');
         $course_data['pay_type'] = $this->input->post('pay_type');
+		$course_data['certification'] = $this->input->post('certification');
+		$course_data['ceu'] = $this->input->post('ceu');
         $course_data['pay_price'] = $this->input->post('pay_price');
         $course_data['show_user'] = $this->input->post('show_user');
         $course_data['pass_mark'] = $this->input->post('pass_mark');
@@ -767,12 +769,10 @@ class Coursecreation extends BaseController{
         }
         foreach($chapters as $session){
             $session = get_object_vars($session);
-            $session['prev_id'] = $session['id'];
             unset($session['id']);
             $session['course_id'] = $course_id;
             $this->Chapter->insert($session);
         }
-        $this->Chapter->updateParent($course_id);
         if($mainCourse["pay_type"] == 1){
             if($mainCourse['category_id'] != ""){
                 $category = $this->Category_model->getRow($mainCourse['category_id'])[0]["name"];
@@ -932,6 +932,7 @@ class Coursecreation extends BaseController{
                 }else $course_data['agenda_img'] = str_replace("./", "", "assets/img/" . 'default.png');		
             }
             $course_data['duration'] = $this->input->post('duration');
+			
             if($this->input->post('course_type') == 0){
                 $course_data['address'] = $this->input->post('address');
                 $course_data['country'] = $this->input->post('country');
@@ -947,6 +948,7 @@ class Coursecreation extends BaseController{
             }
             if($course_data['course_type'] != 2){
                 $course_data['start_at'] = $this->input->post('start_at');
+				$course_data['start_time'] = $this->input->post('starttime');
                 $course_data['end_at'] = $this->input->post('end_at');	
             }else{
                 $course_data['start_at'] = NULL;
@@ -973,10 +975,12 @@ class Coursecreation extends BaseController{
                 /*random upload filename*/
                 $_FILES['image_path']['name'] = microtime(true) . '.' . pathInfo($_FILES['image_path']['name'], PATHINFO_EXTENSION);
                 $course_data['img_path'] = COURSE_FILE_PATH . $_FILES['image_path']["name"];
-            }				
+            }	
+						
             $this->Course_model->update_course($course_data, $course_data['id']);
             $this->Course_model->delete_highlight($course_data['id']);
             $this->Course_model->delete_prerequisite_highlight($course_data['id']);
+			
             if($_FILES['image_path']['name'] != ""){
                 $upload_path = sprintf('%scompany/course/', PATH_UPLOAD);
                 if(!file_exists($upload_path)){
@@ -1330,6 +1334,8 @@ class Coursecreation extends BaseController{
                 $course_data['time_type'] = 0;
                 $course_data['limit_time'] = 0;
                 $course_data['pay_type'] = 0;
+				$course_data['certification'] = 'Non-Certification';
+				$course_data['ceu'] = '';
                 $course_data['pay_price'] = 0;
                 $course_data['amount'] = 0;
                 $course_data['show_user'] = 0;

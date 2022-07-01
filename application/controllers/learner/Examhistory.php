@@ -106,12 +106,10 @@ class Examhistory extends BaseController {
         $side_params = array('selected_menu_id' => '2');
         $this->global['sidebar'] = $this->sidebar->generate($side_params, $this->role);
         if($this->isLearner()){
-            $this->global['feedback'] = $this->Examhistory_model->getExamFeedback($id);
-            //            print_r($this->global['exam_quiz_info']);
-            //            die(0);
+            $this->global['exam_history'] = $this->Examhistory_model->getExamhistoryData($id);
+			$this->global['feedback'] = $this->Examhistory_model->getExamFeedback($id);
             $this->loadViews("learner/exam/exam_feedback", $this->global, NULL, NULL);
         }else{
-            //$this->global['sidebar'] = $this->sidebar->generate();
             $this->loadViews("access", $this->global, NULL, NULL);
         }
     }

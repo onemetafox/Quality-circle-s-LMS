@@ -157,6 +157,11 @@
                                                     <h6>
 														<?php echo ($item['enroll_users'] == NULL || $item['enroll_users'] == 'null')?'Enrolled: 0':'Enrolled: '.$item['enroll_users']; ?>
 													</h6>
+                                                    <?php if ($item['course_type'] != 2){?>
+                                                    <h6>Duration: <?php echo $item['duration'];?> Days</h6>
+                                                    <h6>Start Date: <?php echo date('F d, Y', strtotime($item['start_at']));?></h6>
+                                                    <h6>End Date: <?php echo date('F d, Y', strtotime($item['start_at'].' + '.$item['duration'].' day'));?></h6>
+                                                    <?php } ?>
 												</div>
 											</div>
 											<div style="width: 90%;text-align: right;">

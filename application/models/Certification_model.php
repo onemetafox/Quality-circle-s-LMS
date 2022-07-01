@@ -203,7 +203,7 @@ class Certification_model extends CI_Model
 
     function getLearnerByUserId($user_id)
     {
-        $query ="SELECT concat(first_name, '', last_name) AS name
+        $query ="SELECT concat(first_name, ' ', last_name) AS name
                    FROM user 
                   WHERE id = $user_id";
 

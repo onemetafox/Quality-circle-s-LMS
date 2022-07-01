@@ -359,6 +359,17 @@ class Examhistory_model extends CI_Model
 
         return $query->row();
     }
+	function getExamhistoryData($id)
+    {
+        $this->db->select("*")->from("exam_history")->where("id = '".$id."'");
+        $query = $this->db->get();
+        return $query->row();
+    }
+	function deleteFeedback($exam_id,$user_id)
+    {
+       $this->db->delete('exam_feedback', array('exam_id' => $exam_id,'user_id' => $user_id)); 
+	   return true;
+    }
     function change_mark($mark,$type,$id){
         if ($type == 1){
             $this->db->set('mark1', $mark);

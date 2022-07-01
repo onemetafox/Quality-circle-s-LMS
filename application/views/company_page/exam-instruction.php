@@ -132,7 +132,7 @@
         }
         function exam_agree(){
             swal({
-                title: "Are you start this exam?",
+                title: "Please start your exam.",
                 buttons: true
             })
                 .then((willDelete) => {

@@ -20,7 +20,8 @@ class Demand extends BaseController {
         $this->load->model('Company_model');
         $this->load->model('Category_model');
         $this->load->model('Account_model');
-		$this->load->model('Enrollments_model');		
+		$this->load->model('Enrollments_model');
+		$this->load->model('Examhistory_model');		
         $this->isLoggedIn();
         $this->load->library('Sidebar');
 		$this->load->helper('common');
@@ -102,7 +103,19 @@ class Demand extends BaseController {
             $this->loadViews("access", $this->global, NULL, NULL);
         }
     }
+	public function save_exam_feedback($row_id){
+        $exam_id = $this->input->post('exam_id');
+		$user_id = $this->input->post('user_id');
+		
+		$result = $this->Examhistory_model->deleteFeedback($exam_id,$user_id);
 
+        $insert_data = array();
+        foreach ($this->input->post() as $key => $value) {
+            $insert_data[$key] = $value;
+        }
+        $this->Exam_model->insertFeedback($insert_data);
+		redirect('learner/examhistory/feedback/' . $row_id);
+    }
     public function view_Quiz($quiz_id = 0){
         if($this->isLearner()){
             $params['company'] = $this->company;
@@ -448,6 +461,43 @@ class Demand extends BaseController {
                 $res = array('check_num' => 1);
                 $this->response($res);
             }
+        }
+    }
+	
+	public function view_exam_certificate($course_id, $user_id){
+        if($this->isLearner()){
+            $exam_id = $this->Course_model->getExamId($course_id) [0]['exam_id'];
+            $this->global['user_name'] = $this->session->get_userdata() ['user_name'];
+            $company = $this->Certification_model->getCompanyByUserId($user_id);
+            $learner = $this->Certification_model->getLearnerByUserId($user_id);
+            $course = $this->Certification_model->getCourseById($course_id);
+            $course_status = $this->Certification_model->getCourseStatusById($course_id, $user_id);
+            $course_date = $course_status[0]['reg_date'] . "~" . $course_status[0]['end_date'];
+            $exam_info = $this->Certification_model->getExamHistory($user_id, $exam_id);
+            $exam_date = $exam_info[0]['exam_start_at'] . "~" . $exam_info[0]['exam_end_at'];
+            $exam_history = $this->Exam_model->getExamHistory($user_id, $exam_id);
+            $admin = $this->Certification_model->getCompanyAdmin($company[0]['id']);
+            $params['CERTIFICATE NUMBER'] = $course_id.$user_id;
+			$params['COMPANY NAME'] = $company[0]['name'];
+            $params['PARTICIPANT NAME'] = $learner[0]['name'];
+            $params['COURSE NAME'] = $course[0]['title'];
+            $params['EXAM DATE'] = $exam_date;
+            $params['EXAM TITLE'] = $exam_info[0]['title'];
+            $params['EXAM SCORE'] = $exam_info[0]['mark'];
+            $params['LOCATION'] = str_replace(',,',',',$course[0]['location']);
+            $params['NUMBER'] = $course[0]['ceu'];
+			$params['COURSE TYPE'] = $course[0]['certification'];
+            $params['DATE'] = $course[0]['start_at'];
+            $params['CERTIFICATION DATE'] = substr($exam_info[0]['exam_end_at'], 0, 10);
+            $params['NAME'] = $params['user_name'];
+            $params['SIGNATURE'] = "<img id=\"userSignImg\" style=\"width:70%;\" src=\"" . $admin[0]['sign'] . "\" />";
+            $params['TITLE'] = $this->session->get_userdata() ['role'];
+            $params['LOGO_COMPANY'] = "<img src=\"" . base_url() . "assets/img/logo.png\" alt=\"OLS\" height=\"80\" width=\"240\">";
+            $params['LOGO_COURSE ACCERDITATION COMPANY'] = $params['score'];
+            $this->global['certificate'] = $params;
+            $this->loadViews("instructor/demand/reportCard", $this->global, NULL, NULL);
+        }else{
+            $this->loadViews("access", $this->global, NULL, NULL);
         }
     }
     

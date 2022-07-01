@@ -99,6 +99,6 @@
         <script>
             var  baseurl = "<?php echo base_url($company['company_url'])?>/demand/";
             var  base_url = "<?php echo base_url($company['company_url'])?>/demand/";
-            window.top.document.location.reload();
+            //window.top.document.location.reload();
         </script>
         <script src="<?php echo base_url(); ?>assets/js/jquery-3.1.0.js"></script>

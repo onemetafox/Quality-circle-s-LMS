@@ -166,6 +166,20 @@
           ul.nav-main li a{
               color: <?php echo $site_theme['font_color']; ?>;
           }
+		  .logo-div{
+			      position: absolute;
+    background: #fff;
+    width: 13.7%;
+    padding: .3% 3%;
+	}
+	@media only screen and (max-width: 767px) {
+		.logo-div{
+			          position: absolute;
+    background: #fff;
+    width: 32.7%;
+    padding: .3% 0%;
+	}
+	}
       </style>
   </head>
   
@@ -189,14 +203,16 @@
 
       <!-- start: header -->
       <header class="header">
-        <div class="logo-container">
+        <div style="position:relative" class="logo-container">
+          <div class="logo-div">
           <a href="<?=base_url()?>" class="logo">
               <?php if(!isset($site_theme['logo'])) { ?>
-                    <img src="<?php echo base_url(); ?>assets/images/logo.png" width="150" height="40" alt="OLS" />
+                    <img src="<?php echo base_url(); ?>assets/images/new-logo-nitam.jpg" style="width:90px" alt="OLS" />
               <?php } else{ ?>
-                  <img src="<?php echo base_url($site_theme['logo']); ?>" width="150" height="40" alt="OLS" />
+                  <img src="<?php echo base_url($site_theme['logo']); ?>" width="200" height="40" alt="OLS" />
               <?php } ?>
           </a>
+          </div>
           <div class="d-md-none toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
             <i class="fas fa-bars" aria-label="Toggle sidebar"></i>
           </div>

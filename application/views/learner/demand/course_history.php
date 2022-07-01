@@ -67,24 +67,24 @@
                         $(td).html('Pass');
                     }
                 }
-            },/*{         //http://localhost/ols/learner/examhistory/preview_history/24
+            },{         //http://localhost/ols/learner/examhistory/preview_history/24
                     "targets": [5],
                     "createdCell": function (td, cellData, rowData, row, col) {
-                        if(cellData == 1){
+                        /*if(cellData == 1){
                             $(td).html('<a class="btn btn-default btn-sm" href="<?= base_url()?>learner/demand/view_row_assess/'+rowData['course_id']+'/'+rowData['user_id']+'">View Assessment</a>'+
                             '<a class="btn btn-default btn-sm" target="blank" href="<?= base_url()?>learner/demand/view_quiz_history/'+rowData['course_id']+'/'+rowData['user_id']+'">View Quiz history</a>');
-                        }
-                        if(cellData == 2){
+                        }*/
+                        /*if(cellData == 2){
                             $(td).html('<a class="btn btn-default btn-sm" href="<?= base_url()?>learner/demand/view_row_assess/'+rowData['course_id']+'/'+rowData['user_id']+'">View Assessment</a>'+
                             '<a class="btn btn-default btn-sm" target="blank" href="<?= base_url()?>learner/demand/view_quiz_history/'+rowData['course_id']+'/'+rowData['user_id']+'">View Quiz history</a>');
-                        }
-                        if(cellData == 3){
+                        }*/
+                        /*if(cellData == 3){
                             $(td).html('<a class="btn btn-default btn-sm" href="<?= base_url()?>learner/demand/view_row_assess/'+rowData['course_id']+'/'+rowData['user_id']+'">View Assessment</a>'+
                             '<a class="btn btn-default btn-sm" target="blank" href="<?= base_url()?>learner/demand/view_quiz_history/'+rowData['course_id']+'/'+rowData['user_id']+'">View Quiz history</a>'+
                             '<a class="btn btn-default btn-sm" target="blank" href="<?= base_url()?>learner/demand/view_exam_history/'+rowData['course_id']+'/'+rowData['user_id']+'">View Exam</a>'+
                             '<a class="btn btn-default btn-sm" target="blank" href="<?= base_url()?>learner/demand/view_exam_feedback/'+rowData['course_id']+'/'+rowData['user_id']+'">Feedback</a>');
-                        }
-                        if(cellData == 4){
+                        }*/
+                        /*if(cellData == 4){
                             $(td).html('<a class="btn btn-default btn-sm" href="<?= base_url()?>learner/demand/view_row_assess/'+rowData['course_id']+'/'+rowData['user_id']+'">View Assessment</a>'+
                             //'<a class="btn btn-default btn-sm" target="blank" href="<?= base_url()?>learner/demand/view_quiz_history/'+rowData['course_id']+'/'+rowData['user_id']+'">View Quiz</a>'+
 
@@ -92,16 +92,22 @@
                             '<a class="btn btn-default btn-sm" target="blank" href="<?= base_url()?>learner/demand/view_exam_certificate/'+rowData['course_id']+'/'+rowData['user_id']+'">View Certificate</a>'+
                             '<a class="btn btn-default btn-sm" target="blank" href="<?= base_url()?>learner/demand/view_exam_history/'+rowData['course_id']+'/'+rowData['user_id']+'">View Exam</a>'+
                             '<a class="btn btn-default btn-sm" target="blank" href="<?= base_url()?>learner/demand/view_exam_feedback/'+rowData['course_id']+'/'+rowData['user_id']+'">Feedback</a>');
+                        }*/
+						if(cellData == 1){
+							$(td).html('');
+						}
+						if(cellData == 4){
+                            $(td).html('<a class="btn btn-default btn-sm" target="blank" href="<?= base_url()?>learner/demand/view_exam_certificate/'+rowData['course_id']+'/'+rowData['user_id']+'">View Certificate</a>');
                         }
                     }
-                }*/],
+                }],
 	        "columns": [
 	        	{ "title": "No", "data": "no", "class": "text-left", "width":50},
 	        	{ "title": "Course Title", "data": "title", "class": "text-left", "width":200 },
 				{ "title": "Course Start Time", "data": "reg_date", "class": "text-left", "width":200},
 				{ "title": "Course End Time", "data": "end_date", "class": "text-left", "width":200 },
 				{ "title": "Status", "data": "status", "class": "text-left", "width":60 },
-                /*{ "title": "Action", "data": "status", "class": "text-left", "width":200 }*/
+                { "title": "Action", "data": "status", "class": "text-left", "width":200 }
 			],
 			"lengthMenu": [
 	            [5, 10, 20, 50, 150, -1],

@@ -127,6 +127,21 @@
                                        </div>
                                     </div>
                                     <div class="form-group row">
+                                       <label class="col-sm-12 control-label text-sm-left pt-1" for="w4-username">Select Certification</label>
+                                       <div class="col-sm-4">
+                                        <select class="form-control" id="certification" name="certification" >
+                                        <option <?php if ($course_data['certification'] == 'Non-Certification'):?>selected<?php endif;?> value="Non-Certification">Non-Certification</option>
+                                        <option <?php if ($course_data['certification'] == 'Certification'):?>selected<?php endif;?> value="Certification">Certification</option>
+                                        </select>
+                                       </div>
+                                       <div class="col-sm-8"></div>
+                                    </div>
+                                    
+                                    <div class="form-group row">
+                                       <label class="col-sm-12 control-label text-sm-left pt-1" for="w4-username">Prices and Discounts</label>
+                                    </div>
+                                    
+                                    <div class="form-group row">
                                         <label class="col-sm-1" style="padding-top: 5px;float: left;"><?=$term['usd']?></label>
                                         <input type="text" class="form-control col-sm-1 input-form" style="width: 75px;" id="payy_pricee" name="pay_price" value="<?= $course_data['pay_price'] ?>">
                                         <label class="col-sm-2" style="text-align:right;padding-top: 5px;float: left;"><?=$term['discount']?>(%)</label>
@@ -220,6 +235,15 @@
                                           </div>
                                        </div>
                                     </div>
+                                    
+                                    <div class="form-group row">
+                                       <label class="col-sm-12 control-label text-sm-left pt-1" for="w4-username">CEU</label>
+                                       <div class="col-sm-4">
+                                       <input class="form-control" id="ceu" name="ceu" value="<?php echo $course_data['ceu']; ?>" type="text" />
+                                       </div>
+                                       <div class="col-sm-8"></div>
+                                    </div>
+                                    
                                     <div class="form-group row">
                                        <div class="col-sm-8" style="padding-left: 0px;">
                                           <label class="col-sm-12 control-label text-sm-left pt-1" for="w4-username"><?=$term['selectinstructor']?></label>
@@ -991,9 +1015,11 @@
                 $('#discount').val('100');
                 $('#discount').prop('readonly', true);
                 $('#amount').val(0);
+				$('#certification').html('<option selected="selected" value="Non-Certification">Non-Certification</option><option value="Certification">Certification</option>');
             }else{
                 $('#discount').val('0');
                 $('#discount').prop('readonly', false);
+				$('#certification').html('<option selected="selected" value="Certification">Certification</option>');
             }
                 
         });
