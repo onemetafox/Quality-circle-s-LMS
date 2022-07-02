@@ -271,7 +271,7 @@ a:active {
 		left: 0;
 		padding-bottom: 50px;
 		position: fixed;
-		top: 60px;
+		top:114px;
 	}
 
 	html.fixed .sidebar-left .nano-content {
@@ -1230,7 +1230,7 @@ a:active {
 
 	/* Layout Fixed - Sidebar Left Collapsed */
 	html.fixed.sidebar-left-collapsed .page-header {
-		left: 73px;
+		left:262px;
 	}
 
 	html.fixed.sidebar-left-collapsed .content-body {
@@ -6258,7 +6258,7 @@ html:not(.sidebar-left-collapsed).boxed .call-to-action .call-to-action-btn > sp
 	background: #f6f6f6;
 	border-radius: 5px 5px 0 0 !important;
 	border-bottom: 1px solid #DADADA;
-	padding: 12px;
+	padding: 18px;
 	position: relative;
 }
 
@@ -6350,10 +6350,10 @@ html:not(.sidebar-left-collapsed).boxed .call-to-action .call-to-action-btn > sp
 	outline: none !important;
 	text-decoration: none !important;
 }
-.item_details_single{background-color: #fafafa !important;font-size:14px;line-height:19px;box-shadow: 0 4px 12px 0 #ddd !important; line-height:25px;}
+
 .card-title {
 	color: #33353F;
-	font-size:16px;
+	font-size: 20px;
 	font-weight: 400;
 	line-height: 20px;
 	padding: 0;
