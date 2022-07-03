@@ -35,8 +35,8 @@
 <tr>
 <td width="100">&nbsp;</td>
 <td width="100" style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45">
-
-<?php if($certificate['NUMBER'] != ""){ echo strtoupper($certificate['NUMBER']);?> CEU <?php } ?>
+CEU Number <br>
+<?php if($certificate['NUMBER'] != ""){ echo strtoupper($certificate['NUMBER']);?><?php } ?>
 
 </td>
 <td align="right" width="100"><?php echo $certificate['SIGNATURE']; ?></td>
