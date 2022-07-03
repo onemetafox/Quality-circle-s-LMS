@@ -1004,5 +1004,18 @@ class Course_model extends AbstractModel
 		$res = $result->result_array();
 		return $res;
 	}
+    public function getCourseTime($course_id, $course_type){
+        if ($course_type == 0) {
+            $sql = "SELECT a.id, a.img_path, a.title, course_self_time, a.course_type,  c.start_day,  a.duration, a.active, a.create_id, a.category_id, a.standard_id FROM course a
+            LEFT JOIN training_course b ON  b.course_id = a.id
+            LEFT JOIN training_course_time c ON c.training_course_id = b.id";
+        }else {
+            $sql = "SELECT a.id, a.img_path, a.title, course_self_time, a.course_type,  c.start_at,  a.duration, a.active, a.create_id, a.category_id, a.standard_id FROM course a
+            LEFT JOIN virtual_course b ON  b.course_id = a.id
+            LEFT JOIN virtual_course_time c ON c.virtual_course_id = b.id";
+        }
+        $sql = $sql . " WHERE a.course_type = $course_type AND a.id = $course_id" ;
+        return $this->db->query($sql)->row_array();
+    }
     
 }

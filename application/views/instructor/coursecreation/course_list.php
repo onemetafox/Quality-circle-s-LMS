@@ -38,7 +38,7 @@
 		<div class="right-wrapper">
 			<ol class="breadcrumbs">
 				<li>
-					<a href="<?php echo base_url(); ?>home">
+					<a href="<?= base_url(); ?>home">
 						<i class="fas fa-home"></i>
 					</a>
 				</li>
@@ -64,9 +64,9 @@
 							<div class="sidebar clearfix m-b-20">
 								<div class="main-block">
 									<ul>
-										<li class="<?php echo $status==1 ? 'active' : '' ?>"><a href="<?php echo site_url('instructor/coursecreation/getList?status=1')?>" class="scroll">Active</a></li>
-										<li class="<?php echo $status==2 ? 'active' : '' ?>"><a href="<?php echo site_url('instructor/coursecreation/getList?status=2')?>" class="scroll">In Active</a></li>
-										<li class="<?php echo $status==0 ? 'active' : '' ?>"><a href="<?php echo site_url('instructor/coursecreation/getList?status=0')?>" class="scroll">Draft</a></li>
+										<li class="<?= $status==1 ? 'active' : '' ?>"><a href="<?= site_url('instructor/coursecreation/getList?status=1')?>" class="scroll">Active</a></li>
+										<li class="<?= $status==2 ? 'active' : '' ?>"><a href="<?= site_url('instructor/coursecreation/getList?status=2')?>" class="scroll">In Active</a></li>
+										<li class="<?= $status==0 ? 'active' : '' ?>"><a href="<?= site_url('instructor/coursecreation/getList?status=0')?>" class="scroll">Draft</a></li>
 									</ul>
 									</form>
 									<div class="clearfix"></div>
@@ -80,7 +80,7 @@
                                         <option value="" >Select Course</option>
                                         <?php foreach($course_data_all as $coursefilter){ ?>
                                         <?php if($coursefilter['title'] != ''){ ?>
-											<option value="<?php echo $coursefilter['id']; ?>" <?php $id==$coursefilter['id']?print 'selected':print ''; ?>> <?php echo $coursefilter['title']; ?></option>
+											<option value="<?= $coursefilter['id']; ?>" <?php $id==$coursefilter['id']?print 'selected':print ''; ?>> <?= $coursefilter['title']; ?></option>
 										<?php } } ?>  
                                     </select>
                                </div>
@@ -107,7 +107,7 @@
 										<select id="category_id" name="category_id">
 											<option value="0"> All </option>
 											<?php foreach($category as $item){ ?>
-												<option value="<?php echo $item['id']; ?>" <?php $category_id==$item['id']?print 'selected':print ''; ?>> <?php echo $item['name']; ?></option>
+												<option value="<?= $item['id']; ?>" <?php $category_id==$item['id']?print 'selected':print ''; ?>> <?= $item['name']; ?></option>
 											<?php }  ?>
 										</select>
 									</div>
@@ -118,14 +118,14 @@
 										<select id="standard_id" name="standard_id">
 											<option value="0"> All </option>
 											<?php foreach($standard as $stdS){ ?>
-												<option value="<?php echo $stdS->id; ?>" <?php $standard_id==$stdS->id?print 'selected':print ''; ?>> <?php echo $stdS->name; ?></option>
+												<option value="<?= $stdS->id; ?>" <?php $standard_id==$stdS->id?print 'selected':print ''; ?>> <?= $stdS->name; ?></option>
 											<?php }  ?>
 										</select>
 									</div>
 								</div>
 							</div>
 							<?php foreach($course_data as $item): ?>
-								<div class="bg-gray restaurant-entry" id="restaurant-entry-<?php echo $item['id'] ?>">
+								<div class="bg-gray restaurant-entry" id="restaurant-entry-<?= $item['id'] ?>">
 									<div class="row">
 										<div class="col-sm-12 col-md-12 col-lg-12 text-xs-center text-sm-left" style="padding: 20px;">
 											<div style="float: left;margin-left: 20px;width: 20%;">
@@ -133,9 +133,9 @@
 													$imgName = end(explode('/', $item['img_path']));
 													if($imgName != '' && file_exists(getcwd().'/assets/uploads/company/course/'.$imgName)){
 												?>
-                                                	<img style="max-width: 100%;" src="<?php echo base_url($item['img_path']) ?>" width="auto" height="120">
+                                                	<img style="max-width: 100%;" src="<?= base_url($item['img_path']) ?>" width="auto" height="120">
 												<?php } else{ ?>
-                                                	<img style="max-width: 100%;" src="<?php echo base_url('assets/uploads/company/course/no-preview-available.jpg') ?>" width="auto" height="120">
+                                                	<img style="max-width: 100%;" src="<?= base_url('assets/uploads/company/course/no-preview-available.jpg') ?>" width="auto" height="120">
                                                 <?php } ?>
 											</div>
 											<div style="margin-left: 20px;float:left;width: 75%;padding-bottom: 10px;border-bottom: 1px solid;">
@@ -143,7 +143,7 @@
 													<h5><?= ucfirst($item['title']) ?></h5>
 													<h6><?=$item['first_instructor']?></h6>
 													<h6>
-														<?php echo $item['course_self_time']; ?>
+														<?= $item['course_self_time']; ?>
 													</h6>
 													<h6>
 														<?php if ($item['course_type'] == 0){
@@ -155,12 +155,14 @@
 														}?>
 													</h6>
                                                     <h6>
-														<?php echo ($item['enroll_users'] == NULL || $item['enroll_users'] == 'null')?'Enrolled: 0':'Enrolled: '.$item['enroll_users']; ?>
+														<?= ($item['enroll_users'] == NULL || $item['enroll_users'] == 'null')?'Enrolled: 0':'Enrolled: '.$item['enroll_users']; ?>
 													</h6>
-                                                    <?php if ($item['course_type'] != 2){?>
-                                                    <h6>Duration: <?php echo $item['duration'];?> Days</h6>
-                                                    <h6>Start Date: <?php echo date('F d, Y', strtotime($item['start_at']));?></h6>
-                                                    <h6>End Date: <?php echo date('F d, Y', strtotime($item['start_at'].' + '.$item['duration'].' day'));?></h6>
+                                                    <?php if ($item['course_type'] != 2){ 
+														$course = $this->Course_model->getCourseTime($item['id'], $item['course_type']);
+														?>
+                                                    <h6>Duration: <?= $course['duration'];?> Days</h6>
+                                                    <h6>Start Date: <?= date('F d, Y', strtotime($course['start_at']));?></h6>
+                                                    <h6>End Date: <?= date('F d, Y', strtotime($course['start_at'].' + '.$course['duration'].' day'));?></h6>
                                                     <?php } ?>
 												</div>
 											</div>
@@ -191,7 +193,7 @@
 									?>
 								</div>
 								<div class="col-md-6 col-xs-12">
-									<?php echo $links ?>
+									<?= $links ?>
 								</div>
 							</div>
 						</div>
@@ -337,7 +339,7 @@
 	    </div>
 	</div>
 
-	<?php echo form_open('instructor/exam/create', array("id"=>"frm_examlist")); ?>
+	<?= form_open('instructor/exam/create', array("id"=>"frm_examlist")); ?>
 		<input type="hidden" name="row_id" id="row_id">
 		<input type="hidden" name="exam_type" id="exam_type">
 	</form>
@@ -382,8 +384,8 @@
 
 	function delete_course(id) {
 		(new PNotify({
-            title: "<?php echo $term['confirmation']; ?>",
-            text: "<?php echo $term['areyousuretodelete']; ?>",
+            title: "<?= $term['confirmation']; ?>",
+            text: "<?= $term['areyousuretodelete']; ?>",
 			type: 'custom',
 			icon: 'fas fa-question',
 			confirm: {
@@ -409,8 +411,8 @@
 				},
 				error: function(){
 					new PNotify({
-                        title: '<?php echo $term['error']; ?>',
-                        text: '<?php echo $term['youcantdeletethisitem']; ?>',
+                        title: '<?= $term['error']; ?>',
+                        text: '<?= $term['youcantdeletethisitem']; ?>',
 						type: 'error'
 					});
 				}
@@ -638,8 +640,8 @@
 	        },
 	        error: function () {
 	            new PNotify({
-	                title: '<?php echo $term['error']; ?>',
-	                text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
+	                title: '<?= $term['error']; ?>',
+	                text: '<?= $term['thereissomeissuetryagainlater']; ?>',
 	                type: 'error'
 	            });
 	            $.magnificPopup.close();
@@ -663,7 +665,7 @@
 	            icon:"warning",
 	          }).then((willDelete) => {
 	                if (willDelete) {
-	                  location.href="<?php echo base_url('pricing')?>";
+	                  location.href="<?= base_url('pricing')?>";
 	                }
 	              });
 	        }

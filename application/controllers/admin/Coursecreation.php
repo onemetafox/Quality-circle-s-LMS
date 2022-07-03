@@ -631,6 +631,8 @@ class Coursecreation extends BaseController{
         $course_data['time_type'] = $this->input->post('time_type');
         $course_data['limit_time'] = $this->input->post('limit_time');
         $course_data['pay_type'] = $this->input->post('pay_type');
+        $course_data['certification'] = $this->input->post('certification');
+		$course_data['ceu'] = $this->input->post('ceu');
         $course_data['pay_price'] = $this->input->post('pay_price');
         $course_data['show_user'] = $this->input->post('show_user');
         $course_data['pass_mark'] = $this->input->post('pass_mark');
@@ -1334,6 +1336,8 @@ class Coursecreation extends BaseController{
                 $course_data['pay_price'] = 0;
                 $course_data['amount'] = 0;
                 $course_data['show_user'] = 0;
+                $course_data['certification'] = 'Non-Certification';
+                $course_data['ceu'] = '';
                 $course_data['pass_mark'] = 0;
                 $course_data['is_ass_end'] = 0;
                 $course_data['instructors'] = "";

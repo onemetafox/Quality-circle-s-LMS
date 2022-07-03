@@ -157,6 +157,13 @@
                                                     <h6>
 														<?php echo ($item['enroll_users'] == NULL || $item['enroll_users'] == 'null')?'Enrolled: 0':'Enrolled: '.$item['enroll_users']; ?>
 													</h6>
+													<?php if ($item['course_type'] != 2){ 
+														$course = $this->Course_model->getCourseTime($item['id'], $item['course_type']);
+														?>
+                                                    <h6>Duration: <?= $course['duration'];?> Days</h6>
+                                                    <h6>Start Date: <?= date('F d, Y', strtotime($course['start_at']));?></h6>
+                                                    <h6>End Date: <?= date('F d, Y', strtotime($course['start_at'].' + '.$course['duration'].' day'));?></h6>
+                                                    <?php } ?>
 												</div>
 											</div>
 											<div style="width: 90%;text-align: right;">
