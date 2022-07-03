@@ -392,6 +392,7 @@ class Demand extends BaseController{
             // echo "<pre>";
             //     print_r($admin);
             // exit();
+            $params['CERTIFICATE NUMBER'] = $course_id.$user_id;
             $params['certificate'] = $this->Certification_model->getRowById($this->Exam_model->getRow($exam_id) [0]['certificate_id']) ['content'];
             $params['certificate_id'] = $this->Exam_model->getRow($exam_id) [0]['certificate_id'];
             $params['COMPANY NAME'] = $company[0]['name'];

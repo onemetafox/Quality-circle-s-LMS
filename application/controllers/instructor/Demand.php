@@ -340,6 +340,7 @@ class Demand extends BaseController{
             $params['EXAM SCORE'] = $exam_info[0]['mark'];
             $params['LOCATION'] = str_replace(',,',',',$course[0]['location']);
             $params['NUMBER'] = $course[0]['ceu'];
+            $params['CATEGORY'] = $course[0]['category'];
 			$params['COURSE TYPE'] = $course[0]['certification'];
             $params['DATE'] = $course[0]['start_at'];
             $params['CERTIFICATION DATE'] = substr($exam_info[0]['exam_end_at'], 0, 10);
