@@ -477,7 +477,9 @@ class Demand extends BaseController {
             $exam_date = $exam_info[0]['exam_start_at'] . "~" . $exam_info[0]['exam_end_at'];
             $exam_history = $this->Exam_model->getExamHistory($user_id, $exam_id);
             $admin = $this->Certification_model->getCompanyAdmin($company[0]['id']);
+            $params['COURSE_NUMBER'] = $course[0]['number'];
             $params['CERTIFICATE NUMBER'] = $course_id.$user_id;
+            $params['CATEGORY'] = $course[0]['category'];
 			$params['COMPANY NAME'] = $company[0]['name'];
             $params['PARTICIPANT NAME'] = $learner[0]['name'];
             $params['COURSE NAME'] = $course[0]['title'];

@@ -31,13 +31,12 @@
 <tr><td style="font-size:18px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3">Given on</td></tr>
 <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3"><?php echo strtoupper($certificate['CERTIFICATION DATE']);?></td></tr>
 <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3">in</td></tr>
-<tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3"><?php echo $certificate['LOCATION'];?></td></tr>
+<tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3"><?php echo $certificate['LOCATION'];?><br><br></td></tr>
 <tr>
 <td width="100">&nbsp;</td>
 <td width="100" style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45">
-CEU Number <br>
-<?php if($certificate['NUMBER'] != ""){ echo strtoupper($certificate['NUMBER']);?><?php } ?>
-
+<?php if($certificate['COURSE TYPE'] != 'Non-Certification' && $certificate['NUMBER'] != ""){ echo "CEU Number <br>" . strtoupper($certificate['NUMBER']);?><?php } ?> <br><br>
+<?= $certificate['COURSE_NUMBER']?><br><br>
 </td>
 <td align="right" width="100"><?php echo $certificate['SIGNATURE']; ?></td>
 </tr>
