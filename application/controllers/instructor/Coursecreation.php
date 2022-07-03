@@ -827,7 +827,7 @@ class Coursecreation extends BaseController{
                 $content = str_replace("{VIEWLINK}", base_url() . "company/QC", $content);
                 // print_r($content);
                     
-                $this->sendemail($item['email'],$item['fullname'],$content,$title);
+                // $this->sendemail($item['email'],$item['fullname'],$content,$title);
             }
         }
         $this->response(array("success"=>true, "msg"=>"Course Republished"));
@@ -1091,7 +1091,7 @@ class Coursecreation extends BaseController{
                     $content = str_replace("{VIEWLINK}", base_url() . "company/QC", $content);
                     // print_r($content);
                     
-                    $this->sendemail($item['email'],$item['fullname'],$content,$title);
+                    // $this->sendemail($item['email'],$item['fullname'],$content,$title);
                 }
             }
             
@@ -1103,159 +1103,156 @@ class Coursecreation extends BaseController{
 	
 	public function addIltCourse($iltCourse){
 		$trainingDetail = $this->Training_model->getListByCourseId($iltCourse['id']);		
-		if(empty($trainingDetail)){
-			$startday = NULL; 
-			$endday = NULL; 
-			$starttime = date('H:i:s');
-			$course_data['startday'] = $iltCourse['startday'];
-			$course_data['endday'] = $endday;
-			$course_data['title'] = $iltCourse['title'];
-			$course_data['subtitle'] = $iltCourse['subtitle'];
-			$course_data['duration'] = $iltCourse['duration'];
-			$course_data['objective'] = $iltCourse['learning_objective'];
-			$course_data['attend'] = $iltCourse['attend'];
-			$course_data['agenda'] = $iltCourse['agenda'];
-			$course_data['course_pre_requisite'] = $iltCourse['prerequisite'];
-			$course_data['course_link'] = '';
-			$course_data['description'] = $iltCourse['about'];
-			$course_data['number'] = $iltCourse['number'];
-			$course_data['course_type'] = $iltCourse['course_type'];
-			$course_data['course_id'] = $iltCourse['id'];
-			$course_data['category_id'] = $iltCourse['id'];
-			$course_data['category'] = $iltCourse['category_id'];
-			$course_data['standard_id'] = '['.json_encode($iltCourse['standard_id']).']';
-			$course_data['create_id'] = $this->session->get_userdata()['company_id'];
-			$course_data['img_path'] = str_replace("./", "", "assets/img/" . 'default.png');
-			if($iltCourse['img_path'] != ''){
-				$course_data['img_path'] = $iltCourse['img_path'];
-			}
-			$course_data['objective_img'] = str_replace("./", "", "assets/img/" . 'default.png');
-			if($iltCourse['objective_img'] != ''){
-				$course_data['objective_img'] = $iltCourse['objective_img'];
-			}
-			$course_data['agenda_img'] = str_replace("./", "", "assets/img/" . 'default.png');
-			if($iltCourse['agenda_img'] != ''){
-				$course_data['agenda_img'] = $iltCourse['agenda_img'];
-			}
-			$course_data['attend_img'] = str_replace("./", "", "assets/img/" . 'default.png');
-			if($iltCourse['attend_img'] != ''){
-				$course_data['attend_img'] = $iltCourse['attend_img'];
-			}
-			$timestamp = time();
-			$course_data['instructors'] = json_encode($this->input->post('instructor[]'));
-			$course_data['highlights'] = json_encode($this->input->post('highlight[]'));
-			if($course_data['course_type'] == 0){
-				$explode = explode(',',$iltCourse['location']);			 
-				$course_data['address'] = $iltCourse['address'];
-				$course_data['country'] = $explode[count($explode)-3];
-				$course_data['state'] = $explode[count($explode)-2];
-				$course_data['city'] = $explode[count($explode)-1];
-				$course_data['location'] = $iltCourse['location'];	
-			}else{
-				$course_data['location'] = 'Online';	
-				$course_data['address'] = '';
-				$course_data['country'] = '';
-				$course_data['state'] = '';
-				$course_data['city'] = '';
-			}
-			$row_id = $this->Training_model->insert_course($course_data);
-			$course_time['training_course_id'] = $row_id;
-			$course_time['country_id'] = $iltCourse['country'];
-			$course_time['state_id'] = $iltCourse['state'];
-			$course_time['city_id'] = $iltCourse['city'];
-			// $course_time['start_day'] = date('Y-m-d',$timestamp);
-            $course_time['start_day'] = $iltCourse['startday'];
-			$course_time['start_time'] = $iltCourse['starttime'];
-            $course_time['end_time'] = getEndTime($iltCourse['starttime']);
-            $dates = explode("-", $iltCourse['startday']);
-			// $course_time['date_str'] = strtotime($course_time['start_day'].' '.$course_time['start_time']);
-			$course_time['year'] = $dates[0];
-			$course_time['month'] = $dates[1];
-			$course_time['sday'] = $dates[2];
-			$course_time['location'] = $course_data['location'];
-		
-            $this->Training_model->insert_time($course_time);
-		}else{
-            
+		if(!empty($trainingDetail)){
+            $this->Training_model->deleteCourseTraining($trainingDetail[0]['id']);
         }
+        $startday = NULL; 
+        $endday = NULL; 
+        $starttime = date('H:i:s');
+        $course_data['startday'] = $iltCourse['startday'];
+        $course_data['endday'] = $endday;
+        $course_data['title'] = $iltCourse['title'];
+        $course_data['subtitle'] = $iltCourse['subtitle'];
+        $course_data['duration'] = $iltCourse['duration'];
+        $course_data['objective'] = $iltCourse['learning_objective'];
+        $course_data['attend'] = $iltCourse['attend'];
+        $course_data['agenda'] = $iltCourse['agenda'];
+        $course_data['course_pre_requisite'] = $iltCourse['prerequisite'];
+        $course_data['course_link'] = '';
+        $course_data['description'] = $iltCourse['about'];
+        $course_data['number'] = $iltCourse['number'];
+        $course_data['course_type'] = $iltCourse['course_type'];
+        $course_data['course_id'] = $iltCourse['id'];
+        $course_data['category_id'] = $iltCourse['id'];
+        $course_data['category'] = $iltCourse['category_id'];
+        $course_data['standard_id'] = '['.json_encode($iltCourse['standard_id']).']';
+        $course_data['create_id'] = $this->session->get_userdata()['company_id'];
+        $course_data['img_path'] = str_replace("./", "", "assets/img/" . 'default.png');
+        if($iltCourse['img_path'] != ''){
+            $course_data['img_path'] = $iltCourse['img_path'];
+        }
+        $course_data['objective_img'] = str_replace("./", "", "assets/img/" . 'default.png');
+        if($iltCourse['objective_img'] != ''){
+            $course_data['objective_img'] = $iltCourse['objective_img'];
+        }
+        $course_data['agenda_img'] = str_replace("./", "", "assets/img/" . 'default.png');
+        if($iltCourse['agenda_img'] != ''){
+            $course_data['agenda_img'] = $iltCourse['agenda_img'];
+        }
+        $course_data['attend_img'] = str_replace("./", "", "assets/img/" . 'default.png');
+        if($iltCourse['attend_img'] != ''){
+            $course_data['attend_img'] = $iltCourse['attend_img'];
+        }
+        $timestamp = time();
+        $course_data['instructors'] = json_encode($this->input->post('instructor[]'));
+        $course_data['highlights'] = json_encode($this->input->post('highlight[]'));
+        if($course_data['course_type'] == 0){
+            $explode = explode(',',$iltCourse['location']);			 
+            $course_data['address'] = $iltCourse['address'];
+            $course_data['country'] = $explode[count($explode)-3];
+            $course_data['state'] = $explode[count($explode)-2];
+            $course_data['city'] = $explode[count($explode)-1];
+            $course_data['location'] = $iltCourse['location'];	
+        }else{
+            $course_data['location'] = 'Online';	
+            $course_data['address'] = '';
+            $course_data['country'] = '';
+            $course_data['state'] = '';
+            $course_data['city'] = '';
+        }
+        $row_id = $this->Training_model->insert_course($course_data);
+        $course_time['training_course_id'] = $row_id;
+        $course_time['country_id'] = $iltCourse['country'];
+        $course_time['state_id'] = $iltCourse['state'];
+        $course_time['city_id'] = $iltCourse['city'];
+        // $course_time['start_day'] = date('Y-m-d',$timestamp);
+        $course_time['start_day'] = $iltCourse['startday'];
+        $course_time['start_time'] = $iltCourse['starttime'];
+        $course_time['end_time'] = getEndTime($iltCourse['starttime']);
+        $dates = explode("-", $iltCourse['startday']);
+        // $course_time['date_str'] = strtotime($course_time['start_day'].' '.$course_time['start_time']);
+        $course_time['year'] = $dates[0];
+        $course_time['month'] = $dates[1];
+        $course_time['sday'] = $dates[2];
+        $course_time['location'] = $course_data['location'];
+    
+        $this->Training_model->insert_time($course_time);
 	}
 
 	public function addLive($liveCourse){
 		$liveDetail = $this->Live_model->getListByCourseId($liveCourse['id']);		
-		if(empty($liveDetail)){
-			$startday = NULL; 
-			$endday = NULL; 
-			$starttime = date('H:i:s');
-			$course_data['startday'] = $liveCourse['startday'];
-			$course_data['endday'] = $endday;
-			$course_data['title'] = $liveCourse['title'];
-			$course_data['subtitle'] = $liveCourse['subtitle'];
-			$course_data['duration'] = $liveCourse['duration'];
-			$course_data['about'] = $liveCourse['about'];
-			$course_data['objective'] = $liveCourse['learning_objective'];
-			$course_data['attend'] = $liveCourse['attend'];
-			$course_data['agenda'] = $liveCourse['agenda'];
-			$course_data['course_pre_requisite'] = $liveCourse['prerequisite'];
-			$course_data['user_type'] = 0;
-			// $course_data['pay_type'] = 0;
-			$course_data['record_type'] = 0;
-			// $course_data['pay_price'] = 0;
-			$course_data['number'] = $liveCourse['number'];
-			$course_data['course_type'] = $liveCourse['course_type'];
-			$course_data['course_id'] = $liveCourse['id'];
-			$course_data['category_id'] = $liveCourse['category_id'];
-			$course_data['standard_id'] = '['.json_encode($liveCourse['standard_id']).']';
-			$course_data['url'] = '';
-			// if($course_data['pay_price'] == null){
-			// 	$course_data['pay_price'] = 0;
-			// }
-			$course_data['create_id'] = $this->session->get_userdata()['company_id'];
-			$course_data['img_path'] = str_replace("./", "", "assets/img/" . 'default.png');
-			if($liveCourse['img_path'] != ''){
-				$course_data['img_path'] = $liveCourse['img_path'];
-			}
-			$course_data['objective_img'] = str_replace("./", "", "assets/img/" . 'default.png');
-			if($liveCourse['objective_img'] != ''){
-				$course_data['objective_img'] = $liveCourse['objective_img'];
-			}
-			$course_data['agenda_img'] = str_replace("./", "", "assets/img/" . 'default.png');
-			if($liveCourse['agenda_img'] != ''){
-				$course_data['agenda_img'] = $liveCourse['agenda_img'];
-			}
-			$course_data['attend_img'] = str_replace("./", "", "assets/img/" . 'default.png');
-			if($liveCourse['attend_img'] != ''){
-				$course_data['attend_img'] = $liveCourse['attend_img'];
-			}
-			$timestamp = time();
-			$start_at = date('Y-m-d H:i:s', $timestamp);
-			$course_data['instructors'] = json_encode($this->input->post('instructor[]'));
-			$course_data['highlights'] = json_encode($this->input->post('highlight[]'));
-			$course_data['enroll_users'] = 0;
-			if($liveCourse['course_type'] == 0){
-				$course_data['address'] = $liveCourse['address'];
-				$course_data['country'] = $liveCourse['country'];
-				$course_data['state'] = $liveCourse['state'];
-				$course_data['city'] = $liveCourse['city'];
-				$course_data['location'] = $iltCourse['location'];
-			}else{
-				$course_data['location'] = 'Online';	
-				$course_data['address'] = '';
-				$course_data['country'] = '';
-				$course_data['state'] = '';
-				$course_data['city'] = '';
-			}		
-            
-			$row_id = $this->Live_model->insert_course($course_data);
-			$course_time['virtual_course_id'] = $row_id;
-			$course_time['start_time'] = $liveCourse['starttime'];
-            $course_time['end_time'] = getEndTime($liveCourse['starttime']);
-            $course_time['start_at'] = $liveCourse['startday'];
-			$course_time['reg_date'] = $start_at;
-			$this->Live_model->insert_time($course_time);
-		}else{
-            // print_r($liveDetail);
-            // print_r($liveCourse);
+		if(!empty($liveDetail)){
+            $this->Live_model->deleteCourseVirtual($liveDetail[0]['id']);
         }
+        $startday = NULL; 
+        $endday = NULL; 
+        $starttime = date('H:i:s');
+        $course_data['startday'] = $liveCourse['startday'];
+        $course_data['endday'] = $endday;
+        $course_data['title'] = $liveCourse['title'];
+        $course_data['subtitle'] = $liveCourse['subtitle'];
+        $course_data['duration'] = $liveCourse['duration'];
+        $course_data['about'] = $liveCourse['about'];
+        $course_data['objective'] = $liveCourse['learning_objective'];
+        $course_data['attend'] = $liveCourse['attend'];
+        $course_data['agenda'] = $liveCourse['agenda'];
+        $course_data['course_pre_requisite'] = $liveCourse['prerequisite'];
+        $course_data['user_type'] = 0;
+        // $course_data['pay_type'] = 0;
+        $course_data['record_type'] = 0;
+        // $course_data['pay_price'] = 0;
+        $course_data['number'] = $liveCourse['number'];
+        $course_data['course_type'] = $liveCourse['course_type'];
+        $course_data['course_id'] = $liveCourse['id'];
+        $course_data['category_id'] = $liveCourse['category_id'];
+        $course_data['standard_id'] = '['.json_encode($liveCourse['standard_id']).']';
+        $course_data['url'] = '';
+        // if($course_data['pay_price'] == null){
+        // 	$course_data['pay_price'] = 0;
+        // }
+        $course_data['create_id'] = $this->session->get_userdata()['company_id'];
+        $course_data['img_path'] = str_replace("./", "", "assets/img/" . 'default.png');
+        if($liveCourse['img_path'] != ''){
+            $course_data['img_path'] = $liveCourse['img_path'];
+        }
+        $course_data['objective_img'] = str_replace("./", "", "assets/img/" . 'default.png');
+        if($liveCourse['objective_img'] != ''){
+            $course_data['objective_img'] = $liveCourse['objective_img'];
+        }
+        $course_data['agenda_img'] = str_replace("./", "", "assets/img/" . 'default.png');
+        if($liveCourse['agenda_img'] != ''){
+            $course_data['agenda_img'] = $liveCourse['agenda_img'];
+        }
+        $course_data['attend_img'] = str_replace("./", "", "assets/img/" . 'default.png');
+        if($liveCourse['attend_img'] != ''){
+            $course_data['attend_img'] = $liveCourse['attend_img'];
+        }
+        $timestamp = time();
+        $start_at = date('Y-m-d H:i:s', $timestamp);
+        $course_data['instructors'] = json_encode($this->input->post('instructor[]'));
+        $course_data['highlights'] = json_encode($this->input->post('highlight[]'));
+        $course_data['enroll_users'] = 0;
+        if($liveCourse['course_type'] == 0){
+            $course_data['address'] = $liveCourse['address'];
+            $course_data['country'] = $liveCourse['country'];
+            $course_data['state'] = $liveCourse['state'];
+            $course_data['city'] = $liveCourse['city'];
+            $course_data['location'] = $iltCourse['location'];
+        }else{
+            $course_data['location'] = 'Online';	
+            $course_data['address'] = '';
+            $course_data['country'] = '';
+            $course_data['state'] = '';
+            $course_data['city'] = '';
+        }		
+        
+        $row_id = $this->Live_model->insert_course($course_data);
+        $course_time['virtual_course_id'] = $row_id;
+        $course_time['start_time'] = $liveCourse['starttime'];
+        $course_time['end_time'] = getEndTime($liveCourse['starttime']);
+        $course_time['start_at'] = $liveCourse['startday'];
+        $course_time['reg_date'] = $start_at;
+        $this->Live_model->insert_time($course_time);
 	}
     
     public function edit_course_tab($row_id = 0, $tab_id = 1){
