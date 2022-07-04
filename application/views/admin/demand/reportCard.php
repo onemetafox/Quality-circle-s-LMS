@@ -36,7 +36,7 @@
     <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3"><?php echo $certificate['LOCATION'];?></td></tr>
     <tr>
     <td width="100">&nbsp;</td>
-    <td width="100" style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45">CEU Number <br><?php echo strtoupper($certificate['NUMBER']);?> <br><?= $certificate['COURSE_NUMBER']?> </td>
+    <td width="100" style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45"><br>CEU Number <br><?php echo strtoupper($certificate['NUMBER']);?> <br><br><?= $certificate['COURSE_NUMBER']?> </td>
     <td align="right" width="100"><?php echo $certificate['SIGNATURE']; ?></td>
     </tr>
     <tr>
