@@ -828,7 +828,7 @@ class Coursecreation extends BaseController{
                 $content = str_replace("{VIEWLINK}", base_url() . "company/QC", $content);
                 // print_r($content);
                     
-                // $this->sendemail($item['email'],$item['fullname'],$content,$title);
+                $this->sendemail($item['email'],$item['fullname'],$content,$title);
             }
         }
         $this->response(array("success"=>true, "msg"=>"Course Republished"));
@@ -1088,7 +1088,7 @@ class Coursecreation extends BaseController{
                     $content = str_replace("{VIEWLINK}", base_url() . "company/QC", $content);
                     // print_r($content);
                     
-                    // $this->sendemail($item['email'],$item['fullname'],$content,$title);
+                    $this->sendemail($item['email'],$item['fullname'],$content,$title);
                 }
             }
             

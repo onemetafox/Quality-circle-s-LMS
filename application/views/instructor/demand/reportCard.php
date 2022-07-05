@@ -20,25 +20,25 @@
 </header>
 
 <main role="main" class="content-body">
-<table align="center">
+<table align="center" width = "720">
 <tr><td colspan="3"><img src="<?php echo base_url().'assets/certificate/' ?>header.jpg" /></td></tr>
-<tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3"><?php echo strtoupper($certificate['COMPANY NAME']);?></td></tr>
-<tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3">Hereby Certifies</td></tr>
-<tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3">That</td></tr>
-<tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3"><i><?php echo strtoupper($certificate['PARTICIPANT NAME']);?></i></td></tr>
-<tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3">Has Successfully Completed</td></tr>
-<tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3"><?php echo strtoupper($certificate['COURSE NAME']);?></td></tr>
-<tr><td style="font-size:18px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3">Given on</td></tr>
-<tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3"><?php echo strtoupper($certificate['CERTIFICATION DATE']);?></td></tr>
-<tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3">in</td></tr>
-<tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3"><?php echo $certificate['LOCATION'];?><br><br></td></tr>
+<tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3"><?php echo strtoupper($certificate['COMPANY NAME']);?></td></tr>
+<tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3">Hereby Certifies</td></tr>
+<tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3">That</td></tr>
+<tr><td style="font-size:23px;font-weight:500;font-family:tahoma;color:blue;" align="center" height="35" colspan="3"><?= strtoupper($certificate['PARTICIPANT NAME']);?></td></tr>
+<tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3">Has Successfully Completed</td></tr>
+<tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3"><?php echo strtoupper($certificate['COURSE NAME']);?></td></tr>
+<tr><td style="font-size:18px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3">Given on</td></tr>
+<tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3"><?php echo strtoupper($certificate['CERTIFICATION DATE']);?></td></tr>
+<tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3">in</td></tr>
+<tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3"><?php echo $certificate['LOCATION'];?><br><br></td></tr>
 <tr>
-<td width="100">&nbsp;</td>
-<td width="100" style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45">
+<td width="33.3%">&nbsp;</td>
+<td width="33.3%" style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35">
 <?php if($certificate['COURSE TYPE'] != 'Non-Certification' && $certificate['NUMBER'] != ""){ echo "CEU Number <br>" . strtoupper($certificate['NUMBER']);?><?php } ?> <br><br>
 <?= $certificate['COURSE_NUMBER']?><br><br>
 </td>
-<td align="right" width="100"><?php echo $certificate['SIGNATURE']; ?></td>
+<td align="right" width="33.3%"><?php echo $certificate['SIGNATURE']; ?></td>
 </tr>
 <tr>
 <td style="font-size:15px;font-family:tahoma;" align="center"><?php echo $certificate['CERTIFICATE NUMBER'];?> <br />Certificate Number</td>

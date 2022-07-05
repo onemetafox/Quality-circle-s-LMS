@@ -22,59 +22,59 @@
 <main role="main" class="content-body">
 
 <?php if($certificate['certificate_id'] == 1) {?>
-    <table align="center">
-    <tr><td colspan="3"><img src="<?php echo base_url().'assets/certificate/' ?>header.jpg" /></td></tr>
-    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3"><?php echo strtoupper($certificate['COMPANY NAME']);?></td></tr>
-    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3">Hereby Certifies</td></tr>
-    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3">That</td></tr>
-    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3"><i><?php echo strtoupper($certificate['PARTICIPANT NAME']);?></i></td></tr>
-    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3">Has Successfully Completed</td></tr>
-    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3"><?php echo strtoupper($certificate['COURSE NAME']);?></td></tr>
-    <tr><td style="font-size:18px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3">Given on</td></tr>
-    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3"><?php echo strtoupper($certificate['CERTIFICATION DATE']);?></td></tr>
-    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3">in</td></tr>
-    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3"><?php echo $certificate['LOCATION'];?></td></tr>
+    <table align="center" width = "720">
+    <tr><td colspan="3"><img src="<?= base_url().'assets/certificate/' ?>header.jpg" /></td></tr>
+    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3"><?= strtoupper($certificate['COMPANY NAME']);?></td></tr>
+    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3">Hereby Certifies</td></tr>
+    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3">That</td></tr>
+    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;color:blue;" align="center" height="35" colspan="3"><?= strtoupper($certificate['PARTICIPANT NAME']);?></td></tr>
+    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3">Has Successfully Completed</td></tr>
+    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3"><?= strtoupper($certificate['COURSE NAME']);?></td></tr>
+    <tr><td style="font-size:18px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3">Given on</td></tr>
+    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3"><?= strtoupper($certificate['CERTIFICATION DATE']);?></td></tr>
+    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3">in</td></tr>
+    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3"><?= $certificate['LOCATION'];?></td></tr>
     <tr>
-    <td width="100">&nbsp;</td>
-    <td width="100" style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45"><br>CEU Number <br><?php echo strtoupper($certificate['NUMBER']);?> <br><br><?= $certificate['COURSE_NUMBER']?> </td>
-    <td align="right" width="100"><?php echo $certificate['SIGNATURE']; ?></td>
+    <td width="33.3%">&nbsp;</td>
+    <td width="33.3%" style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35"><br>CEU Number <br><?= strtoupper($certificate['NUMBER']);?> <br><br><?= $certificate['COURSE_NUMBER']?><br><br> </td>
+    <td align="right" width="33.3%"><?= $certificate['SIGNATURE']; ?></td>
     </tr>
     <tr>
-    <td style="font-size:15px;font-family:tahoma;" align="center"><?php echo $certificate['CERTIFICATE NUMBER'];?> <br />Certificate Number</td>
-    <td style="font-size:15px;font-family:tahoma;" align="center"><?php echo date_format(date_create($certificate['CERTIFICATION DATE']),"M d, Y")?> <br />Certificate Date</td>
-    <td style="font-size:15px;font-family:tahoma;" align="center"><?php echo($certificate['CATEGORY']);?></td>
+    <td style="font-size:15px;font-family:tahoma;" align="center"><?= $certificate['CERTIFICATE NUMBER'];?> <br />Certificate Number</td>
+    <td style="font-size:15px;font-family:tahoma;" align="center"><?= date_format(date_create($certificate['CERTIFICATION DATE']),"M d, Y")?> <br />Certificate Date</td>
+    <td style="font-size:15px;font-family:tahoma;" align="center"><?=($certificate['CATEGORY']);?></td>
     </tr>
     <tr><td colspan="3"><?php if($certificate['COURSE TYPE'] == 'Non-Certification'){?>
-    <img src="<?php echo base_url().'assets/certificate/' ?>footer.jpg" />
+    <img src="<?= base_url().'assets/certificate/' ?>footer.jpg" />
     <?php }else{ ?>
-    <img src="<?php echo base_url().'assets/certificate/' ?>footer-3.jpg" />
+    <img src="<?= base_url().'assets/certificate/' ?>footer-3.jpg" />
     <?php } ?></td></tr>
     </table>
 <?php } elseif($certificate['certificate_id'] == 2){?>
     <table align="center">
-    <tr><td colspan="3"><img src="<?php echo base_url().'assets/certificate/' ?>header.jpg" /></td></tr>
-    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3">Quality Circle International Limied</td></tr>
-    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3">Hereby Certifies</td></tr>
-    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3">That</td></tr>
-    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3"><i><?php echo strtoupper($certificate['PARTICIPANT NAME']);?></i></td></tr>
-    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3">Has Successfully Completed</td></tr>
-    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3"><?php echo strtoupper($certificate['COURSE NAME']);?></td></tr>
-    <tr><td style="font-size:18px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3">Given on</td></tr>
-    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3"><?php echo date_format(date_create($certificate['CERTIFICATION DATE']),"M d, Y")?></td></tr>
-    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3">in</td></tr>
-    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3"><?php echo $certificate['LOCATION'];?><br><br></td></tr>
-    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="45" colspan="3"> 
+    <tr><td colspan="3"><img src="<?= base_url().'assets/certificate/' ?>header.jpg" /></td></tr>
+    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3">Quality Circle International Limied</td></tr>
+    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3">Hereby Certifies</td></tr>
+    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3">That</td></tr>
+    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;color:blue;" align="center" height="35" colspan="3"><?= strtoupper($certificate['PARTICIPANT NAME']);?></td></tr>
+    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3">Has Successfully Completed</td></tr>
+    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3"><?= strtoupper($certificate['COURSE NAME']);?></td></tr>
+    <tr><td style="font-size:18px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3">Given on</td></tr>
+    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3"><?= date_format(date_create($certificate['CERTIFICATION DATE']),"M d, Y")?></td></tr>
+    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3">in</td></tr>
+    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3"><?= $certificate['LOCATION'];?><br><br></td></tr>
+    <tr><td style="font-size:23px;font-weight:500;font-family:tahoma;" align="center" height="35" colspan="3"> 
     <?php if($certificate['COURSE TYPE'] != 'Non-Certification' && $certificate['NUMBER'] != ""){ echo "CEU Number <br>" . strtoupper($certificate['NUMBER']);?><?php } ?><br><br> 
     <?= $certificate['COURSE_NUMBER']?><br><br></td></tr>
     <tr>
-    <td style="font-size:15px;font-family:tahoma;" align="center"><?php echo $certificate['CERTIFICATE NUMBER'];?> <br />Certificate Number</td>
-    <td style="font-size:15px;font-family:tahoma;" align="center"><?php echo date_format(date_create($certificate['CERTIFICATION DATE']),"M d, Y")?> <br />Certificate Date</td>
-    <td style="font-size:15px;font-family:tahoma;" align="center"><?php echo($certificate['CATEGORY']);?></td>
+    <td style="font-size:15px;font-family:tahoma;" align="center"><?= $certificate['CERTIFICATE NUMBER'];?> <br />Certificate Number</td>
+    <td style="font-size:15px;font-family:tahoma;" align="center"><?= date_format(date_create($certificate['CERTIFICATION DATE']),"M d, Y")?> <br />Certificate Date</td>
+    <td style="font-size:15px;font-family:tahoma;" align="center"><?=($certificate['CATEGORY']);?></td>
     </tr>
     <tr><td colspan="3"><?php if($certificate['COURSE TYPE'] == 'Non-Certification'){?>
-    <img src="<?php echo base_url().'assets/certificate/' ?>footer.jpg" />
+    <img src="<?= base_url().'assets/certificate/' ?>footer.jpg" />
     <?php }else{ ?>
-    <img src="<?php echo base_url().'assets/certificate/' ?>footer-3.jpg" />
+    <img src="<?= base_url().'assets/certificate/' ?>footer-3.jpg" />
     <?php } ?></td></tr>
     </table>
 <?php } ?>
@@ -86,7 +86,7 @@
     </form>
 </div>
 <script>
-    var baseurl = "<?php echo base_url(); ?>";
+    var baseurl = "<?= base_url(); ?>";
     $(function(){
         if(!$("html").hasClass("sidebar-left-collapsed"))
         {
@@ -137,4 +137,4 @@
     });
 </script>       
 
-<script src="<?php echo base_url(); ?>assets/js/user.js"></script>
+<script src="<?= base_url(); ?>assets/js/user.js"></script>
