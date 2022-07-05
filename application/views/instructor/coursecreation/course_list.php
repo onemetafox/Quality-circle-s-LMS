@@ -162,7 +162,7 @@
 														?>
                                                     <h6>Duration: <?= $course['duration'];?> Days</h6>
                                                     <h6>Start Date: <?= date('F d, Y', strtotime($course['start_at']));?></h6>
-                                                    <h6>End Date: <?= date('F d, Y', strtotime($course['start_at'].' + '.$course['duration'].' day'));?></h6>
+                                                    <h6>End Date: <?= date('F d, Y', strtotime($course['start_at'].' + '.($course['duration']-1).' day'));?></h6>
                                                     <?php } ?>
 												</div>
 											</div>
