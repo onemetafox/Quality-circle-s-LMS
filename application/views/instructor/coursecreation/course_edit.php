@@ -271,8 +271,8 @@
                                           <div class="list-group">
                                              <a href="javascript:void(0);" onclick="btnCreateChapter()" class="btn btn-primary modal-with-form">New Session</a></br>
                                              <a href="#modalFormCreatePage" class="create-page btn btn-info modal-with-form">New Page</a> </br>
-                                             <a href="#modalFormCreateQuiz" class="create-quiz btn modal-with-form" style="background-color: #ff6628; color: white">New Quiz</a>
-                                             <a href="#modalFormCreateExam" class="create-exam btn btn-warning modal-with-form">New Exam</a></br>
+                                             <a href="#modalFormCreateQuiz" class="create-quiz btn modal-with-form" style="background-color: #ff6628; color: white">New Quiz</a></br>
+                                             <a href="#modalFormCreateExam" class="create-exam btn btn-warning modal-with-form">New Exam</a>
 
                                           </div>
                                           <div id="modalFormCreatePage" class="modal-block modal-block-primary mfp-hide">
@@ -626,7 +626,7 @@
                                                 <select class="form-control" id="starttime" name="starttime" >
                                                     <option value="7:00 AM">7:00 AM</option>
                                                     <option value="8:00 AM">8:00 AM</option>
-                                                    <option value="9:00 AM">9:00 AM</option>
+                                                    <option selected value="9:00 AM">9:00 AM</option>
                                                     <option value="10:00 AM">10:00 AM</option>
                                                 </select>
                                             </div>
