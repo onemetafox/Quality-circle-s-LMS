@@ -22,7 +22,7 @@ class Countries_model extends CI_Model
     function getList($where = null){
 
         if($where == null){
-			$this->db->order_by('name','asc');
+            $this->db->order_by('id, name','asc');
 			$result = $this->db->get($this->table);		
         }else{
             $result = $this->db->get_where($this->table, $where);

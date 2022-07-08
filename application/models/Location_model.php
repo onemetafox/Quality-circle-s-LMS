@@ -40,7 +40,7 @@ class Location_model extends CI_Model
 	
 	function getAllCounties(){
         $this->db->select("id, name")->from('countries');
-        $this->db->order_by('name', 'ASC');
+        $this->db->order_by('sort, name', 'ASC');
 
         $query = $this->db->get();
         return $query->result_array();

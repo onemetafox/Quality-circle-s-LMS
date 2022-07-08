@@ -1277,7 +1277,7 @@ class Coursecreation extends BaseController{
                 $course_data['id'] = 0;
                 $course_data['time_type'] = 0;
                 $course_data['limit_time'] = 0;
-                $course_data['pay_type'] = 0;
+                $course_data['pay_type'] = 1;
                 $course_data['pay_price'] = 0;
                 $course_data['show_user'] = 0;
                 $course_data['instructors'] = "";
@@ -1293,14 +1293,26 @@ class Coursecreation extends BaseController{
                 $this->global['highlight'] = array();
 				$this->global['prerequisitehighlight'] = array();
             }
+            // $this->global['course_data'] = $course_data;
+            // $this->global['exam_data'] = $this->Exam_model->getExamListByCompanyID($this->session->get_userdata() ['company_id']);
+            // $this->global['chapter_data'] = $this->Course_model->getChapterByCourseID($row_id);
+            // $this->global['quiz_data'] = $this->Exam_model->getQuizGroupListByCompanyID($this->session->get_userdata() ['company_id']);
+            // $this->global['category'] = $this->Category_model->getListByCompanyID($this->session->get_userdata() ['company_id']);
+			// $this->global['countries'] = $this->Location_model->getAllCounties();
+			// $this->global['states'] = $this->Location_model->getStateByCountryId($course->country);
+			// $this->global['cities'] = $this->Location_model->getCityByStateId($course->state);
             $this->global['course_data'] = $course_data;
-            $this->global['exam_data'] = $this->Exam_model->getExamListByCompanyID($this->session->get_userdata() ['company_id']);
-            $this->global['chapter_data'] = $this->Course_model->getChapterByCourseID($row_id);
-            $this->global['quiz_data'] = $this->Exam_model->getQuizGroupListByCompanyID($this->session->get_userdata() ['company_id']);
-            $this->global['category'] = $this->Category_model->getListByCompanyID($this->session->get_userdata() ['company_id']);
+            $this->global['location_data'] = $this->Location_model->getTrainingCourseLocationList();
 			$this->global['countries'] = $this->Location_model->getAllCounties();
 			$this->global['states'] = $this->Location_model->getStateByCountryId($course->country);
 			$this->global['cities'] = $this->Location_model->getCityByStateId($course->state);
+            $this->global['category'] = $this->Category_model->getListByCompanyID($this->session->get_userdata() ['company_id']);
+            $this->global['chapter_data'] = $this->Course_model->getChapterByCourseID($row_id);
+            $this->global['quiz_data'] = $this->Exam_model->getQuizGroupListByCompanyID($this->session->get_userdata() ['company_id']);
+			$this->global['category_standard_list'] = $this->Category_model->getListByCategoryID($course->category_id);
+            $this->global['exam_data'] = $this->Exam_model->getExamListByCompanyID($this->session->get_userdata() ['company_id']);
+            $this->global['company'] = (array) $this->Company_model->getRow($this->session->get_userdata() ['company_id']);
+
             $this->loadViews($page_path, $this->global, NULL, NULL);
         }else{
             $this->loadViews("access", $this->global, NULL, NULL);
@@ -1331,11 +1343,11 @@ class Coursecreation extends BaseController{
                 $course_data['id'] = 0;
                 $course_data['time_type'] = 0;
                 $course_data['limit_time'] = 0;
-                $course_data['pay_type'] = 0;
+                $course_data['pay_type'] = 1;
                 $course_data['pay_price'] = 0;
                 $course_data['amount'] = 0;
                 $course_data['show_user'] = 0;
-                $course_data['certification'] = 'Non-Certification';
+                $course_data['certification'] = 'Certification';
                 $course_data['ceu'] = '';
                 $course_data['pass_mark'] = 0;
                 $course_data['is_ass_end'] = 0;
@@ -1347,7 +1359,7 @@ class Coursecreation extends BaseController{
 				$course_data['city'] = 0;
 				$course_data['state'] = 0;
                 $course_data['subtitle'] = "";
-                $course_data['discount'] = "100";
+                $course_data['discount'] = "";
                 $course_data['about'] = "";
                 $course_data['location'] = "";
                 $course_data['start_at'] = date("Y-m-d");

@@ -1278,7 +1278,7 @@ class Coursecreation extends BaseController{
                 $course_data['id'] = 0;
                 $course_data['time_type'] = 0;
                 $course_data['limit_time'] = 0;
-                $course_data['pay_type'] = 0;
+                $course_data['pay_type'] = 1;
                 $course_data['pay_price'] = 0;
                 $course_data['show_user'] = 0;
                 $course_data['instructors'] = "";
@@ -1302,6 +1302,8 @@ class Coursecreation extends BaseController{
 			$this->global['countries'] = $this->Location_model->getAllCounties();
 			$this->global['states'] = $this->Location_model->getStateByCountryId($course->country);
 			$this->global['cities'] = $this->Location_model->getCityByStateId($course->state);
+            $this->global['company'] = (array) $this->Company_model->getRow($this->session->get_userdata() ['company_id']);
+
             $this->loadViews($page_path, $this->global, NULL, NULL);
         }else{
             $this->loadViews("access", $this->global, NULL, NULL);
@@ -1332,8 +1334,8 @@ class Coursecreation extends BaseController{
                 $course_data['id'] = 0;
                 $course_data['time_type'] = 0;
                 $course_data['limit_time'] = 0;
-                $course_data['pay_type'] = 0;
-				$course_data['certification'] = 'Non-Certification';
+                $course_data['pay_type'] = 1;
+				$course_data['certification'] = 'Certification';
 				$course_data['ceu'] = '';
                 $course_data['pay_price'] = 0;
                 $course_data['amount'] = 0;
@@ -1348,7 +1350,7 @@ class Coursecreation extends BaseController{
 				$course_data['city'] = 0;
 				$course_data['state'] = 0;
                 $course_data['subtitle'] = "";
-                $course_data['discount'] = "100";
+                $course_data['discount'] = "0";
                 $course_data['about'] = "";
                 $course_data['location'] = "";
                 $course_data['start_at'] = date("Y-m-d");

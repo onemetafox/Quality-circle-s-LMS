@@ -130,7 +130,7 @@
                                        <label class="col-sm-12 control-label text-sm-left pt-1" for="w4-username">Select Certification</label>
                                        <div class="col-sm-4">
                                         <select class="form-control" id="certification" name="certification" >
-                                        <option <?php if ($course_data['certification'] == 'Non-Certification'):?>selected<?php endif;?> value="Non-Certification">Non-Certification</option>
+                                        <!-- <option <?php if ($course_data['certification'] == 'Non-Certification'):?>selected<?php endif;?> value="Non-Certification">Non-Certification</option> -->
                                         <option <?php if ($course_data['certification'] == 'Certification'):?>selected<?php endif;?> value="Certification">Certification</option>
                                         </select>
                                        </div>
@@ -268,8 +268,9 @@
                                           <div class="list-group">
                                              <a href="javascript:void(0);" onclick="btnCreateChapter()" class="btn btn-primary modal-with-form">New Session</a></br>
                                              <a href="#modalFormCreatePage" class="create-page btn btn-info modal-with-form">New Page</a> </br>
-                                             <a href="#modalFormCreateExam" class="create-exam btn btn-warning modal-with-form">New Exam</a></br>
                                              <a href="#modalFormCreateQuiz" class="create-quiz btn modal-with-form" style="background-color: #ff6628; color: white">New Quiz</a>
+                                             <a href="#modalFormCreateExam" class="create-exam btn btn-warning modal-with-form">New Exam</a></br>
+
                                           </div>
                                           <div id="modalFormCreatePage" class="modal-block modal-block-primary mfp-hide">
                                              <section class="card">
