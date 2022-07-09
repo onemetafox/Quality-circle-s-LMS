@@ -191,7 +191,7 @@ class Training_model extends AbstractModel
         if($filter['course']){
             $query = $query . " And b.id = '".$filter['course']."'";
         }
-       
+        $query = $query . " ORDER BY e.start_day, e.start_time";
         $result = $this->db->query($query);
         $res=$result->result_array();
    
@@ -215,6 +215,7 @@ class Training_model extends AbstractModel
         if($filter['course']){
             $query = $query . " And a.id = '".$filter['course']."'";
         }
+        $query = $query . " ORDER BY c.start_day, c.start_time";
         $result = $this->db->query($query);
         $res=$result->result_array();
         
