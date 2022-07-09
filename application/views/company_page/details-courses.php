@@ -32,12 +32,12 @@
 
 	<link rel="stylesheet" href="<?= base_url(); ?>assets/css_flipbook/normalize.css">
     <link rel="stylesheet" href="<?= base_url(); ?>assets/wow_book/wow_book.css" type="text/css" />
-    <!-- <link rel="stylesheet" href="<?= base_url(); ?>assets/css_flipbook/main.css"> -->
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/css_flipbook/main.css">
     <script src="<?= base_url(); ?>assets/js_flipbook/vendor/modernizr-2.7.1.min.js"></script>
 <style>
 	iframe{
-		
 		min-height: 30rem;
+        overflow: scroll;
 	}
 </style>
 <section class="sectionBox detailsWrapper">
@@ -418,7 +418,7 @@
                                             if(data.exist_num >0){
                                                 exam_url = '<?= base_url($company['company_url']);?>/demand/view_QuizGroup/'+quiz_id+'/'+id;
                                                 //alert(exam_url);
-                                               $('#div_container').html('<iframe id="course_container" scrolling="no" style="width: 100%; overflow: hidden" src = '+exam_url+'></iframe>');
+                                               $('#div_container').html('<iframe id="course_container" style="width: 100%;" src = '+exam_url+'></iframe>');
                                             }else{
                                                 new PNotify({
                                                     title: '<?= $term['error']; ?>',
@@ -458,7 +458,7 @@
 
                                         if(data.exist_num >0){
                                             exam_url = '<?= base_url($company['company_url']);?>/demand/examInstruction/' + exam_id+'/<?= $course_id?>?chapter_id='+id;
-                                            $('#div_container').html('<input id="s_course_id" value="<?= $course_id?>" type="hidden"><iframe id="course_container" scrolling="no" style="width: 100%; overflow: hidden" src = ' + exam_url + '></iframe>');
+                                            $('#div_container').html('<input id="s_course_id" value="<?= $course_id?>" type="hidden"><iframe id="course_container" style="width: 100%;" src = ' + exam_url + '></iframe>');
                                         }else{
                                             new PNotify({
                                                 title: '<?= $term['error']; ?>',

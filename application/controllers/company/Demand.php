@@ -1621,38 +1621,69 @@ class Demand  extends BaseController
 
             }else{
                
-                $company = $this->Certification_model->getCompanyByUserId($user_id);
+                // $company = $this->Certification_model->getCompanyByUserId($user_id);
                 
+                // $learner = $this->Certification_model->getLearnerByUserId($user_id);
+                // $course = $this->Certification_model->getCourseById($course_id);
+                // $course_status = $this->Certification_model->getCourseStatusById($course_id, $user_id);         
+                // $course_date = $course_status[0]['reg_date'] . "~" . $course_status[0]['end_date'];
+                // $exam_info = $this->Certification_model->getExamHistory($user_id,$exam_id);
+                // $exam_date = $exam_info[0]['exam_start_at'] . "~" . $exam_info[0]['exam_end_at'];
+               
+                // $admin = $this->Certification_model->getCompanyAdmin($company[0]['id']);
+                // $certificate['certificate_id'] = $this->Exam_model->getRow($exam_id)[0]['certificate_id'];
+                // $certificate['COMPANY NAME'] = $company[0]['name'];
+                // //print_r("company=".$params['COMPANY NAME']);
+                // //die();
+                // $certificate['PARTICIPANT NAME'] = $learner[0]['name'];
+                
+                // $certificate['COURSE NAME'] = $course[0]['title'];
+                // $certificate['EXAM DATE'] = $exam_date;
+                // $certificate['EXAM TITLE'] = $exam_info[0]['title'];
+                // $certificate['EXAM SCORE'] = $exam_info[0]['mark'];
+                
+                // $certificate['LOCATION'] = $course[0]['location'];
+                // $certificate['NUMBER'] = $course[0]['number'];
+                // $certificate['DATE'] = $course[0]['start_at'];
+                // $certificate['CERTIFICATION DATE'] = substr($exam_info[0]['exam_end_at'], 0, 10);
+                // $certificate['CATEGORY'] = $course[0]['category'];  
+                // $certificate['NAME'] = $params['user_name'];
+                // $certificate['SIGNATURE'] =  "<img id=\"userSignImg\" style=\"width:100%;\" src=\"".$admin[0]['sign']."\" />";
+                // $certificate['TITLE'] = $this->session->get_userdata()['role'];
+                // $certificate['LOGO_COMPANY'] = "<img src=\"".base_url()."assets/img/logo.png\" alt=\"OLS\" height=\"80\" width=\"240\">";
+                // $certificate['LOGO_COURSE ACCERDITATION COMPANY'] = $params['score'];
+                // $params['certificate'] = $certificate;
+                $exam_id = $this->Course_model->getExamId($course_id) [0]['exam_id'];
+                $this->global['user_name'] = $this->session->get_userdata() ['user_name'];
+                $company = $this->Certification_model->getCompanyByUserId($user_id);
                 $learner = $this->Certification_model->getLearnerByUserId($user_id);
                 $course = $this->Certification_model->getCourseById($course_id);
-                $course_status = $this->Certification_model->getCourseStatusById($course_id, $user_id);         
+                $course_status = $this->Certification_model->getCourseStatusById($course_id, $user_id);
                 $course_date = $course_status[0]['reg_date'] . "~" . $course_status[0]['end_date'];
-                $exam_info = $this->Certification_model->getExamHistory($user_id,$exam_id);
+                $exam_info = $this->Certification_model->getExamHistory($user_id, $exam_id);
                 $exam_date = $exam_info[0]['exam_start_at'] . "~" . $exam_info[0]['exam_end_at'];
-               
+                $exam_history = $this->Exam_model->getExamHistory($user_id, $exam_id);
                 $admin = $this->Certification_model->getCompanyAdmin($company[0]['id']);
-                $certificate['certificate_id'] = $this->Exam_model->getRow($exam_id)[0]['certificate_id'];
-                $certificate['COMPANY NAME'] = $company[0]['name'];
-                //print_r("company=".$params['COMPANY NAME']);
-                //die();
-                $certificate['PARTICIPANT NAME'] = $learner[0]['name'];
-                
-                $certificate['COURSE NAME'] = $course[0]['title'];
-                $certificate['EXAM DATE'] = $exam_date;
-                $certificate['EXAM TITLE'] = $exam_info[0]['title'];
-                $certificate['EXAM SCORE'] = $exam_info[0]['mark'];
-                
-                $certificate['LOCATION'] = $course[0]['location'];
-                $certificate['NUMBER'] = $course[0]['number'];
-                $certificate['DATE'] = $course[0]['start_at'];
-                $certificate['CERTIFICATION DATE'] = substr($exam_info[0]['exam_end_at'], 0, 10);
-                $certificate['CATEGORY'] = $course[0]['category'];  
-                $certificate['NAME'] = $params['user_name'];
-                $certificate['SIGNATURE'] =  "<img id=\"userSignImg\" style=\"width:100%;\" src=\"".$admin[0]['sign']."\" />";
-                $certificate['TITLE'] = $this->session->get_userdata()['role'];
-                $certificate['LOGO_COMPANY'] = "<img src=\"".base_url()."assets/img/logo.png\" alt=\"OLS\" height=\"80\" width=\"240\">";
-                $certificate['LOGO_COURSE ACCERDITATION COMPANY'] = $params['score'];
-                $params['certificate'] = $certificate;
+                $params['COURSE_NUMBER'] = $course[0]['number'];
+                $params['CERTIFICATE NUMBER'] = $course_id.$user_id;
+                $params['CATEGORY'] = $course[0]['category'];
+                $params['COMPANY NAME'] = $company[0]['name'];
+                $params['PARTICIPANT NAME'] = $learner[0]['name'];
+                $params['COURSE NAME'] = $course[0]['title'];
+                $params['EXAM DATE'] = $exam_date;
+                $params['EXAM TITLE'] = $exam_info[0]['title'];
+                $params['EXAM SCORE'] = $exam_info[0]['mark'];
+                $params['LOCATION'] = str_replace(',,',',',$course[0]['location']);
+                $params['NUMBER'] = $course[0]['ceu'];
+                $params['COURSE TYPE'] = $course[0]['certification'];
+                $params['DATE'] = $course[0]['start_at'];
+                $params['CERTIFICATION DATE'] = substr($exam_info[0]['exam_end_at'], 0, 10);
+                $params['NAME'] = $params['user_name'];
+                $params['SIGNATURE'] = "<img id=\"userSignImg\" style=\"width:70%;\" src=\"" . $admin[0]['sign'] . "\" />";
+                $params['TITLE'] = $this->session->get_userdata() ['role'];
+                $params['LOGO_COMPANY'] = "<img src=\"" . base_url() . "assets/img/logo.png\" alt=\"OLS\" height=\"80\" width=\"240\">";
+                $params['LOGO_COURSE ACCERDITATION COMPANY'] = $params['score'];
+                $this->global['certificate'] = $params;
 
                 //$this->global['certificate'] = $params['certificate'];
                 //When users receive certificate  successfully
@@ -1728,7 +1759,7 @@ class Demand  extends BaseController
         }
         /*end send_email*/
 
-        $this->load->view('company_page/reportCard', $params);
+        $this->load->view('company_page/reportCard',  $this->global);
     }
 
     public function print_exam_certificate()
