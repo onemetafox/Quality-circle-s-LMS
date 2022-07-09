@@ -154,9 +154,6 @@
 															echo "On Demand";
 														}?>
 													</h6>
-                                                    <h6>
-														<?= ($item['enroll_users'] == NULL || $item['enroll_users'] == 'null')?'Enrolled: 0':'Enrolled: '.$item['enroll_users']; ?>
-													</h6>
                                                     <?php if ($item['course_type'] != 2){ 
 														$course = $this->Course_model->getCourseTime($item['id'], $item['course_type']);
 														?>

@@ -371,7 +371,7 @@ class Course_model extends AbstractModel
             $this->db->or_like('a.about', $filter['search'], 'both');
             $this->db->group_end();
         }
-        $this->db->order_by('id','desc');
+        $this->db->order_by('start_at','desc');
         $this->db->limit($filter['limit'], $filter['start']);
 
         $query = $this->db->get();
