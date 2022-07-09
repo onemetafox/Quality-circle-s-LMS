@@ -16,31 +16,31 @@
 							<div class="card-body">
 								<div class="col-sm-12">
                                     <div class="control-group">
-                                        <label class="control-label col-lg-12" style="font-size: 18px;color: rgb(255, 0, 255);" for="textinput-0">
+                                        <label class="control-label col-lg-12" style="font-size: 18px;" for="textinput-0">
                                             1. What I learned most from this course was:
                                         </label>
                                         <label class="control-label col-lg-12" style="font-size: 14px;padding: 10px;padding-left: 30px;" for="textinput-0"><?=$feedback->answer1?></label>
-                                        <label class="control-label col-lg-12" style="font-size: 18px;color: rgb(255, 0, 255);" for="textinput-0">
+                                        <label class="control-label col-lg-12" style="font-size: 18px;" for="textinput-0">
                                             2. What I still need to learn more about is:
                                         </label>
                                         <label class="control-label col-lg-12" style="font-size: 14px;padding: 10px;padding-left: 30px;" for="textinput-0"><?=$feedback->answer2?></label>
-                                        <label class="control-label col-lg-12" style="font-size: 18px;color: rgb(255, 0, 255);" for="textinput-0">
+                                        <label class="control-label col-lg-12" style="font-size: 18px;" for="textinput-0">
                                             3. I will apply the following in my organization:
                                         </label>
                                         <label class="control-label col-lg-12" style="font-size: 14px;padding: 10px;padding-left: 30px;" for="textinput-0"><?=$feedback->answer3?></label>
-                                        <label class="control-label col-lg-12" style="font-size: 18px;color: rgb(255, 0, 255);" for="textinput-0">
+                                        <label class="control-label col-lg-12" style="font-size: 18px;" for="textinput-0">
                                             4. I will have difficulty applying the following to my organization:
                                         </label>
                                         <label class="control-label col-lg-12" style="font-size: 14px;padding: 10px;padding-left: 30px;" for="textinput-0"><?=$feedback->answer4?></label>
-                                        <label class="control-label col-lg-12" style="font-size: 18px;color: rgb(255, 0, 255);" for="textinput-0">
+                                        <label class="control-label col-lg-12" style="font-size: 18px;" for="textinput-0">
                                             5. My overall feeling about the course is:
                                         </label>
                                         <label class="control-label col-lg-12" style="font-size: 14px;padding: 10px;padding-left: 30px;" for="textinput-0"><?=$feedback->answer5?></label>
-                                        <label class="control-label col-lg-12" style="font-size: 18px;color: rgb(255, 0, 255);" for="textinput-0">
+                                        <label class="control-label col-lg-12" style="font-size: 18px;" for="textinput-0">
                                             6. The course might have been more effective if:
                                         </label>
                                         <label class="control-label col-lg-12" style="font-size: 14px;padding: 10px;padding-left: 30px;" for="textinput-0"><?=$feedback->answer6?></label>
-                                        <label class="control-label col-lg-12" style="font-size: 18px;color: rgb(255, 0, 255);" for="textinput-0">
+                                        <label class="control-label col-lg-12" style="font-size: 18px;" for="textinput-0">
                                             7. Please rate and comment on the following:
                                         </label>
                                         <label class="control-label col-lg-12" style="font-size: 14px;padding: 10px;padding-left: 30px;" for="textinput-0">1=Poor 2=Fair 3=Average 4=Good 5=Excellent<br>Course Content 1 2 3 4 5<br>&nbsp;Comments:</label>
@@ -115,7 +115,7 @@
 									    </span>
                                         <label class="control-label col-lg-12" style="font-size: 14px;padding: 10px;padding-left: 30px;" for="textinput-0">Pre course organization/communication, advertising<br>&nbsp;Comments: (including length, daily hours, etc)</label>
                                         <label class="control-label col-lg-12" style="font-size: 14px;padding: 0px;padding-left: 50px;" for="textinput-0"><?=$feedback->answer7_com?></label>
-                                        <label class="control-label col-lg-12" style="font-size: 18px;color: rgb(255, 0, 255);" for="textinput-0">
+                                        <label class="control-label col-lg-12" style="font-size: 18px;" for="textinput-0">
                                             8. Any other comments: (use additional paper as necessary)
                                         </label>
                                         <label class="control-label col-lg-12" style="font-size: 14px;padding: 10px;padding-left: 30px;" for="textinput-0"><?=$feedback->answer8?></label>

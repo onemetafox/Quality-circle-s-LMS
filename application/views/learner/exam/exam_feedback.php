@@ -20,31 +20,31 @@
                                         <input type="hidden" id="exam_id" name="exam_id" value="<?php echo $exam_history->exam_id;?>">
                                         <input type="hidden" id="user_id" name="user_id" value="<?php echo $exam_history->user_id;?>">
                                         <div class="control-group">
-                                            <label class="control-label col-lg-12" style="font-size: 18px;color: rgb(255, 0, 255);" for="textinput-0">
+                                            <label class="control-label col-lg-12" style="font-size: 18px;" for="textinput-0">
                                                 1. What I learned most from this course was:
                                             </label></br>
                                             <textarea class="col-lg-12 form-control control-text" rows="3" id="answer1" name="answer1"><?php echo $feedback->answer1;?></textarea>
-                                            <label class="control-label col-lg-12" style="font-size: 18px;color: rgb(255, 0, 255);" for="textinput-0">
+                                            <label class="control-label col-lg-12" style="font-size: 18px;" for="textinput-0">
                                                 2. What I still need to learn more about is:
                                             </label></br>
                                             <textarea class="col-lg-12 form-control control-text" rows="3" id="answer2" name="answer2"><?php echo $feedback->answer2;?></textarea>
-                                            <label class="control-label col-lg-12" style="font-size: 18px;color: rgb(255, 0, 255);" for="textinput-0">
+                                            <label class="control-label col-lg-12" style="font-size: 18px;" for="textinput-0">
                                                 3. I will apply the following in my organization:
                                             </label></br>
                                             <textarea class="col-lg-12 form-control control-text" rows="3" id="answer3" name="answer3"><?php echo $feedback->answer3;?></textarea>
-                                            <label class="control-label col-lg-12" style="font-size: 18px;color: rgb(255, 0, 255);" for="textinput-0">
+                                            <label class="control-label col-lg-12" style="font-size: 18px;" for="textinput-0">
                                                 4. I will have difficulty applying the following to my organization:
                                             </label></br>
                                             <textarea class="col-lg-12 form-control control-text" rows="3" id="answer4" name="answer4"><?php echo $feedback->answer4;?></textarea>
-                                            <label class="control-label col-lg-12" style="font-size: 18px;color: rgb(255, 0, 255);" for="textinput-0">
+                                            <label class="control-label col-lg-12" style="font-size: 18px;" for="textinput-0">
                                                 5. My overall feeling about the course is:
                                             </label></br>
                                             <textarea class="col-lg-12 form-control control-text" rows="3" id="answer5" name="answer5"><?php echo $feedback->answer5;?></textarea>
-                                            <label class="control-label col-lg-12" style="font-size: 18px;color: rgb(255, 0, 255);" for="textinput-0">
+                                            <label class="control-label col-lg-12" style="font-size: 18px;" for="textinput-0">
                                                 6. The course might have been more effective if:
                                             </label></br>
                                             <textarea class="col-lg-12 form-control control-text" rows="3" id="answer6" name="answer6"><?php echo $feedback->answer6;?></textarea>
-                                            <label class="control-label col-lg-12" style="font-size: 18px;color: rgb(255, 0, 255);" for="textinput-0">
+                                            <label class="control-label col-lg-12" style="font-size: 18px;" for="textinput-0">
                                                 7. Please rate and comment on the following:
                                             </label></br>
                                             <label class="control-label col-lg-12" style="font-size: 14px;padding: 10px;padding-left: 30px;" for="textinput-0">1=Poor 2=Fair 3=Average 4=Good 5=Excellent<br>Course Content 1 2 3 4 5<br></label></br>
@@ -129,7 +129,7 @@
                                             <input type="hidden" id="answer7_facilities" name="answer7_facilities" value="<?php echo $feedback->answer7_facilities;?>" class="col-lg-12 form-control control-text"></br>
                                             <label class="control-label col-lg-12" style="font-size: 14px;padding: 10px;padding-left: 30px;" for="textinput-0">Pre course organization/communication, advertising<br>&nbsp;Comments: (including length, daily hours, etc)</label></br>
                                             <input type="text" id="answer7_com" value="<?php echo $feedback->answer7_com;?>" name="answer7_com" class="col-lg-12 form-control control-text"></br>
-                                            <label class="control-label col-lg-12" style="font-size: 18px;color: rgb(255, 0, 255);" for="textinput-0">
+                                            <label class="control-label col-lg-12" style="font-size: 18px;" for="textinput-0">
                                                 8. Any other comments: (use additional paper as necessary)
                                             </label></br>
                                             <textarea class="col-lg-12 form-control control-text" rows="3" id="answer8" name="answer8"><?php echo $feedback->answer8;?></textarea>

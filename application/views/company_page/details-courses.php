@@ -32,7 +32,7 @@
 
 	<link rel="stylesheet" href="<?= base_url(); ?>assets/css_flipbook/normalize.css">
     <link rel="stylesheet" href="<?= base_url(); ?>assets/wow_book/wow_book.css" type="text/css" />
-    <link rel="stylesheet" href="<?= base_url(); ?>assets/css_flipbook/main.css">
+    <!-- <link rel="stylesheet" href="<?= base_url(); ?>assets/css_flipbook/main.css"> -->
     <script src="<?= base_url(); ?>assets/js_flipbook/vendor/modernizr-2.7.1.min.js"></script>
 <style>
 	iframe{
