@@ -268,7 +268,7 @@ class Demand extends BaseController{
                                         }
                                     }
                                 }
-                                $group_quiz_sum = $group_quiz_sum / (count($quiz_ids) * 100);
+                                $group_quiz_sum = $group_quiz_sum / (count($quiz_ids) * 100)*100;
                                 $page_type_num++;
                                 $page_type_sum = $page_type_sum + $group_quiz_sum;
                             }else if(is_null($quiz['relative_type']) && $quiz['parent'] == $chapter->id && $i == 6){
@@ -281,7 +281,7 @@ class Demand extends BaseController{
                                         }
                                     }
                                 }
-                                $group_quiz_sum = $group_quiz_sum / (count($quiz_ids) * 100);
+                                $group_quiz_sum = $group_quiz_sum / (count($quiz_ids) * 100) *100;
                                 $page_type_num++;
                                 $page_type_sum = $page_type_sum + $group_quiz_sum;
                             }

@@ -132,11 +132,11 @@ class Examhistory_model extends CI_Model
 
     function getList($searchcond = array(), $limit = "", $offset = "")
     {
-        $this->db->select("a.id,b.title,b.type,a.exam_status,a.sign,CONCAT(c.first_name, ' ', c.last_name) AS fullname,c.email,a.exam_start_at,a.exam_end_at, sum(f.mark1) + sum(f.mark2) total_marks")->from($this->table." a");
+        $this->db->select("a.id,b.title,b.type,a.exam_status,a.sign,CONCAT(c.first_name, ' ', c.last_name) AS fullname,c.email,a.exam_start_at,a.exam_end_at, a.mark total_marks")->from($this->table." a");
         $this->db->join($this->exam_table." b", "a.exam_id = b.id ", 'left');
         $this->db->join($this->user_table." c", 'a.user_id = c.id', 'left');
-        $this->db->join("exam_quiz e", 'a.exam_id = e.exam_id', 'left');
-        $this->db->join("exam_quiz_history f", 'e.id = f.quiz_id and c.id = f.user_id', 'left');
+        // $this->db->join("exam_quiz e", 'a.exam_id = e.exam_id', 'left');
+        // $this->db->join("exam_quiz_history f", 'e.id = f.quiz_id and c.id = f.user_id', 'left');
 
         foreach ($searchcond as $fname=>$val) {
             $this->db->where($fname, $val);    
@@ -157,8 +157,8 @@ class Examhistory_model extends CI_Model
         }
         $this->db->order_by('a.exam_start_at', 'DESC'); 
         $query = $this->db->get();
-        //echo $this->db->last_query();
-        //die;
+        // echo $this->db->last_query();
+        // die;
 
         $result_info = array();
         if ($query->num_rows() > 0) {
