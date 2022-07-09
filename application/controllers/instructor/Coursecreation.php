@@ -685,7 +685,8 @@ class Coursecreation extends BaseController{
         $mainCourse['amount'] = $data['republish-amount'];
         $mainCourse['pay_price'] = $data['republish-price'];
         $mainCourse['reg_date'] = date("Y-m-d H:s:i");
-
+        $mainCourse['start_at'] = $this->input->post('startdays');
+        $mainCourse['start_time'] = $this->input->post('starttime');
         $this->load->model("Chapter_model", "Chapter");
         $chapters = (array)$this->Chapter->all(array("course_id"=> $mainCourse['id']));
         
