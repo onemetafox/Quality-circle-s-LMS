@@ -1598,14 +1598,14 @@
             processData: false,
             contentType: false,
             success: function (data, status, xhr) {
-               if(data.success == "true"){
+               if(data.success){
                   $.magnificPopup.close();
                   new PNotify({
                      title: 'Success',
                      text: data.msg,
                      type: 'success'
                   });
-                  document.location.reload();
+                  // document.location.reload();
                }else{
                   new PNotify({
                      title: 'Faild',
