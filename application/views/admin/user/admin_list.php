@@ -233,7 +233,7 @@
                 { "title": "<?=$term["email"]?>", "data": "email", "class": "text-left", "width":100 },
 				{ "title": "<?=$term["phone"]?>", "data": "phone", "class": "text-left", "width":100 },
                 { "title": "<?=$term["role"]?>", "data": "user_type", "class": "text-center", "width":110 },
-                { "title": "<?=$term["active"]?>", "data": "active", "class": "text-center", "width":50 },
+                { "title": "<?=$term["active"]?>", "data": "is_active", "class": "text-center", "width":50 },
                 { "title": "<?=$term["paymentstatus"]?>", "data": "payment_status", "class": "text-center", "width":50 },
                 { "title": "<?=$term["action"]?>", "data": "id", "class": "text-center", "width":80 },
             ],

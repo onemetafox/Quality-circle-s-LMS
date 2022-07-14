@@ -30,8 +30,8 @@
                                 <div class="col-sm-4">
 
                                     <select data-plugin-selectTwo class="form-control populate" id="active" name="active" >
-                                        <option value=1 <?php $active==1?print 'selected':print ''?>><?php echo $term['on']; ?></option>
-                                        <option value=0 <?php $active==0?print 'selected':print ''?>><?php echo $term['off']; ?></option>
+                                        <option value=1 <?php $is_active==1?print 'selected':print ''?>><?php echo $term['on']; ?></option>
+                                        <option value=0 <?php $is_active==0?print 'selected':print ''?>><?php echo $term['off']; ?></option>
                                     </select>
                                 </div>
                             </div>

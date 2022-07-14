@@ -480,7 +480,7 @@
                 { "title": "<?php echo $term['email']; ?>", "data": "email", "class": "text-left", "width":"*" },
                 { "title": "<?php echo $term['picture']; ?>", "data": "picture", "class": "text-center", "width":110 },
                 { "title": "<?php echo $term['groups']; ?>", "data": "user_type", "class": "text-center", "width":50 },
-                { "title": "<?php echo $term['status']; ?>", "data": "active", "class": "text-center", "width":50 },
+                { "title": "<?php echo $term['status']; ?>", "data": "is_active", "class": "text-center", "width":50 },
                 { "title": "<?php echo $term['action']; ?>", "data": "id", "class": "text-center", "width":80 },
                 { "title": "<?php echo $term['company_id']; ?>", "data": "company_id" },
                 { "title": "<?php echo $term['examstart']; ?>", "data": "exam" }
