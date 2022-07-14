@@ -470,13 +470,13 @@
     }
     function register(){
         console.log('register form clicked');
-        if(grecaptcha.getResponse() == "") {
-            console.log('recaptcha error');
-            $(".errormessage").text("Please Fill The Google Captcha");
-        }
-        else{
-            console.log('All fine need to submit form now');
+        // if(grecaptcha.getResponse() == "") {
+        //     console.log('recaptcha error');
+        //     $(".errormessage").text("Please Fill The Google Captcha");
+        // }
+        // else{
+            // console.log('All fine need to submit form now');
             $("#signup_frm").submit();
-        } 
+        // } 
     }
 </script>

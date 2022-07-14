@@ -982,22 +982,25 @@ class Login extends BaseController{
                     $content = $emailTmp['message'];
                     $title = $emailTmp['subject'];
                     $content = str_replace("{USERNAME}", $data["first_name"] . ' ' . $data["last_name"], $content);
-                    $content = str_replace("{LOGO}", "<img src='" . base_url('assets/logos/logo1.png') . "'/>"."<img src='" . base_url('assets/logos/logo2.png') . "'/>", $content);
+                    // $content = str_replace("{LOGO}", "<img src='" . base_url('assets/img/logo.png') . "'/>", $content);
+                    $content = str_replace("{LOGO}", "<img src='".base_url('assets/logos/logo1.png')."'/>"."<img src='".base_url('assets/logos/logo2.png')."'/>", $content);
                     $this->sendemail($data['email'], $data['first_name'] . $data['last_name'], $content, $title);
              //   }
                 //-------------------Send email to registered user for Email verificaiton  ----------------------
 
-                $verificaiton_link = base_url().'welcome/verifyEmail/'.$data["activation_code"];
-                $email_tempU = $this->Settings_model->getEmailTemplate("action='email_verification_authentication'");
-                $email_tempU['message'] = str_replace("{username}", $data["first_name"].' '.$data["last_name"], $email_tempU['message']);
-                $email_tempU['message'] = str_replace("{verification_link}", $verificaiton_link, $email_tempU['message']);
-                // $this->sendemail($email, 'Email Verification', $email_tempU['message'], $email_tempU['subject']);
-                $this->sendemail($data["email"], $data["first_name"].' '.$data["last_name"], $email_tempU['message'] , $email_tempU['subject']);
+                
 
                 // if($res->type === 'Admin'){
                 //     redirect(base_url('pricing'));
                 // }  
             }
+            $verificaiton_link = base_url().'welcome/verifyEmail/'.$data["activation_code"];
+            $email_tempU = $this->Settings_model->getEmailTemplate("action='email_verification_authentication'");
+            $email_tempU['message'] = str_replace("{username}", $data["first_name"].' '.$data["last_name"], $email_tempU['message']);
+            $email_tempU['message'] = str_replace("{verification_link}", $verificaiton_link, $email_tempU['message']);
+                // $this->sendemail($email, 'Email Verification', $email_tempU['message'], $email_tempU['subject']);
+            $this->sendemail($data["email"], $data["first_name"].' '.$data["last_name"], $email_tempU['message'] , $email_tempU['subject']);
+            
             $this->session->set_flashdata('success_msg', 'Please verify your email to start login !!!');
             redirect($_SERVER['HTTP_REFERER']);            
         }
