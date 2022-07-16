@@ -784,7 +784,7 @@ class Course_model extends AbstractModel
 
     function getCertificateHistoryList($company_id)
     {
-        $query = "select cs.*, concat(u.first_name, '', u.last_name) as name, c.title as title from course_status as cs join course as c on cs.course_id=c.id join user as u on cs.user_id=u.id where c.create_id=$company_id and cs.status=4";
+        $query = "select cs.*, concat(u.first_name, ' ', u.last_name) as name, c.title as title from course_status as cs join course as c on cs.course_id=c.id join user as u on cs.user_id=u.id where c.create_id=$company_id and cs.status=4";
         $result = $this->db->query($query);
         $res=$result->result_array();
 
