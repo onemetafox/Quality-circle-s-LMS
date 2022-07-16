@@ -152,11 +152,13 @@ class Examhistory extends BaseController {
 	
 	public function course_enrolled_users($course_id,$time_id){
 		$records["data"] = array();
-		$query = "Select * from enrollments where course_id = ".$course_id." and course_time_id = ".$time_id."";
-		$result = $this->db->query($query);						
-		if(!empty($result->result_array())){
+		$query = "SELECT enrollments.*, CONCAT(user.first_name, ' ', user.last_name) AS fullname FROM enrollments 
+                LEFT JOIN user ON user.id = enrollments.user_id
+                WHERE course_id = ".$course_id." AND course_time_id = ".$time_id."";
+		$result = $this->db->query($query)->result_array();						
+		if(!empty($result)){
 			$i = 0;
-			foreach($result->result_array() as $keys => $course){
+			foreach($result as $keys => $course){
 				$title = $email = $lname = $fname = $last_login = 'Not Available';
 				if(isset($course['user_name'])){
 					$user_name = $course['user_name'];
@@ -172,16 +174,16 @@ class Examhistory extends BaseController {
 				}
 				$records["data"][$i]['id'] = $course['id'];
 				$records["data"][$i]['serial'] = $keys+1;
-				$records["data"][$i]['full_name'] = $user_name;
+				$records["data"][$i]['full_name'] = $course['fullname'];
 				$records["data"][$i]['course_title'] = ucfirst($title);
-				$records["data"][$i]['email'] = $email;
+				$records["data"][$i]['email'] = $course['user_email'];
 				$records["data"][$i]['created'] = $last_login;
 				$records["data"][$i]['course_id'] = $course['course_id'];
 				$i++;
 			}
 		}
 		$this->response($records);
-	}
+	}	
 	
 	public function today_enrolled_users($course_id){
 		$records["data"] = array();
@@ -287,6 +289,11 @@ class Examhistory extends BaseController {
             $out_data["message"] = "Could not delete the row.";
         }
         $this->response($out_data);
+    }
+	public function getSign(){
+        $filter = $this->input->post();
+        $data = $this->Examhistory_model->getSign($filter);
+        $this->response(array("success"=>true,"data"=>$data));
     }
 	
 	public function searchResult(){

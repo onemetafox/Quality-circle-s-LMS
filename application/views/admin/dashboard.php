@@ -219,7 +219,23 @@
 			</section>
 		</div>
 	</div>
-	
+	<div id="modalSign" class="modal fade">
+        <div class="modal-dialog" style = "width: 50%;max-width: 50%;">
+            <div class="modal-content">
+                <div class="modal-header bg-default">
+                    <h3 class="modal-title">Sign Image</h3>
+                </div>
+                    <div class="modal-body">
+                        <div class="col-lg-12" style="display: flex;">
+                            <img id="userSignImg" style="width:100%;" src="" />
+                        </div>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 	<!-- end: page -->
@@ -464,7 +480,8 @@
                         if(rowData['exam_title'] != '') {
                             $(td).html('<a class="btn btn-default btn-sm" href="<?= base_url()?>admin/demand/view_row_assess/' + rowData['course_id'] + '/' + rowData['user_id'] + '">View Assessment</a>' +
                                 '<a class="btn btn-default btn-sm" href="<?= base_url()?>admin/demand/view_exam_history/' + rowData['course_id'] + '/' + rowData['user_id'] + '">View Exam</a>' +
-                                '<a class="btn btn-default btn-sm" href="<?= base_url()?>admin/demand/view_exam_certificate/' + rowData['course_id'] + '/' + rowData['user_id'] + '">View Certificate</a>');
+                                '<a class="btn btn-default btn-sm" href="<?= base_url()?>admin/demand/view_exam_certificate/' + rowData['course_id'] + '/' + rowData['course_id'] + '">View Certificate</a>' +
+								'<a class="btn btn-default btn-sm" onclick = "view_sign('+rowData['course_id']+', '+rowData['user_id']+')">View Sign</a><span class="w-20"></span>');
                         }
                         else {
                             $(td).html('<a class="btn btn-default btn-sm" href="<?= base_url()?>admin/demand/view_exam_certificate/' + rowData['course_id'] + '/' + rowData['user_id'] + '">View Certificate</a>');
@@ -498,4 +515,25 @@
 
 	
 	});
+	function view_sign(course_id, user_id){
+		$.ajax({
+			url: '<?=base_url()?>admin/examhistory/getSign',
+			type: 'POST',
+			data: { 'user_id': user_id, 'course_id': course_id},
+			success: function (data, status, xhr) {
+				if (data.success){
+					$("#userSignImg").attr("src",data.data.sign);
+        			$("#modalSign").modal();
+				}
+			},
+			error: function(){
+				new PNotify({
+					title: '<?php echo $term['error']; ?>',
+					text: '<?php echo $term['thereissomeissuetryagainlater']; ?>',
+					type: 'error'
+				});
+			}
+		});
+        
+    }
 </script>

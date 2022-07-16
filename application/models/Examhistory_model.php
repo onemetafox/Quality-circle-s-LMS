@@ -379,7 +379,13 @@ class Examhistory_model extends CI_Model
         $this->db->where('id', $id);
         return $this->db->update("exam_quiz_history");
     }
-
+    function getSign($filter){
+        $this->db->where("user_id", $filter["user_id"]);
+        $this->db->where("course_id", $filter["course_id"]);
+        $this->db->join("chapter","chapter.exam_id = exam_history.exam_id");
+        $this->db->select("exam_history.*");
+        return $this->db->get("exam_history")->row_array();
+    }
     
 }
 

@@ -37,7 +37,7 @@ class Course_model extends AbstractModel
     }
 
     function getHistoryByUserID($user_id = null){
-        $query = "select cs.*, concat(u.first_name, '', u.last_name) as name, c.title as title from course_status as cs join course as c on cs.course_id=c.id join user as u on cs.user_id=u.id where u.id=$user_id ORDER BY cs.reg_date desc";
+        $query = "select cs.*, concat(u.first_name, ' ', u.last_name) as name, c.title as title from course_status as cs join course as c on cs.course_id=c.id join user as u on cs.user_id=u.id where u.id=$user_id ORDER BY cs.reg_date desc";
         $result = $this->db->query($query);
         $res=$result->result_array();
 /*        if($user_id == null){
