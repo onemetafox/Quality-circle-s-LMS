@@ -1155,6 +1155,198 @@ class Demand  extends BaseController
 
         $ch_id = $this->input->post('id');
         $user_id = $this->session->get_userdata()['user_id'];
+        
+        $chapter = $this->Course_model->data_gets('chapter', array("id"=>$ch_id), '', 'position', 'asc')[0];
+        $course = $this->Course_model->select( $chapter->course_id);
+
+        $user_type = $this->session->userdata('user_type');
+        if($user_type != 'Learner') {
+            $res = array('check_num'=>1);
+            $this->response($res);
+        }
+        if($chapter->quiz_id != 0){
+            // get quiz ids based on chapter id
+            $page_data['session_quiz'] = $this->Course_model->getQuizByChapterId($chapter->id);
+            // get quiz exam result based on quiz group id
+            $page_data['quiz_history'] = $this->Exam_model->getQuizGroupHistoryByUser($chapter->quiz_id, $user_id, $chapter->id);
+            // get assessment data (handled by instructor)
+            $results = $this->Course_model->getAssessByCourseID($chapter->course_id);
+            $page_data['assess'] = $results;
+            $asses_data = array();
+            $is_ass_exist = 0;
+            $page_type_sum = 0;
+            $page_type_num = 0;
+
+            foreach($page_data['session_quiz'] as $quiz){
+                foreach ($page_data['assess'] as $asses){
+                    if($chapter->id == $asses['chapter_id'] && $asses['user_id'] == $user_id){
+                        $is_ass_exist = 1;
+                        break;
+                    }
+                }
+                if($is_ass_exist == 0){
+                    if($quiz['parent'] == $chapter->id){
+                        $group_quiz_sum = 0;
+                        $quiz_ids = json_decode($quiz['quiz_ids']);
+                        for ($j = 0;$j < count($quiz_ids);$j++){
+                            foreach ($page_data['quiz_history'] as $q_h){
+                                if($q_h['chapter_id'] == $quiz['id'] && $q_h['user_id'] == $user_id && $q_h['quiz_id'] == $quiz_ids[$j]){
+                                    $group_quiz_sum = $group_quiz_sum + $q_h['mark1'];
+                                }
+                            }
+                        }
+                        $group_quiz_sum = $group_quiz_sum / (count($quiz_ids) * 100)*100;
+                        $page_type_num++;
+                        $page_type_sum = $page_type_sum + $group_quiz_sum;
+                    }else {
+                        $group_quiz_sum = 0;
+                        $quiz_ids = json_decode($quiz['quiz_ids']);
+                        for ($j = 0;$j < count($quiz_ids);$j++){
+                            foreach ($page_data['quiz_history'] as $q_h){
+                                if($q_h['chapter_id'] == $quiz['id'] && $q_h['user_id'] == $user_id && $q_h['quiz_id'] == $quiz_ids[$j]){
+                                    $group_quiz_sum = $group_quiz_sum + $q_h['mark1'];
+                                }
+                            }
+                        }
+                        // $group_quiz_sum = (100 / (count($quiz_ids)) * $group_quiz_sum / 100);
+                        $group_quiz_sum = $group_quiz_sum / (count($quiz_ids) * 100)*100;
+                        $page_type_num++;
+                        $page_type_sum = $page_type_sum + $group_quiz_sum;
+                    }
+                }else{
+                    break;
+                }
+            }
+            if($is_ass_exist == 0){
+                if($page_type_num != 0){
+                    $page_type_sum = $page_type_sum / $page_type_num;
+                }else{
+                    $page_type_sum = null;
+                }
+                if($page_type_sum > $course->passmark){
+                    $res = array('check_num'=>0, 'msg'=>"You already passed it!");
+                    $this->response($res);
+                }else {
+                    $res = array('check_num'=>1);
+                    $this->response($res);
+                }
+            }else {
+                $res = array('check_num'=>0, 'msg'=>"You cann't test it again!");
+                $this->response($res);
+            }
+        }else if ($chapter->exam_id != 0) {
+            $course_id = $course->id;
+            
+            $results = $this->Course_model->getAssessByCourseID($course_id);
+            $page_data['assess'] = $results;
+            $dataget = array('id' => $course_id);
+            $page_data['pass_mark'] = $this->Course_model->data_gets('course', $dataget) [0]->pass_mark;
+            $dataget = array('course_id' => $course_id, 'parent' => 0, 'exam_id' => 0, 'quiz_id !=' => 0);
+            $page_data['session_quiz'] = $this->Course_model->getQuizPageByCourseId($course_id);
+            $dataget = array('course_id' => $course_id, 'parent' => 0, 'exam_id' => 0);
+            $page_data['course_session'] = $this->Course_model->data_gets('chapter', $dataget, '', 'position', 'asc');
+            $page_data['course_pay_user'] = $this->Course_model->get_pay_data($course_id, $user_id);
+            if(empty($page_data['course_pay_user'])){
+                $page_data['course_pay_user'] = $this->Course_model->get_unpay_data($course_id, $user_id);
+            }
+            $page_data['quiz_history'] = $this->Exam_model->get_quiz_history($course_id);
+            $asses_data = array();
+            foreach ($page_data['course_session'] as $chapter){
+                for ($i = 1;$i < 7;$i++){
+                    $is_ass_exist = 0;
+                    $page_type_sum = 0;
+                    $page_type_num = 0;
+                    foreach($page_data['session_quiz'] as $quiz){
+                        foreach ($page_data['assess'] as $asses){
+                            if($i == $asses['page_type'] && $chapter->id == $asses['chapter_id'] && $asses['user_id'] == $user_id){
+                                $asses_data[$chapter->id][$i] = $asses['assessment'];
+                                $is_ass_exist = 1;
+                                break;
+                            }
+                        }
+                        if($is_ass_exist == 0){
+                            if($quiz['relative_type'] == $i && $quiz['parent'] == $chapter->id && $i != 6){
+                                $group_quiz_sum = 0;
+                                $quiz_ids = json_decode($quiz['quiz_ids']);
+                                for ($j = 0;$j < count($quiz_ids);$j++){
+                                    foreach ($page_data['quiz_history'] as $q_h){
+                                        if($q_h['chapter_id'] == $quiz['id'] && $q_h['user_id'] == $user_id && $q_h['quiz_id'] == $quiz_ids[$j]){
+                                            $group_quiz_sum = $group_quiz_sum + $q_h['mark1'];
+                                        }
+                                    }
+                                }
+                                // $group_quiz_sum = (100 / (count($quiz_ids)) * $group_quiz_sum / 100);
+                                $group_quiz_sum = $group_quiz_sum / (count($quiz_ids) * 100)*100;
+                                $page_type_num++;
+                                $page_type_sum = $page_type_sum + $group_quiz_sum;
+                            }else if(is_null($quiz['relative_type']) && $quiz['parent'] == $chapter->id && $i == 6){
+                                $group_quiz_sum = 0;
+                                $quiz_ids = json_decode($quiz['quiz_ids']);
+                                for ($j = 0;$j < count($quiz_ids);$j++){
+                                    foreach ($page_data['quiz_history'] as $q_h){
+                                        if($q_h['chapter_id'] == $quiz['id'] && $q_h['user_id'] == $user_id && $q_h['quiz_id'] == $quiz_ids[$j]){
+                                            $group_quiz_sum = $group_quiz_sum + $q_h['mark1'];
+                                        }
+                                    }
+                                }
+                                // $group_quiz_sum = (100 / (count($quiz_ids)) * $group_quiz_sum / 100);
+                                $group_quiz_sum = $group_quiz_sum / (count($quiz_ids) * 100)*100;
+                                $page_type_num++;
+                                $page_type_sum = $page_type_sum + $group_quiz_sum;
+                            }
+                        }else{
+                            break;
+                        }
+                    }
+                    if($is_ass_exist == 0){
+                        if($page_type_num != 0){
+                            $page_type_sum = $page_type_sum / $page_type_num;
+                        }else{
+                            $page_type_sum = null;
+                        }
+                        $asses_data[$chapter->id][$i] = $page_type_sum;
+                    }
+                }
+            }
+            $page_data['asses_data'] = $asses_data;	
+            $is_all_null_num = 0;
+            $all_total = 0;
+            foreach ($page_data['course_session'] as $session){
+                $sum_mark_total = 0;
+                $is_null_num = 0;
+
+                for($i = 1; $i<7; $i++)
+                {
+                    $sum_mark_total = $sum_mark_total+$asses_data[$session->id][$i];
+                    if(is_null($asses_data[$session->id][$i]))
+                    {
+                        $is_null_num++;
+                    }
+                }
+                if($is_null_num!=6)
+                    $all_total = $all_total+round($sum_mark_total/(6-$is_null_num), 2);
+                else
+                    $is_all_null_num++;
+            }
+            $average = round($all_total/(count($page_data['course_session'])-$is_all_null_num), 2);
+            if($average < $page_data['pass_mark']){
+                $res = array('check_num'=>0, 'msg'=>"You didn't passed sessions!");
+                $this->response($res);
+            }else{
+                $res = array('check_num'=>1);
+                $this->response($res);
+            }
+            
+        }else{
+            $res = array('check_num'=>1);
+            $this->response($res);
+        }
+        
+    }
+    public function checkAssessment1(){
+
+        $ch_id = $this->input->post('id');
+        $user_id = $this->session->get_userdata()['user_id'];
 
         $up_ch_id = null;
         $dataget = array(
@@ -1236,7 +1428,6 @@ class Demand  extends BaseController
             $this->response($res);
             return;
         }
-//////////////////////////////////////////////////////////////////////////////////
         $dataget = array(
             'id' => $course->course_id,
             'create_id' => $this->session->get_userdata()['company_id']
@@ -1383,7 +1574,6 @@ class Demand  extends BaseController
                 $chapter_avg = round($sum_mark_total/(6-$is_null_num), 2);
         }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////
 
 
         if($course->exam_id != 0){

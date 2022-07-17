@@ -509,6 +509,17 @@ class Course_model extends AbstractModel
 
         return $res;
     }
+    function getQuizByChapterId($chapter_id){
+        $query = "SELECT ch.*, eqg.quiz_ids AS quiz_ids 
+            FROM chapter AS ch 
+            JOIN exam_quiz_group AS eqg ON ch.quiz_id = eqg.id 
+            WHERE ch.id=$chapter_id and ch.quiz_id != 0";
+
+        $result = $this->db->query($query);
+        $res=$result->result_array();
+
+        return $res;
+    }
 
     function get_exam_data_courseid($course_id){
         $query = "SELECT ch.* from chapter as ch where ch.course_id = $course_id and ch.exam_id!=0";
