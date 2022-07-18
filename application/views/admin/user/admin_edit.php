@@ -166,7 +166,15 @@ if($id != 0){
                                 <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term["active"]?></label>
                                 <div class="col-sm-10">
                                     <div class="switch switch-primary">
-                                        <input type="checkbox" name="active" id="active" data-plugin-ios-switch <?php echo $is_active==1?'checked="checked"':'';?> />
+                                        <input type="checkbox" name="active" id="active" data-plugin-ios-switch <?php echo $active==1?'checked="checked"':'';?> />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term["is_active"]?></label>
+                                <div class="col-sm-10">
+                                    <div class="switch switch-primary">
+                                        <input type="checkbox" name="is_active" id="is_active" data-plugin-ios-switch <?php echo $is_active==1?'checked="checked"':'';?> />
                                     </div>
                                 </div>
                             </div>

@@ -225,7 +225,7 @@ class User extends BaseController {
 			foreach ($this->input->post() as $key => $value){
 				//if($key == 'type_update') continue;
 				$update_data[$key] = $value;
-				if($key == 'active' || $key == 'payment_status'){
+				if($key == 'is_active' || $key == 'payment_status' || $key == 'active'){
 					$update_data[$key] = $value == 'on' ? 1 : 0;
 				}
 			}

@@ -14,6 +14,9 @@
     label.cours-0 {
         cursor: not-allowed;
     }
+    .content-body{
+        display: unset !important;
+    }
 </style>
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/bootstrap/css/bootstrap.css" />
 <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/animate/animate.css">
