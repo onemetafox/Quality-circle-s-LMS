@@ -97,7 +97,8 @@
 							$(td).html('');
 						}
 						if(cellData == 4){
-                            $(td).html('<a class="btn btn-default btn-sm" target="blank" href="<?= base_url()?>learner/demand/view_exam_certificate/'+rowData['course_id']+'/'+rowData['user_id']+'">View Certificate</a>');
+                            $(td).html('<a class="btn btn-default btn-sm" target="blank" href="<?= base_url()?>learner/demand/view_exam_certificate/'+rowData['course_id']+'/'+rowData['user_id']+'">View Certificate</a>' +
+							'<a class="btn btn-default btn-sm" href="<?= base_url()?>learner/demand/view_row_assess/'+rowData['course_id']+'/'+rowData['user_id']+'">View Assessment</a>');
                         }
                     }
                 }],

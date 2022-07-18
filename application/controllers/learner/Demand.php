@@ -755,7 +755,88 @@ class Demand extends BaseController {
                 $this->Exam_model->updateUserAnswer($user_id, $ansArry['current_q_id'], json_encode($ansArry), $mark);
             }
     }
-
+    public function view_row_assess($course_id = 0, $user_id = 0){
+        if($this->isLearner()){
+            $results = $this->Course_model->getAssessByCourseID($course_id);
+            $page_data['assess'] = $results;
+            $dataget = array('id' => $course_id);
+            $page_data['pass_mark'] = $this->Course_model->data_gets('course', $dataget) [0]->pass_mark;
+            $dataget = array('course_id' => $course_id, 'parent' => 0, 'exam_id' => 0, 'quiz_id !=' => 0);
+            $page_data['session_quiz'] = $this->Course_model->getQuizPageByCourseId($course_id);
+            $dataget = array('course_id' => $course_id, 'parent' => 0, 'exam_id' => 0);
+            $page_data['course_session'] = $this->Course_model->data_gets('chapter', $dataget, '', 'position', 'asc');
+            $page_data['course_pay_user'] = $this->Course_model->get_pay_data($course_id, $user_id);
+            if(empty($page_data['course_pay_user'])){
+                $page_data['course_pay_user'] = $this->Course_model->get_unpay_data($course_id, $user_id);
+            }
+            $page_data['quiz_history'] = $this->Exam_model->get_quiz_history($course_id);
+            $asses_data = array();
+            $user['user_id'] = $user_id;
+            foreach ($page_data['course_session'] as $chapter){
+                for ($i = 1;$i < 7;$i++){
+                    $is_ass_exist = 0;
+                    $page_type_sum = 0;
+                    $page_type_num = 0;
+                    foreach($page_data['session_quiz'] as $quiz){
+                        foreach ($page_data['assess'] as $asses){
+                            if($i == $asses['page_type'] && $chapter->id == $asses['chapter_id'] && $asses['user_id'] == $user['user_id']){
+                                $asses_data[$user['user_id']][$chapter->id][$i] = $asses['assessment'];
+                                $is_ass_exist = 1;
+                                break;
+                            }
+                        }
+                        if($is_ass_exist == 0){
+                            if($quiz['relative_type'] == $i && $quiz['parent'] == $chapter->id && $i != 6){
+                                $group_quiz_sum = 0;
+                                $quiz_ids = json_decode($quiz['quiz_ids']);
+                                for ($j = 0;$j < count($quiz_ids);$j++){
+                                    foreach ($page_data['quiz_history'] as $q_h){
+                                        if($q_h['chapter_id'] == $quiz['id'] && $q_h['user_id'] == $user['user_id'] && $q_h['quiz_id'] == $quiz_ids[$j]){
+                                            $group_quiz_sum = $group_quiz_sum + $q_h['mark1'];
+                                        }
+                                    }
+                                }
+                                // $group_quiz_sum = (100 / (count($quiz_ids)) * $group_quiz_sum / 100);
+                                $group_quiz_sum = $group_quiz_sum / (count($quiz_ids) * 100)*100;
+                                $page_type_num++;
+                                $page_type_sum = $page_type_sum + $group_quiz_sum;
+                            }else if(is_null($quiz['relative_type']) && $quiz['parent'] == $chapter->id && $i == 6){
+                                $group_quiz_sum = 0;
+                                $quiz_ids = json_decode($quiz['quiz_ids']);
+                                for ($j = 0;$j < count($quiz_ids);$j++){
+                                    foreach ($page_data['quiz_history'] as $q_h){
+                                        if($q_h['chapter_id'] == $quiz['id'] && $q_h['user_id'] == $user['user_id'] && $q_h['quiz_id'] == $quiz_ids[$j]){
+                                            $group_quiz_sum = $group_quiz_sum + $q_h['mark1'];
+                                        }
+                                    }
+                                }
+                                // $group_quiz_sum = (100 / (count($quiz_ids)) * $group_quiz_sum / 100);
+                                $group_quiz_sum = $group_quiz_sum / (count($quiz_ids) * 100)*100;
+                                $page_type_num++;
+                                $page_type_sum = $page_type_sum + $group_quiz_sum;
+                            }
+                        }else{
+                            break;
+                        }
+                    }
+                    if($is_ass_exist == 0){
+                        if($page_type_num != 0){
+                            $page_type_sum = $page_type_sum / $page_type_num;
+                        }else{
+                            $page_type_sum = null;
+                        }
+                        $asses_data[$user['user_id']][$chapter->id][$i] = $page_type_sum;
+                    }
+                }
+            }
+            $page_data['asses_data'] = $asses_data;	
+            $user = $this->session->userdata();
+            $this->global['user_data'] = $user;
+            $this->loadViews("learner/demand/view_assess", $this->global, $page_data, NULL);
+        }else{
+            $this->loadViews("access", $this->global, NULL , NULL); 
+        }
+    }
     function preview_exam($history_id = 0){
         $this->load->library('Sidebar');
         $side_params = array('selected_menu_id' => '2');
