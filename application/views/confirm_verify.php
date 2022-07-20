@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css" />
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/morris/morris.css" />
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/theme.css" />
-    <script src="<?php echo base_url(); ?>assets/vendor/modernizr/modernizr.js"></script>
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/vendor/pnotify/pnotify.custom.css" />
+   
 	<style>
 		html,body {
 			height:100%;
@@ -73,14 +74,14 @@
           <div class="card-body">
               <input type="hidden"  name="email" value="<?php echo $email; ?>" />
               <div class="form-group mb-3">
-                <div class="row">
-                  <h5>Verify your email to proceed</h5>
+                <div style="text-align:center">
+                  <h1>Verify your email to proceed</h1>
                   Please check your email and click on the link provided to verify your address
                 </div>
               </div>
               <div class="row">                
                 <div class="col-sm-12 text-center">
-                  <button type="submit" class="btn btn-danger mt-2 mb-6 pb-6">Resend verification email</button>
+                  <button type="button" onclick="sendVerification('<?= $email?>')" class="btn btn-danger mt-2 mb-6 pb-6">Resend verification email</button>
                 </div>
               </div>
             <!-- </form> -->
@@ -94,5 +95,32 @@
     <script src="<?php echo base_url(); ?>assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script src="<?php echo base_url(); ?>assets/vendor/common/common.js"></script>
     <script src="<?php echo base_url(); ?>assets/vendor/magnific-popup/jquery.magnific-popup.js"></script>
+    <script src="<?php echo base_url(); ?>assets/vendor/pnotify/pnotify.custom.js"></script>
+    <script src="<?php echo base_url(); ?>assets/vendor/modernizr/modernizr.js"></script>
+    <script>
+      function sendVerification(email){
+        $.ajax({
+          url: '<?= base_url()?>login/resend_verification',
+          type: 'POST',
+          data: {'email': email},
+          success: function (data, status, xhr) {
+					if(data.success){
+            new PNotify({
+              title: 'Success!',
+              text: data.msg,
+              type: 'success'
+            });
+          }
+				},
+				error: function(){
+					new PNotify({
+            title: '<?php echo $term['error']; ?>',
+            text: '<?php echo $term['youcantdeletethisitem']; ?>',
+						type: 'error'
+					});
+				}
+			});
+      }
+    </script>
   </body>
 </html>

@@ -954,6 +954,32 @@ class Login extends BaseController{
         }
 
     }
+    public function resend_verification(){
+        $email = $this->input->post('email');
+        $data = (array)$this->User_model->one(array("email" => $email));
+        $pool = '0123456789';
+        $api_key = substr(str_shuffle(str_repeat($pool, ceil(10 / strlen($pool)))), 0, 10);
+        $data["api_key"] = $api_key;
+        $data["is_active"] = 0;
+        $data["activation_code"] = $this->serialkey();
+        $data["isPasswordUptd"] = 1;
+        $this->User_model->update(array("activation_code"=>$data["activation_code"]), array("id"=>$data["id"]));
+        $response = $this->Login_model->loginMe($data["email"], $data["password"]);
+        if($response['result'] == true){
+                $emailTmp = $this->Settings_model->getEmailTemplate("action='signup_company'");
+                $content = $emailTmp['message'];
+                $title = $emailTmp['subject'];
+                $content = str_replace("{USERNAME}", $data["first_name"] . ' ' . $data["last_name"], $content);
+                $content = str_replace("{LOGO}", "<img src='".base_url('assets/logos/logo1.png')."'/>"."<img src='".base_url('assets/logos/logo2.png')."'/>", $content);
+                $this->sendemail($data['email'], $data['first_name'] . $data['last_name'], $content, $title);
+        }
+        $verificaiton_link = base_url().'welcome/verifyEmail/'.$data["activation_code"];
+        $email_tempU = $this->Settings_model->getEmailTemplate("action='email_verification_authentication'");
+        $email_tempU['message'] = str_replace("{username}", $data["first_name"].' '.$data["last_name"], $email_tempU['message']);
+        $email_tempU['message'] = str_replace("{verification_link}", $verificaiton_link, $email_tempU['message']);
+        $this->sendemail($data["email"], $data["first_name"].' '.$data["last_name"], $email_tempU['message'] , $email_tempU['subject']);
+        $this->response(array("success"=> true, "msg"=> "Verification sent"));
+    }
 
 
     /**
