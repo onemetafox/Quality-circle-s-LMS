@@ -76,7 +76,7 @@
               <div class="form-group mb-3">
                 <div style="text-align:center">
                   <h1>Verify your email to proceed</h1>
-                  Please check your email and click on the link provided to verify your address
+                  Please check your email and click on the link provided to verify your address. If you don’t get code  please resend
                 </div>
               </div>
               <div class="row">                
