@@ -441,7 +441,7 @@
                         </div>
 
                         <div class="loginRow">
-                            <div class="g-recaptcha" data-sitekey="6LciUf0UAAAAANP2mefF3glkoF3NRzTTO6ZEJmge"></div> 
+                            <div class="g-recaptcha" data-sitekey="6LfFAvsgAAAAAAjak90G1MG8y0W6HwOcSOYNH5z1"></div> 
                             <div class="errormessage" style="color: red; margin: 5px 0 0 0px"></div> 
                         </div>
                         <div class="loginRow">
@@ -469,9 +469,8 @@
             $('.company-row').hide();
     }
     function register(){
-        console.log('register form clicked');
         // if(grecaptcha.getResponse() == "") {
-        //     console.log('recaptcha error');
+        //     // console.log('recaptcha error');
         //     $(".errormessage").text("Please Fill The Google Captcha");
         // }
         // else{

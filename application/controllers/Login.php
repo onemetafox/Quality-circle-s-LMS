@@ -935,74 +935,22 @@ class Login extends BaseController{
             $user_id = $this->User_model->signup($data);
             $response = $this->Login_model->loginMe($data["email"], $data["password"]);
             if($response['result'] == true){
-                /*start send_email*/
-
-                /*$this->load->library('email');
-                $email_temp = $this->getEmailTemp('welcome_email',$data['company_id']);
-                $from_email = $this->getSuperEmailAddress();
-                $email_class  = new Email();
-                $email_class->send_email($data['email'],$email_temp['subject'],$email_temp['message'],$from_email);*/
-                /*end send_email*/
-
-                /*$result['type'] = 1;
-                $res = $response['user'][0];
-                $this->User_model->update_last_login($res->id);
-                $photo = base_url().$res->photo;
-                $sessionArray = array(
-                    'userId'=>$res->id,
-                    'is_password_updated' => $res->isPasswordUptd,
-                    'user_type'=>$res->type,
-                    'user_name'=>$res->fullname,
-                    'company_user_type'=>$res->company_user_type,
-                    'roleText'=>$res->type,
-                    'user_photo'=>$photo,
-                    'user_id'=>$res->id,
-                    'email'=>$res->email,
-                    'company_id'=>$res->company_id,
-                    'name'=>$res->fullname,
-                    'last_check'=>time(),
-                    'company_url'=>base_url().'company/'.$res->company_url,
-                    'isLoggedIn' => TRUE,
-                    'userId'=>$res->api_key,
-                );
-                $this->session->set_userdata($sessionArray);
-                $activity_data[activity_type] = "Login";
-                $activity_data[user_id] = $res->id;
-                $activity_data[activity_message] = $res->fullname." login successfully.";
-
-                $this->load->model('Activity_model');
-                $this->Activity_model->insert($activity_data);
-
-                $result['redirect'] = 1;
-                $result['msg'] = 'Login successfully';
-                $this->session->set_userdata($sessionArray);*/
-
-               // if($res->type == 'Admin'){
                     $emailTmp = $this->Settings_model->getEmailTemplate("action='signup_company'");
                     $content = $emailTmp['message'];
                     $title = $emailTmp['subject'];
                     $content = str_replace("{USERNAME}", $data["first_name"] . ' ' . $data["last_name"], $content);
-                    // $content = str_replace("{LOGO}", "<img src='" . base_url('assets/img/logo.png') . "'/>", $content);
                     $content = str_replace("{LOGO}", "<img src='".base_url('assets/logos/logo1.png')."'/>"."<img src='".base_url('assets/logos/logo2.png')."'/>", $content);
                     $this->sendemail($data['email'], $data['first_name'] . $data['last_name'], $content, $title);
-             //   }
-                //-------------------Send email to registered user for Email verificaiton  ----------------------
-
-                
-
-                // if($res->type === 'Admin'){
-                //     redirect(base_url('pricing'));
-                // }  
             }
             $verificaiton_link = base_url().'welcome/verifyEmail/'.$data["activation_code"];
             $email_tempU = $this->Settings_model->getEmailTemplate("action='email_verification_authentication'");
             $email_tempU['message'] = str_replace("{username}", $data["first_name"].' '.$data["last_name"], $email_tempU['message']);
             $email_tempU['message'] = str_replace("{verification_link}", $verificaiton_link, $email_tempU['message']);
-                // $this->sendemail($email, 'Email Verification', $email_tempU['message'], $email_tempU['subject']);
             $this->sendemail($data["email"], $data["first_name"].' '.$data["last_name"], $email_tempU['message'] , $email_tempU['subject']);
             
             $this->session->set_flashdata('success_msg', 'Please verify your email to start login !!!');
-            redirect($_SERVER['HTTP_REFERER']);            
+            // redirect($_SERVER['HTTP_REFERER']);
+            $this->load->view('confirm_verify',$data);
         }
 
     }
