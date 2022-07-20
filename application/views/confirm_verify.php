@@ -71,21 +71,11 @@
             <h2 class="title font-weight-bold m-0"><?php echo $term['googletwofactorauthentication']; ?></h2>
           </div>
           <div class="card-body">
-              <?php
-              if ($this->session->flashdata('error'))
-              {
-                  echo "<div class='alert alert-danger'><p class='m-0'>" . $this->session->flashdata('error')."</p></div>";
-                  unset($_SESSION['flash']);
-              }
-              ?>
-            <?php echo form_open('verification/userverify');?>            
               <input type="hidden"  name="email" value="<?php echo $email; ?>" />
               <div class="form-group mb-3">
-                  <span style="font-weight: bold;color: red;"><?php echo $term['youshoulddownloadgoole']; ?> </span>
-              </div>
-              <div class="form-group mb-3">
-                <div class="input-group">
+                <div class="row">
                   <h5>Verify your email to proceed</h5>
+                  Please check your email and click on the link provided to verify your address
                 </div>
               </div>
               <div class="row">                
@@ -94,7 +84,6 @@
                 </div>
               </div>
             <!-- </form> -->
-            <?php echo form_close();?>
           </div>
         </div>
       </div>

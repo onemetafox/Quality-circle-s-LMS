@@ -67,7 +67,7 @@
 						<?php if($free_course_list || $paid_course_list){ ?>
 							<div class="col-sm-12">
 								<?php foreach($free_course_list as $free_course):
-									if($course['course_self_time'] == "Time Restricted"){
+									if($free_course['course_self_time'] == "Time Restricted"){
 										$showDuration = $free_course['duration'] > 1 ? $free_course['duration']. " Days" : $free_course['duration']." Day";
 										$duration = $free_course['duration'] - 1;
 										$enddate = strtotime('+'.$duration .' days', strtotime($free_course['start_day']. " " . $free_course['end_time']));
