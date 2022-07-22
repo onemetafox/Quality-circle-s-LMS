@@ -19,6 +19,7 @@ class Book extends BaseController{
         $this->load->model('Library_model');
         $this->load->model('Translate_model');
         $this->isLoggedIn();
+        $this->isLearner();
     }
     /**
      * This function used to load the first screen of the user

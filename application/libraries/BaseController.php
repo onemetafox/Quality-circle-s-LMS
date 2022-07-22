@@ -148,6 +148,10 @@ class BaseController extends CI_Controller {
      */
     function isLearner() {
         if($this->role == ROLE_LEARNER) {
+            $user = (array)$this->User_model->select($this->vendorId);
+            if (!$user['country_code'] || !$user['phone']) {
+                redirect('login/showProfile/error');
+            }
             return true;
         }else{
             return false;

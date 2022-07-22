@@ -232,38 +232,38 @@ class Login extends BaseController{
                         $this->db->insert('user_login_log', $insArr);
 
     					$photo = base_url().$res->photo;
-    						$sessionArray = array(
-    							'userId'=>$res->id,
-    							'user_type'=>$res->type,
-    							'user_name'=>$res->fullname,
-                                'is_password_updated' => $res->isPasswordUptd,
-    							'company_user_type'=>$res->company_user_type,
-    							'roleText'=>$res->type,
-    							'user_photo'=>$photo,
-    							'user_id'=>$res->id,
-    							'email'=>$res->email,
-    							'company_id'=>$res->company_id,
-    							'name'=>$res->fullname,
-    							'role'=>$res->role,
-                                'sign'=>$res->sign,
-    							'last_check'=>time(),
-                                'company_url'=>base_url().'company/'.$res->company_url,
-    							'isLoggedIn' => TRUE,
-                                'plan_id' => $res->plan_id,
-                                'is_trialed' => $res->is_trialed,
-                                'expired' => $res->expired,
-    						);
-    						$this->session->set_userdata($sessionArray);
-    						$activity_data["activity_type"] = "Login";
-    						$activity_data["user_id"] = $res->id;
-    						$activity_data["activity_message"] = $res->fullname." login successfully.";
-        						 
-    						$this->load->model('Activity_model');
-    						$this->Activity_model->insert($activity_data);				
-    						
-    						$result['redirect'] = 1;
-    						$result['msg'] = 'Login successfully';
-    						$this->session->set_userdata($sessionArray);
+                        $sessionArray = array(
+                            'userId'=>$res->id,
+                            'user_type'=>$res->type,
+                            'user_name'=>$res->fullname,
+                            'is_password_updated' => $res->isPasswordUptd,
+                            'company_user_type'=>$res->company_user_type,
+                            'roleText'=>$res->type,
+                            'user_photo'=>$photo,
+                            'user_id'=>$res->id,
+                            'email'=>$res->email,
+                            'company_id'=>$res->company_id,
+                            'name'=>$res->fullname,
+                            'role'=>$res->role,
+                            'sign'=>$res->sign,
+                            'last_check'=>time(),
+                            'company_url'=>base_url().'company/'.$res->company_url,
+                            'isLoggedIn' => TRUE,
+                            'plan_id' => $res->plan_id,
+                            'is_trialed' => $res->is_trialed,
+                            'expired' => $res->expired,
+                        );
+                        $this->session->set_userdata($sessionArray);
+                        $activity_data["activity_type"] = "Login";
+                        $activity_data["user_id"] = $res->id;
+                        $activity_data["activity_message"] = $res->fullname." login successfully.";
+                                
+                        $this->load->model('Activity_model');
+                        $this->Activity_model->insert($activity_data);				
+                        
+                        $result['redirect'] = 1;
+                        $result['msg'] = 'Login successfully';
+                        $this->session->set_userdata($sessionArray);
                         if($res->type === 'Admin'){
                             if(isset($res->plan_id)){
                                 $plan = $this->Plan_model->select($res->plan_id);
@@ -723,7 +723,7 @@ class Login extends BaseController{
         }
     }
 
-    public function showProfile(){
+    public function showProfile($status = null){
         $this->load->library('Sidebar');
         $sessiondata = $this->session->get_userdata();
         $user = $this->User_model->getRow("id=".$sessiondata['userId']);
@@ -778,7 +778,11 @@ class Login extends BaseController{
 		
 		$page_data['country_list'] = $this->Countries_model->getList();
 		$page_data['user'] = $user;
-        
+        if($status == "error"){
+            $page_data["msg"] = "You should input required fields";
+        }else {
+            $page_data["msg"] = "";
+        }
         $this->load->view('_templates/header', $this->global );
         $this->load->view("user_profile", $page_data);
         $this->load->view('_templates/footer', NULL);

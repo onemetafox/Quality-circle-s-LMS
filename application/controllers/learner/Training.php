@@ -14,6 +14,7 @@ class Training extends BaseController {
         $this->load->model('Company_model');
 		
         $this->isLoggedIn();
+        $this->isLearner();
     }
     /**
      * This function used to load the default screen of trainingassign menu

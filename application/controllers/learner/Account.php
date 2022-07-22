@@ -17,6 +17,7 @@ class Account extends BaseController {
         $this->load->model('Account_model');
         $this->load->model('Examhistory_model');
         $this->isLoggedIn();
+        $this->isLearner();
     }
     /**
      * This function used to load the first screen of the user

@@ -22,10 +22,10 @@ $image = $this->session->userdata('user_photo');
 		<div class="col-sm-12 col-md-10">
             <div class="tabs">
                 <ul class="nav nav-tabs">
-                    <li class="nav-item overview active">
+                    <li class="nav-item overview">
                         <a class="nav-link" href="#overview"  data-toggle="tab"><?php echo $term['overview']; ?></a>
                     </li>
-                    <li class="nav-item edit ">
+                    <li class="nav-item edit">
                         <a class="nav-link" href="#edit" data-toggle="tab"><?php echo $term['edit']; ?></a>
                     </li>
                     <li class="nav-item edit ">
@@ -33,7 +33,7 @@ $image = $this->session->userdata('user_photo');
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div id="overview" class="tab-pane active">
+                    <div id="overview" class="tab-pane <?= $msg == "active show"?"":""?>">
                         <div class="form-group row">
                             <label class="col-sm-2 control-label text-sm-right pt-2"><?php echo $term['picture']; ?></label>
                             <div class="col-sm-3">
@@ -90,7 +90,10 @@ $image = $this->session->userdata('user_photo');
                             </div>                            
                         </div>
                     </div>
-                    <div id="edit" class="tab-pane">
+                    <div id="edit" class="tab-pane <?= $msg == ""?"":"active show"?>">
+                        <?php if ($msg != "") { ?>
+                            <span><strong style="text-align:center"><h3 style = "color:red"><?= $msg?></h3></strong></span>
+                        <?php }?>
                         <form id="add-form" method="POST" novalidate="novalidate" enctype="multipart/form-data">
                             <input type="hidden" value="<?php print $this->session->userdata('user_id') ?>" class="form-control" id="id" name="id">
                             <input type="hidden" id="base_url" value="<?= base_url()?>">
@@ -185,7 +188,7 @@ $image = $this->session->userdata('user_photo');
                                         <label class="col-sm-2 control-label text-sm-right pt-2"><?=$term['companyname']?></label>
                                         <div class="col-sm-3">
                                             <input type="hidden" value="<?php print $user->company_id ?>" class="form-control">
-                                            <input type="text" value="<?php echo $company_name ?>" class="form-control" name="company_name" readonly >
+                                            <input type="text" value="<?php echo $company_name ?>" class="form-control" readonly >
                                         </div>
                                     </div>
                                     <?php if($user->user_type == "Admin") {?>

@@ -18,6 +18,7 @@ class Examhistory extends BaseController {
         $this->load->model('Examassign_model');
         $this->load->model('Examhistory_model');
         $this->isLoggedIn();
+        $this->isLearner();
     }
     /**
      * This function used to load the default screen of exam menu

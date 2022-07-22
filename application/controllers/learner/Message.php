@@ -1,6 +1,5 @@
 <?php if(!defined('BASEPATH')) exit('No direct script access allowed');
 require APPPATH . '/libraries/BaseController.php';
-require APPPATH . '/third_party/PHPExcel.php';
 /**
  * Class : Account (AccountController)
  * Account Class to control all account related operations.
@@ -18,6 +17,7 @@ class Message extends BaseController {
         $this->load->model('Company_model');
         $this->load->model('Feedback_model');
         $this->isLoggedIn();
+        $this->isLearner();
     }
     /**
      * This function used to load the first screen of the user

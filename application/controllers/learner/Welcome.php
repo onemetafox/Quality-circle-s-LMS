@@ -26,6 +26,7 @@ class Welcome extends BaseController {
         if (!isset($isLoggedIn) || $isLoggedIn != TRUE){
             redirect('login');
         }else{
+            $this->isLearner();
             $this->load->library('Sidebar');
             $sessiondata = $this->session->get_userdata();
             $user_id = $sessiondata['user_id'];

@@ -10,6 +10,7 @@ class Flipbook extends BaseController{
         $this->load->model('Library_model');
         $this->load->model('Translate_model');
         $this->isLoggedIn();
+        $this->isLearner();
     }
 
     public function view_book($id = ''){

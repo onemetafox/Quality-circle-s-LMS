@@ -26,6 +26,7 @@ class Demand extends BaseController {
         $this->load->library('Sidebar');
 		$this->load->helper('common');
         $side_params = array('selected_menu_id' => '4');
+        $this->isLearner();
         $this->global['sidebar'] = $this->sidebar->generate($side_params, $this->role);
     }
     /**

@@ -207,6 +207,7 @@ class User extends BaseController {
 				'company_name' => $this->input->post('company_name'),
 				'country_code' => $this->input->post('country_code'),				
 			]);
+            $this->isLearner();
 			$this->loadViews("admin_edit", $this->global, NULL, NULL);
 						
 		}else{			

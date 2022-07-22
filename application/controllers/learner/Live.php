@@ -20,6 +20,7 @@ class Live extends BaseController {
 		$this->load->model('Company_model');
 		$this->load->helper('common');	
         $this->isLoggedIn();
+		$this->isLearner();
     }
     /**
      * This function used to load the default screen of trainingassign menu

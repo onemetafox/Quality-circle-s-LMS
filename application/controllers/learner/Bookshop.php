@@ -21,6 +21,7 @@ class Bookshop extends BaseController {
         $this->load->model('Library_model');
         $this->load->model('Bookshop_model');
         $this->isLoggedIn();
+        $this->isLearner();
     }
     /**
      * This function used to load the default screen of exam menu
