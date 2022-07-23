@@ -22,10 +22,10 @@ $image = $this->session->userdata('user_photo');
 		<div class="col-sm-12 col-md-10">
             <div class="tabs">
                 <ul class="nav nav-tabs">
-                    <li class="nav-item overview">
+                    <li class="nav-item overview <?= $msg == "active show"?"":""?>">
                         <a class="nav-link" href="#overview"  data-toggle="tab"><?php echo $term['overview']; ?></a>
                     </li>
-                    <li class="nav-item edit">
+                    <li class="nav-item edit <?= $msg == ""?"":"active show"?>">
                         <a class="nav-link" href="#edit" data-toggle="tab"><?php echo $term['edit']; ?></a>
                     </li>
                     <li class="nav-item edit ">
@@ -93,6 +93,13 @@ $image = $this->session->userdata('user_photo');
                     <div id="edit" class="tab-pane <?= $msg == ""?"":"active show"?>">
                         <?php if ($msg != "") { ?>
                             <span><strong style="text-align:center"><h3 style = "color:red"><?= $msg?></h3></strong></span>
+                            <span>For the safety of our website and the protection of your information we have instituted layers of protection
+                                    to mitigate unwanted access to our site. As a result it is necessary for you to update the fields below to
+                                    continue.
+                                    Thanks for your cooperation and understanding.
+                                    Have fun learning.
+                                    From our happy team to you.
+                                    Go Smart Academy </span>
                         <?php }?>
                         <form id="add-form" method="POST" novalidate="novalidate" enctype="multipart/form-data">
                             <input type="hidden" value="<?php print $this->session->userdata('user_id') ?>" class="form-control" id="id" name="id">
@@ -112,7 +119,7 @@ $image = $this->session->userdata('user_photo');
                                     </div>		
                                     <input type="hidden" id="sortname" name="sortname" value="<?php print $user->sortname; ?>"/>							
                                     <div class="form-group row">
-                                        <label class="col-sm-2 control-label text-sm-right pt-2">Country Code</label>
+                                        <label class="col-sm-2 control-label text-sm-right pt-2">Country Code <span style="color:red">*</span></label>
                                         <div class="col-sm-3">
                                             <select name="country_code" id="country_code" class="form-control" onchange="getCountryCode()">
 												<?php if(isset($country_list) && !empty($country_list)){ 
@@ -122,9 +129,9 @@ $image = $this->session->userdata('user_photo');
                                                 <?php } } ?>
                                 			</select>
                                         </div>
-                                        <label class="col-sm-2 control-label text-sm-right pt-2">Phone Number</label>
+                                        <label class="col-sm-2 control-label text-sm-right pt-2">Phone Number<span style="color:red">*</span></label>
                                         <div class="col-sm-3">
-                                            <input type="text" maxlength="10" value="<?php print $user->phone ?>" class="form-control"  id="phone" name="phone" >
+                                            <input type="text" maxlength="10" value="<?php print $user->phone ?>" placeholder = "input phone number" class="form-control"  id="phone" name="phone" >
                                         </div>
                                     </div>
                                     

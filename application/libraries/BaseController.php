@@ -388,16 +388,16 @@ class BaseController extends CI_Controller {
         // email to multiple recipients.
         $mail->addAddress($to, $toname);
         // Replace smtp_username with your Amazon SES SMTP user name.
-        $mail->Username = 'AKIAXV6BG43O3OSPYYHD';
+        $mail->Username = 'E312EFED1C72E1E8787D83377C2BD089D00124E54ACB7A7872CE10985AB933BE6A5D7E0C1242BD91B14615FC180285AA';
         // Replace smtp_password with your Amazon SES SMTP password.
-        $mail->Password = 'BFigoBAw9o+JLkMcI561ljgwd+nOCSRradgaAzf3Y4WN';
+        $mail->Password = 'E312EFED1C72E1E8787D83377C2BD089D00124E54ACB7A7872CE10985AB933BE6A5D7E0C1242BD91B14615FC180285AA';
         // Specify a configuration set. If you do not want to use a configuration
         // set, comment or remove the next line.
         $mail->addCustomHeader('X-SES-CONFIGURATION-SET', 'ConfigSet');
         // If you're using Amazon SES in a region other than US West (Oregon),
         // replace email-smtp.us-west-2.amazonaws.com with the Amazon SES SMTP
         // endpoint in the appropriate region.
-        $mail->Host = 'email-smtp.us-east-2.amazonaws.com';
+        $mail->Host = 'smtp.elasticemail.com';
         // The subject line of the email
         $mail->Subject = $title;
         // The HTML-formatted body of the email
@@ -406,7 +406,7 @@ class BaseController extends CI_Controller {
         $mail->SMTPAuth = true;
         // Enable TLS encryption over port 587
         $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;
+        $mail->Port = 2525;
         // Tells PHPMailer to send HTML-formatted email
         $mail->isHTML(true);
         // The alternative email body; this is only displayed when a recipient
