@@ -377,27 +377,18 @@ class BaseController extends CI_Controller {
         // Replace sender@example.com with your "From" address.
         // This address must be verified with Amazon SES.
         $mail->setFrom('support@gosmartacademy.com', 'gosmartacademy');
-        // if(!$from){
-        //     $mail->setFrom('support@gosmartacademy.com', 'gosmartacademy');
-        // }else{
-        //     $mail->setFrom($from, $fromname);
-        // }
-        // Replace recipient@example.com with a "To" address. If your account
-        // is still in the sandbox, this address must be verified.
-        // Also note that you can include several addAddress() lines to send
-        // email to multiple recipients.
         $mail->addAddress($to, $toname);
         // Replace smtp_username with your Amazon SES SMTP user name.
-        $mail->Username = 'E312EFED1C72E1E8787D83377C2BD089D00124E54ACB7A7872CE10985AB933BE6A5D7E0C1242BD91B14615FC180285AA';
+        $mail->Username = 'support@gosmartacademy.com';
         // Replace smtp_password with your Amazon SES SMTP password.
-        $mail->Password = 'E312EFED1C72E1E8787D83377C2BD089D00124E54ACB7A7872CE10985AB933BE6A5D7E0C1242BD91B14615FC180285AA';
+        $mail->Password = 'SecureL0g!nn!!#';
         // Specify a configuration set. If you do not want to use a configuration
         // set, comment or remove the next line.
         $mail->addCustomHeader('X-SES-CONFIGURATION-SET', 'ConfigSet');
         // If you're using Amazon SES in a region other than US West (Oregon),
         // replace email-smtp.us-west-2.amazonaws.com with the Amazon SES SMTP
         // endpoint in the appropriate region.
-        $mail->Host = 'smtp.elasticemail.com';
+        $mail->Host = 'secure.emailsrvr.com';
         // The subject line of the email
         $mail->Subject = $title;
         // The HTML-formatted body of the email
@@ -406,7 +397,7 @@ class BaseController extends CI_Controller {
         $mail->SMTPAuth = true;
         // Enable TLS encryption over port 587
         $mail->SMTPSecure = 'tls';
-        $mail->Port = 2525;
+        $mail->Port = 587;
         // Tells PHPMailer to send HTML-formatted email
         $mail->isHTML(true);
         // The alternative email body; this is only displayed when a recipient
