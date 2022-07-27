@@ -1661,7 +1661,7 @@
      function resend_inviteuser(obj, id , firstname, lastname, email){
          $(obj).attr("disabled",1);
          $.ajax({
-             url: '<?=base_url()?>admin/inviteuser/createInviteuser/training/1',
+             url: '<?=base_url()?>admin/inviteuser/createInviteuser/training/0',
              type: 'POST',
              data: {
                  	id:id,
@@ -1674,13 +1674,21 @@
              },
              success: function (data, status, xhr) {
                  $(obj).removeAttr("disabled");
-     
+                  if(data.success){
+                     new PNotify({
+                        title: 'Success',
+                        text: 'Resend',
+                        type: 'success'
+                     });
+                  }else{
+                     new PNotify({
+                        title: 'Failed',
+                        text: data.msg,
+                        type: 'error'
+                     });
+                  }
                  //$.magnificPopup.close();
-                 new PNotify({
-                     title: 'Success',
-                     text: 'Resend',
-                     type: 'success'
-                 });
+                 
                  //document.location.reload();
              },
              error: function(){   

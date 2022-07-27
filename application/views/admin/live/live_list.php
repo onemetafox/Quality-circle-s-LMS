@@ -980,7 +980,7 @@
     function resend_inviteuser(obj, id , firstname, lastname, email){
         $(obj).attr("disabled",1);
         $.ajax({
-            url: '<?=base_url()?>admin/inviteuser/createInviteuser/classes/1',
+            url: '<?=base_url()?>admin/inviteuser/createInviteuser/classes/0',
             type: 'POST',
             data: {
 				add_course_time_id: $('#add_course_time_id').val(),
@@ -994,12 +994,19 @@
             success: function (data, status, xhr) {
                 $(obj).removeAttr("disabled");
 
-                //$.magnificPopup.close();
-                new PNotify({
+                if(data.success){
+                    new PNotify({
                     title: 'Success',
                     text: 'Resend',
                     type: 'success'
-                });
+                    });
+                }else{
+                    new PNotify({
+                    title: 'Failed',
+                    text: data.msg,
+                    type: 'error'
+                    });
+                }
                 //document.location.reload();
             },
             error: function () {

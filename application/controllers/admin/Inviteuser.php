@@ -289,7 +289,7 @@ class Inviteuser extends BaseController{
 					}
 				}
 				$temp = $this->Inviteuser_model->getInviteUserCountFront($data['course_id'],$data['course_type'],$data['email'],$time_id);
-				if($temp != 0 ){
+				if($temp != 0 && $flag != 0 ){
 					$result = array("success"=> false, "msg"=>"User already invited");
 					$this->response($result);
 				}
