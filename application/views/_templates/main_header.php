@@ -303,7 +303,7 @@
                                     <div id="recaptcha1"></div>
                                     <div id="errormessage" style="color: red; margin: 5px 0 0 0px"></div> 
                                 </div>
-                                <!-- <div class="g-recaptcha" data-sitekey="6LciUf0UAAAAANP2mefF3glkoF3NRzTTO6ZEJmge"></div>  -->
+                                <div class="g-recaptcha" data-sitekey="6LfFAvsgAAAAAAjak90G1MG8y0W6HwOcSOYNH5z1"></div> 
                                 <div style="float: right; font-size: 14px; font-weight: 500;">
                                     <a href="<?php echo base_url(); ?>forgotPassword" style="color: #03a9f4;">Forgot password?</a>
                                 </div>
@@ -375,13 +375,13 @@
   var myCallBack = function() {
     //Render the recaptcha1 on the element with ID "recaptcha1"
     recaptcha1 = grecaptcha.render('recaptcha1', {
-      'sitekey' : '6LciUf0UAAAAANP2mefF3glkoF3NRzTTO6ZEJmge', //Replace this with your Site key
+      'sitekey' : '6LfFAvsgAAAAAAjak90G1MG8y0W6HwOcSOYNH5z1', //Replace this with your Site key
       'theme' : 'light'
     });
     
     //Render the recaptcha2 on the element with ID "recaptcha2"
     recaptcha2 = grecaptcha.render('recaptcha2', {
-      'sitekey' : '6LciUf0UAAAAANP2mefF3glkoF3NRzTTO6ZEJmge', //Replace this with your Site key
+      'sitekey' : '6LfFAvsgAAAAAAjak90G1MG8y0W6HwOcSOYNH5z1', //Replace this with your Site key
       'theme' : 'light'
     });
   };
@@ -393,11 +393,11 @@
 <script>
     $('#company_login_frm .signin').on('click', function(e){
         var flag =  $("#flag").val();
-        // e.preventDefault();
-        // if(grecaptcha.getResponse(recaptcha1) != "") { 
-        //     $("#errormessage").text("Please Fill The Google Captcha");
-        //     return false;
-        // } else {
+        e.preventDefault();
+        if(grecaptcha.getResponse(recaptcha1) != "") { 
+            $("#errormessage").text("Please Fill The Google Captcha");
+            return false;
+        } else {
             var formdata    = $('#company_login_frm').serialize();
             var formAction  = $('#company_login_frm').attr('action');
             var msg         = $('.login_errMsg');
@@ -419,17 +419,17 @@
                         msg.html('<div class="alert alert-danger"><p class="m-0">'+res.msg+'</p></div>');
                 }
             });
-        // }
+        }
 
     });
 
     $('#company_signup_frm .signin').on('click', function(e) {
-        // e.preventDefault();
-        // console.log('#company_signup_frm .signin');
-        // if(grecaptcha.getResponse(recaptcha2) == "") { 
-        //     $("#errormessage1").text("Please Fill The Google Captcha");
-        //     return false;
-        // } else {
+        e.preventDefault();
+        console.log('#company_signup_frm .signin');
+        if(grecaptcha.getResponse(recaptcha2) == "") { 
+            $("#errormessage1").text("Please Fill The Google Captcha");
+            return false;
+        } else {
             var formdata    = $('#company_signup_frm').serialize();
             var formAction  = $('#company_signup_frm').attr('action');
             var msg         = $('.signup_errMsg');
@@ -475,7 +475,7 @@
                 }
 
             });
-        // }
+        }
     });
 
     function showLogin(){

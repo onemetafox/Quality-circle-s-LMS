@@ -131,7 +131,7 @@ $image = $this->session->userdata('user_photo');
                                         </div>
                                         <label class="col-sm-2 control-label text-sm-right pt-2">Phone Number<span style="color:red">*</span></label>
                                         <div class="col-sm-3">
-                                            <input type="text" maxlength="10" value="<?php print $user->phone ?>" placeholder = "input phone number" class="form-control"  id="phone" name="phone" >
+                                            <input type="text" maxlength="10" value="<?php print $user->phone ?>" placeholder = "4052838303" class="form-control"  id="phone" name="phone" >
                                         </div>
                                     </div>
                                     
