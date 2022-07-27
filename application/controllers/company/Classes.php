@@ -113,34 +113,36 @@ class Classes  extends BaseController
         $params["term"] = $this->term;
         $params['company'] = $this->company;
         $course = $this->Virtualcourse_model->select($id);
-        if($course->pay_type == 1){
-            $filter['object_type'] = "live";
-            $filter['object_id'] = $course->course_id;
-            $filter['user_id'] = $this->session->userdata()["userId"];
-            $payment = $this->Payment_model->one($filter);
-            if($payment){
-                $enrollment = $this->Enrollments_model->getEnrolledList($filter['user_id'],$course->course_id, $course->id);
-                if($enrollment){
-                    $params['status'] = "Enrolled";    
+        if($this->session->userdata ('isLoggedIn')) {
+            if($course->pay_type == 1){
+                $filter['object_type'] = "live";
+                $filter['object_id'] = $course->course_id;
+                $filter['user_id'] = $this->session->userdata()["userId"];
+                $payment = $this->Payment_model->one($filter);
+                if($payment){
+                    $enrollment = $this->Enrollments_model->getEnrolledList($filter['user_id'],$course->course_id, $course->id);
+                    if($enrollment){
+                        $params['status'] = "Enrolled";    
+                    }else{
+                        $params['status'] = "Paid";
+                    }
                 }else{
-                    $params['status'] = "Paid";
+                    $params['status'] = "UnPaid";
                 }
             }else{
-                $params['status'] = "UnPaid";
-            }
-        }else{
-            $filter['course_id'] = $id;
-            $filter['user_id'] = $this->session->userdata()["userId"];
-            $invite_user = $this->Inviteuser_model->one($filter);
-            if($invite_user){
-                $enrollment = $this->Enrollments_model->getEnrolledList($filter['user_id'],$course->course_id, $course->id);
-                if($enrollment){
-                    $params['status'] = "Enrolled";    
+                $filter['course_id'] = $id;
+                $filter['user_id'] = $this->session->userdata()["userId"];
+                $invite_user = $this->Inviteuser_model->one($filter);
+                if($invite_user){
+                    $enrollment = $this->Enrollments_model->getEnrolledList($filter['user_id'],$course->course_id, $course->id);
+                    if($enrollment){
+                        $params['status'] = "Enrolled";    
+                    }else{
+                        $params['status'] = "Invited";
+                    }
                 }else{
-                    $params['status'] = "Invited";
+                    $params['status'] = "Uninvited";
                 }
-            }else{
-                $params['status'] = "Uninvited";
             }
         }
 		$totalCourseEnrollments = $this->Enrollments_model->totalCourseEnrollments($course->course_id,$id);
