@@ -953,7 +953,7 @@
                 processData: false,
                 contentType: false,
                 success: function (data, status, xhr) {
-                    if(data.succss == "true"){
+                    if(data.succss){
                         $.magnificPopup.close();
                         new PNotify({
                             title: 'Success',
