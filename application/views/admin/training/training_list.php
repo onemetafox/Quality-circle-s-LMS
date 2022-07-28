@@ -1608,7 +1608,7 @@
                   // document.location.reload();
                }else{
                   new PNotify({
-                     title: 'Faild',
+                     title: 'Failed',
                      text: data.msg,
                      type: 'error'
                   });
@@ -1646,7 +1646,7 @@
                      document.location.reload();
                   }else{
                      new PNotify({
-                        title: 'Faild',
+                        title: 'Failed',
                         text: data.msg,
                         type: 'error'
                      });
