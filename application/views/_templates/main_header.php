@@ -394,7 +394,7 @@
     $('#company_login_frm .signin').on('click', function(e){
         var flag =  $("#flag").val();
         e.preventDefault();
-        if(grecaptcha.getResponse(recaptcha1) != "") { 
+        if(grecaptcha.getResponse(recaptcha1) == "") { 
             $("#errormessage").text("Please Fill The Google Captcha");
             return false;
         } else {

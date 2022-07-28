@@ -14,7 +14,7 @@
                             <input type="password" id="password" data-toggle="password" name="password" placeholder="Password" class="loginFeild">
                         </div>
                         <div class="loginRow">
-                            <div class="g-recaptcha" data-sitekey="6LfFAvsgAAAAAAjak90G1MG8y0W6HwOcSOYNH5z1"></div> 
+                            <div id="recaptcha3"></div>
                             <div class="errormessage" style="color: red; margin: 5px 0 0 0px"></div> 
                         </div>
                         <div class="loginRow">
@@ -37,14 +37,20 @@
     <script src="<?php echo base_url(); ?>assets/js_company/jquery.simplyscroll.js"></script>
     <script src="<?php echo base_url(); ?>assets/js_company/wow.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/js_company/owl.carousel.min.js"></script>
-    <script src='https://www.google.com/recaptcha/api.js'></script>
-    <script type="text/javascript">
-       $("#password").password('toggle');
-    </script> 
+    <script src="https://www.google.com/recaptcha/api.js?onload=myCallBack&render=explicit" async defer></script>
     <script>
+        var recaptcha1;
+        var recaptcha3;
+        var myCallBack = function() {
+            //Render the recaptcha1 on the element with ID "recaptcha1"
+            recaptcha3 = grecaptcha.render('recaptcha3', {
+            'sitekey' : '6LfFAvsgAAAAAAjak90G1MG8y0W6HwOcSOYNH5z1', //Replace this with your Site key
+            'theme' : 'light'
+            });
+        };
         $('#login_frm .signin').on('click', function(e){
             e.preventDefault();
-            if(grecaptcha.getResponse() != "") { 
+            if(grecaptcha.getResponse(recaptcha3) == "") { 
                 $(".errormessage").text("Please Fill The Google Captcha");
                 return false;
             } else {
